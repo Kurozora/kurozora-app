@@ -6,6 +6,7 @@
 //  Copyright © 2023 Kurozora. All rights reserved.
 //
 
+import KurozoraKit
 import UIKit
 
 enum SearchFilterDataSource {

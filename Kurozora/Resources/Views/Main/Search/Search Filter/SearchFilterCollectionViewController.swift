@@ -17,15 +17,16 @@ protocol SearchFilterCollectionViewControllerDelegate: AnyObject {
 
 class SearchFilterCollectionViewController: KCollectionViewController {
 	// MARK: - Views
-	private var cancelBarButtonItem: UIBarButtonItem!
 	private var resetBarButtonItem: UIBarButtonItem!
-	private var applyButtonContainer: UIView!
-	private var applyButton: KTintedButton!
+	private var applyBarButtonItem: UIBarButtonItem!
 
 	// MARK: - Properties
 	var searchType: SearchType?
-	var filterableAttributes: [(key: FilterKey, value: FilterableAttribute)] = []
+	var descriptors: [FilterDescriptor] = []
 	var filter: SearchFilter?
+
+	/// The values the user has set on the page.
+	var draft: [FilterKey: FilterValue] = [:]
 
 	var dataSource: UICollectionViewDiffableDataSource<SearchFilterDataSource.Section, SearchFilterDataSource.ItemKind>!
 	var snapshot: NSDiffableDataSourceSnapshot<SearchFilterDataSource.Section, SearchFilterDataSource.ItemKind>!
@@ -61,8 +62,10 @@ class SearchFilterCollectionViewController: KCollectionViewController {
 		self.configure()
 
 		if let searchType = self.searchType {
-			self.filterableAttributes = searchType.filterableAttributes
+			self.descriptors = searchType.filterDescriptors
 		}
+
+		self.draft = self.filter?.values ?? [:]
 
 		self.configureDataSource()
 		self.updateDataSource()
@@ -70,148 +73,83 @@ class SearchFilterCollectionViewController: KCollectionViewController {
 
 	// MARK: - Functions
 	private func configure() {
-		self.configureViews()
-		self.configureViewHierarchy()
-		self.configureViewConstraints()
-	}
-
-	/// Returns the filterable attribute registered under the given key.
-	///
-	/// - Parameter key: The key of the attribute.
-	///
-	/// - Returns: The matching attribute.
-	func attribute(for key: FilterKey) -> FilterableAttribute? {
-		return self.filterableAttributes.first { $0.key == key }?.value
-	}
-
-	private func configureViews() {
 		self.configureView()
 		self.configureCollectionView()
-		self.configureCancelBarButtonItem()
-		self.configureRestBarButtonItem()
-		self.configureApplyButtonContainer()
-		self.configureApplyButton()
+		self.configureResetBarButtonItem()
+		self.configureApplyBarButtonItem()
+		self.updateResetAvailability()
+	}
+
+	/// Returns the descriptor registered under the given key.
+	///
+	/// - Parameter key: The key of the descriptor.
+	///
+	/// - Returns: The matching descriptor.
+	func descriptor(for key: FilterKey) -> FilterDescriptor? {
+		return self.descriptors.first { $0.key == key }
+	}
+
+	/// Returns the value the user has set against the given key.
+	///
+	/// - Parameter key: The key to read.
+	///
+	/// - Returns: The value the user set.
+	func draftValue(for key: FilterKey) -> FilterValue? {
+		return self.draft[key]
+	}
+
+	/// Writes the given value against the given key.
+	///
+	/// - Parameters:
+	///    - value: The value the user set.
+	///    - key: The key to write.
+	func setDraftValue(_ value: FilterValue?, for key: FilterKey) {
+		if let value = value, !value.isEmpty {
+			self.draft[key] = value
+		} else {
+			self.draft[key] = nil
+		}
+
+		self.updateResetAvailability()
 	}
 
 	private func configureView() {
-		// Disable Refresh Control & hide Activity Indicator
 		self._prefersRefreshControlDisabled = true
 		self._prefersActivityIndicatorHidden = true
 		self.title = L10n.filters
 	}
 
 	private func configureCollectionView() {
-		self.collectionView.contentInset.bottom = 50
+		self.collectionView.contentInset.bottom = 20
 		self.collectionView.scrollIndicatorInsets = self.collectionView.contentInset
 	}
 
-	private func configureCancelBarButtonItem() {
-		self.cancelBarButtonItem = UIBarButtonItem(systemItem: .cancel, primaryAction: UIAction { [weak self] _ in
-			guard let self = self else { return }
-			self.cancelButtonPressed()
-		})
-		self.navigationItem.leftBarButtonItem = self.cancelBarButtonItem
-	}
-
-	private func configureRestBarButtonItem() {
-		self.resetBarButtonItem = UIBarButtonItem(title: L10n.reset, primaryAction: UIAction { [weak self] _ in
+	private func configureResetBarButtonItem() {
+		self.resetBarButtonItem = UIBarButtonItem(image: UIImage(systemName: "arrow.counterclockwise"), primaryAction: UIAction { [weak self] _ in
 			guard let self = self else { return }
 			self.resetButtonPressed()
 		})
-		self.navigationItem.rightBarButtonItem = self.resetBarButtonItem
+		self.resetBarButtonItem.accessibilityLabel = L10n.reset
+		self.navigationItem.leftBarButtonItem = self.resetBarButtonItem
 	}
 
-	private func configureApplyButtonContainer() {
-		self.applyButtonContainer = UIView()
-		self.applyButtonContainer.translatesAutoresizingMaskIntoConstraints = false
-		self.applyButtonContainer.backgroundColor = .clear
-
-		if #available(iOS 26.0, macOS 26.0, tvOS 26.0, visionOS 26.0, watchOS 26.0, *) {
-			let interaction = UIScrollEdgeElementContainerInteraction()
-			interaction.scrollView = self.collectionView
-			interaction.edge = .bottom
-			self.applyButtonContainer.addInteraction(interaction)
-		}
-	}
-
-	private func configureApplyButton() {
-		self.applyButton = KTintedButton()
-		self.applyButton.translatesAutoresizingMaskIntoConstraints = false
-		self.applyButton.setTitle(L10n.apply, for: .normal)
-		self.applyButton.addAction(UIAction { [weak self] _ in
+	private func configureApplyBarButtonItem() {
+		self.applyBarButtonItem = UIBarButtonItem(image: UIImage(systemName: "checkmark"), primaryAction: UIAction { [weak self] _ in
 			guard let self = self else { return }
 			self.applyButtonPressed()
-		}, for: .touchUpInside)
+		})
+		self.applyBarButtonItem.accessibilityLabel = L10n.apply
+		self.navigationItem.rightBarButtonItem = self.applyBarButtonItem
 	}
 
-	private func configureViewHierarchy() {
-		self.view.addSubview(self.applyButtonContainer)
-		self.applyButtonContainer.addSubview(self.applyButton)
-	}
-
-	private func configureViewConstraints() {
-		NSLayoutConstraint.activate([
-			self.applyButtonContainer.leadingAnchor.constraint(equalTo: self.view.leadingAnchor),
-			self.applyButtonContainer.bottomAnchor.constraint(equalTo: self.view.bottomAnchor),
-			self.applyButtonContainer.trailingAnchor.constraint(equalTo: self.view.trailingAnchor),
-
-			self.applyButton.topAnchor.constraint(equalTo: self.applyButtonContainer.topAnchor, constant: 12.0),
-			self.applyButton.leadingAnchor.constraint(equalTo: self.applyButtonContainer.leadingAnchor, constant: 12.0),
-			self.applyButton.bottomAnchor.constraint(equalTo: self.applyButtonContainer.bottomAnchor, constant: -24.0),
-			self.applyButton.trailingAnchor.constraint(equalTo: self.applyButtonContainer.trailingAnchor, constant: -12.0),
-		])
+	private func updateResetAvailability() {
+		self.resetBarButtonItem?.isEnabled = !self.draft.isEmpty
 	}
 
 	private func applyButtonPressed() {
-		var newSearchFilter: SearchFilter?
+		guard let searchType = self.searchType else { return }
 
-		if let oldSearchFilter = self.filter {
-			switch oldSearchFilter {
-			case .appTheme(let appThemeFilter):
-				newSearchFilter = self.getNewSearchFilter(merging: appThemeFilter)
-			case .character(let characterFilter):
-				newSearchFilter = self.getNewSearchFilter(merging: characterFilter)
-			case .episode(let episodeFilter):
-				newSearchFilter = self.getNewSearchFilter(merging: episodeFilter)
-			case .game(let gameFilter):
-				newSearchFilter = self.getNewSearchFilter(merging: gameFilter)
-			case .literature(let literatureFilter):
-				newSearchFilter = self.getNewSearchFilter(merging: literatureFilter)
-			case .person(let personFilter):
-				newSearchFilter = self.getNewSearchFilter(merging: personFilter)
-			case .show(let showFilter):
-				newSearchFilter = self.getNewSearchFilter(merging: showFilter)
-			case .song(let songFilter):
-				newSearchFilter = self.getNewSearchFilter(merging: songFilter)
-			case .studio(let studioFilter):
-				newSearchFilter = self.getNewSearchFilter(merging: studioFilter)
-			case .user(let userFilter):
-				newSearchFilter = self.getNewSearchFilter(merging: userFilter)
-			}
-		} else if let searchType = self.searchType {
-			switch searchType {
-			case .characters:
-				newSearchFilter = self.getNewSearchFilter(merging: CharacterFilter())
-			case .episodes:
-				newSearchFilter = self.getNewSearchFilter(merging: EpisodeFilter())
-			case .games:
-				newSearchFilter = self.getNewSearchFilter(merging: GameFilter())
-			case .literatures:
-				newSearchFilter = self.getNewSearchFilter(merging: LiteratureFilter())
-			case .people:
-				newSearchFilter = self.getNewSearchFilter(merging: PersonFilter())
-			case .shows:
-				newSearchFilter = self.getNewSearchFilter(merging: ShowFilter())
-			case .songs:
-				newSearchFilter = self.getNewSearchFilter(merging: SongFilter())
-			case .studios:
-				newSearchFilter = self.getNewSearchFilter(merging: StudioFilter())
-			case .users:
-				newSearchFilter = self.getNewSearchFilter(merging: UserFilter())
-			}
-		}
-
-		guard let newSearchFilter = newSearchFilter else { return }
+		let newSearchFilter = SearchFilter(type: searchType, values: self.draft)
 		let searchFilterCollectionViewController = self
 
 		self.dismiss(animated: true) {
@@ -219,522 +157,11 @@ class SearchFilterCollectionViewController: KCollectionViewController {
 		}
 	}
 
-	private func getNewSearchFilter(merging searchFilter: Any?) -> SearchFilter? {
-		if let characterFilter = searchFilter as? CharacterFilter {
-			var age: Int? = characterFilter.age
-			var astrologicalSign: Int? = characterFilter.astrologicalSign
-			var birthDay: Int? = characterFilter.birthDay
-			var birthMonth: Int? = characterFilter.birthMonth
-			var bust: String? = characterFilter.bust
-			var height: String? = characterFilter.height
-			var hip: String? = characterFilter.hip
-			var status: Int? = characterFilter.status
-			var waist: String? = characterFilter.waist
-			var weight: String? = characterFilter.weight
-
-			for (key, value) in self.filterableAttributes {
-				switch key {
-				case .status:
-					status = value.options?.first { key, _ in
-						key == value.selected as? String
-					}?.value
-				case .age:
-					age = value.selected as? Int
-				case .birthDay:
-					birthDay = value.options?.first { key, _ in
-						key == value.selected as? String
-					}?.value
-				case .birthMonth:
-					birthMonth = value.options?.first { key, _ in
-						key == value.selected as? String
-					}?.value
-				case .bust:
-					bust = value.selected as? String
-				case .height:
-					height = value.selected as? String
-				case .hip:
-					hip = value.selected as? String
-				case .waist:
-					waist = value.selected as? String
-				case .weight:
-					weight = value.selected as? String
-				case .astrologicalSign:
-					astrologicalSign = value.options?.first { key, _ in
-						key == value.selected as? String
-					}?.value
-				default: break
-				}
-			}
-
-			let characterFilter = CharacterFilter(
-				age: age,
-				astrologicalSign: astrologicalSign,
-				birthDay: birthDay,
-				birthMonth: birthMonth,
-				bust: bust,
-				height: height,
-				hip: hip,
-				status: status,
-				waist: waist,
-				weight: weight
-			)
-			return .character(characterFilter)
-		} else if let episodeFilter = searchFilter as? EpisodeFilter {
-			var duration: Int? = episodeFilter.duration
-			var isFiller: Bool? = episodeFilter.isFiller
-			var isNSFW: Bool? = episodeFilter.isNSFW
-			var isSpecial: Bool? = episodeFilter.isSpecial
-			var isPremiere: Bool? = episodeFilter.isPremiere
-			var isFinale: Bool? = episodeFilter.isFinale
-			var number: Int? = episodeFilter.number
-			var numberTotal: Int? = episodeFilter.numberTotal
-			var season: Int? = episodeFilter.season
-			var tvRating: Int? = episodeFilter.tvRating
-			var startedAt: TimeInterval? = episodeFilter.startedAt
-			var endedAt: TimeInterval? = episodeFilter.endedAt
-
-			for (key, value) in self.filterableAttributes {
-				switch key {
-				case .duration:
-					if let selected = value.selected as? Double {
-						duration = Int(selected) * 60
-					} else {
-						duration = nil
-					}
-				case .isFiller:
-					isFiller = (value.options?.first { key, _ in
-						key == value.selected as? String
-					}?.value as? NSNumber)?.boolValue
-				case .isNSFW:
-					isNSFW = (value.options?.first { key, _ in
-						key == value.selected as? String
-					}?.value as? NSNumber)?.boolValue
-				case .isSpecial:
-					isSpecial = (value.options?.first { key, _ in
-						key == value.selected as? String
-					}?.value as? NSNumber)?.boolValue
-				case .isPremiere:
-					isPremiere = (value.options?.first { key, _ in
-						key == value.selected as? String
-					}?.value as? NSNumber)?.boolValue
-				case .isFinale:
-					isFinale = (value.options?.first { key, _ in
-						key == value.selected as? String
-					}?.value as? NSNumber)?.boolValue
-				case .number:
-					if let selected = value.selected as? Double {
-						number = Int(selected)
-					} else {
-						number = nil
-					}
-				case .numberTotal:
-					if let selected = value.selected as? Double {
-						numberTotal = Int(selected)
-					} else {
-						numberTotal = nil
-					}
-				case .season:
-					season = value.selected as? Int
-				case .tvRating:
-					tvRating = value.options?.first { key, _ in
-						key == value.selected as? String
-					}?.value
-				case .startedAt:
-					startedAt = (value.selected as? Date)?.timeIntervalSince1970
-				case .endedAt:
-					endedAt = (value.selected as? Date)?.timeIntervalSince1970
-				default: break
-				}
-			}
-
-			let episodeFilter = EpisodeFilter(
-				duration: duration,
-				isFiller: isFiller,
-				isNSFW: isNSFW,
-				isSpecial: isSpecial,
-				isPremiere: isPremiere,
-				isFinale: isFinale,
-				number: number,
-				numberTotal: numberTotal,
-				season: season,
-				tvRating: tvRating,
-				startedAt: startedAt,
-				endedAt: endedAt
-			)
-			return .episode(episodeFilter)
-		} else if let gameFilter = searchFilter as? GameFilter {
-			var publicationDay: Int? = gameFilter.publicationDay
-			var publicationSeason: Int? = gameFilter.publicationSeason
-			var duration: Int? = gameFilter.duration
-			var publishedAt: TimeInterval? = gameFilter.publishedAt
-			var isNSFW: Bool? = gameFilter.isNSFW
-			var mediaType: Int? = gameFilter.mediaType
-			var source: Int? = gameFilter.source
-			var status: Int? = gameFilter.status
-			var tvRating: Int? = gameFilter.tvRating
-			var countryOfOrigin: String? = gameFilter.countryOfOrigin
-			var editionCount: Int? = gameFilter.editionCount
-
-			for (key, value) in self.filterableAttributes {
-				switch key {
-				case .publicationDay:
-					publicationDay = value.options?.first { key, _ in
-						key == value.selected as? String
-					}?.value
-				case .publicationSeason:
-					publicationSeason = value.options?.first { key, _ in
-						key == value.selected as? String
-					}?.value
-				case .duration:
-					if let selected = value.selected as? Double {
-						duration = Int(selected) * 60
-					} else {
-						duration = nil
-					}
-				case .publishedAt:
-					publishedAt = (value.selected as? Date)?.timeIntervalSince1970
-				case .isNSFW:
-					isNSFW = (value.options?.first { key, _ in
-						key == value.selected as? String
-					}?.value as? NSNumber)?.boolValue
-				case .mediaType:
-					mediaType = value.options?.first { key, _ in
-						key == value.selected as? String
-					}?.value
-				case .source:
-					source = value.options?.first { key, _ in
-						key == value.selected as? String
-					}?.value
-				case .status:
-					status = value.options?.first { key, _ in
-						key == value.selected as? String
-					}?.value
-				case .tvRating:
-					tvRating = value.options?.first { key, _ in
-						key == value.selected as? String
-					}?.value
-				case .countryOfOrigin:
-					countryOfOrigin = CountryOfOrigin.allCases.first { countryOfOrigin in
-						countryOfOrigin.name == value.selected as? String
-					}?.value
-				case .editionCount:
-					if let selected = value.selected as? Double {
-						editionCount = Int(selected)
-					} else {
-						editionCount = nil
-					}
-				default: break
-				}
-			}
-
-			let gameFilter = GameFilter(
-				publicationDay: publicationDay,
-				publicationSeason: publicationSeason,
-				countryOfOrigin: countryOfOrigin,
-				duration: duration,
-				publishedAt: publishedAt,
-				isNSFW: isNSFW,
-				mediaType: mediaType,
-				source: source,
-				status: status,
-				tvRating: tvRating,
-				editionCount: editionCount
-			)
-			return .game(gameFilter)
-		} else if let literatureFilter = searchFilter as? LiteratureFilter {
-			var publicationDay: Int? = literatureFilter.publicationDay
-			var publicationSeason: Int? = literatureFilter.publicationSeason
-			var publicationTime: String? = literatureFilter.publicationTime
-			var duration: Int? = literatureFilter.duration
-			var startedAt: TimeInterval? = literatureFilter.startedAt
-			var endedAt: TimeInterval? = literatureFilter.endedAt
-			var isNSFW: Bool? = literatureFilter.isNSFW
-			var mediaType: Int? = literatureFilter.mediaType
-			var source: Int? = literatureFilter.source
-			var status: Int? = literatureFilter.status
-			var tvRating: Int? = literatureFilter.tvRating
-			var countryOfOrigin: String? = literatureFilter.countryOfOrigin
-			var volumeCount: Int? = literatureFilter.volumeCount
-			var chapterCount: Int? = literatureFilter.chapterCount
-			var pageCount: Int? = literatureFilter.pageCount
-
-			for (key, value) in self.filterableAttributes {
-				switch key {
-				case .publicationDay:
-					publicationDay = value.options?.first { key, _ in
-						key == value.selected as? String
-					}?.value
-				case .publicationSeason:
-					publicationSeason = value.options?.first { key, _ in
-						key == value.selected as? String
-					}?.value
-				case .publicationTime:
-					publicationTime = (value.selected as? Date)?.convertTo24Hour()
-				case .duration:
-					if let selected = value.selected as? Double {
-						duration = Int(selected) * 60
-					} else {
-						duration = nil
-					}
-				case .startedAt:
-					startedAt = (value.selected as? Date)?.timeIntervalSince1970
-				case .endedAt:
-					endedAt = (value.selected as? Date)?.timeIntervalSince1970
-				case .isNSFW:
-					isNSFW = (value.options?.first { key, _ in
-						key == value.selected as? String
-					}?.value as? NSNumber)?.boolValue
-				case .mediaType:
-					mediaType = value.options?.first { key, _ in
-						key == value.selected as? String
-					}?.value
-				case .source:
-					source = value.options?.first { key, _ in
-						key == value.selected as? String
-					}?.value
-				case .status:
-					status = value.options?.first { key, _ in
-						key == value.selected as? String
-					}?.value
-				case .tvRating:
-					tvRating = value.options?.first { key, _ in
-						key == value.selected as? String
-					}?.value
-				case .countryOfOrigin:
-					countryOfOrigin = CountryOfOrigin.allCases.first { countryOfOrigin in
-						countryOfOrigin.name == value.selected as? String
-					}?.value
-				case .volumeCount:
-					if let selected = value.selected as? Double {
-						volumeCount = Int(selected)
-					} else {
-						volumeCount = nil
-					}
-				case .chapterCount:
-					if let selected = value.selected as? Double {
-						chapterCount = Int(selected)
-					} else {
-						chapterCount = nil
-					}
-				case .pageCount:
-					if let selected = value.selected as? Double {
-						pageCount = Int(selected)
-					} else {
-						pageCount = nil
-					}
-				default: break
-				}
-			}
-
-			let literatureFilter = LiteratureFilter(
-				publicationDay: publicationDay,
-				publicationSeason: publicationSeason,
-				publicationTime: publicationTime,
-				countryOfOrigin: countryOfOrigin,
-				duration: duration,
-				startedAt: startedAt,
-				endedAt: endedAt,
-				isNSFW: isNSFW,
-				mediaType: mediaType,
-				source: source,
-				status: status,
-				tvRating: tvRating,
-				volumeCount: volumeCount,
-				chapterCount: chapterCount,
-				pageCount: pageCount
-			)
-			return .literature(literatureFilter)
-		} else if let personFilter = searchFilter as? PersonFilter {
-			var astrologicalSign: Int? = personFilter.astrologicalSign
-			var birthDate: TimeInterval? = personFilter.birthDate
-			var deceasedDate: TimeInterval? = personFilter.deceasedDate
-
-			for (key, value) in self.filterableAttributes {
-				switch key {
-				case .astrologicalSign:
-					astrologicalSign = value.options?.first { key, _ in
-						key == value.selected as? String
-					}?.value
-				case .birthDate:
-					birthDate = (value.selected as? Date)?.timeIntervalSince1970
-				case .deceasedDate:
-					deceasedDate = (value.selected as? Date)?.timeIntervalSince1970
-				default: break
-				}
-			}
-
-			let personFilter = PersonFilter(astrologicalSign: astrologicalSign, birthDate: birthDate, deceasedDate: deceasedDate)
-			return .person(personFilter)
-		} else if let showFilter = searchFilter as? ShowFilter {
-			var airDay: Int? = showFilter.airDay
-			var airSeason: Int? = showFilter.airSeason
-			var airTime: String? = showFilter.airTime
-			var duration: Int? = showFilter.duration
-			var isNSFW: Bool? = showFilter.isNSFW
-			var startedAt: TimeInterval? = showFilter.startedAt
-			var endedAt: TimeInterval? = showFilter.endedAt
-			var mediaType: Int? = showFilter.mediaType
-			var source: Int? = showFilter.source
-			var status: Int? = showFilter.status
-			var tvRating: Int? = showFilter.tvRating
-			var countryOfOrigin: String? = showFilter.countryOfOrigin
-			var seasonCount: Int? = showFilter.seasonCount
-			var episodeCount: Int? = showFilter.episodeCount
-
-			for (key, value) in self.filterableAttributes {
-				switch key {
-				case .airDay:
-					airDay = value.options?.first { key, _ in
-						key == value.selected as? String
-					}?.value
-				case .airSeason:
-					airSeason = value.options?.first { key, _ in
-						key == value.selected as? String
-					}?.value
-				case .airTime:
-					airTime = (value.selected as? Date)?.convertTo24Hour()
-				case .duration:
-					if let selected = value.selected as? Double {
-						duration = Int(selected) * 60
-					} else {
-						duration = nil
-					}
-				case .isNSFW:
-					isNSFW = (value.options?.first { key, _ in
-						key == value.selected as? String
-					}?.value as? NSNumber)?.boolValue
-				case .startedAt:
-					startedAt = (value.selected as? Date)?.timeIntervalSince1970
-				case .endedAt:
-					endedAt = (value.selected as? Date)?.timeIntervalSince1970
-				case .mediaType:
-					mediaType = value.options?.first { key, _ in
-						key == value.selected as? String
-					}?.value
-				case .source:
-					source = value.options?.first { key, _ in
-						key == value.selected as? String
-					}?.value
-				case .status:
-					status = value.options?.first { key, _ in
-						key == value.selected as? String
-					}?.value
-				case .tvRating:
-					tvRating = value.options?.first { key, _ in
-						key == value.selected as? String
-					}?.value
-				case .countryOfOrigin:
-					countryOfOrigin = CountryOfOrigin.allCases.first { countryOfOrigin in
-						countryOfOrigin.name == value.selected as? String
-					}?.value
-				case .seasonCount:
-					if let selected = value.selected as? Double {
-						seasonCount = Int(selected)
-					} else {
-						seasonCount = nil
-					}
-				case .episodeCount:
-					if let selected = value.selected as? Double {
-						episodeCount = Int(selected)
-					} else {
-						episodeCount = nil
-					}
-				default: break
-				}
-			}
-
-			let showFilter = ShowFilter(
-				airDay: airDay,
-				airSeason: airSeason,
-				airTime: airTime,
-				countryOfOrigin: countryOfOrigin,
-				duration: duration,
-				isNSFW: isNSFW,
-				startedAt: startedAt,
-				endedAt: endedAt,
-				mediaType: mediaType,
-				source: source,
-				status: status,
-				tvRating: tvRating,
-				seasonCount: seasonCount,
-				episodeCount: episodeCount
-			)
-			return .show(showFilter)
-		} else if searchFilter is SongFilter {
-			for (key, _) in self.filterableAttributes {
-				switch key {
-				default: break
-				}
-			}
-
-			let songFilter = SongFilter()
-			return .song(songFilter)
-		} else if let studioFilter = searchFilter as? StudioFilter {
-			var address: String? = studioFilter.address
-			var foundedAt: TimeInterval? = studioFilter.foundedAt
-			var defunctAt: TimeInterval? = studioFilter.defunctAt
-			var isNSFW: Bool? = studioFilter.isNSFW
-			var type: Int? = studioFilter.type
-			var tvRating: Int? = studioFilter.tvRating
-
-			for (key, value) in self.filterableAttributes {
-				switch key {
-				case .address:
-					address = value.selected as? String
-				case .foundedAt:
-					foundedAt = (value.selected as? Date)?.timeIntervalSince1970
-				case .defunctAt:
-					defunctAt = (value.selected as? Date)?.timeIntervalSince1970
-				case .isNSFW:
-					isNSFW = (value.options?.first { key, _ in
-						key == value.selected as? String
-					}?.value as? NSNumber)?.boolValue
-				case .type:
-					type = value.options?.first { key, _ in
-						key == value.selected as? String
-					}?.value
-				case .tvRating:
-					tvRating = value.options?.first { key, _ in
-						key == value.selected as? String
-					}?.value
-				default: break
-				}
-			}
-
-			let studioFilter = StudioFilter(
-				type: type,
-				tvRating: tvRating,
-				address: address,
-				foundedAt: foundedAt,
-				defunctAt: defunctAt,
-				isNSFW: isNSFW
-			)
-			return .studio(studioFilter)
-		} else if searchFilter is UserFilter {
-			for (key, _) in self.filterableAttributes {
-				switch key {
-				default: break
-				}
-			}
-
-			let userFilter = UserFilter()
-			return .user(userFilter)
-		}
-
-		return nil
-	}
-
-	private func cancelButtonPressed() {
-		let searchFilterCollectionViewController = self
-
-		self.dismiss(animated: true) {
-			searchFilterCollectionViewController.delegate?.searchFilterCollectionViewControllerDidCancel(searchFilterCollectionViewController)
-		}
-	}
-
 	private func resetButtonPressed() {
 		self.filter = nil
+		self.draft = [:]
 
+		self.updateResetAvailability()
 		self.updateDataSource()
 	}
 }
@@ -742,12 +169,38 @@ class SearchFilterCollectionViewController: KCollectionViewController {
 // MARK: - SearchFilterBaseCollectionViewCellDelegate
 extension SearchFilterCollectionViewController: SearchFilterBaseCollectionViewCellDelegate {
 	func searchFilterBaseCollectionViewCell(_ cell: SearchFilterBaseCollectionViewCell, didChangeValue value: AnyHashable?) {
-		guard let indexPath = collectionView.indexPath(for: cell) else { return }
+		guard let indexPath = self.collectionView.indexPath(for: cell) else { return }
 		guard let itemKind = self.dataSource.itemIdentifier(for: indexPath) else { return }
 
 		switch itemKind {
 		case .searchFilter(let key, _):
-			self.attribute(for: key)?.selected = value
+			guard let descriptor = self.descriptor(for: key) else { return }
+
+			self.setDraftValue(self.draftValue(from: value, for: descriptor), for: key)
+		}
+	}
+
+	/// Returns the value the cell's report writes.
+	///
+	/// - Parameters:
+	///    - value: The value the cell reported.
+	///    - descriptor: The filter the cell presents.
+	///
+	/// - Returns: The value to hold against the filter.
+	private func draftValue(from value: AnyHashable?, for descriptor: FilterDescriptor) -> FilterValue? {
+		switch descriptor.control {
+		case .date:
+			guard let date = value as? Date else { return nil }
+
+			return .date(date.timeIntervalSince1970)
+		case .text:
+			guard let text = value as? String, !text.isEmpty else { return nil }
+
+			return .text(text)
+		case .numberPills, .textPills, .booleanPills, .buckets, .duration:
+			guard let title = value as? String else { return nil }
+
+			return self.value(forOptionTitle: title, in: descriptor)
 		}
 	}
 }

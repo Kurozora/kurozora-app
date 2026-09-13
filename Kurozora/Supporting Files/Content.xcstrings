@@ -17452,6 +17452,9 @@
         }
       }
     },
+    "Afternoon" : {
+      "comment" : "The 'Afternoon' search filter option."
+    },
     "Age (years)" : {
       "comment" : "The 'Age (years)' search filter label.",
       "localizations" : {
@@ -44250,6 +44253,9 @@
         }
       }
     },
+    "Evening" : {
+      "comment" : "The 'Evening' search filter option."
+    },
     "Favorited %@ will show up on this page!" : {
       "comment" : "The favorites empty-state detail for your own profile.",
       "localizations" : {
@@ -61948,6 +61954,9 @@
         }
       }
     },
+    "Late Night" : {
+      "comment" : "The 'Late Night' search filter option."
+    },
     "Leaderboard" : {
       "comment" : "The title shown on the reputation leaderboard screen.",
       "localizations" : {
@@ -70574,6 +70583,9 @@
           }
         }
       }
+    },
+    "Morning" : {
+      "comment" : "The 'Morning' search filter option."
     },
     "Most Anticipated" : {
       "comment" : "The string for the 'most anticipated' browse option.",
@@ -133966,6 +133978,9 @@
           }
         }
       }
+    },
+    "Under %@" : {
+      "comment" : "The label of a search filter matching everything shorter than a duration. The argument is a duration such as 30 min."
     },
     "Unblock" : {
       "comment" : "The string for the word 'unblock'.",

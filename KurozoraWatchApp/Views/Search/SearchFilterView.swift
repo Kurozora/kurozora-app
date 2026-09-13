@@ -82,41 +82,20 @@ struct SearchFilterView: View {
 	private static func selectedValues(in filter: SearchFilter?) -> [String: Int] {
 		guard let filter else { return [:] }
 
-		let values: [String: Int?]
+		var values: [String: Int] = [:]
 
-		switch filter {
-		case .show(let show):
-			values = [
-				"airDay": show.airDay,
-				"airSeason": show.airSeason,
-				"mediaType": show.mediaType,
-				"source": show.source,
-				"status": show.status,
-				"tvRating": show.tvRating
-			]
-		case .literature(let literature):
-			values = [
-				"publicationDay": literature.publicationDay,
-				"publicationSeason": literature.publicationSeason,
-				"mediaType": literature.mediaType,
-				"source": literature.source,
-				"status": literature.status,
-				"tvRating": literature.tvRating
-			]
-		case .game(let game):
-			values = [
-				"publicationDay": game.publicationDay,
-				"publicationSeason": game.publicationSeason,
-				"mediaType": game.mediaType,
-				"source": game.source,
-				"status": game.status,
-				"tvRating": game.tvRating
-			]
-		default:
-			return [:]
+		for (key, value) in filter.values {
+			switch value {
+			case .selection(let selection):
+				values[key.rawValue] = selection.included.first
+			case .boolean(let boolean):
+				values[key.rawValue] = boolean ? 1 : 0
+			default:
+				continue
+			}
 		}
 
-		return values.compactMapValues { $0 }
+		return values
 	}
 
 	private func applyFilter() {
@@ -189,69 +168,24 @@ struct SearchFilterView: View {
 
 	/// Constructs a `SearchFilter` from the current attribute selections.
 	static func buildFilter(from attributes: [WatchFilterAttribute], for type: SearchType) -> SearchFilter? {
-		let selected = attributes.filter { $0.selectedValue != nil }
-		guard !selected.isEmpty else { return nil }
+		var values: [FilterKey: FilterValue] = [:]
 
-		func value(for id: String) -> Int? {
-			attributes.first(where: { $0.id == id })?.selectedValue
+		for attribute in attributes {
+			guard let selectedValue = attribute.selectedValue else { continue }
+			guard let key = FilterKey(rawValue: attribute.id) else { continue }
+
+			values[key] = Self.booleanKeys.contains(key)
+				? .boolean(selectedValue == 1)
+				: .selection(FilterSelection(selectedValue))
 		}
 
-		switch type {
-		case .shows:
-			return .show(ShowFilter(
-				airDay: value(for: "airDay"),
-				airSeason: value(for: "airSeason"),
-				mediaType: value(for: "mediaType"),
-				source: value(for: "source"),
-				status: value(for: "status"),
-				tvRating: value(for: "tvRating")
-			))
-		case .literatures:
-			return .literature(LiteratureFilter(
-				publicationDay: value(for: "publicationDay"),
-				publicationSeason: value(for: "publicationSeason"),
-				mediaType: value(for: "mediaType"),
-				source: value(for: "source"),
-				status: value(for: "status"),
-				tvRating: value(for: "tvRating")
-			))
-		case .games:
-			return .game(GameFilter(
-				publicationDay: value(for: "publicationDay"),
-				publicationSeason: value(for: "publicationSeason"),
-				mediaType: value(for: "mediaType"),
-				source: value(for: "source"),
-				status: value(for: "status"),
-				tvRating: value(for: "tvRating")
-			))
-		case .episodes:
-			return .episode(EpisodeFilter(
-				isFiller: value(for: "isFiller").map { $0 == 1 },
-				isSpecial: value(for: "isSpecial").map { $0 == 1 },
-				isPremiere: value(for: "isPremiere").map { $0 == 1 },
-				isFinale: value(for: "isFinale").map { $0 == 1 },
-				tvRating: value(for: "tvRating")
-			))
-		case .characters:
-			return .character(CharacterFilter(
-				astrologicalSign: value(for: "astrologicalSign"),
-				status: value(for: "status")
-			))
-		case .people:
-			return .person(PersonFilter(
-				astrologicalSign: value(for: "astrologicalSign")
-			))
-		case .studios:
-			return .studio(StudioFilter(
-				type: value(for: "type"),
-				tvRating: value(for: "tvRating")
-			))
-		case .songs:
-			return nil
-		case .users:
-			return nil
-		}
+		guard !values.isEmpty else { return nil }
+
+		return SearchFilter(type: type, values: values)
 	}
+
+	/// The attributes carrying a yes or no choice.
+	static let booleanKeys: Set<FilterKey> = [.isFiller, .isSpecial, .isPremiere, .isFinale, .isNSFW]
 }
 
 // MARK: - Filter Option Constants

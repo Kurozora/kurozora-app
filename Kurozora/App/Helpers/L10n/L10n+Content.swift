@@ -2289,6 +2289,79 @@ extension L10n {
             )
 		}
 	}
+	/// Label shown for a filter matching everything up to a duration.
+	///
+	/// - Parameter duration: The upper bound of the filter, already written for the locale.
+	///
+	/// - Tag: L10n-underDuration
+	static func underDuration(_ duration: String) -> String {
+		return String(
+			format: String(
+				localized: "Under %@",
+				table: "Content",
+				bundle: LanguageManager.shared.bundle,
+				locale: LanguageManager.shared.locale,
+				comment: "The label of a search filter matching everything shorter than a duration. The argument is a duration such as 30 min."
+			),
+			duration
+		)
+	}
+	/// The 'Late Night' search filter option.
+	///
+	/// - Tag: L10n-dayPartLateNight
+	static var dayPartLateNight: String {
+		L10n.resolve {
+			String(
+                localized: "Late Night",
+                table: "Content",
+                bundle: LanguageManager.shared.bundle,
+                locale: LanguageManager.shared.locale,
+                comment: "The 'Late Night' search filter option."
+            )
+		}
+	}
+	/// The 'Morning' search filter option.
+	///
+	/// - Tag: L10n-dayPartMorning
+	static var dayPartMorning: String {
+		L10n.resolve {
+			String(
+                localized: "Morning",
+                table: "Content",
+                bundle: LanguageManager.shared.bundle,
+                locale: LanguageManager.shared.locale,
+                comment: "The 'Morning' search filter option."
+            )
+		}
+	}
+	/// The 'Afternoon' search filter option.
+	///
+	/// - Tag: L10n-dayPartAfternoon
+	static var dayPartAfternoon: String {
+		L10n.resolve {
+			String(
+                localized: "Afternoon",
+                table: "Content",
+                bundle: LanguageManager.shared.bundle,
+                locale: LanguageManager.shared.locale,
+                comment: "The 'Afternoon' search filter option."
+            )
+		}
+	}
+	/// The 'Evening' search filter option.
+	///
+	/// - Tag: L10n-dayPartEvening
+	static var dayPartEvening: String {
+		L10n.resolve {
+			String(
+                localized: "Evening",
+                table: "Content",
+                bundle: LanguageManager.shared.bundle,
+                locale: LanguageManager.shared.locale,
+                comment: "The 'Evening' search filter option."
+            )
+		}
+	}
 	/// The 'Age (years)' search filter label.
 	///
 	/// - Tag: L10n-ageYears

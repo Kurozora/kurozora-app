@@ -6,8 +6,8 @@
 //  Copyright © 2023 Kurozora. All rights reserved.
 //
 
-import UIKit
 import KurozoraKit
+import UIKit
 
 extension SearchFilterCollectionViewController {
 	override func registerNibs(for collectionView: UICollectionView) -> [UICollectionReusableView.Type] {
@@ -17,389 +17,28 @@ extension SearchFilterCollectionViewController {
 	override func configureDataSource() {
 		let dateCellRegistration = self.dateCellRegistration()
 		let selectCellRegistration = self.selectCellRegistration()
-		let switchCellRegistration = self.switchCellRegistration()
 		let textCellRegistration = self.textCellRegistration()
-		let stepperCellRegistration = self.stepperCellRegistration()
 
 		self.dataSource = UICollectionViewDiffableDataSource<SearchFilterDataSource.Section, SearchFilterDataSource.ItemKind>(collectionView: self.collectionView) { collectionView, indexPath, item in
 			switch item {
 			case .searchFilter(let key, _):
-				guard let attribute = self.attribute(for: key) else { return nil }
+				guard let descriptor = self.descriptor(for: key) else { return nil }
 
-				switch attribute.type {
-				case .singleSelection:
-					return collectionView.dequeueConfiguredReusableCell(using: selectCellRegistration, for: indexPath, item: item)
-				case .multiSelection:
-					return collectionView.dequeueConfiguredReusableCell(using: selectCellRegistration, for: indexPath, item: item)
+				switch descriptor.control {
 				case .date:
 					return collectionView.dequeueConfiguredReusableCell(using: dateCellRegistration, for: indexPath, item: item)
-				case .time:
-					return collectionView.dequeueConfiguredReusableCell(using: dateCellRegistration, for: indexPath, item: item)
-				case .dateTime:
-					return collectionView.dequeueConfiguredReusableCell(using: dateCellRegistration, for: indexPath, item: item)
-				case .range:
-					return collectionView.dequeueConfiguredReusableCell(using: textCellRegistration, for: indexPath, item: item)
-				case .`switch`:
-					return collectionView.dequeueConfiguredReusableCell(using: switchCellRegistration, for: indexPath, item: item)
 				case .text:
 					return collectionView.dequeueConfiguredReusableCell(using: textCellRegistration, for: indexPath, item: item)
-				case .stepper:
-					return collectionView.dequeueConfiguredReusableCell(using: stepperCellRegistration, for: indexPath, item: item)
+				case .numberPills, .textPills, .booleanPills, .buckets, .duration:
+					return collectionView.dequeueConfiguredReusableCell(using: selectCellRegistration, for: indexPath, item: item)
 				}
 			}
 		}
 	}
 
 	override func updateDataSource() {
-		var itemKind: [SearchFilterDataSource.ItemKind] = []
-
-		switch self.filter {
-		case .character(let characterFilter):
-			itemKind = self.filterableAttributes.map { filterableAttribute in
-				var value: AnyHashable?
-
-				switch filterableAttribute.key {
-				case .status:
-					if let status = characterFilter.status {
-						value = CharacterStatus(rawValue: status)?.title
-					}
-				case .age:
-					value = characterFilter.age
-				case .birthDay:
-					if let birthDay = characterFilter.birthDay {
-						value = birthDay < 10 ? "0\(birthDay)" : "\(birthDay)"
-					}
-				case .birthMonth:
-					if let birthMonth = characterFilter.birthMonth {
-						value = Month(rawValue: birthMonth)?.name
-					}
-				case .height:
-					value = characterFilter.height
-				case .weight:
-					value = characterFilter.weight
-				case .bust:
-					value = characterFilter.bust
-				case .waist:
-					value = characterFilter.waist
-				case .hip:
-					value = characterFilter.hip
-				case .astrologicalSign:
-					if let astrologicalSignValue = characterFilter.astrologicalSign, let astrologicalSign = AstrologicalSign(rawValue: astrologicalSignValue) {
-						value = "\(astrologicalSign.title) \(astrologicalSign.emoji)"
-					}
-				default: break
-				}
-
-				filterableAttribute.value.selected = value
-
-				return .searchFilter(key: filterableAttribute.key, selectedValue: value)
-			}
-		case .episode(let episodeFilter):
-			itemKind = self.filterableAttributes.map { filterableAttribute in
-				var value: AnyHashable?
-
-				switch filterableAttribute.key {
-				case .duration:
-					if let duration = episodeFilter.duration, duration != 0 {
-						value = duration / 60 // We get it in seconds, but present to the user in minutes
-					}
-				case .tvRating:
-					if let tvRating = episodeFilter.tvRating {
-						value = TVRating(rawValue: tvRating)?.name
-					}
-				case .isFiller:
-					if let isFiller = episodeFilter.isFiller {
-						value = isFiller ? "Shown" : "Hidden"
-					}
-				case .isPremiere:
-					if let isPremiere = episodeFilter.isPremiere {
-						value = isPremiere ? "Shown" : "Hidden"
-					}
-				case .isFinale:
-					if let isFinale = episodeFilter.isFinale {
-						value = isFinale ? "Shown" : "Hidden"
-					}
-				case .isSpecial:
-					if let isSpecial = episodeFilter.isSpecial {
-						value = isSpecial ? "Shown" : "Hidden"
-					}
-				case .isNSFW:
-					if let isNSFW = episodeFilter.isNSFW {
-						value = isNSFW ? "Shown" : "Hidden"
-					}
-				case .number:
-					value = episodeFilter.number
-				case .numberTotal:
-					value = episodeFilter.numberTotal
-				case .startedAt:
-					if let startedAt = episodeFilter.startedAt {
-						value = Date(timeIntervalSince1970: startedAt)
-					}
-				case .endedAt:
-					if let endedAt = episodeFilter.endedAt {
-						value = Date(timeIntervalSince1970: endedAt)
-					}
-				default: break
-				}
-
-				filterableAttribute.value.selected = value
-
-				return .searchFilter(key: filterableAttribute.key, selectedValue: value)
-			}
-		case .game(let gameFilter):
-			itemKind = self.filterableAttributes.map { filterableAttribute in
-				var value: AnyHashable?
-
-				switch filterableAttribute.key {
-				case .mediaType:
-					if let mediaType = gameFilter.mediaType {
-						value = GameType(rawValue: mediaType)?.name
-					}
-				case .status:
-					if let status = gameFilter.status {
-						value = GameStatus(rawValue: status)?.name
-					}
-				case .source:
-					if let source = gameFilter.source {
-						value = SourceType(rawValue: source)?.name
-					}
-				case .tvRating:
-					if let tvRating = gameFilter.tvRating {
-						value = TVRating(rawValue: tvRating)?.name
-					}
-				case .countryOfOrigin:
-					if let countryOfOrigin = gameFilter.countryOfOrigin {
-						value = CountryOfOrigin.allCases.first { countryOfOriginCase in
-							countryOfOriginCase.value == countryOfOrigin
-						}?.name
-					}
-				case .editionCount:
-					value = gameFilter.editionCount
-				case .publicationSeason:
-					if let publicationSeason = gameFilter.publicationSeason {
-						value = SeasonOfYear(rawValue: publicationSeason)?.name
-					}
-				case .publicationDay:
-					if let publicationDay = gameFilter.publicationDay {
-						value = DayOfWeek(rawValue: publicationDay)?.name
-					}
-				case .duration:
-					if let duration = gameFilter.duration, duration != 0 {
-						value = duration / 60 // We get it in seconds, but present to the user in minutes
-					}
-				case .publishedAt:
-					if let publishedAt = gameFilter.publishedAt {
-						value = Date(timeIntervalSince1970: publishedAt)
-					}
-				case .isNSFW:
-					if let isNSFW = gameFilter.isNSFW {
-						value = isNSFW ? "Shown" : "Hidden"
-					}
-				default: break
-				}
-
-				filterableAttribute.value.selected = value
-
-				return .searchFilter(key: filterableAttribute.key, selectedValue: value)
-			}
-		case .literature(let literatureFilter):
-			itemKind = self.filterableAttributes.map { filterableAttribute in
-				var value: AnyHashable?
-
-				switch filterableAttribute.key {
-				case .mediaType:
-					if let mediaType = literatureFilter.mediaType {
-						value = LiteratureType(rawValue: mediaType)?.name
-					}
-				case .status:
-					if let status = literatureFilter.status {
-						value = LiteratureStatus(rawValue: status)?.name
-					}
-				case .source:
-					if let source = literatureFilter.source {
-						value = SourceType(rawValue: source)?.name
-					}
-				case .tvRating:
-					if let tvRating = literatureFilter.tvRating {
-						value = TVRating(rawValue: tvRating)?.name
-					}
-				case .countryOfOrigin:
-					if let countryOfOrigin = literatureFilter.countryOfOrigin {
-						value = CountryOfOrigin.allCases.first { countryOfOriginCase in
-							countryOfOriginCase.value == countryOfOrigin
-						}?.name
-					}
-				case .volumeCount:
-					value = literatureFilter.volumeCount
-				case .chapterCount:
-					value = literatureFilter.chapterCount
-				case .pageCount:
-					value = literatureFilter.pageCount
-				case .duration:
-					if let duration = literatureFilter.duration, duration != 0 {
-						value = duration / 60 // We get it in seconds, but present to the user in minutes
-					}
-				case .publicationSeason:
-					if let publicationSeason = literatureFilter.publicationSeason {
-						value = SeasonOfYear(rawValue: publicationSeason)?.name
-					}
-				case .publicationDay:
-					if let publicationDay = literatureFilter.publicationDay {
-						value = DayOfWeek(rawValue: publicationDay)?.name
-					}
-				case .publicationTime:
-					if let publicationTime = literatureFilter.publicationTime {
-						value = publicationTime.toDate(format: "HH:mm:ss")
-					}
-				case .startedAt:
-					if let startedAt = literatureFilter.startedAt {
-						value = Date(timeIntervalSince1970: startedAt)
-					}
-				case .endedAt:
-					if let endedAt = literatureFilter.endedAt {
-						value = Date(timeIntervalSince1970: endedAt)
-					}
-				case .isNSFW:
-					if let isNSFW = literatureFilter.isNSFW {
-						value = isNSFW ? "Shown" : "Hidden"
-					}
-				default: break
-				}
-
-				filterableAttribute.value.selected = value
-
-				return .searchFilter(key: filterableAttribute.key, selectedValue: value)
-			}
-		case .person(let personFilter):
-			itemKind = self.filterableAttributes.map { filterableAttribute in
-				var value: AnyHashable?
-
-				switch filterableAttribute.key {
-				case .birthDate:
-					if let birthDate = personFilter.birthDate {
-						value = Date(timeIntervalSince1970: birthDate)
-					}
-				case .deceasedDate:
-					if let deceasedDate = personFilter.deceasedDate {
-						value = Date(timeIntervalSince1970: deceasedDate)
-					}
-				case .astrologicalSign:
-					if let astrologicalSignValue = personFilter.astrologicalSign, let astrologicalSign = AstrologicalSign(rawValue: astrologicalSignValue) {
-						value = "\(astrologicalSign.title) \(astrologicalSign.emoji)"
-					}
-				default: break
-				}
-
-				filterableAttribute.value.selected = value
-
-				return .searchFilter(key: filterableAttribute.key, selectedValue: value)
-			}
-		case .show(let showFilter):
-			itemKind = self.filterableAttributes.map { filterableAttribute in
-				var value: AnyHashable?
-
-				switch filterableAttribute.key {
-				case .mediaType:
-					if let mediaType = showFilter.mediaType {
-						value = ShowType(rawValue: mediaType)?.name
-					}
-				case .status:
-					if let status = showFilter.status {
-						value = ShowStatus(rawValue: status)?.name
-					}
-				case .tvRating:
-					if let tvRating = showFilter.tvRating {
-						value = TVRating(rawValue: tvRating)?.name
-					}
-				case .countryOfOrigin:
-					if let countryOfOrigin = showFilter.countryOfOrigin {
-						value = CountryOfOrigin.allCases.first { countryOfOriginCase in
-							countryOfOriginCase.value == countryOfOrigin
-						}?.name
-					}
-				case .seasonCount:
-					value = showFilter.seasonCount
-				case .episodeCount:
-					value = showFilter.episodeCount
-				case .airDay:
-					if let airDay = showFilter.airDay {
-						value = DayOfWeek(rawValue: airDay)?.name
-					}
-				case .airTime:
-					if let airTime = showFilter.airTime {
-						value = airTime.toDate(format: "HH:mm:ss")
-					}
-				case .airSeason:
-					if let airSeason = showFilter.airSeason {
-						value = SeasonOfYear(rawValue: airSeason)?.name
-					}
-				case .duration:
-					if let duration = showFilter.duration, duration != 0 {
-						value = duration / 60 // We get it in seconds, but present to the user in minutes
-					}
-				case .startedAt:
-					if let startedAt = showFilter.startedAt {
-						value = Date(timeIntervalSince1970: startedAt)
-					}
-				case .endedAt:
-					if let endedAt = showFilter.endedAt {
-						value = Date(timeIntervalSince1970: endedAt)
-					}
-				case .source:
-					if let source = showFilter.source {
-						value = SourceType(rawValue: source)?.name
-					}
-				case .isNSFW:
-					if let isNSFW = showFilter.isNSFW {
-						value = isNSFW ? "Shown" : "Hidden"
-					}
-				default: break
-				}
-
-				filterableAttribute.value.selected = value
-
-				return .searchFilter(key: filterableAttribute.key, selectedValue: value)
-			}
-		case .studio(let studioFilter):
-			itemKind = self.filterableAttributes.map { filterableAttribute in
-				var value: AnyHashable?
-
-				switch filterableAttribute.key {
-				case .type:
-					if let type = studioFilter.type {
-						value = StudioType(rawValue: type)?.name
-					}
-				case .tvRating:
-					if let tvRating = studioFilter.tvRating {
-						value = TVRating(rawValue: tvRating)?.name
-					}
-				case .address:
-					value = studioFilter.address
-				case .foundedAt:
-					if let foundedAt = studioFilter.foundedAt {
-						value = Date(timeIntervalSince1970: foundedAt)
-					}
-				case .defunctAt:
-					if let defunctAt = studioFilter.defunctAt {
-						value = Date(timeIntervalSince1970: defunctAt)
-					}
-				case .isNSFW:
-					if let isNSFW = studioFilter.isNSFW {
-						value = isNSFW ? "Shown" : "Hidden"
-					}
-				default: break
-				}
-
-				filterableAttribute.value.selected = value
-
-				return .searchFilter(key: filterableAttribute.key, selectedValue: value)
-			}
-		default:
-			itemKind = self.filterableAttributes.map { filterableAttribute in
-				filterableAttribute.value.selected = nil
-
-				return .searchFilter(key: filterableAttribute.key, selectedValue: nil)
-			}
+		let itemKind: [SearchFilterDataSource.ItemKind] = self.descriptors.map { descriptor in
+			return .searchFilter(key: descriptor.key, selectedValue: self.draftValue(for: descriptor.key))
 		}
 
 		var snapshot = NSDiffableDataSourceSnapshot<SearchFilterDataSource.Section, SearchFilterDataSource.ItemKind>()
@@ -410,25 +49,24 @@ extension SearchFilterCollectionViewController {
 	}
 }
 
+// MARK: - Cell Registrations
 extension SearchFilterCollectionViewController {
 	func dateCellRegistration() ->
 	UICollectionView.CellRegistration<SearchFilterDateCollectionViewCell, SearchFilterDataSource.ItemKind> {
 		return UICollectionView.CellRegistration<SearchFilterDateCollectionViewCell, SearchFilterDataSource.ItemKind>(cellNib: SearchFilterDateCollectionViewCell.nib) { searchFilterDateCollectionViewCell, _, item in
 			switch item {
 			case .searchFilter(let key, _):
-				guard let attribute = self.attribute(for: key) else { return }
-				searchFilterDateCollectionViewCell.delegate = self
-				searchFilterDateCollectionViewCell.configureCell(title: attribute.name, selected: attribute.selected as? Date)
+				guard let descriptor = self.descriptor(for: key) else { return }
 
-				switch attribute.type {
-				case .date:
-					searchFilterDateCollectionViewCell.datePicker.datePickerMode = .date
-				case .dateTime:
-					searchFilterDateCollectionViewCell.datePicker.datePickerMode = .dateAndTime
-				case .time:
-					searchFilterDateCollectionViewCell.datePicker.datePickerMode = .time
-				default: break
+				var selected: Date?
+
+				if case .date(let timeInterval) = self.draftValue(for: key) {
+					selected = Date(timeIntervalSince1970: timeInterval)
 				}
+
+				searchFilterDateCollectionViewCell.delegate = self
+				searchFilterDateCollectionViewCell.configureCell(title: descriptor.title, selected: selected)
+				searchFilterDateCollectionViewCell.datePicker.datePickerMode = .date
 			}
 		}
 	}
@@ -438,28 +76,13 @@ extension SearchFilterCollectionViewController {
 		return UICollectionView.CellRegistration<SearchFilterSelectCollectionViewCell, SearchFilterDataSource.ItemKind>(cellNib: SearchFilterSelectCollectionViewCell.nib) { searchFilterSelectCollectionViewCell, _, item in
 			switch item {
 			case .searchFilter(let key, _):
-				guard let attribute = self.attribute(for: key) else { return }
-				guard let options = attribute.options?.map({ key, _ in
-					return key
-				}) else { return }
-				let selectedOption = attribute.options?.first { key, _ in
-					return key == attribute.selected as? String
-				}
+				guard let descriptor = self.descriptor(for: key) else { return }
+
+				let titles = self.optionTitles(for: descriptor)
+				let selected = self.selectedOptionTitle(for: descriptor)
 
 				searchFilterSelectCollectionViewCell.delegate = self
-				searchFilterSelectCollectionViewCell.configureCell(title: attribute.name, options: options, selected: selectedOption?.key)
-			}
-		}
-	}
-
-	func switchCellRegistration() ->
-	UICollectionView.CellRegistration<SearchFilterSwitchCollectionViewCell, SearchFilterDataSource.ItemKind> {
-		return UICollectionView.CellRegistration<SearchFilterSwitchCollectionViewCell, SearchFilterDataSource.ItemKind>(cellNib: SearchFilterSwitchCollectionViewCell.nib) { searchFilterSwitchCollectionViewCell, _, item in
-			switch item {
-			case .searchFilter(let key, _):
-				guard let attribute = self.attribute(for: key) else { return }
-				searchFilterSwitchCollectionViewCell.delegate = self
-				searchFilterSwitchCollectionViewCell.configureCell(title: attribute.name, selected: attribute.selected as? Bool)
+				searchFilterSelectCollectionViewCell.configureCell(title: descriptor.title, options: titles, selected: selected)
 			}
 		}
 	}
@@ -469,22 +92,128 @@ extension SearchFilterCollectionViewController {
 		return UICollectionView.CellRegistration<SearchFilterTextCollectionViewCell, SearchFilterDataSource.ItemKind>(cellNib: SearchFilterTextCollectionViewCell.nib) { searchFilterTextCollectionViewCell, _, item in
 			switch item {
 			case .searchFilter(let key, _):
-				guard let attribute = self.attribute(for: key) else { return }
+				guard let descriptor = self.descriptor(for: key) else { return }
+
+				var selected: String?
+
+				if case .text(let text) = self.draftValue(for: key) {
+					selected = text
+				}
+
 				searchFilterTextCollectionViewCell.delegate = self
-				searchFilterTextCollectionViewCell.configureCell(title: attribute.name, placeholder: nil, selected: attribute.selected as? String)
+				searchFilterTextCollectionViewCell.configureCell(title: descriptor.title, placeholder: nil, selected: selected)
 			}
+		}
+	}
+}
+
+// MARK: - Options
+extension SearchFilterCollectionViewController {
+	/// The titles the given filter offers.
+	///
+	/// - Parameter descriptor: The filter to read.
+	///
+	/// - Returns: The titles the control lists.
+	func optionTitles(for descriptor: FilterDescriptor) -> [String] {
+		switch descriptor.control {
+		case .numberPills(let options):
+			return options.map { $0.title }
+		case .textPills(let options):
+			return options.map { $0.title }
+		case .booleanPills(let trueTitle, let falseTitle):
+			return [trueTitle, falseTitle]
+		case .buckets(let buckets):
+			return buckets.map { $0.title }
+		case .duration(let durations):
+			return durations.map { Self.durationTitle(for: $0) }
+		case .date, .text:
+			return []
 		}
 	}
 
-	func stepperCellRegistration() ->
-	UICollectionView.CellRegistration<SearchFilterStepperCollectionViewCell, SearchFilterDataSource.ItemKind> {
-		return UICollectionView.CellRegistration<SearchFilterStepperCollectionViewCell, SearchFilterDataSource.ItemKind>(cellNib: SearchFilterStepperCollectionViewCell.nib) { searchFilterStepperCollectionViewCell, _, item in
-			switch item {
-			case .searchFilter(let key, _):
-				guard let attribute = self.attribute(for: key) else { return }
-				searchFilterStepperCollectionViewCell.delegate = self
-				searchFilterStepperCollectionViewCell.configureCell(title: attribute.name, selected: attribute.selected as? Double)
-			}
+	/// The title of the choice the user has made.
+	///
+	/// - Parameter descriptor: The filter to read.
+	///
+	/// - Returns: The title the control shows.
+	func selectedOptionTitle(for descriptor: FilterDescriptor) -> String? {
+		let value = self.draftValue(for: descriptor.key)
+
+		switch descriptor.control {
+		case .numberPills(let options):
+			guard case .selection(let selection) = value, let included = selection.included.first else { return nil }
+
+			return options.first { $0.value == included }?.title
+		case .textPills(let options):
+			guard case .textSelection(let selection) = value, let included = selection.included.first else { return nil }
+
+			return options.first { $0.value == included }?.title
+		case .booleanPills(let trueTitle, let falseTitle):
+			guard case .boolean(let boolean) = value else { return nil }
+
+			return boolean ? trueTitle : falseTitle
+		case .buckets(let buckets):
+			guard case .range(let range) = value else { return nil }
+
+			return buckets.first { $0.range == range }?.title
+		case .duration(let durations):
+			guard case .range(let range) = value, let maximum = range.maximum else { return nil }
+
+			return durations.first { Int($0) == maximum }.map { Self.durationTitle(for: $0) }
+		case .date, .text:
+			return nil
 		}
 	}
+
+	/// The value the given title writes.
+	///
+	/// - Parameters:
+	///    - title: The title the user picked.
+	///    - descriptor: The filter the title belongs to.
+	///
+	/// - Returns: The value to hold against the filter.
+	func value(forOptionTitle title: String, in descriptor: FilterDescriptor) -> FilterValue? {
+		switch descriptor.control {
+		case .numberPills(let options):
+			guard let option = options.first(where: { $0.title == title }) else { return nil }
+
+			return .selection(FilterSelection(option.value))
+		case .textPills(let options):
+			guard let option = options.first(where: { $0.title == title }) else { return nil }
+
+			return .textSelection(FilterSelection(option.value))
+		case .booleanPills(let trueTitle, _):
+			return .boolean(title == trueTitle)
+		case .buckets(let buckets):
+			guard let bucket = buckets.first(where: { $0.title == title }) else { return nil }
+
+			return .range(bucket.range)
+		case .duration(let durations):
+			guard let duration = durations.first(where: { Self.durationTitle(for: $0) == title }) else { return nil }
+
+			return .range(FilterRange(maximum: Int(duration)))
+		case .date, .text:
+			return nil
+		}
+	}
+
+	/// The title shown for the given duration.
+	///
+	/// - Parameter duration: The duration in seconds.
+	///
+	/// - Returns: The title the control shows.
+	static func durationTitle(for duration: TimeInterval) -> String {
+		let formatted = Self.durationFormatter.string(from: duration) ?? ""
+
+		return L10n.underDuration(formatted)
+	}
+
+	/// The formatter that writes a duration.
+	private static let durationFormatter: DateComponentsFormatter = {
+		let formatter = DateComponentsFormatter()
+		formatter.allowedUnits = [.hour, .minute]
+		formatter.unitsStyle = .abbreviated
+		formatter.zeroFormattingBehavior = .dropAll
+		return formatter
+	}()
 }
