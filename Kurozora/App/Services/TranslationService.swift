@@ -23,6 +23,15 @@ final class TranslationService {
 	/// The shared feed translation service.
 	static let shared = TranslationService()
 
+	/// Whether the device can translate on device.
+	static let isSupported: Bool = {
+		#if targetEnvironment(simulator)
+		return false
+		#else
+		return true
+		#endif
+	}()
+
 	/// The languages the on-device models can translate.
 	private var supportedLanguages: [Locale.Language] = []
 
@@ -79,6 +88,7 @@ final class TranslationService {
 	///
 	/// - Returns: The state to render.
 	func state(for content: TranslatableContent) -> State {
+		guard Self.isSupported else { return .unavailable }
 		guard let sourceLanguage = self.sourceLanguage(for: content) else { return .unavailable }
 
 		self.repairStrandedTranslation(for: content)
@@ -107,6 +117,8 @@ final class TranslationService {
 	///
 	/// - Parameter content: The content to toggle.
 	func toggleTranslation(for content: TranslatableContent) {
+		guard Self.isSupported else { return }
+
 		if self.revealedIdentities.contains(content.translationIdentity) {
 			self.revealedIdentities.remove(content.translationIdentity)
 			self.postUpdate(for: [content.translationIdentity])
@@ -122,6 +134,8 @@ final class TranslationService {
 	///
 	/// - Parameter contents: The content about to be shown.
 	func prefetch(_ contents: [TranslatableContent]) {
+		guard Self.isSupported else { return }
+
 		for content in contents {
 			guard let sourceLanguage = self.sourceLanguage(for: content) else { continue }
 
@@ -238,6 +252,8 @@ extension TranslationService {
 
 	/// Loads the languages the on-device models cover.
 	private func loadSupportedLanguages() {
+		guard Self.isSupported else { return }
+
 		Task { [weak self] in
 			let languages = await LanguageAvailability().supportedLanguages
 			guard let self = self else { return }
