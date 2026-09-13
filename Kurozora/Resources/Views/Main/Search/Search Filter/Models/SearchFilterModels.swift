@@ -11,11 +11,21 @@ import UIKit
 
 enum SearchFilterDataSource {
 	enum Section: nonisolated Equatable, nonisolated Hashable {
-		case main
+		/// A filter and the control it is set with.
+		case filter(FilterKey)
+
+		/// The card holding every filter presented as a row.
+		case details
 	}
 
 	enum ItemKind: nonisolated Hashable {
-		/// A filter row, identified by the attribute's key and its current value.
-		case searchFilter(key: FilterKey, selectedValue: AnyHashable?)
+		/// A single pill within a filter.
+		case pill(key: FilterKey, index: Int, state: FilterSelectionState)
+
+		/// A single duration within a filter.
+		case duration(key: FilterKey, index: Int, isSelected: Bool)
+
+		/// A filter presented as a row within the details card.
+		case row(key: FilterKey, selectedValue: AnyHashable?, position: GroupedRowPosition)
 	}
 }

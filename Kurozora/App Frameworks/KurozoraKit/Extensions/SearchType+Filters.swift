@@ -270,8 +270,7 @@ private extension SearchType {
 	/// Determines whether to include NSFW filters.
 	func includeNSFW() -> Bool {
 		guard let preferredTVRating = User.current?.attributes.preferredTVRating else { return false }
-		guard let tvRating = TVRating(rawValue: preferredTVRating) else { return false }
 
-		return tvRating.isNSFW
+		return TVRating.includesNSFW(preferredTVRating)
 	}
 }

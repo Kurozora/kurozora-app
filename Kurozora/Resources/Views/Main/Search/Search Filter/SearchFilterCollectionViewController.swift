@@ -66,6 +66,7 @@ class SearchFilterCollectionViewController: KCollectionViewController {
 		}
 
 		self.draft = self.filter?.values ?? [:]
+		self.updateResetAvailability()
 
 		self.configureDataSource()
 		self.updateDataSource()
@@ -157,6 +158,34 @@ class SearchFilterCollectionViewController: KCollectionViewController {
 		}
 	}
 
+	/// Presents a date picker for the given filter.
+	///
+	/// - Parameter descriptor: The filter the picker sets.
+	func presentDatePicker(for descriptor: FilterDescriptor) {
+		let searchFilterDatePickerViewController = SearchFilterDatePickerViewController()
+		searchFilterDatePickerViewController.filterTitle = descriptor.title
+
+		if case .date(let timeInterval) = self.draftValue(for: descriptor.key) {
+			searchFilterDatePickerViewController.selectedDate = Date(timeIntervalSince1970: timeInterval)
+		}
+
+		searchFilterDatePickerViewController.dateHandler = { [weak self] date in
+			guard let self = self else { return }
+
+			self.setDraftValue(date.map { .date($0.timeIntervalSince1970) }, for: descriptor.key)
+			self.updateDataSource()
+		}
+
+		let kNavigationController = KNavigationController(rootViewController: searchFilterDatePickerViewController)
+
+		if let sheetPresentationController = kNavigationController.sheetPresentationController {
+			sheetPresentationController.detents = [.medium()]
+			sheetPresentationController.prefersGrabberVisible = true
+		}
+
+		self.present(kNavigationController, animated: true)
+	}
+
 	private func resetButtonPressed() {
 		self.filter = nil
 		self.draft = [:]
@@ -173,10 +202,12 @@ extension SearchFilterCollectionViewController: SearchFilterBaseCollectionViewCe
 		guard let itemKind = self.dataSource.itemIdentifier(for: indexPath) else { return }
 
 		switch itemKind {
-		case .searchFilter(let key, _):
+		case .row(let key, _, _):
 			guard let descriptor = self.descriptor(for: key) else { return }
 
 			self.setDraftValue(self.draftValue(from: value, for: descriptor), for: key)
+		case .pill, .duration:
+			break
 		}
 	}
 

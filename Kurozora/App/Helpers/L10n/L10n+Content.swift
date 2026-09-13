@@ -2306,6 +2306,48 @@ extension L10n {
 			duration
 		)
 	}
+	/// The value shown for a search filter the user has left unset.
+	///
+	/// - Tag: L10n-filterAny
+	static var filterAny: String {
+		L10n.resolve {
+			String(
+                localized: "Any",
+                table: "Content",
+                bundle: LanguageManager.shared.bundle,
+                locale: LanguageManager.shared.locale,
+                comment: "The value shown for a search filter the user has left unset."
+            )
+		}
+	}
+	/// The action that opens a date picker for a search filter.
+	///
+	/// - Tag: L10n-chooseDate
+	static var chooseDate: String {
+		L10n.resolve {
+			String(
+                localized: "Choose Date…",
+                table: "Content",
+                bundle: LanguageManager.shared.bundle,
+                locale: LanguageManager.shared.locale,
+                comment: "The action that opens a date picker for a search filter."
+            )
+		}
+	}
+	/// Header shown above the durations a filter offers.
+	///
+	/// - Tag: L10n-durationInUnder
+	static var durationInUnder: String {
+		L10n.resolve {
+			String(
+                localized: "Duration in Under",
+                table: "Content",
+                bundle: LanguageManager.shared.bundle,
+                locale: LanguageManager.shared.locale,
+                comment: "The header above the durations a search filter offers. Reads as a sentence with the option below it, such as 'Duration in under 30 min'."
+            )
+		}
+	}
 	/// The 'Late Night' search filter option.
 	///
 	/// - Tag: L10n-dayPartLateNight

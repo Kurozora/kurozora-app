@@ -102,6 +102,12 @@ class SearchResultsCollectionViewController: KCollectionViewController, SectionF
 	/// The search filters applied to the respective search type
 	var searchFilters: [SearchType: SearchFilter?] = [:]
 
+	/// The row of chips showing the applied filters.
+	let filterChipsView = KFilterChipsView()
+
+	/// The choices the chips stand for, in display order.
+	var appliedFilterChips: [FilterChip] = []
+
 	/// Per-search-type model caches.
 	private var cachesByType: [SearchType: [IndexPath: KurozoraItem]] = [:]
 
@@ -455,6 +461,11 @@ class SearchResultsCollectionViewController: KCollectionViewController, SectionF
 		self.kSearchController.searchBar.chipsView.chipSelectedHandler = { [weak self] index in
 			guard let self = self else { return }
 			self.selectSearchType(at: index)
+		}
+
+		self.filterChipsView.chipRemovedHandler = { [weak self] index in
+			guard let self = self else { return }
+			self.removeFilterChip(at: index)
 		}
 	}
 
@@ -1161,12 +1172,10 @@ extension SearchResultsCollectionViewController {
 			self.kSearchController.searchBar.showsBookmarkButton = false
 		default:
 			self.kSearchController.searchBar.showsBookmarkButton = true
-			if self.searchFilters[searchType] != nil {
-				self.kSearchController.searchBar.setImage(UIImage(systemName: "line.3.horizontal.decrease.circle.fill"), for: .bookmark, state: .normal)
-			} else {
-				self.kSearchController.searchBar.setImage(UIImage(systemName: "line.3.horizontal.decrease.circle"), for: .bookmark, state: .normal)
-			}
+			self.refreshFilterBarButtonImage(for: searchType)
 		}
+
+		self.refreshFilterChips()
 
 		self.updateDataSource()
 
@@ -1542,11 +1551,12 @@ extension SearchResultsCollectionViewController: SearchFilterCollectionViewContr
 		guard let searchScope = SearchScope(rawValue: self.kSearchController.searchBar.selectedScopeButtonIndex) else { return }
 		guard let searchType = self.searchTypes[safe: self.currentIndex] else { return }
 
-		self.searchFilters[searchType] = filter
+		self.searchFilters[searchType] = filter.isEmpty ? nil : filter
 
 		self.performSearch(with: self.searchQuery, in: searchScope, for: [searchType], with: filter, next: nil, resettingResults: true)
 
-		self.kSearchController.searchBar.setImage(UIImage(systemName: "line.3.horizontal.decrease.circle.fill"), for: .bookmark, state: .normal)
+		self.refreshFilterChips()
+		self.refreshFilterBarButtonImage(for: searchType)
 	}
 
 	func searchFilterCollectionViewControllerDidReset(_ searchFilterCollectionViewController: SearchFilterCollectionViewController) {
@@ -1554,7 +1564,8 @@ extension SearchResultsCollectionViewController: SearchFilterCollectionViewContr
 
 		self.searchFilters[searchType] = nil
 
-		self.kSearchController.searchBar.setImage(UIImage(systemName: "line.3.horizontal.decrease.circle"), for: .bookmark, state: .normal)
+		self.refreshFilterChips()
+		self.refreshFilterBarButtonImage(for: searchType)
 	}
 
 	func searchFilterCollectionViewControllerDidCancel(_ searchFilterCollectionViewController: SearchFilterCollectionViewController) {
