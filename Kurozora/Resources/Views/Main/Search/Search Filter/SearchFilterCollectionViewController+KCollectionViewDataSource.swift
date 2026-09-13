@@ -170,7 +170,7 @@ extension SearchFilterCollectionViewController {
 				case .countryOfOrigin:
 					if let countryOfOrigin = gameFilter.countryOfOrigin {
 						value = CountryOfOrigin.allCases.first { countryOfOriginCase in
-							countryOfOriginCase.name == countryOfOrigin
+							countryOfOriginCase.value == countryOfOrigin
 						}?.name
 					}
 				case .editionCount:
@@ -226,7 +226,7 @@ extension SearchFilterCollectionViewController {
 				case .countryOfOrigin:
 					if let countryOfOrigin = literatureFilter.countryOfOrigin {
 						value = CountryOfOrigin.allCases.first { countryOfOriginCase in
-							countryOfOriginCase.name == countryOfOrigin
+							countryOfOriginCase.value == countryOfOrigin
 						}?.name
 					}
 				case .volumeCount:
@@ -314,7 +314,7 @@ extension SearchFilterCollectionViewController {
 				case .countryOfOrigin:
 					if let countryOfOrigin = showFilter.countryOfOrigin {
 						value = CountryOfOrigin.allCases.first { countryOfOriginCase in
-							countryOfOriginCase.name == countryOfOrigin
+							countryOfOriginCase.value == countryOfOrigin
 						}?.name
 					}
 				case .seasonCount:

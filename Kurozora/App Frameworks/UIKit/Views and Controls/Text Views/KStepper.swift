@@ -76,7 +76,9 @@ protocol KStepperDelegate: AnyObject {
 				self.updateValueTextField()
 			}
 
-			if self.isContinuous {
+			self.updateButtonEnabledState()
+
+			if self.isContinuous, self.reportsValueChanges {
 				self.sendActions(for: .valueChanged)
 				self.delegate?.kStepper(self, valueChanged: self.value)
 			}
@@ -147,6 +149,9 @@ protocol KStepperDelegate: AnyObject {
 		}
 	}
 
+	/// Whether a change to [value](x-source-tag://KStepper-value) reaches the target and the delegate.
+	private var reportsValueChanges = true
+
 	private var repeatTimer: Timer?
 
 	// MARK: - Initializers
@@ -174,6 +179,18 @@ protocol KStepperDelegate: AnyObject {
 		MainActor.assumeIsolated {
 			self.updateValueTextField()
 		}
+	}
+
+	// MARK: - Functions
+	/// Sets the stepper's value.
+	///
+	/// - Parameters:
+	///    - value: The value to display.
+	///    - notify: Whether the change reaches the target and the delegate.
+	func setValue(_ value: Double, notify: Bool) {
+		self.reportsValueChanges = notify
+		self.value = value
+		self.reportsValueChanges = true
 	}
 }
 

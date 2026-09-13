@@ -15,9 +15,9 @@ class SearchFilterStepperCollectionViewCell: SearchFilterBaseCollectionViewCell 
 	// MARK: - Functions
 	func configureCell(title: String?, selected: Double?) {
 		super.configureCell(title: title)
-		self.stepper.maximumValue = 100000
 
-		self.stepper.value = selected ?? 0
+		self.stepper.maximumValue = 100000
+		self.stepper.setValue(selected ?? 0, notify: false)
 	}
 
 	// MARK: - IBactions

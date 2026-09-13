@@ -298,6 +298,8 @@ class SearchFilterCollectionViewController: KCollectionViewController {
 				case .duration:
 					if let selected = value.selected as? Double {
 						duration = Int(selected) * 60
+					} else {
+						duration = nil
 					}
 				case .isFiller:
 					isFiller = (value.options?.first { key, _ in
@@ -386,6 +388,8 @@ class SearchFilterCollectionViewController: KCollectionViewController {
 				case .duration:
 					if let selected = value.selected as? Double {
 						duration = Int(selected) * 60
+					} else {
+						duration = nil
 					}
 				case .publishedAt:
 					publishedAt = (value.selected as? Date)?.timeIntervalSince1970
@@ -469,6 +473,8 @@ class SearchFilterCollectionViewController: KCollectionViewController {
 				case .duration:
 					if let selected = value.selected as? Double {
 						duration = Int(selected) * 60
+					} else {
+						duration = nil
 					}
 				case .startedAt:
 					startedAt = (value.selected as? Date)?.timeIntervalSince1970
@@ -590,6 +596,8 @@ class SearchFilterCollectionViewController: KCollectionViewController {
 				case .duration:
 					if let selected = value.selected as? Double {
 						duration = Int(selected) * 60
+					} else {
+						duration = nil
 					}
 				case .isNSFW:
 					isNSFW = (value.options?.first { key, _ in
