@@ -47,6 +47,9 @@ enum TVRating: Int, CaseIterable {
 		}
 	}
 
+	/// The preferred TV rating that leaves everything unrestricted.
+	static let unrestricted = -1
+
 	/// Whether a TV rating is not safe for work.
 	var isNSFW: Bool {
 		switch self {
@@ -61,5 +64,19 @@ enum TVRating: Int, CaseIterable {
 		case .r18:
 			return true
 		}
+	}
+
+	// MARK: - Functions
+	/// Whether the given preferred TV rating reaches NSFW content.
+	///
+	/// - Parameter preferredTVRating: The rating the user picked.
+	///
+	/// - Returns: `true` when the rating reaches NSFW content.
+	static func includesNSFW(_ preferredTVRating: Int) -> Bool {
+		if preferredTVRating == Self.unrestricted {
+			return true
+		}
+
+		return TVRating(rawValue: preferredTVRating)?.isNSFW == true
 	}
 }
