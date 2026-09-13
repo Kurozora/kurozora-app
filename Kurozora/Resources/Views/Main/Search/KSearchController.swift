@@ -18,7 +18,11 @@ class KSearchController: UISearchController {
 	}
 
 	// MARK: - Properties
-	weak var viewController: SearchResultsCollectionViewController?
+	weak var viewController: SearchResultsCollectionViewController? {
+		didSet {
+			self.configureSearchBar()
+		}
+	}
 	var searchScope: SearchScope = .kurozora
 
 	// MARK: - Initializers
@@ -41,6 +45,16 @@ class KSearchController: UISearchController {
 	override func viewDidLoad() {
 		super.viewDidLoad()
 
+		self.configureSearchBar()
+
+		if #available(iOS 16.0, *) {
+			self.obscuresBackgroundDuringPresentation = false
+		}
+	}
+
+	// MARK: - Functions
+	/// Applies the search bar's appearance for the hosting view controller.
+	private func configureSearchBar() {
 		self.searchBar.delegate = self.viewController
 
 		if let viewController = self.viewController {
@@ -75,10 +89,6 @@ class KSearchController: UISearchController {
 		self.searchBar.selectedScopeButtonIndex = self.searchScope.rawValue
 		self.searchBar.searchTextField.theme_textColor = KThemePicker.textColor.rawValue
 		self.searchBar.searchTextField.theme_tokenBackgroundColor = KThemePicker.tintedBackgroundColor.rawValue
-
-		if #available(iOS 16.0, *) {
-			self.obscuresBackgroundDuringPresentation = false
-		}
 	}
 }
 
