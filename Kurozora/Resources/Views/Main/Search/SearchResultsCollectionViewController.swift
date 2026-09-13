@@ -50,10 +50,6 @@ class SearchResultsCollectionViewController: KCollectionViewController, SectionF
 		case usersListSegue
 	}
 
-	// MARK: - Views
-	/// The chips naming the types the results are split across.
-	let chipsView = KChipsView()
-
 	// MARK: - Properties
 	var filterBarButtonItem: UIBarButtonItem!
 	var currentIndex: Int = 0
@@ -210,7 +206,7 @@ class SearchResultsCollectionViewController: KCollectionViewController, SectionF
 	override func themeWillReload() {
 		super.themeWillReload()
 
-		self.chipsView.restyle()
+		self.kSearchController.searchBar.chipsView.restyle()
 	}
 
 	override func viewDidLoad() {
@@ -456,7 +452,7 @@ class SearchResultsCollectionViewController: KCollectionViewController, SectionF
 	}
 
 	func configureChipsView() {
-		self.chipsView.chipSelectedHandler = { [weak self] index in
+		self.kSearchController.searchBar.chipsView.chipSelectedHandler = { [weak self] index in
 			guard let self = self else { return }
 			self.selectSearchType(at: index)
 		}
@@ -554,7 +550,7 @@ class SearchResultsCollectionViewController: KCollectionViewController, SectionF
 					searchTypes = self.searchResults != nil ? types : [.shows, .literatures, .games]
 				}
 
-				self.searchLocalLibrary(types: searchTypes, query: query, userSlug: userSlug)
+				self.searchLocalLibrary(types: searchTypes, query: query, userSlug: userSlug, filter: filter)
 			}
 		}
 	}
@@ -565,7 +561,7 @@ class SearchResultsCollectionViewController: KCollectionViewController, SectionF
 	///    - types: The library kinds (`shows`/`literatures`/`games`) to search.
 	///    - query: The trimmed search query.
 	///    - userSlug: The signed-in user's account slug.
-	fileprivate func searchLocalLibrary(types: [SearchType], query: String, userSlug: String) {
+	fileprivate func searchLocalLibrary(types: [SearchType], query: String, userSlug: String, filter: SearchFilter?) {
 		self.searchQuery = query
 
 		let trimmed = query.trimmingCharacters(in: .whitespacesAndNewlines)
@@ -594,7 +590,8 @@ class SearchResultsCollectionViewController: KCollectionViewController, SectionF
 				sortType: .alphabetically,
 				sortOption: .ascending,
 				offset: 0,
-				limit: 100
+				limit: 100,
+				filter: filter ?? self.searchFilters[type] ?? nil
 			)
 
 			switch kind {
@@ -615,16 +612,11 @@ class SearchResultsCollectionViewController: KCollectionViewController, SectionF
 
 		if types.count > 1 {
 			self.searchTypes = self.determineLocalResultTypes()
-			#if targetEnvironment(macCatalyst)
-			self.navigationItem.rightBarButtonItems = [self.filterBarButtonItem]
-			#else
-			self.kSearchController.searchBar.showsBookmarkButton = true
-			#endif
 		} else {
 			self.searchTypes = types
 		}
 
-		self.setShowToolbar(!self.searchTypes.isEmpty)
+		self.setShowResultChrome(!self.searchTypes.isEmpty)
 
 		self.updateDataSource()
 		self._prefersActivityIndicatorHidden = true
@@ -697,7 +689,6 @@ class SearchResultsCollectionViewController: KCollectionViewController, SectionF
 				#if targetEnvironment(macCatalyst)
 				self.navigationItem.rightBarButtonItems = [self.filterBarButtonItem]
 				#else
-				self.kSearchController.searchBar.setShowsScope(false, animated: true)
 				self.kSearchController.searchBar.showsBookmarkButton = true
 				#endif
 				self.setShowToolbar(true)
@@ -898,6 +889,7 @@ class SearchResultsCollectionViewController: KCollectionViewController, SectionF
 		} else {
 			self.currentIndex = 0
 			self.searchResults = nil
+			self.searchTypes = []
 
 			self.characterIdentities = []
 			self.episodeIdentities = []
@@ -938,8 +930,34 @@ class SearchResultsCollectionViewController: KCollectionViewController, SectionF
 		}
 	}
 
+	/// Shows or hides the chrome that only makes sense alongside results.
+	///
+	/// - Parameter show: Whether results are on screen.
+	func setShowResultChrome(_ show: Bool) {
+		#if targetEnvironment(macCatalyst)
+		self.navigationItem.rightBarButtonItems = show ? [self.filterBarButtonItem] : []
+		#else
+		self.kSearchController.searchBar.showsBookmarkButton = show
+		#endif
+
+		self.setShowToolbar(show)
+
+		if #available(iOS 16.0, *) {
+			self.refreshTokenSuggestions()
+		}
+	}
+
 	func setShowToolbar(_ show: Bool) {
-		self.navigationItem.setBottomPalette(contentView: show ? self.chipsView : nil, height: KChipsView.paletteHeight)
+		let searchBar = self.kSearchController.searchBar
+
+		// The chips ride in the scope bar's row.
+		if show {
+			searchBar.setShowsScope(true, animated: false)
+		}
+
+		UIView.animate(withDuration: 0.25) {
+			searchBar.showsChips = show
+		}
 	}
 
 	func getSearchFilterCollectionViewController() -> SearchFilterCollectionViewController? {
@@ -1126,8 +1144,8 @@ extension SearchResultsCollectionViewController {
 
 		// A fresh search resets `currentIndex` to 0, so the chips are re-selected here to keep the
 		// highlighted chip and the rendered section in sync.
-		self.chipsView.titles = self.searchTypes.map(\.stringValue)
-		self.chipsView.selectChip(at: self.currentIndex, animated: false)
+		self.kSearchController.searchBar.chipsView.titles = self.searchTypes.map(\.stringValue)
+		self.kSearchController.searchBar.chipsView.selectChip(at: self.currentIndex, animated: false)
 	}
 
 	/// Switches the results to the search type at the given index.
@@ -1176,6 +1194,7 @@ extension SearchResultsCollectionViewController: UISearchBarDelegate {
 		guard !searchText.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty else {
 			self.resetSearchResults(for: nil)
 			self.updateDataSource()
+			self.setShowResultChrome(false)
 			return
 		}
 
@@ -1244,7 +1263,7 @@ extension SearchResultsCollectionViewController: UISearchBarDelegate {
 
 	func searchBarTextDidEndEditing(_ searchBar: UISearchBar) {
 		#if !targetEnvironment(macCatalyst)
-		if !self.isLibrarySurface {
+		if self.searchTypes.isEmpty {
 			searchBar.setShowsScope(false, animated: true)
 		}
 		#endif
@@ -1326,6 +1345,12 @@ extension SearchResultsCollectionViewController: UISearchBarDelegate {
 		guard let searchScope = SearchScope(rawValue: searchBar.selectedScopeButtonIndex) else { return }
 		guard let query = searchBar.text else { return }
 
+		// Library results arrive as the user types.
+		guard searchScope != .library else {
+			searchBar.resignFirstResponder()
+			return
+		}
+
 		var types: [SearchType] = []
 		if #available(iOS 16.0, *) {
 			types = self.typesFromTokens()
@@ -1343,22 +1368,12 @@ extension SearchResultsCollectionViewController: UISearchBarDelegate {
 		switch self.searchViewKind {
 		case .single(let type):
 			self.performSearch(with: "", in: .kurozora, for: [type], with: self.searchFilters[type] as? SearchFilter, next: nil)
-		case .multiple:
-			#if targetEnvironment(macCatalyst)
-			self.navigationItem.rightBarButtonItems = []
-			#else
-			searchBar.showsBookmarkButton = false
+		case .multiple, .library:
+			#if !targetEnvironment(macCatalyst)
+			searchBar.setShowsScope(false, animated: true)
 			#endif
-			self.setShowToolbar(false)
 			self.resetSearchResults(for: nil)
-		case .library:
-			#if targetEnvironment(macCatalyst)
-			self.navigationItem.rightBarButtonItems = []
-			#else
-			searchBar.showsBookmarkButton = false
-			#endif
-			self.setShowToolbar(false)
-			self.resetSearchResults(for: nil)
+			self.setShowResultChrome(false)
 		}
 	}
 }
@@ -1574,7 +1589,9 @@ extension SearchResultsCollectionViewController: UISearchResultsUpdating {
 
 		let types = self.tokenSuggestionTypes()
 		self.tokenSuggestionsViewController?.types = types
-		self.kSearchController.showsSearchResultsController = !types.isEmpty
+
+		// Results take the screen back from the suggestions.
+		self.kSearchController.showsSearchResultsController = !types.isEmpty && self.searchTypes.isEmpty
 	}
 
 	/// Inserts a token representing `type` and refreshes the suggestion list.

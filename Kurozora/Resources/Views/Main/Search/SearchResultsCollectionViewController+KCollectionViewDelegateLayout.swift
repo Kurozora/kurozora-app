@@ -125,6 +125,11 @@ extension SearchResultsCollectionViewController {
 				sectionLayout = Layouts.usersSection(section, columns: columns, layoutEnvironment: layoutEnvironment, isHorizontal: false)
 			}
 
+			// The first section clears the chips riding above it.
+			if section == 0 {
+				sectionLayout?.contentInsets.top = 20
+			}
+
 			if hasHeader {
 				// Add header supplementary view.
 				let headerFooterSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0), heightDimension: .estimated(50.0))

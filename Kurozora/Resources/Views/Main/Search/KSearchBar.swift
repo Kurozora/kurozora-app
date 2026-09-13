@@ -9,13 +9,23 @@
 import Obfuscation
 import UIKit
 
-/// A search bar that draws its own scope bar.
+/// A search bar that swaps its scope bar for a row of chips once a search has been run.
 class KSearchBar: UISearchBar {
 	// MARK: - Views
+	/// The chips shown in place of the scope bar.
+	let chipsView = KChipsView()
+
 	/// The stand-in for the scope bar UIKit draws.
 	private let scopeSegmentedControl = UISegmentedControl()
 
 	// MARK: - Properties
+	/// Whether the chips take the place of the scope bar.
+	var showsChips = false {
+		didSet {
+			self.layoutScopeViews()
+		}
+	}
+
 	override var scopeButtonTitles: [String]? {
 		didSet {
 			self.scopeSegmentedControl.segmentTitles = self.scopeButtonTitles ?? []
@@ -59,24 +69,41 @@ class KSearchBar: UISearchBar {
 	// MARK: - Functions
 	/// The shared init of the view.
 	private func sharedInit() {
+		self.chipsView.alpha = 0.0
 		self.scopeSegmentedControl.addTarget(self, action: #selector(self.scopeSegmentedControlDidChange(_:)), for: .valueChanged)
 	}
 
-	/// Moves the stand-in into the scope bar's container.
+	/// Moves the stand-in and the chips into the scope bar's container, which UIKit builds lazily.
 	private func attachScopeViews() {
 		self.systemScopeBar?.isHidden = true
 
 		guard let scopeBarContainerView = self.scopeBarContainerView else { return }
-		guard self.scopeSegmentedControl.superview !== scopeBarContainerView else { return }
 
-		scopeBarContainerView.addSubview(self.scopeSegmentedControl)
+		if self.scopeSegmentedControl.superview !== scopeBarContainerView {
+			scopeBarContainerView.addSubview(self.scopeSegmentedControl)
+		}
+
+		if self.chipsView.superview !== scopeBarContainerView {
+			scopeBarContainerView.addSubview(self.chipsView)
+		}
 	}
 
-	/// Places the scope stand-in over the scope bar.
+	/// Places the scope stand-in and the chips, sliding whichever is on its way out.
 	private func layoutScopeViews() {
-		guard let systemScopeBar = self.systemScopeBar else { return }
+		guard let scopeBarContainerView = self.scopeBarContainerView else { return }
 
-		self.scopeSegmentedControl.frame = systemScopeBar.frame
+		if let systemScopeBar = self.systemScopeBar {
+			self.scopeSegmentedControl.frame.size = systemScopeBar.frame.size
+			self.scopeSegmentedControl.frame.origin.x = systemScopeBar.frame.origin.x
+			self.scopeSegmentedControl.frame.origin.y = self.showsChips ? -systemScopeBar.frame.height : systemScopeBar.frame.origin.y
+		}
+
+		self.scopeSegmentedControl.alpha = self.showsChips ? 0.0 : 1.0
+
+		self.chipsView.frame.size = scopeBarContainerView.frame.size
+		self.chipsView.frame.origin.x = 0.0
+		self.chipsView.frame.origin.y = self.showsChips ? 0.0 : scopeBarContainerView.frame.height
+		self.chipsView.alpha = self.showsChips ? 1.0 : 0.0
 	}
 
 	/// Reports the stand-in's selection as a scope change.

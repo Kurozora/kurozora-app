@@ -27,14 +27,23 @@ extension SearchResultsCollectionViewController {
 		case .personIdentity:
 			guard let person: Person = self.fetchModel(at: indexPath) else { return }
 			self.show(.personDetailsSegue, sender: person)
-		case .showIdentity:
-			guard let show: Show = self.fetchModel(at: indexPath) else { return }
+		case .showIdentity(let identity):
+			guard let show: Show = self.fetchModel(at: indexPath) else {
+				self.show(ShowDetailsCollectionViewController()(with: identity.id), sender: nil)
+				return
+			}
 			self.show(.showDetailsSegue, sender: show)
-		case .literatureIdentity:
-			guard let literature: Literature = self.fetchModel(at: indexPath) else { return }
+		case .literatureIdentity(let identity):
+			guard let literature: Literature = self.fetchModel(at: indexPath) else {
+				self.show(LiteratureDetailsCollectionViewController()(with: identity.id), sender: nil)
+				return
+			}
 			self.show(.literatureDetailsSegue, sender: literature)
-		case .gameIdentity:
-			guard let game: Game = self.fetchModel(at: indexPath) else { return }
+		case .gameIdentity(let identity):
+			guard let game: Game = self.fetchModel(at: indexPath) else {
+				self.show(GameDetailsCollectionViewController()(with: identity.id), sender: nil)
+				return
+			}
 			self.show(.gameDetailsSegue, sender: game)
 		case .songIdentity:
 			guard let song: Song = self.fetchModel(at: indexPath) else { return }
@@ -134,14 +143,20 @@ extension SearchResultsCollectionViewController {
 			return (self.fetchModel(at: indexPath) as Episode?)?.contextMenuConfiguration(in: self, userInfo: ["indexPath": indexPath], sourceView: collectionViewCell?.contentView, barButtonItem: nil)
 		case .personIdentity:
 			return (self.fetchModel(at: indexPath) as Person?)?.contextMenuConfiguration(in: self, userInfo: ["indexPath": indexPath], sourceView: collectionViewCell?.contentView, barButtonItem: nil)
-		case .showIdentity:
-			guard let show: Show = self.fetchModel(at: indexPath) else { return nil }
+		case .showIdentity(let identity):
+			guard let show: Show = self.fetchModel(at: indexPath) else {
+				return self.libraryEntry(forTrackableID: identity.id.rawValue, kind: .shows)?.contextMenuConfiguration(in: self, userInfo: ["indexPath": indexPath], sourceView: collectionViewCell?.contentView, barButtonItem: nil)
+			}
 			return show.contextMenuConfiguration(in: self, userInfo: ["indexPath": indexPath], sourceView: collectionViewCell?.contentView, barButtonItem: nil)
-		case .literatureIdentity:
-			guard let literature: Literature = self.fetchModel(at: indexPath) else { return nil }
+		case .literatureIdentity(let identity):
+			guard let literature: Literature = self.fetchModel(at: indexPath) else {
+				return self.libraryEntry(forTrackableID: identity.id.rawValue, kind: .literatures)?.contextMenuConfiguration(in: self, userInfo: ["indexPath": indexPath], sourceView: collectionViewCell?.contentView, barButtonItem: nil)
+			}
 			return literature.contextMenuConfiguration(in: self, userInfo: ["indexPath": indexPath], sourceView: collectionViewCell?.contentView, barButtonItem: nil)
-		case .gameIdentity:
-			guard let game: Game = self.fetchModel(at: indexPath) else { return nil }
+		case .gameIdentity(let identity):
+			guard let game: Game = self.fetchModel(at: indexPath) else {
+				return self.libraryEntry(forTrackableID: identity.id.rawValue, kind: .games)?.contextMenuConfiguration(in: self, userInfo: ["indexPath": indexPath], sourceView: collectionViewCell?.contentView, barButtonItem: nil)
+			}
 			return game.contextMenuConfiguration(in: self, userInfo: ["indexPath": indexPath], sourceView: collectionViewCell?.contentView, barButtonItem: nil)
 		case .songIdentity:
 			guard
