@@ -28,4 +28,7 @@ nonisolated extension LocalSyncCursor {
 
 	/// The server wall-clock embedded into the cursor on the previous response.
 	@NSManaged var syncedAt: Date?
+
+	/// The shape of the sync payload the cursor's rows were applied from.
+	@NSManaged var payloadVersion: Int64
 }

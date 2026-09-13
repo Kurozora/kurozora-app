@@ -76,7 +76,7 @@ class LibraryBaseCollectionViewCell: UICollectionViewCell {
 	///    - showSelectionIcon: A boolean value that indicates whether the selection icon is visible.
 	func configure(using entry: LocalLibraryEntry, showSelectionIcon: Bool) {
 		self.showSelectionIcon = showSelectionIcon
-		self.primaryLabel.text = entry.title
+		self.primaryLabel.text = entry.trackable?.title
 		entry.posterImage(imageView: self.posterImageView)
 
 		switch entry.kind {

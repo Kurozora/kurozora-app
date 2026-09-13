@@ -30,16 +30,17 @@ class LibraryListCollectionViewCell: LibraryBaseCollectionViewCell {
 		self.informationLabel.text = entry.informationStringShort
 		self.estimatedAiringLabel.text = ""
 
-		let tagline = entry.tagline ?? ""
-		self.secondaryLabel.text = tagline.isEmpty ? entry.genresLocalized : tagline
+		let trackable = entry.trackable
+		let tagline = trackable?.tagline ?? ""
+		self.secondaryLabel.text = tagline.isEmpty ? trackable?.genresLocalized : tagline
 
 		let isAiring: Bool
 		switch entry.kind {
-		case .shows: isAiring = entry.statusName == "Currently Airing"
-		case .literatures, .games: isAiring = entry.statusName == "Currently Publishing"
+		case .shows: isAiring = trackable?.statusName == "Currently Airing"
+		case .literatures, .games: isAiring = trackable?.statusName == "Currently Publishing"
 		}
 
-		if isAiring, let airingDate = entry.airingDate, let durationCount = entry.durationCount {
+		if isAiring, let airingDate = trackable?.airingDate, let durationCount = trackable?.durationCount {
 			self.estimatedAiringLabel.startCountdown(to: airingDate, duration: durationCount.intValue)
 		}
 	}

@@ -12,6 +12,9 @@ import KurozoraKit
 @objc(LocalSyncCursor)
 class LocalSyncCursor: NSManagedObject {
 	// MARK: - Properties
+	/// The sync payload shape the client reads today.
+	static let currentPayloadVersion: Int64 = 1
+
 	/// The library kind this cursor tracks.
 	var kind: LibraryKind {
 		get { LibraryKind(rawValue: Int(self.kindRaw)) ?? .shows }
@@ -42,6 +45,7 @@ class LocalSyncCursor: NSManagedObject {
 		cursor.cursorID = nil
 		cursor.cursorUpdatedAt = nil
 		cursor.syncedAt = nil
+		cursor.payloadVersion = Self.currentPayloadVersion
 		return cursor
 	}
 

@@ -85,7 +85,7 @@ import UIKit
 		// Create "copy" action
 		let copyTitleAction = UIAction(title: L10n.copyTitle, image: UIImage(systemName: "document.on.document.fill")) { [weak self] _ in
 			guard let self = self else { return }
-			UIPasteboard.general.string = self.title
+			UIPasteboard.general.string = self.trackable?.title
 		}
 		let copyLinkAction = UIAction(title: L10n.copyLink, image: UIImage(systemName: "document.on.document.fill")) { [weak self] _ in
 			guard let self = self else { return }
@@ -133,7 +133,7 @@ import UIKit
 	///
 	/// - NOTE: If both `sourceView` and `barButtonItem` are provided, `sourceView` takes precedence.
 	func openShareSheet(on viewController: UIViewController? = UIApplication.topViewController, sourceView: UIView?, barButtonItem: UIBarButtonItem?) {
-		let entryTitle = self.title ?? ""
+		let entryTitle = self.trackable?.title ?? ""
 		var activityItems: [Any] = []
 		activityItems.append(self.webpageURLString)
 		switch self.kind {

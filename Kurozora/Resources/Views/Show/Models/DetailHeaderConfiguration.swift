@@ -107,16 +107,18 @@ struct DetailHeaderConfiguration {
 	///
 	/// - Parameter entry: The cached library entry to present.
 	init(entry: LocalLibraryEntry) {
+		let trackable = entry.trackable
+
 		self.libraryKind = entry.kind
-		self.title = entry.title ?? ""
+		self.title = trackable?.title ?? ""
 		self.tags = entry.informationStringShort
-		self.statusName = entry.statusName
-		self.statusColorHex = AiringStatusStore.shared.colorHex(forStatusName: entry.statusName)
-		self.rank = entry.popularityRank?.intValue ?? 0
-		self.posterURLString = entry.posterURL ?? ""
-		self.posterBackgroundColorHex = entry.posterBackgroundColor
-		self.bannerURLString = entry.bannerURL ?? entry.posterURL ?? ""
-		self.bannerBackgroundColorHex = entry.bannerBackgroundColor ?? entry.posterBackgroundColor
+		self.statusName = trackable?.statusName
+		self.statusColorHex = AiringStatusStore.shared.colorHex(forStatusName: trackable?.statusName)
+		self.rank = trackable?.popularityRank?.intValue ?? 0
+		self.posterURLString = trackable?.posterURL ?? ""
+		self.posterBackgroundColorHex = trackable?.posterBackgroundColor
+		self.bannerURLString = trackable?.bannerURL ?? trackable?.posterURL ?? ""
+		self.bannerBackgroundColorHex = trackable?.bannerBackgroundColor ?? trackable?.posterBackgroundColor
 		self.trailerURLString = nil
 		self.synopsis = nil
 	}

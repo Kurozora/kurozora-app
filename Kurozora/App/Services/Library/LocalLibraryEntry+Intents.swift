@@ -16,7 +16,7 @@ extension LocalLibraryEntry {
 	/// The canonical webpage URL for the entry's catalog page; prefers slug, falls back
 	/// to the trackable identifier when no slug has been synced yet.
 	var webpageURLString: String {
-		let identifier = self.slug ?? self.trackableID
+		let identifier = self.trackable?.slug ?? self.trackableID
 		return "https://kurozora.app/\(self.kind.urlPathName)/\(identifier)"
 	}
 
@@ -32,7 +32,7 @@ extension LocalLibraryEntry {
 			activityType = .openGame
 		}
 
-		let entryTitle = self.title ?? ""
+		let entryTitle = self.trackable?.title ?? ""
 		let userActivity = NSUserActivity(activityType: activityType)
 		userActivity.contentAttributeSet = self.contentAttributeSet
 		userActivity.title = entryTitle
@@ -50,27 +50,28 @@ extension LocalLibraryEntry {
 
 	/// The metadata used to make the selected library entry searchable.
 	var contentAttributeSet: CSSearchableItemAttributeSet {
+		let trackable = self.trackable
 		let contentType: UTType
 		switch self.kind {
 		case .shows:
-			contentType = (self.mediaTypeName?.lowercased() == "movie") ? .movie : .audiovisualContent
+			contentType = (trackable?.mediaTypeName?.lowercased() == "movie") ? .movie : .audiovisualContent
 		case .literatures, .games:
 			contentType = .content
 		}
 
 		let attributeSet = CSSearchableItemAttributeSet(contentType: contentType)
-		attributeSet.title = self.title
-		attributeSet.contentDescription = self.tagline
-		if let genres = self.genresLocalized, !genres.isEmpty {
-			attributeSet.keywords = [self.title, genres].compactMap { $0 }
+		attributeSet.title = trackable?.title
+		attributeSet.contentDescription = trackable?.tagline
+		if let genres = trackable?.genresLocalized, !genres.isEmpty {
+			attributeSet.keywords = [trackable?.title, genres].compactMap { $0 }
 			attributeSet.genre = genres
-		} else if let title = self.title {
+		} else if let title = trackable?.title {
 			attributeSet.keywords = [title]
 		}
-		if let urlString = self.posterURL {
+		if let urlString = trackable?.posterURL {
 			attributeSet.thumbnailURL = URL(string: urlString)
 		}
-		if let score = self.publicRating {
+		if let score = trackable?.publicRating {
 			attributeSet.rating = score
 		}
 		attributeSet.startDate = self.startedAt

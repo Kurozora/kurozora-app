@@ -186,8 +186,8 @@ class BaseLockupCollectionViewCell: KCollectionViewCell {
 		self.libraryKind = entry.kind
 		self.hideSkeleton()
 
-		self.primaryLabel?.text = entry.title
-		self.secondaryLabel?.text = (entry.tagline ?? "").isEmpty ? entry.genresLocalized : entry.tagline
+		self.primaryLabel?.text = entry.trackable?.title
+		self.secondaryLabel?.text = (entry.trackable?.tagline ?? "").isEmpty ? entry.trackable?.genresLocalized : entry.trackable?.tagline
 
 		self.configureRank(nil)
 

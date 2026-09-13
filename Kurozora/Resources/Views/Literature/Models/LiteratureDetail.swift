@@ -371,9 +371,9 @@ extension LiteratureDetail {
 		func information(from entry: LocalLibraryEntry) -> String? {
 			switch self {
 			case .type:
-				return entry.mediaTypeName ?? "-"
+				return entry.trackable?.mediaTypeName ?? "-"
 			case .genres:
-				return entry.genresLocalized ?? "-"
+				return entry.trackable?.genresLocalized ?? "-"
 			case .duration:
 				return entry.durationString
 			case .publication:

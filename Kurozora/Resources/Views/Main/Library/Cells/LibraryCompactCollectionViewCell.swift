@@ -32,8 +32,8 @@ class LibraryCompactCollectionViewCell: LibraryBaseCollectionViewCell {
 	func configure(using entry: LocalLibraryEntry, showSelectionIcon: Bool, titleVisibility: LibraryCompactTitleVisibility) {
 		super.configure(using: entry, showSelectionIcon: showSelectionIcon)
 
-		let hasRealPoster = !(entry.posterURL?.isEmpty ?? true)
-		self.applyTitleVisibility(titleVisibility, hasRealPoster: hasRealPoster, title: entry.title)
+		let hasRealPoster = !(entry.trackable?.posterURL?.isEmpty ?? true)
+		self.applyTitleVisibility(titleVisibility, hasRealPoster: hasRealPoster, title: entry.trackable?.title)
 	}
 
 	// MARK: - Helpers

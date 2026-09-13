@@ -61,51 +61,9 @@ nonisolated extension LocalLibraryEntry {
 	/// The date the user set the reminder.
 	@NSManaged var remindedAt: Date?
 
-	/// The trackable's URL-safe slug, used to build canonical webpage links.
-	@NSManaged var slug: String?
-
-	/// The renderable title for the trackable, localised to the request's locale.
-	@NSManaged var title: String?
-
-	/// The locale-stable sort key for alphabetical ordering.
-	@NSManaged var sortTitle: String?
-
-	/// The trackable's tagline, or `nil` if absent.
-	@NSManaged var tagline: String?
-
-	/// The poster image URL, or `nil` if no poster exists.
-	@NSManaged var posterURL: String?
-
-	/// The poster placeholder background color, as a hex string.
-	@NSManaged var posterBackgroundColor: String?
-
-	/// The banner image URL, or `nil` if no banner exists.
-	@NSManaged var bannerURL: String?
-
-	/// The banner placeholder background color, as a hex string.
-	@NSManaged var bannerBackgroundColor: String?
-
-	/// The trackable's genres pre-joined into a localised display string.
-	@NSManaged var genresLocalized: String?
-
-	/// The trackable's status name (e.g. "Currently Airing"), localised.
-	@NSManaged var statusName: String?
-
-	/// The next broadcast or publication date, used for the on-cell countdown.
-	@NSManaged var airingDate: Date?
-
-	/// The countdown duration in seconds.
-	@NSManaged var durationCount: NSNumber?
-
-	/// The localised media-type label (e.g. "TV", "Movie", "Novel").
-	@NSManaged var mediaTypeName: String?
-
-	/// The popularity ranking of the trackable, lower is more popular.
-	@NSManaged var popularityRank: NSNumber?
-
-	/// The public average rating, used for the rating sort axis.
-	@NSManaged var publicRating: NSNumber?
-
 	/// The user's review of the trackable.
 	@NSManaged var review: LocalReview?
+
+	/// The show, literature or game the entry tracks.
+	@NSManaged var trackable: LocalTrackable?
 }

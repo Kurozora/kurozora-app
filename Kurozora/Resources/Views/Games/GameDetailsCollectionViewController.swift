@@ -108,13 +108,13 @@ class GameDetailsCollectionViewController: DetailsCollectionViewController, Sect
 	private var cachedMediaItems: [MediaItem] {
 		guard let libraryEntry = self.libraryEntry else { return [] }
 
-		let title = libraryEntry.title
+		let title = libraryEntry.trackable?.title
 		var items: [MediaItem] = []
 
-		if let posterURL = URL(string: libraryEntry.posterURL ?? "") {
+		if let posterURL = URL(string: libraryEntry.trackable?.posterURL ?? "") {
 			items.append(MediaItem(url: posterURL, type: .image, title: title, description: nil, author: nil, provider: nil, embedHTML: nil, extraInfo: nil))
 		}
-		if let bannerURL = URL(string: libraryEntry.bannerURL ?? "") {
+		if let bannerURL = URL(string: libraryEntry.trackable?.bannerURL ?? "") {
 			items.append(MediaItem(url: bannerURL, type: .image, title: title, description: nil, author: nil, provider: nil, embedHTML: nil, extraInfo: nil))
 		}
 
@@ -240,8 +240,8 @@ class GameDetailsCollectionViewController: DetailsCollectionViewController, Sect
 			} catch {
 				print(error.localizedDescription)
 				self.libraryEntry = self.cachedLibraryEntry(forTrackableID: gameIdentity.id.rawValue)
-				self.title = self.libraryEntry?.title
-				self.navigationTitleLabel.text = self.libraryEntry?.title
+				self.title = self.libraryEntry?.trackable?.title
+				self.navigationTitleLabel.text = self.libraryEntry?.trackable?.title
 				self._prefersActivityIndicatorHidden = true
 				self.updateDataSource()
 			}

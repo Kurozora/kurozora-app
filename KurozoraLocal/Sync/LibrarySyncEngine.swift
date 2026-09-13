@@ -39,7 +39,7 @@ actor LibrarySyncEngine {
 	/// becomes reachable again. Keyed by `(userSlug, kind)`.
 	private var pendingRetries: Set<String> = []
 
-	/// Keys whose next sync drops the cursor first, re-pulling the whole slice and sweeping stale rows.
+	/// Keys whose next sync drops the cursor first.
 	private var fullPullRequested: Set<String> = []
 
 	/// The earliest time a throttled user's pulls may resume.
@@ -77,6 +77,7 @@ actor LibrarySyncEngine {
 	/// - Parameter userSlug: The user's account slug.
 	func syncAll(forUserSlug userSlug: String) async {
 		self.installPathMonitorIfNeeded()
+		await self.repairCursorsIfNeeded(forUserSlug: userSlug)
 		await LibraryOutbox.shared.flush(force: true)
 
 		if let existing = self.syncAllInFlight[userSlug] {
@@ -118,7 +119,7 @@ actor LibrarySyncEngine {
 			LibraryKind.allCases
 				.flatMap { kind in
 					LibraryStore.shared.entries(forUserSlug: userSlug, kind: kind)
-						.flatMap { [$0.posterURL, $0.bannerURL] }
+						.flatMap { [$0.trackable?.posterURL, $0.trackable?.bannerURL] }
 				}
 				.compactMap(\.self)
 		}
@@ -174,7 +175,7 @@ actor LibrarySyncEngine {
 		}
 	}
 
-	/// Makes the kind's next sync drop its cursor, re-pull the whole slice, and remove local rows the server no longer has.
+	/// Makes the kind's next sync drop its cursor.
 	///
 	/// - Parameters:
 	///    - kind: The library kind to reconcile.
@@ -414,6 +415,54 @@ actor LibrarySyncEngine {
 		}
 	}
 
+	/// Drops every cursor while the account's local rows cannot be trusted.
+	///
+	/// - Parameter userSlug: The user's account slug.
+	private func repairCursorsIfNeeded(forUserSlug userSlug: String) async {
+		guard let reason = await self.fullPullReason(forUserSlug: userSlug) else { return }
+
+		syncLogger.info("REPAIR pulling the full library, \(reason, privacy: .public)")
+
+		for kind in LibraryKind.allCases {
+			await self.clearCursor(forUserSlug: userSlug, kind: kind)
+		}
+	}
+
+	/// Reports what makes the account's local rows untrustworthy.
+	///
+	/// - Parameter userSlug: The user's account slug.
+	///
+	/// - Returns: The reason a full pull is due.
+	private func fullPullReason(forUserSlug userSlug: String) async -> String? {
+		let context = PersistenceController.shared.container.newBackgroundContext()
+		context.automaticallyMergesChangesFromParent = true
+		context.mergePolicy = NSMergePolicy.mergeByPropertyObjectTrump
+
+		return await context.perform {
+			let entryRequest = LocalLibraryEntry.fetchRequest()
+			entryRequest.predicate = NSPredicate(format: "userSlug == %@ AND trackable == nil", userSlug)
+			entryRequest.fetchLimit = 1
+
+			if ((try? context.count(for: entryRequest)) ?? 0) > 0 {
+				return "entries are missing their trackable"
+			}
+
+			let cursorRequest = LocalSyncCursor.fetchRequest()
+			cursorRequest.predicate = NSPredicate(
+				format: "userSlug == %@ AND payloadVersion != %d",
+				userSlug,
+				LocalSyncCursor.currentPayloadVersion
+			)
+			cursorRequest.fetchLimit = 1
+
+			if ((try? context.count(for: cursorRequest)) ?? 0) > 0 {
+				return "the sync payload shape changed"
+			}
+
+			return nil
+		}
+	}
+
 	private func clearCursor(forUserSlug userSlug: String, kind: LibraryKind) async {
 		let context = PersistenceController.shared.container.newBackgroundContext()
 		context.automaticallyMergesChangesFromParent = true
@@ -439,7 +488,7 @@ actor LibrarySyncEngine {
 		}
 	}
 
-	/// Deletes the kind's local rows the full pull never returned, keeping offline placeholders whose add is still queued.
+	/// Deletes the kind's local rows the full pull never returned.
 	private func sweepEntries(notIn seenRemoteIDs: Set<String>, forUserSlug userSlug: String, kind: LibraryKind) async throws {
 		let context = PersistenceController.shared.container.newBackgroundContext()
 		context.automaticallyMergesChangesFromParent = true

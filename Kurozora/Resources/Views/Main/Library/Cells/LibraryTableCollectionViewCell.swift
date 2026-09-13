@@ -827,10 +827,10 @@ class LibraryTableCollectionViewCell: UICollectionViewCell {
 	/// - Returns: The rendered string.
 	static func text(for column: LibraryColumn, entry: LocalLibraryEntry) -> String {
 		switch column {
-		case .title: return entry.title ?? ""
-		case .type: return entry.mediaTypeName ?? ""
-		case .status: return entry.statusName ?? ""
-		case .genres: return entry.genresLocalized ?? ""
+		case .title: return entry.trackable?.title ?? ""
+		case .type: return entry.trackable?.mediaTypeName ?? ""
+		case .status: return entry.trackable?.statusName ?? ""
+		case .genres: return entry.trackable?.genresLocalized ?? ""
 		case .year, .studio, .tvRating, .episodes, .chapters, .volumes, .editions, .dateAdded, .progress: return ""
 		case .rating, .favorite, .reminder, .visibility: return ""
 		}

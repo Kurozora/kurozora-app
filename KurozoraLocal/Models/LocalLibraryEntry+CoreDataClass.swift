@@ -29,7 +29,7 @@ class LocalLibraryEntry: NSManagedObject {
 
 	/// The source URLs of the entry's stored art.
 	var artURLStrings: [String] {
-		return [self.posterURL, self.bannerURL].compactMap(\.self)
+		return self.trackable?.artURLStrings ?? []
 	}
 
 	// MARK: - Functions
@@ -72,21 +72,7 @@ class LocalLibraryEntry: NSManagedObject {
 
 		LocalReview.apply(row.review, to: entry, in: context)
 
-		entry.slug = row.slug
-		entry.title = row.title
-		entry.sortTitle = Self.normalizedSortKey(row.sortTitle ?? row.title)
-		entry.tagline = row.tagline
-		entry.posterURL = row.posterURL
-		entry.posterBackgroundColor = row.posterBackgroundColor
-		entry.bannerURL = row.bannerURL
-		entry.bannerBackgroundColor = row.bannerBackgroundColor
-		entry.genresLocalized = row.genresLocalized
-		entry.statusName = row.statusName
-		entry.airingDate = row.airingDate.map { Date(timeIntervalSince1970: TimeInterval($0)) }
-		entry.durationCount = row.durationCount.map { NSNumber(value: $0) }
-		entry.mediaTypeName = row.mediaTypeName
-		entry.popularityRank = row.popularityRank.map { NSNumber(value: $0) }
-		entry.publicRating = row.publicRating.map { NSNumber(value: $0) }
+		entry.trackable = LocalTrackable.apply(row, kind: kind, in: context)
 
 		Self.deleteLocalPlaceholder(userSlug: userSlug, kind: kind, trackableID: row.trackableID, excludingRemoteID: row.id, in: context)
 

@@ -111,8 +111,8 @@ final class LibraryStore {
 	///    - limit: The maximum number of matches to return after ranking.
 	///
 	/// - Returns: Matching `LocalLibraryEntry` rows in relevance-descending order.
-	func search(forUserSlug userSlug: String, kind: LibraryKind, query: String, status: LibraryStatus = .none, sortType: LibrarySortType = .none, sortOption: LibrarySortOption = .none, offset: Int = 0, limit: Int = 100) -> [LocalLibraryEntry] {
-		let matches = LibrarySearchIndex.shared.search(query, forUserSlug: userSlug, kind: kind, status: status)
+	func search(forUserSlug userSlug: String, kind: LibraryKind, query: String, status: LibraryStatus = .none, sortType: LibrarySortType = .none, sortOption: LibrarySortOption = .none, offset: Int = 0, limit: Int = 100, filter: SearchFilter? = nil) -> [LocalLibraryEntry] {
+		let matches = LibrarySearchIndex.shared.search(query, forUserSlug: userSlug, kind: kind, status: status, filter: filter)
 
 		return Array(matches.dropFirst(offset).prefix(limit))
 	}
@@ -146,15 +146,14 @@ final class LibraryStore {
 	///
 	/// - Returns: The counts keyed by localized media type name.
 	func mediaTypeCounts(forUserSlug userSlug: String, kind: LibraryKind, status: LibraryStatus) -> [String: Int] {
-		let request = NSFetchRequest<NSDictionary>(entityName: "LocalLibraryEntry")
+		let request = LocalLibraryEntry.fetchRequest()
 		request.predicate = Self.predicate(forUserSlug: userSlug, kind: kind, status: status)
-		request.resultType = .dictionaryResultType
-		request.propertiesToFetch = ["mediaTypeName"]
+		request.relationshipKeyPathsForPrefetching = ["trackable"]
 
 		do {
-			let rows = try self.viewContext.fetch(request)
-			return rows.reduce(into: [:]) { counts, row in
-				guard let name = row["mediaTypeName"] as? String, !name.isEmpty else { return }
+			let entries = try self.viewContext.fetch(request)
+			return entries.reduce(into: [:]) { counts, entry in
+				guard let name = entry.trackable?.mediaTypeName, !name.isEmpty else { return }
 				counts[name, default: 0] += 1
 			}
 		} catch {
@@ -184,14 +183,14 @@ final class LibraryStore {
 		case .none:
 			return [NSSortDescriptor(key: "updatedAt", ascending: false)]
 		case .alphabetically:
-			return [NSSortDescriptor(key: "sortTitle", ascending: option != .descending, selector: #selector(NSString.localizedCaseInsensitiveCompare(_:)))]
+			return [NSSortDescriptor(key: "trackable.sortTitle", ascending: option != .descending, selector: #selector(NSString.localizedCaseInsensitiveCompare(_:)))]
 		case .popularity:
 			// Lower rank is more popular.
-			return [NSSortDescriptor(key: "popularityRank", ascending: option != .least)]
+			return [NSSortDescriptor(key: "trackable.popularityRank", ascending: option != .least)]
 		case .date:
 			return [NSSortDescriptor(key: "createdAt", ascending: option == .oldest)]
 		case .rating:
-			return [NSSortDescriptor(key: "publicRating", ascending: option == .worst)]
+			return [NSSortDescriptor(key: "trackable.publicRating", ascending: option == .worst)]
 		case .myRating:
 			return [NSSortDescriptor(key: "review.score", ascending: option == .worst)]
 		}
@@ -459,21 +458,26 @@ final class LibraryStore {
 		entry.libraryStatus = status
 		entry.createdAt = now
 		entry.updatedAt = now
-		entry.title = seed.title
-		entry.sortTitle = seed.sortTitle
-		entry.tagline = seed.tagline
-		entry.posterURL = seed.posterURL
-		entry.posterBackgroundColor = seed.posterBackgroundColor
-		entry.bannerURL = seed.bannerURL
-		entry.bannerBackgroundColor = seed.bannerBackgroundColor
-		entry.genresLocalized = seed.genresLocalized
-		entry.statusName = seed.statusName
-		entry.airingDate = seed.airingDate
-		entry.durationCount = seed.durationCount.map { NSNumber(value: $0) }
-		entry.mediaTypeName = seed.mediaTypeName
-		entry.popularityRank = seed.popularityRank.map { NSNumber(value: $0) }
-		entry.publicRating = seed.publicRating.map { NSNumber(value: $0) }
-		entry.slug = seed.slug
+		let trackable = LocalTrackable.fetch(trackableID: trackableID, kind: kind, in: self.viewContext) ?? LocalTrackable(context: self.viewContext)
+		trackable.kindRaw = Int64(kind.rawValue)
+		trackable.trackableID = trackableID
+		trackable.title = seed.title
+		trackable.sortTitle = seed.sortTitle
+		trackable.tagline = seed.tagline
+		trackable.posterURL = seed.posterURL
+		trackable.posterBackgroundColor = seed.posterBackgroundColor
+		trackable.bannerURL = seed.bannerURL
+		trackable.bannerBackgroundColor = seed.bannerBackgroundColor
+		trackable.genresLocalized = seed.genresLocalized
+		trackable.statusName = seed.statusName
+		trackable.airingDate = seed.airingDate
+		trackable.durationCount = seed.durationCount.map { NSNumber(value: $0) }
+		trackable.mediaTypeName = seed.mediaTypeName
+		trackable.popularityRank = seed.popularityRank.map { NSNumber(value: $0) }
+		trackable.publicRating = seed.publicRating.map { NSNumber(value: $0) }
+		trackable.slug = seed.slug
+		entry.trackable = trackable
+
 		PersistenceController.shared.save(self.viewContext)
 		return true
 	}
@@ -521,6 +525,7 @@ final class LibraryStore {
 			for cursor in try self.viewContext.fetch(cursorRequest) {
 				self.viewContext.delete(cursor)
 			}
+			self.deleteOrphanedTrackables()
 			PersistenceController.shared.save(self.viewContext)
 		} catch {
 			storeLogger.error("Clear failed: \(error.localizedDescription)")
@@ -532,5 +537,17 @@ final class LibraryStore {
 		self.overlayCache = self.overlayCache.filter { !$0.key.hasPrefix(prefix) }
 
 		LibrarySearchIndex.shared.clear(forUserSlug: userSlug)
+	}
+
+	/// Removes the trackables no account keeps an entry for.
+	private func deleteOrphanedTrackables() {
+		let request = LocalTrackable.fetchRequest()
+		request.predicate = NSPredicate(format: "entries.@count == 0")
+
+		guard let orphaned = try? self.viewContext.fetch(request) else { return }
+
+		for trackable in orphaned {
+			self.viewContext.delete(trackable)
+		}
 	}
 }

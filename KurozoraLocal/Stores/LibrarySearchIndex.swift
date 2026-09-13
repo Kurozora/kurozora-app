@@ -33,6 +33,9 @@ final class LibrarySearchIndex {
 	/// The relevance awarded to a token the entry extends.
 	private static let prefixQuality = 200
 
+	/// The relevance awarded to a token the entry contains.
+	private static let containsQuality = 150
+
 	/// The relevance awarded to a token one edit away.
 	private static let typoQuality = 100
 
@@ -70,9 +73,6 @@ final class LibrarySearchIndex {
 		/// The entries every token appears in.
 		var postings: [String: [Posting]] = [:]
 
-		/// The indexed tokens grouped by their first character.
-		var tokensByFirstCharacter: [String: Set<String>] = [:]
-
 		// MARK: - Functions
 		/// Indexes the given entry.
 		///
@@ -80,11 +80,12 @@ final class LibrarySearchIndex {
 		mutating func insert(_ entry: LocalLibraryEntry) {
 			self.remove(entry.objectID)
 
+			let trackable = entry.trackable
 			let fields: [(String?, Int)] = [
-				(entry.title, LibrarySearchIndex.titleWeight),
-				(entry.sortTitle, LibrarySearchIndex.sortTitleWeight),
-				(entry.tagline, LibrarySearchIndex.taglineWeight),
-				(entry.genresLocalized, LibrarySearchIndex.genresWeight)
+				(trackable?.title, LibrarySearchIndex.titleWeight),
+				(trackable?.sortTitle, LibrarySearchIndex.sortTitleWeight),
+				(trackable?.tagline, LibrarySearchIndex.taglineWeight),
+				(trackable?.genresLocalized, LibrarySearchIndex.genresWeight)
 			]
 			var indexedTokens: Set<String> = []
 
@@ -94,7 +95,6 @@ final class LibrarySearchIndex {
 				for (position, token) in LibrarySearchIndex.tokens(in: text).enumerated() {
 					self.postings[token, default: []].append(Posting(objectID: entry.objectID, fieldWeight: fieldWeight, position: position))
 					indexedTokens.insert(token)
-					self.tokensByFirstCharacter[String(token.prefix(1)), default: []].insert(token)
 				}
 			}
 
@@ -102,8 +102,8 @@ final class LibrarySearchIndex {
 
 			self.documents[entry.objectID] = Document(
 				kindRaw: entry.kindRaw,
-				popularityRank: entry.popularityRank?.intValue ?? Int.max,
-				sortTitle: entry.sortTitle ?? entry.title ?? "",
+				popularityRank: trackable?.popularityRank?.intValue ?? Int.max,
+				sortTitle: trackable?.sortTitle ?? trackable?.title ?? "",
 				tokens: indexedTokens
 			)
 		}
@@ -120,7 +120,6 @@ final class LibrarySearchIndex {
 				guard self.postings[token]?.isEmpty == true else { continue }
 
 				self.postings.removeValue(forKey: token)
-				self.tokensByFirstCharacter[String(token.prefix(1))]?.remove(token)
 			}
 		}
 	}
@@ -160,9 +159,10 @@ final class LibrarySearchIndex {
 	///    - userSlug: The user's account slug.
 	///    - kind: The library kind to search.
 	///    - status: The status to filter by.
+	///    - filter: The filter the user applied.
 	///
 	/// - Returns: The matching entries, most relevant first.
-	func search(_ query: String, forUserSlug userSlug: String, kind: LibraryKind, status: LibraryStatus) -> [LocalLibraryEntry] {
+	func search(_ query: String, forUserSlug userSlug: String, kind: LibraryKind, status: LibraryStatus, filter: SearchFilter? = nil) -> [LocalLibraryEntry] {
 		let queryTokens = Self.tokens(in: query)
 		guard !queryTokens.isEmpty else { return [] }
 
@@ -197,6 +197,7 @@ final class LibrarySearchIndex {
 		return ranked.compactMap { objectID in
 			guard let entry = try? self.viewContext.existingObject(with: objectID) as? LocalLibraryEntry else { return nil }
 			guard status == .none || entry.libraryStatus == status else { return nil }
+			if let filter = filter, entry.trackable?.matches(filter) != true { return nil }
 
 			return entry
 		}
@@ -273,23 +274,24 @@ final class LibrarySearchIndex {
 	/// - Returns: Each candidate token paired with its match quality.
 	private static func candidates(for queryToken: String, in index: Index) -> [(String, Int)] {
 		var candidates: [(String, Int)] = []
-
-		if index.postings[queryToken] != nil {
-			candidates.append((queryToken, Self.exactQuality))
-		}
-
-		guard let tokens = index.tokensByFirstCharacter[String(queryToken.prefix(1))] else { return candidates }
-
 		let queryCharacters = Array(queryToken)
 		let maximumEdits = Self.maximumEdits(forTokenLength: queryCharacters.count)
 
-		for token in tokens where token != queryToken {
+		for token in index.postings.keys {
+			if token == queryToken {
+				candidates.append((token, Self.exactQuality))
+				continue
+			}
 			if token.hasPrefix(queryToken) {
 				candidates.append((token, Self.prefixQuality))
 				continue
 			}
+			if token.contains(queryToken) {
+				candidates.append((token, Self.containsQuality))
+				continue
+			}
 
-			guard maximumEdits > 0 else { continue }
+			guard maximumEdits > 0, token.first == queryToken.first else { continue }
 
 			let characters = Array(token)
 			guard abs(characters.count - queryCharacters.count) <= maximumEdits else { continue }

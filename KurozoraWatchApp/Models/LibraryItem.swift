@@ -50,15 +50,17 @@ struct LibraryItem: Hashable, Identifiable, Sendable {
 	///
 	/// - Parameter entry: The entry to snapshot, resolved on the main thread.
 	init(entry: LocalLibraryEntry) {
+		let trackable = entry.trackable
+
 		self.id = entry.trackableID
 		self.kind = entry.kind
-		self.title = entry.title ?? ""
-		self.posterURL = entry.posterURL
-		self.posterBackgroundColor = entry.posterBackgroundColor
-		self.mediaTypeName = entry.mediaTypeName
-		self.statusName = entry.statusName
-		self.airingDate = entry.airingDate
-		self.durationCount = entry.durationCount?.intValue ?? 0
+		self.title = trackable?.title ?? ""
+		self.posterURL = trackable?.posterURL
+		self.posterBackgroundColor = trackable?.posterBackgroundColor
+		self.mediaTypeName = trackable?.mediaTypeName
+		self.statusName = trackable?.statusName
+		self.airingDate = trackable?.airingDate
+		self.durationCount = trackable?.durationCount?.intValue ?? 0
 		self.userScore = entry.review?.score?.doubleValue
 		self.libraryStatus = entry.libraryStatus
 		self.isFavorited = entry.isFavorited
