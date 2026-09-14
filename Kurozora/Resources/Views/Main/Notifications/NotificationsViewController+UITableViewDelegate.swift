@@ -41,6 +41,9 @@ extension NotificationsTableViewController {
 			} else if let link = userNotification.attributes.payload.link, let feedMessageID = Self.feedMessageID(fromLink: link) {
 				WorkflowController.shared.openFeedMessage(for: feedMessageID, in: self)
 			}
+		case .newEpisode, .newEpisodes:
+			guard let episodeID = userNotification.attributes.payload.episodeID else { return }
+			self.show(EpisodeDetailsCollectionViewController()(with: episodeID), sender: nil)
 		default: break
 		}
 	}
@@ -135,9 +138,38 @@ extension NotificationsTableViewController {
 		deleteAction.backgroundColor = .kLightRed
 		deleteAction.image = UIImage(systemName: "minus.circle")
 
-		let swipeActionsConfiguration = UISwipeActionsConfiguration(actions: [deleteAction])
+		var actions = [deleteAction]
+
+		if let watchAction = self.markWatchedAction(for: userNotification) {
+			actions.append(watchAction)
+		}
+
+		let swipeActionsConfiguration = UISwipeActionsConfiguration(actions: actions)
 		swipeActionsConfiguration.performsFirstActionWithFullSwipe = true
 		return swipeActionsConfiguration
+	}
+
+	/// The action that marks the notification's episode as watched.
+	///
+	/// - Parameter userNotification: The notification the row shows.
+	///
+	/// - Returns: The action an episode notification offers.
+	private func markWatchedAction(for userNotification: UserNotification) -> UIContextualAction? {
+		guard userNotification.episodeID != nil else { return nil }
+
+		let isWatched = userNotification.episodeWatchStatus == .watched
+		let title = isWatched ? L10n.markAsUnwatched : L10n.markAsWatched
+
+		let watchAction = UIContextualAction(style: .normal, title: title) { _, _, completionHandler in
+			Task {
+				await userNotification.toggleEpisodeWatchStatus()
+				completionHandler(true)
+			}
+		}
+		watchAction.backgroundColor = KThemePicker.tintColor.colorValue
+		watchAction.image = UIImage(systemName: isWatched ? "eye.slash.fill" : "eye.fill")
+
+		return watchAction
 	}
 
 	// MARK: - Context menus

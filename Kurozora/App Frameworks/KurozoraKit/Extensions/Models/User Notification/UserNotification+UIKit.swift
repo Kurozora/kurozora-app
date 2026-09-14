@@ -10,6 +10,33 @@ import KurozoraKit
 import UIKit
 
 @MainActor extension UserNotification {
+	// MARK: - Properties
+	/// The episode the notification points at.
+	var episodeID: KurozoraItemID? {
+		switch self.attributes.type {
+		case .newEpisode, .newEpisodes:
+			return self.attributes.payload.episodeID
+		default:
+			return nil
+		}
+	}
+
+	/// The watch status the notification's episode carries.
+	var episodeWatchStatus: WatchStatus {
+		guard let episodeID = self.episodeID else { return .notWatched }
+		return WatchedStore.shared.status(forEpisodeID: episodeID.rawValue) ?? .notWatched
+	}
+
+	// MARK: - Functions
+	/// Flips the watch status of the notification's episode.
+	func toggleEpisodeWatchStatus() async {
+		guard let episodeID = self.episodeID else { return }
+		guard let userSlug = User.current?.attributes.slug else { return }
+
+		await LibraryOutbox.shared.enqueueEpisodeWatchToggle(episodeID: episodeID.rawValue, userSlug: userSlug)
+		NotificationCenter.default.post(name: .KUNDidUpdate, object: self, userInfo: nil)
+	}
+
 	/// Create a context menu configuration for the user's notification.
 	///
 	/// - Parameters:
@@ -37,6 +64,10 @@ import UIKit
 			case .feedMessageReply, .feedMessageReShare:
 				if let feedMessageID = self.attributes.payload.feedMessageID {
 					return FMDetailsTableViewController()(with: feedMessageID)
+				}
+			case .newEpisode, .newEpisodes:
+				if let episodeID = self.episodeID {
+					return EpisodeDetailsCollectionViewController()(with: episodeID)
 				}
 			default: break
 			}
@@ -75,6 +106,22 @@ import UIKit
 			}
 		}
 		menuElements.append(updateReadStatusAction)
+
+		// Watch status action
+		if self.episodeID != nil {
+			let isWatched = self.episodeWatchStatus == .watched
+			let watchTitle = isWatched ? L10n.markAsUnwatched : L10n.markAsWatched
+			let watchImage = isWatched ? UIImage(systemName: "eye.slash.fill") : UIImage(systemName: "eye.fill")
+			let watchAttributes: UIAction.Attributes = isWatched ? .destructive : []
+
+			let watchStatusAction = UIAction(title: watchTitle, image: watchImage, attributes: watchAttributes) { [weak self] _ in
+				guard let self = self else { return }
+				Task {
+					await self.toggleEpisodeWatchStatus()
+				}
+			}
+			menuElements.append(watchStatusAction)
+		}
 
 		// Delete action
 		let deleteAction = UIAction(title: L10n.removeNotification, image: UIImage(systemName: "minus.circle"), attributes: .destructive) { [weak self] _ in

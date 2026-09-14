@@ -253,6 +253,8 @@ class NotificationsTableViewController: KTableViewController, ProfileNavigable, 
 				case .off:
 					self.userNotifications = notificationResponse.data
 				}
+
+				await self.fetchWatchedOverlay(for: notificationResponse.data)
 			} catch {
 				print(error.localizedDescription)
 			}
@@ -262,6 +264,34 @@ class NotificationsTableViewController: KTableViewController, ProfileNavigable, 
 		}
 
 		self.endFetch()
+	}
+
+	/// Records the watch status of the episodes the given notifications point at.
+	///
+	/// - Parameter userNotifications: The notifications the list shows.
+	private func fetchWatchedOverlay(for userNotifications: [UserNotification]) async {
+		guard let userID = User.current?.id else { return }
+
+		let episodeIDs = Array(Set(userNotifications.compactMap(\.episodeID)))
+		guard !episodeIDs.isEmpty else { return }
+
+		let userIdentity = UserIdentity(id: userID)
+		let requestedIDs = episodeIDs.map(\.rawValue)
+
+		do {
+			let cachedETag = WatchedStore.shared.etag(forRequestedIDs: requestedIDs)
+			let overlayResult = try await KService
+				.watchedOverlay(forUser: userIdentity, episodes: episodeIDs)
+				.response(ifNoneMatch: cachedETag)
+
+			// A 304 means the cache already reflects the current state.
+			guard case .modified(let response, let etag) = overlayResult else { return }
+
+			WatchedStore.shared.apply(response.data, requestedIDs: requestedIDs)
+			WatchedStore.shared.setETag(etag, forRequestedIDs: requestedIDs)
+		} catch {
+			print(error.localizedDescription)
+		}
 	}
 
 	/// Configures the view with the user's details.
