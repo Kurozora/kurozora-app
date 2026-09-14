@@ -256,6 +256,20 @@ extension L10n {
 			)
 		}
 	}
+	/// The string for the 'new episode' notification type.
+	///
+	/// - Tag: L10n-newEpisode
+	static var newEpisode: String {
+		L10n.resolve {
+			String(
+				localized: "New Episode",
+				table: "Settings",
+				bundle: LanguageManager.shared.bundle,
+				locale: LanguageManager.shared.locale,
+				comment: "The string for the 'new episode' notification type"
+			)
+		}
+	}
 	/// The string for the 'new session' notification type.
 	///
 	/// - Tag: L10n-newSession

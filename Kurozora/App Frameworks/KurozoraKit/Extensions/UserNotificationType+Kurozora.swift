@@ -22,6 +22,8 @@ extension UserNotificationType {
 			return L10n.message
 		case .userMention:
 			return L10n.mention
+		case .newEpisode, .newEpisodes:
+			return L10n.newEpisode
 		case .libraryImportFinished:
 			return L10n.libraryImport
 		case .subscriptionStatus:
@@ -42,6 +44,8 @@ extension UserNotificationType {
             return .Icons.person2
 		case .feedMessageReply, .feedMessageReShare, .userMention:
             return .Icons.message
+		case .newEpisode, .newEpisodes:
+            return .Icons.tvSparkles
 		case .libraryImportFinished:
             return .Icons.library
 		case .subscriptionStatus:
