@@ -46,6 +46,9 @@ final class Animation {
 	/// The shared instance of `Animation`.
 	static let shared = Animation()
 
+	/// The time the logo is held on screen when no animation plays.
+	fileprivate static let staticLogoDuration: TimeInterval = 1.0
+
 	private var playbackTasks: [UUID: Task<Void, Never>] = [:]
 	private var playbackViews: [UUID: WeakView] = [:]
 
@@ -247,7 +250,12 @@ private extension Animation {
 	///    - view: The view to animate.
 	///    - completion: The completion handler to call when the animation is finished.
 	func playNoneAnimation(on view: UIView, completion: (@MainActor @Sendable (Bool) -> Void)?) {
-		completion?(true)
+		view.transform = .identity
+		view.alpha = 1.0
+
+		DispatchQueue.main.asyncAfter(deadline: .now() + Animation.staticLogoDuration) {
+			completion?(true)
+		}
 	}
 
 	/// Plays the default animation.
