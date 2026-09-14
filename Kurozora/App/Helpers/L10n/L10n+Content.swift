@@ -2306,6 +2306,71 @@ extension L10n {
 			duration
 		)
 	}
+	/// The action that repeats a reminder an hour later.
+	///
+	/// - Tag: L10n-remindInAnHour
+	static var remindInAnHour: String {
+		L10n.resolve {
+			String(
+                localized: "Remind Me in an Hour",
+                table: "Content",
+                bundle: LanguageManager.shared.bundle,
+                locale: LanguageManager.shared.locale,
+                comment: "The action that repeats a reminder an hour later."
+            )
+		}
+	}
+	/// The action that stops a show's reminders.
+	///
+	/// - Tag: L10n-turnOffReminder
+	static var turnOffReminder: String {
+		L10n.resolve {
+			String(
+                localized: "Turn Off Reminder",
+                table: "Content",
+                bundle: LanguageManager.shared.bundle,
+                locale: LanguageManager.shared.locale,
+                comment: "The action that stops a show's reminders."
+            )
+		}
+	}
+	/// The message of a reminder naming the episode that is airing.
+	///
+	/// - Parameter number: The number of the episode.
+	///
+	/// - Tag: L10n-episodeNumberAiringNow
+	static func episodeNumberAiringNow(_ number: Int) -> String {
+		return String(
+			format: String(
+				localized: "Episode %lld is airing now.",
+				table: "Content",
+				bundle: LanguageManager.shared.bundle,
+				locale: LanguageManager.shared.locale,
+				comment: "The message of a reminder naming the episode that is airing. The argument is the episode number."
+			),
+			number
+		)
+	}
+	/// The message of a reminder naming the episode's season and series numbers.
+	///
+	/// - Parameters:
+	///    - number: The number of the episode within its season.
+	///    - numberTotal: The number of the episode within its series.
+	///
+	/// - Tag: L10n-episodeNumberTotalAiringNow
+	static func episodeNumberTotalAiringNow(_ number: Int, _ numberTotal: Int) -> String {
+		return String(
+			format: String(
+				localized: "Episode %1$lld (%2$lld) is airing now.",
+				table: "Content",
+				bundle: LanguageManager.shared.bundle,
+				locale: LanguageManager.shared.locale,
+				comment: "The message of a reminder naming the episode that is airing. The first argument is the episode number within its season and the second is its number within the series."
+			),
+			number,
+			numberTotal
+		)
+	}
 	/// The value shown for a search filter the user has left unset.
 	///
 	/// - Tag: L10n-filterAny

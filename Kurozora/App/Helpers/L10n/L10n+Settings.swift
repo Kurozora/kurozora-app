@@ -328,6 +328,34 @@ extension L10n {
 			)
 		}
 	}
+	/// The title string for the 'Airing Reminders' settings.
+	///
+	/// - Tag: L10n-airingReminders
+	static var airingReminders: String {
+		L10n.resolve {
+			String(
+				localized: "Airing Reminders",
+				table: "Settings",
+				bundle: LanguageManager.shared.bundle,
+				locale: LanguageManager.shared.locale,
+				comment: "The title string for the 'Airing Reminders' settings."
+			)
+		}
+	}
+	/// The footer string for the 'Airing Reminders' settings.
+	///
+	/// - Tag: L10n-airingRemindersFooter
+	static var airingRemindersFooter: String {
+		L10n.resolve {
+			String(
+				localized: "Get a reminder when a title you follow airs or releases. Reminders are scheduled on your device from your last sync, so they work without a connection.",
+				table: "Settings",
+				bundle: LanguageManager.shared.bundle,
+				locale: LanguageManager.shared.locale,
+				comment: "The footer string for the 'Airing Reminders' settings."
+			)
+		}
+	}
 	/// The title string for the 'Allow Notifications' settings.
 	///
 	/// - Tag: L10n-allowNotifications

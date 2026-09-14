@@ -169,16 +169,16 @@ nonisolated enum LibrarySyncVerifier {
 	/// The kind's entries on the server.
 	private static func fetchServerStates(_ kind: LibraryKind) async throws -> [String: EntryState] {
 		var states: [String: EntryState] = [:]
-		var cursor: SyncCursor?
+		var cursors: [LibrarySyncStream: SyncCursor] = [:]
 
 		while true {
 			let response = try await KService
-				.librarySync(kind)
-				.since(cursor)
+				.librarySync()
+				.since(cursors)
 				.limit(500)
 				.response()
 
-			for row in response.data.relationships.libraries {
+			for row in response.data.relationships.entries where row.kind == kind.rawValue {
 				if row.deletedAt != nil {
 					states.removeValue(forKey: row.trackableID)
 				} else {
@@ -186,8 +186,13 @@ nonisolated enum LibrarySyncVerifier {
 				}
 			}
 
-			guard response.data.attributes.hasMore, let nextSince = response.data.attributes.nextSince else { break }
-			cursor = nextSince
+			let hasMore = LibrarySyncStream.allCases.contains { response.data.attributes.state(of: $0)?.hasMore == true }
+			guard hasMore else { break }
+
+			for stream in LibrarySyncStream.allCases {
+				guard let state = response.data.attributes.state(of: stream) else { continue }
+				cursors[stream] = state.nextSince
+			}
 		}
 
 		return states

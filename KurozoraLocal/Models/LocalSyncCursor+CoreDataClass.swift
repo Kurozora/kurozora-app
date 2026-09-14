@@ -12,16 +12,12 @@ import KurozoraKit
 @objc(LocalSyncCursor)
 class LocalSyncCursor: NSManagedObject {
 	// MARK: - Properties
-	/// The sync payload shape the client reads today.
-	static let currentPayloadVersion: Int64 = 1
-
-	/// The library kind this cursor tracks.
-	var kind: LibraryKind {
-		get { LibraryKind(rawValue: Int(self.kindRaw)) ?? .shows }
-		set { self.kindRaw = Int64(newValue.rawValue) }
+	/// The stream this cursor tracks.
+	var syncStream: LibrarySyncStream? {
+		return LibrarySyncStream(rawValue: self.stream)
 	}
 
-	/// The opaque cursor the next sync should resume from, or `nil` for initial sync.
+	/// The opaque cursor the next sync round resumes from.
 	var syncCursor: SyncCursor? {
 		guard let updatedAt = self.cursorUpdatedAt, let id = self.cursorID else { return nil }
 		let syncedAtTimestamp = (self.syncedAt ?? Date()).timeIntervalSince1970
@@ -33,23 +29,31 @@ class LocalSyncCursor: NSManagedObject {
 	}
 
 	// MARK: - Functions
-	/// Fetches or creates the cursor row for the given (userSlug, kind), seeding defaults.
-	static func upsert(forUserSlug userSlug: String, kind: LibraryKind, in context: NSManagedObjectContext) -> LocalSyncCursor {
-		if let existing = Self.fetch(forUserSlug: userSlug, kind: kind, in: context) {
+	/// Fetches or creates the cursor row for the given account and stream.
+	///
+	/// - Parameters:
+	///    - userSlug: The user's account slug.
+	///    - stream: The sync stream the cursor tracks.
+	///    - context: The context to write into.
+	///
+	/// - Returns: The cursor row.
+	static func upsert(forUserSlug userSlug: String, stream: LibrarySyncStream, in context: NSManagedObjectContext) -> LocalSyncCursor {
+		if let existing = Self.fetch(forUserSlug: userSlug, stream: stream, in: context) {
 			return existing
 		}
 
 		let cursor = LocalSyncCursor(context: context)
 		cursor.userSlug = userSlug
-		cursor.kindRaw = Int64(kind.rawValue)
+		cursor.stream = stream.rawValue
 		cursor.cursorID = nil
 		cursor.cursorUpdatedAt = nil
 		cursor.syncedAt = nil
-		cursor.payloadVersion = Self.currentPayloadVersion
 		return cursor
 	}
 
-	/// Persists the next-since cursor returned by a sync batch.
+	/// Persists the next-since cursor returned by a sync round.
+	///
+	/// - Parameter next: The cursor the server returned.
 	func advance(to next: SyncCursor?) {
 		self.cursorID = next.map { $0.id }
 		self.cursorUpdatedAt = next.map { $0.updatedAt }
@@ -61,15 +65,22 @@ class LocalSyncCursor: NSManagedObject {
 		}
 	}
 
-	/// Fetches the cursor row matching the given identity, if present.
-	static func fetch(forUserSlug userSlug: String, kind: LibraryKind, in context: NSManagedObjectContext) -> LocalSyncCursor? {
+	/// Fetches the cursor row matching the given identity.
+	///
+	/// - Parameters:
+	///    - userSlug: The user's account slug.
+	///    - stream: The sync stream the cursor tracks.
+	///    - context: The context to read from.
+	///
+	/// - Returns: The matching cursor row.
+	static func fetch(forUserSlug userSlug: String, stream: LibrarySyncStream, in context: NSManagedObjectContext) -> LocalSyncCursor? {
 		let request = LocalSyncCursor.fetchRequest()
-		request.predicate = NSPredicate(format: "userSlug == %@ AND kindRaw == %d", userSlug, Int64(kind.rawValue))
+		request.predicate = NSPredicate(format: "userSlug == %@ AND stream == %@", userSlug, stream.rawValue)
 		request.fetchLimit = 1
 		return try? context.fetch(request).first
 	}
 
-	/// The most recent sync date across the account's kinds.
+	/// The most recent sync date across the account's streams.
 	///
 	/// - Parameters:
 	///    - userSlug: The user's account slug.

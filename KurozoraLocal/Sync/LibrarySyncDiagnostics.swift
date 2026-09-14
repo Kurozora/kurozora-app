@@ -23,13 +23,13 @@ nonisolated enum LibrarySyncDiagnostics {
 	// MARK: - Types
 	private struct StateSnapshot: Codable {
 		let reason: String
+		let cursors: [String: String]
 		let kinds: [String: KindState]
 	}
 
 	private struct KindState: Codable {
 		let count: Int
 		let ops: Int
-		let cursor: String?
 		let entries: [Row]
 	}
 
@@ -68,14 +68,13 @@ nonisolated enum LibrarySyncDiagnostics {
 
 		let snapshot = await context.perform { () -> StateSnapshot in
 			var kinds: [String: KindState] = [:]
+			var cursors: [String: String] = [:]
 
 			for kind in LibraryKind.allCases {
 				let entryRequest = LocalLibraryEntry.fetchRequest()
 				entryRequest.predicate = NSPredicate(format: "userSlug == %@ AND kindRaw == %d", userSlug, Int64(kind.rawValue))
 				entryRequest.sortDescriptors = [NSSortDescriptor(key: "trackableID", ascending: true)]
 				let entries = (try? context.fetch(entryRequest)) ?? []
-
-				let cursorRow = LocalSyncCursor.fetch(forUserSlug: userSlug, kind: kind, in: context)
 
 				let opRequest = LocalOutboxOperation.fetchRequest()
 				opRequest.predicate = NSPredicate(format: "userSlug == %@ AND kindRaw == %d", userSlug, Int64(kind.rawValue))
@@ -84,12 +83,16 @@ nonisolated enum LibrarySyncDiagnostics {
 				kinds[String(kind.rawValue)] = KindState(
 					count: entries.count,
 					ops: opCount,
-					cursor: cursorRow.map { "\($0.cursorUpdatedAt ?? "nil")|\($0.cursorID ?? "nil")" },
 					entries: entries.map { Self.row(for: $0) }
 				)
 			}
 
-			return StateSnapshot(reason: reason, kinds: kinds)
+			for stream in LibrarySyncStream.allCases {
+				guard let row = LocalSyncCursor.fetch(forUserSlug: userSlug, stream: stream, in: context) else { continue }
+				cursors[stream.rawValue] = "\(row.cursorUpdatedAt ?? "nil")|\(row.cursorID ?? "nil")"
+			}
+
+			return StateSnapshot(reason: reason, cursors: cursors, kinds: kinds)
 		}
 
 		Self.logSummary(snapshot)
@@ -113,9 +116,13 @@ nonisolated enum LibrarySyncDiagnostics {
 	private static func logSummary(_ snapshot: StateSnapshot) {
 		let summary = snapshot.kinds
 			.sorted { $0.key < $1.key }
-			.map { "kind=\($0.key) count=\($0.value.count) ops=\($0.value.ops) cursor=\($0.value.cursor ?? "nil")" }
+			.map { "kind=\($0.key) count=\($0.value.count) ops=\($0.value.ops)" }
 			.joined(separator: " | ")
-		Self.logger.log("STATE [\(snapshot.reason, privacy: .public)] \(summary, privacy: .public)")
+		let cursors = snapshot.cursors
+			.sorted { $0.key < $1.key }
+			.map { "\($0.key)=\($0.value)" }
+			.joined(separator: " ")
+		Self.logger.log("STATE [\(snapshot.reason, privacy: .public)] \(summary, privacy: .public) || \(cursors, privacy: .public)")
 	}
 
 	private static func append(_ snapshot: StateSnapshot) {

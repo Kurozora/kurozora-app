@@ -24,6 +24,7 @@ nonisolated class UserSettings: UserDefaults {
 			UserSettingsKey.notificationsSound.rawValue: true,
 			UserSettingsKey.notificationsBadge.rawValue: true,
 			UserSettingsKey.notificationsMirrorWatch.rawValue: true,
+			UserSettingsKey.airingRemindersAllowed.rawValue: true,
 			UserSettingsKey.startupSoundAllowed.rawValue: true,
 			UserSettingsKey.uiSoundsAllowed.rawValue: true,
 			UserSettingsKey.hapticsAllowed.rawValue: true,
@@ -333,6 +334,12 @@ extension UserSettings {
 	static var notificationsBadge: Bool {
 		return self.shared.bool(forKey: #function)
 	}
+
+	/// Returns a boolean indicating if airing reminders are allowed.
+	static var airingRemindersAllowed: Bool {
+		return self.shared.bool(forKey: #function)
+	}
+
 
 	/// Returns a boolean indicating if the Watch should mirror the iPhone's notification grouping.
 	static var notificationsMirrorWatch: Bool {

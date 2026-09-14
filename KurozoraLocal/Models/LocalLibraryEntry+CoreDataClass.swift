@@ -38,12 +38,13 @@ class LocalLibraryEntry: NSManagedObject {
 	/// - Parameters:
 	///    - row: The sync delta row.
 	///    - userSlug: The account slug owning the row.
-	///    - kind: The library kind the row belongs to.
 	///    - context: The managed object context.
 	///
 	/// - Returns: The upserted `LocalLibraryEntry`.
 	@discardableResult
-	static func apply(_ row: LibrarySyncEntry, userSlug: String, kind: LibraryKind, in context: NSManagedObjectContext) -> LocalLibraryEntry? {
+	static func apply(_ row: LibrarySyncEntry, userSlug: String, in context: NSManagedObjectContext) -> LocalLibraryEntry? {
+		let kind = LibraryKind(rawValue: row.kind) ?? .shows
+
 		if row.deletedAt != nil {
 			Self.delete(remoteID: row.id, userSlug: userSlug, kind: kind, in: context)
 			return nil
@@ -72,7 +73,7 @@ class LocalLibraryEntry: NSManagedObject {
 
 		LocalReview.apply(row.review, to: entry, in: context)
 
-		entry.trackable = LocalTrackable.apply(row, kind: kind, in: context)
+		entry.trackable = LocalTrackable.fetch(trackableID: row.trackableID, kind: kind, in: context)
 
 		Self.deleteLocalPlaceholder(userSlug: userSlug, kind: kind, trackableID: row.trackableID, excludingRemoteID: row.id, in: context)
 
@@ -137,11 +138,16 @@ class LocalLibraryEntry: NSManagedObject {
 	///
 	/// - Returns: `true` when a live entry references the URL.
 	private static func isArtReferenced(_ urlString: String, in context: NSManagedObjectContext) -> Bool {
-		let request = LocalLibraryEntry.fetchRequest()
+		let request = LocalTrackable.fetchRequest()
 		request.predicate = NSPredicate(format: "posterURL == %@ OR bannerURL == %@", urlString, urlString)
 		let matches = (try? context.fetch(request)) ?? []
 
-		return matches.contains { !$0.isDeleted }
+		return matches.contains { trackable in
+			guard !trackable.isDeleted else { return false }
+			let entries = (trackable.entries as? Set<LocalLibraryEntry>) ?? []
+
+			return entries.contains { !$0.isDeleted }
+		}
 	}
 
 	/// Returns a sort key derived from the supplied title, lowercased with the leading English article stripped.

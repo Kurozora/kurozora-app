@@ -269,21 +269,20 @@ actor LibraryOutbox {
 		let ops = await self.fetchPendingOps(forUserSlug: userSlug)
 		guard !ops.isEmpty else { return .idle }
 
-		var affectedKinds: Set<LibraryKind> = []
-		var reconcileKinds: Set<LibraryKind> = []
+		var hasSentOperation = false
+		var needsReconcile = false
 		var maxFailedAttemptCount: Int16 = 0
 		var isThrottled = false
 
 		for group in Self.consecutiveGroups(ops) {
 			guard let first = group.first else { continue }
-			let kind = first.kind
 			let label = Self.label(for: group)
 
 			do {
 				outboxLogger.info("SEND \(label, privacy: .public)")
 				try await self.send(group, forUserSlug: userSlug)
 				await self.deleteOps(group)
-				affectedKinds.insert(kind)
+				hasSentOperation = true
 				outboxLogger.info("OK \(label, privacy: .public)")
 			} catch let error as APIError where error.statusCode == 429 {
 				// Throttling says nothing about the operation itself, so it costs no attempt and
@@ -297,7 +296,7 @@ actor LibraryOutbox {
 				outboxLogger.error("REJECT \(label, privacy: .public) msg=\(error.message, privacy: .public)")
 				await self.deleteOps(group)
 				if first.operationType.mutatesLibraryEntry {
-					reconcileKinds.insert(kind)
+					needsReconcile = true
 				}
 			} catch {
 				let nextAttemptCount = (group.map(\.attemptCount).max() ?? 0) + 1
@@ -305,7 +304,7 @@ actor LibraryOutbox {
 					outboxLogger.error("ABANDON \(label, privacy: .public) attempts=\(nextAttemptCount)")
 					await self.deleteOps(group)
 					if first.operationType.mutatesLibraryEntry {
-						reconcileKinds.insert(kind)
+						needsReconcile = true
 					}
 				} else {
 					outboxLogger.error("FAIL \(label, privacy: .public) attempt=\(nextAttemptCount) err=\(error.librarySyncDescription, privacy: .public)")
@@ -324,14 +323,11 @@ actor LibraryOutbox {
 		// Pulling now would only meet the same throttle. The retry after the window syncs instead.
 		guard !isThrottled else { return .blocked }
 
-		// A dropped operation leaves the optimistic local row without a server delta to correct
-		// it, since the server row never changed. Reconciling re-pulls the kind from the server.
-		for kind in reconcileKinds {
-			try? await LibrarySyncEngine.shared.reconcile(kind, forUserSlug: userSlug)
-		}
-
-		for kind in affectedKinds.subtracting(reconcileKinds) {
-			try? await LibrarySyncEngine.shared.sync(kind, forUserSlug: userSlug)
+		// A dropped operation leaves the optimistic local row without a server delta to correct it.
+		if needsReconcile {
+			await LibrarySyncEngine.shared.reconcile(forUserSlug: userSlug)
+		} else if hasSentOperation {
+			await LibrarySyncEngine.shared.pull(forUserSlug: userSlug)
 		}
 
 		return maxFailedAttemptCount > 0 ? .blocked : .drained

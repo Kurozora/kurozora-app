@@ -310,7 +310,7 @@ enum LibrarySyncScenarioRunner: String, CaseIterable, Sendable {
 			return
 		}
 
-		await self.sync(.shows, userSlug: userSlug)
+		await self.sync(userSlug: userSlug)
 		let localIsHidden = LibraryStore.shared.entry(forTrackableID: baseline.trackableID, userSlug: userSlug, kind: .shows)?.isHidden
 		report.record("delta-applied", passed: localIsHidden == !baseline.isHidden, detail: "local hidden=\(String(describing: localIsHidden))")
 		await self.verify("after-remote-change", kinds: [.shows], userSlug: userSlug, report: &report)
@@ -320,7 +320,7 @@ enum LibrarySyncScenarioRunner: String, CaseIterable, Sendable {
 		} catch {
 			report.record("remote-restore", passed: false, detail: error.librarySyncDescription)
 		}
-		await self.sync(.shows, userSlug: userSlug)
+		await self.sync(userSlug: userSlug)
 		await self.verify("after-remote-restore", kinds: [.shows], userSlug: userSlug, report: &report)
 	}
 
@@ -328,11 +328,11 @@ enum LibrarySyncScenarioRunner: String, CaseIterable, Sendable {
 		await self.verifyBaseline(kinds: [.shows], userSlug: userSlug, report: &report)
 		let countBefore = LibraryStore.shared.count(forUserSlug: userSlug, kind: .shows, status: .none)
 
-		let isAged = await Self.ageCursor(forUserSlug: userSlug, kind: .shows)
-		report.record("age-cursor", passed: isAged, detail: isAged ? "syncedAt pushed \(Int(Self.expiredCursorAgeInDays)) days back" : "no shows cursor to age")
+		let isAged = await Self.ageCursor(forUserSlug: userSlug, stream: .entries)
+		report.record("age-cursor", passed: isAged, detail: isAged ? "syncedAt pushed \(Int(Self.expiredCursorAgeInDays)) days back" : "no entries cursor to age")
 		guard isAged else { return }
 
-		await self.sync(.shows, userSlug: userSlug)
+		await self.sync(userSlug: userSlug)
 
 		let countAfter = LibraryStore.shared.count(forUserSlug: userSlug, kind: .shows, status: .none)
 		report.record("no-wipe", passed: countAfter == countBefore, detail: "before=\(countBefore) after=\(countAfter)")
@@ -357,9 +357,7 @@ enum LibrarySyncScenarioRunner: String, CaseIterable, Sendable {
 	/// Syncs and verifies the given kinds.
 	private func syncAndVerify(_ name: String, kinds: [LibraryKind], userSlug: String, report: inout LibrarySyncScenarioReport) async {
 		await self.flushWaitingOutThrottle(userSlug: userSlug)
-		for kind in kinds {
-			await self.sync(kind, userSlug: userSlug)
-		}
+		await self.sync(userSlug: userSlug)
 		await self.verify(name, kinds: kinds, userSlug: userSlug, report: &report)
 	}
 
@@ -388,9 +386,7 @@ enum LibrarySyncScenarioRunner: String, CaseIterable, Sendable {
 	private func verifyBaseline(_ name: String = "baseline", kinds: [LibraryKind], userSlug: String, report: inout LibrarySyncScenarioReport) async {
 		guard await !self.verify(name, kinds: kinds, userSlug: userSlug, report: &report) else { return }
 
-		for kind in kinds {
-			try? await LibrarySyncEngine.shared.reconcile(kind, forUserSlug: userSlug)
-		}
+		await LibrarySyncEngine.shared.reconcile(forUserSlug: userSlug)
 		await self.verify("\(name)-healed", kinds: kinds, userSlug: userSlug, report: &report)
 	}
 
@@ -405,21 +401,14 @@ enum LibrarySyncScenarioRunner: String, CaseIterable, Sendable {
 		}
 	}
 
-	/// Runs the kind's delta sync.
-	private func sync(_ kind: LibraryKind, userSlug: String) async {
+	/// Runs the account's delta sync.
+	private func sync(userSlug: String) async {
 		let remaining = await LibrarySyncEngine.shared.throttleRemaining(forUserSlug: userSlug)
 		if remaining > 0 {
 			await Self.wait(remaining, reason: "sync window")
 		}
 
-		do {
-			try await LibrarySyncEngine.shared.sync(kind, forUserSlug: userSlug)
-		} catch let error as APIError where error.statusCode == 429 {
-			await Self.wait(error.retryAfterInterval ?? Self.defaultThrottleInterval, reason: "sync throttled")
-			try? await LibrarySyncEngine.shared.sync(kind, forUserSlug: userSlug)
-		} catch {
-			scenarioLogger.error("sync kind=\(kind.rawValue) failed: \(error.librarySyncDescription, privacy: .public)")
-		}
+		await LibrarySyncEngine.shared.pull(forUserSlug: userSlug)
 	}
 
 	/// Verifies the kind.
@@ -495,14 +484,14 @@ enum LibrarySyncScenarioRunner: String, CaseIterable, Sendable {
 		}
 	}
 
-	/// Expires the kind's sync cursor.
-	private static func ageCursor(forUserSlug userSlug: String, kind: LibraryKind) async -> Bool {
+	/// Expires the stream's sync cursor.
+	private static func ageCursor(forUserSlug userSlug: String, stream: LibrarySyncStream) async -> Bool {
 		let context = PersistenceController.shared.container.newBackgroundContext()
 		context.automaticallyMergesChangesFromParent = true
 		let agedSyncedAt = Date().addingTimeInterval(-Self.expiredCursorAgeInDays * 24 * 60 * 60)
 
 		return await context.perform {
-			guard let cursor = LocalSyncCursor.fetch(forUserSlug: userSlug, kind: kind, in: context), cursor.cursorUpdatedAt != nil else { return false }
+			guard let cursor = LocalSyncCursor.fetch(forUserSlug: userSlug, stream: stream, in: context), cursor.cursorUpdatedAt != nil else { return false }
 			cursor.syncedAt = agedSyncedAt
 
 			do {

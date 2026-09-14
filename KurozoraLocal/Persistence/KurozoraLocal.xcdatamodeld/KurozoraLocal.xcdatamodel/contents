@@ -116,14 +116,13 @@
     <entity name="LocalSyncCursor" representedClassName="LocalSyncCursor" syncable="YES">
         <attribute name="cursorID" optional="YES" attributeType="String"/>
         <attribute name="cursorUpdatedAt" optional="YES" attributeType="String"/>
-        <attribute name="kindRaw" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
-        <attribute name="payloadVersion" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="stream" attributeType="String" defaultValueString=""/>
         <attribute name="syncedAt" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
         <attribute name="userSlug" attributeType="String"/>
         <uniquenessConstraints>
             <uniquenessConstraint>
                 <constraint value="userSlug"/>
-                <constraint value="kindRaw"/>
+                <constraint value="stream"/>
             </uniquenessConstraint>
         </uniquenessConstraints>
     </entity>
@@ -175,6 +174,27 @@
         <uniquenessConstraints>
             <uniquenessConstraint>
                 <constraint value="name"/>
+            </uniquenessConstraint>
+        </uniquenessConstraints>
+    </entity>
+    <entity name="LocalEpisodeSnapshot" representedClassName="LocalEpisodeSnapshot" syncable="YES">
+        <attribute name="bannerURL" optional="YES" attributeType="String"/>
+        <attribute name="episodeID" attributeType="String"/>
+        <attribute name="number" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="numberTotal" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="seasonNumber" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="startedAt" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
+        <attribute name="trackableID" attributeType="String"/>
+        <attribute name="userSlug" attributeType="String"/>
+        <fetchIndex name="byTrackableStart">
+            <fetchIndexElement property="userSlug" type="Binary" order="ascending"/>
+            <fetchIndexElement property="trackableID" type="Binary" order="ascending"/>
+            <fetchIndexElement property="startedAt" type="Binary" order="ascending"/>
+        </fetchIndex>
+        <uniquenessConstraints>
+            <uniquenessConstraint>
+                <constraint value="userSlug"/>
+                <constraint value="episodeID"/>
             </uniquenessConstraint>
         </uniquenessConstraints>
     </entity>

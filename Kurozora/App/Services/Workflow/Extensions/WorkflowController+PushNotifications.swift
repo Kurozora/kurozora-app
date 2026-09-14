@@ -61,6 +61,15 @@ extension WorkflowController {
 		self.setupCategoryActions()
 	}
 
+	/// The identifier of the action that marks an episode watched.
+	static let markWatchedActionIdentifier = "LIBRARY_AIRING_MARK_WATCHED"
+
+	/// The identifier of the action that repeats a reminder later.
+	static let snoozeActionIdentifier = "LIBRARY_AIRING_SNOOZE"
+
+	/// The identifier of the action that stops a show's reminders.
+	static let turnOffReminderActionIdentifier = "LIBRARY_AIRING_TURN_OFF"
+
 	/// Sets up the notification actions for each of the available categories.
 	func setupCategoryActions() {
 		print("----- Setup category actions.")
@@ -75,6 +84,17 @@ extension WorkflowController {
 		// Skip action
 		let skipAction = UNNotificationAction(identifier: MusicManager.skipActionIdentifier, title: L10n.skip, options: [])
 		notificationCategories.insert(UNNotificationCategory(identifier: MusicManager.songChangeCategoryIdentifier, actions: [skipAction], intentIdentifiers: [], options: []))
+
+		// Airing reminder actions
+		let markWatchedAction = UNNotificationAction(identifier: Self.markWatchedActionIdentifier, title: L10n.markAsWatched, options: [])
+		let snoozeAction = UNNotificationAction(identifier: Self.snoozeActionIdentifier, title: L10n.remindInAnHour, options: [])
+		let turnOffAction = UNNotificationAction(identifier: Self.turnOffReminderActionIdentifier, title: L10n.turnOffReminder, options: [.destructive])
+		notificationCategories.insert(UNNotificationCategory(
+			identifier: AiringNotificationScheduler.categoryIdentifier,
+			actions: [markWatchedAction, snoozeAction, turnOffAction],
+			intentIdentifiers: [],
+			options: [.hiddenPreviewsShowTitle]
+		))
 
 		// Register notification categories.
 		UNUserNotificationCenter.current().setNotificationCategories(notificationCategories)
@@ -104,6 +124,22 @@ extension WorkflowController: UNUserNotificationCenterDelegate {
 			MusicManager.shared.skipForward()
 			completionHandler()
 			return
+		case Self.markWatchedActionIdentifier:
+			if let episodeID = userInfo["EPISODE_ID"] as? String, let slug = User.current?.attributes.slug {
+				Task {
+					await LibraryOutbox.shared.enqueueEpisodeWatchToggle(episodeID: episodeID, userSlug: slug)
+				}
+			}
+		case Self.snoozeActionIdentifier:
+			Task {
+				await AiringNotificationScheduler.shared.snooze(response.notification.request.content)
+			}
+		case Self.turnOffReminderActionIdentifier:
+			if let showID = userInfo["SHOW_ID"] as? String, let slug = User.current?.attributes.slug {
+				Task {
+					await LibraryOutbox.shared.enqueueSetReminder(false, trackableID: showID, userSlug: slug, kind: .shows)
+				}
+			}
 		case NotificationKind.Action.viewSessionDetails.identifierValue:
 			self.openSessionsManager()
 		case NotificationKind.Action.viewShowDetails.identifierValue:
@@ -223,7 +259,9 @@ extension WorkflowController {
 		case "digest":
 			self.openDigest()
 		default:
-			break
+			guard let url = URL(string: "kurozora://\(path)") else { return }
+
+			UIApplication.shared.open(url)
 		}
 	}
 

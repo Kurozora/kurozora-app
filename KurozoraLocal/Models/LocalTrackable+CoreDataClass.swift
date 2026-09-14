@@ -28,16 +28,16 @@ class LocalTrackable: NSManagedObject {
 	///
 	/// - Parameters:
 	///    - row: The sync delta row.
-	///    - kind: The library kind the row belongs to.
 	///    - context: The managed object context.
 	///
 	/// - Returns: The upserted `LocalTrackable`.
 	@discardableResult
-	static func apply(_ row: LibrarySyncEntry, kind: LibraryKind, in context: NSManagedObjectContext) -> LocalTrackable {
-		let trackable = Self.fetch(trackableID: row.trackableID, kind: kind, in: context) ?? LocalTrackable(context: context)
+	static func apply(_ row: LibrarySyncTrackable, in context: NSManagedObjectContext) -> LocalTrackable {
+		let kind = LibraryKind(rawValue: row.kind) ?? .shows
+		let trackable = Self.fetch(trackableID: row.id, kind: kind, in: context) ?? LocalTrackable(context: context)
 
 		trackable.kindRaw = Int64(kind.rawValue)
-		trackable.trackableID = row.trackableID
+		trackable.trackableID = row.id
 		trackable.slug = row.slug
 		trackable.title = row.title
 		trackable.sortTitle = Self.normalizedSortKey(row.sortTitle ?? row.title)

@@ -12,6 +12,7 @@ import ImageIO
 import os.log
 import UIKit
 import UniformTypeIdentifiers
+import UserNotifications
 
 private nonisolated let artStoreLogger = Logger(subsystem: "app.kurozora.Kurozora", category: "LibraryArtStore")
 
@@ -25,6 +26,13 @@ actor LibraryArtStore {
 
 	/// The lossy compression quality of stored art.
 	private static let compressionQuality: CGFloat = 0.75
+
+	/// The image types a notification attachment accepts.
+	private static let attachableTypeIdentifiers: Set<String> = [
+		UTType.jpeg.identifier,
+		UTType.png.identifier,
+		UTType.gif.identifier
+	]
 
 	/// The maximum number of concurrent downloads per prefetch call.
 	private let downloadConcurrency: Int = 4
@@ -44,6 +52,53 @@ actor LibraryArtStore {
 		      let fileURL = try? Self.fileURL(forURLString: urlString, creatingDirectory: false),
 		      FileManager.default.fileExists(atPath: fileURL.path) else { return nil }
 		return fileURL
+	}
+
+	/// Returns a notification attachment carrying the first of the given URLs that is stored.
+	///
+	/// - Parameter urlStrings: The source URLs of the art, most specific first.
+	///
+	/// - Returns: The attachment a notification shows.
+	func notificationAttachment(forURLStrings urlStrings: [String]) -> UNNotificationAttachment? {
+		for urlString in urlStrings {
+			if let attachment = self.notificationAttachment(forURLString: urlString) {
+				return attachment
+			}
+		}
+
+		return nil
+	}
+
+	/// Returns a notification attachment carrying the stored art for the given URL.
+	///
+	/// - Parameter urlString: The source URL of the art.
+	///
+	/// - Returns: The attachment a notification shows.
+	func notificationAttachment(forURLString urlString: String?) -> UNNotificationAttachment? {
+		guard let urlString = urlString, !urlString.isEmpty else { return nil }
+
+		guard let fileURL = Self.storedFileURL(forURLString: urlString) else {
+			artStoreLogger.error("Art is not stored: \(urlString, privacy: .public)")
+			return nil
+		}
+
+		// The system takes ownership of the file it is handed.
+		guard let attachable = Self.attachableCopy(of: fileURL) else {
+			artStoreLogger.error("Art is not attachable: \(urlString, privacy: .public)")
+			return nil
+		}
+
+		do {
+			return try UNNotificationAttachment(
+				identifier: urlString,
+				url: attachable.url,
+				options: [UNNotificationAttachmentOptionsTypeHintKey: attachable.typeIdentifier]
+			)
+		} catch {
+			try? FileManager.default.removeItem(at: attachable.url)
+			artStoreLogger.error("Attaching art failed: \(error.localizedDescription)")
+			return nil
+		}
 	}
 
 	/// Returns the total size of the stored art in bytes.
@@ -194,6 +249,36 @@ actor LibraryArtStore {
 		guard CGImageDestinationFinalize(destination) else { return nil }
 
 		return mutableData as Data
+	}
+
+	/// Returns a temporary copy of the stored art in a type a notification accepts.
+	///
+	/// - Parameter fileURL: The stored art to copy.
+	///
+	/// - Returns: The copy's location and uniform type identifier.
+	private static func attachableCopy(of fileURL: URL) -> (url: URL, typeIdentifier: String)? {
+		guard let imageSource = CGImageSourceCreateWithURL(fileURL as CFURL, nil) else { return nil }
+		let sourceType = CGImageSourceGetType(imageSource) as String?
+
+		if let sourceType = sourceType, Self.attachableTypeIdentifiers.contains(sourceType),
+		   let fileExtension = UTType(sourceType)?.preferredFilenameExtension,
+		   let destinationURL = Self.temporaryURL(withExtension: fileExtension),
+		   (try? FileManager.default.copyItem(at: fileURL, to: destinationURL)) != nil {
+			return (destinationURL, sourceType)
+		}
+
+		guard let image = CGImageSourceCreateImageAtIndex(imageSource, 0, nil) else { return nil }
+		guard let jpegData = UIImage(cgImage: image).jpegData(compressionQuality: Self.compressionQuality) else { return nil }
+		guard let destinationURL = Self.temporaryURL(withExtension: "jpg") else { return nil }
+		guard (try? jpegData.write(to: destinationURL, options: .atomic)) != nil else { return nil }
+
+		return (destinationURL, UTType.jpeg.identifier)
+	}
+
+	private static func temporaryURL(withExtension fileExtension: String) -> URL? {
+		return FileManager.default.temporaryDirectory
+			.appendingPathComponent(UUID().uuidString, isDirectory: false)
+			.appendingPathExtension(fileExtension)
 	}
 
 	private static func fileName(forURLString urlString: String) -> String {

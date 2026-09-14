@@ -13,7 +13,7 @@ import KurozoraKit
 @MainActor
 final class LibrarySyncProgress {
 	// MARK: - Types
-	/// The progress of a single kind's sync round.
+	/// The progress of a single sync round.
 	struct RoundProgress {
 		/// The number of rows applied so far in the round.
 		var appliedCount: Int
@@ -26,21 +26,15 @@ final class LibrarySyncProgress {
 	/// Returns the singleton `LibrarySyncProgress` instance.
 	static let shared = LibrarySyncProgress()
 
-	/// The in-flight sync rounds, keyed by library kind.
-	private(set) var activeRounds: [LibraryKind: RoundProgress] = [:]
+	/// The in-flight sync round.
+	private(set) var activeRound: RoundProgress?
 
 	/// The import's progress.
 	private(set) var importProgress: RoundProgress?
 
 	/// The work in flight.
 	private var activeWork: [RoundProgress] {
-		var work = Array(self.activeRounds.values)
-
-		if let importProgress = self.importProgress {
-			work.append(importProgress)
-		}
-
-		return work
+		return [self.activeRound, self.importProgress].compactMap(\.self)
 	}
 
 	/// Whether any work is in flight.
@@ -70,21 +64,21 @@ final class LibrarySyncProgress {
 	private init() {}
 
 	// MARK: - Functions
-	/// Marks the start of a sync round for the given kind.
-	func begin(_ kind: LibraryKind) {
-		self.activeRounds[kind] = RoundProgress(appliedCount: 0, expectedCount: nil)
+	/// Marks the start of a sync round.
+	func begin() {
+		self.activeRound = RoundProgress(appliedCount: 0, expectedCount: nil)
 		self.notify()
 	}
 
-	/// Records progress for the given kind's in-flight round.
-	func update(_ kind: LibraryKind, appliedCount: Int, expectedCount: Int?) {
-		self.activeRounds[kind] = RoundProgress(appliedCount: appliedCount, expectedCount: expectedCount)
+	/// Records progress for the in-flight round.
+	func update(appliedCount: Int, expectedCount: Int?) {
+		self.activeRound = RoundProgress(appliedCount: appliedCount, expectedCount: expectedCount)
 		self.notify()
 	}
 
-	/// Marks the end of the given kind's sync round.
-	func end(_ kind: LibraryKind) {
-		self.activeRounds[kind] = nil
+	/// Marks the end of the sync round.
+	func end() {
+		self.activeRound = nil
 		self.notify()
 	}
 

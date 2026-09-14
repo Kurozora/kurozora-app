@@ -361,20 +361,6 @@ final class LibraryStore {
 		}
 	}
 
-	// MARK: - Write
-	/// Applies a sync batch and saves, upserting non-tombstones and removing tombstones.
-	///
-	/// - Parameters:
-	///    - entries: The rows from a `LibrarySyncResponse.relationships.libraries` batch.
-	///    - userSlug: The user's account slug.
-	///    - kind: The library kind the batch belongs to.
-	func apply(_ entries: [LibrarySyncEntry], forUserSlug userSlug: String, kind: LibraryKind) {
-		for row in entries {
-			LocalLibraryEntry.apply(row, userSlug: userSlug, kind: kind, in: self.viewContext)
-		}
-		PersistenceController.shared.save(self.viewContext)
-	}
-
 	// MARK: - Optimistic Writes
 	/// Updates the local entry's favorite state immediately after a successful server toggle.
 	func applyFavorite(_ isFavorited: Bool, forTrackableID trackableID: String, userSlug: String, kind: LibraryKind) {
@@ -394,6 +380,12 @@ final class LibraryStore {
 		entry.remindedAt = isReminded ? (entry.remindedAt ?? now) : nil
 		entry.updatedAt = now
 		PersistenceController.shared.save(self.viewContext)
+
+		#if !os(watchOS)
+		Task {
+			await AiringNotificationScheduler.shared.refresh()
+		}
+		#endif
 	}
 
 	func applyRating(score: Double?, description: String?, isSpoiler: Bool?, recommendation: ReviewRecommendation?, forTrackableID trackableID: String, userSlug: String, kind: LibraryKind) {
@@ -509,7 +501,7 @@ final class LibraryStore {
 	}
 
 	// MARK: - Delete
-	/// Removes every cached library entry and sync cursor for the given account.
+	/// Removes every cached library entry, episode and sync cursor for the given account.
 	///
 	/// - Parameter userSlug: The user's account slug.
 	func clear(forUserSlug userSlug: String) {
@@ -525,6 +517,7 @@ final class LibraryStore {
 			for cursor in try self.viewContext.fetch(cursorRequest) {
 				self.viewContext.delete(cursor)
 			}
+			LocalEpisodeSnapshot.deleteAll(forUserSlug: userSlug, in: self.viewContext)
 			self.deleteOrphanedTrackables()
 			PersistenceController.shared.save(self.viewContext)
 		} catch {

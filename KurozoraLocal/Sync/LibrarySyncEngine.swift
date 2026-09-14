@@ -13,33 +13,25 @@ import os.log
 
 private nonisolated let syncLogger = Logger(subsystem: "app.kurozora.Kurozora", category: "LibrarySyncEngine")
 
-/// Drives the combined library delta sync into the local store.
+/// Drives the multiplexed library delta sync into the local store.
 actor LibrarySyncEngine {
 	// MARK: - Properties
 	/// Returns the singleton `LibrarySyncEngine` instance.
 	static let shared = LibrarySyncEngine()
 
-	/// The maximum number of rows requested per batch.
+	/// The maximum number of rows requested per stream, per round.
 	private let batchLimit = 500
 
-	/// In-flight per-`(userSlug, kind)` sync tasks, used to dedupe concurrent callers.
-	private var inFlight: [String: Task<Void, Error>] = [:]
+	/// The in-flight sync tasks per user.
+	private var inFlight: [String: Task<Void, Never>] = [:]
 
-	/// Keys whose in-flight sync runs once more after it finishes.
+	/// Users whose in-flight sync runs once more after it finishes.
 	private var rerunRequested: Set<String> = []
 
-	/// In-flight `syncAll` tasks, keyed by `userSlug`, used to dedupe overlapping calls
-	/// from concurrent lifecycle triggers.
-	private var syncAllInFlight: [String: Task<Void, Never>] = [:]
-
-	/// Users whose in-flight `syncAll` runs once more after it finishes.
-	private var syncAllRerunRequested: Set<String> = []
-
-	/// Kinds that failed on the last attempt and should be retried when the network
-	/// becomes reachable again. Keyed by `(userSlug, kind)`.
+	/// The users whose last attempt failed.
 	private var pendingRetries: Set<String> = []
 
-	/// Keys whose next sync drops the cursor first.
+	/// Users whose next sync drops the entry cursor first.
 	private var fullPullRequested: Set<String> = []
 
 	/// The earliest time a throttled user's pulls may resume.
@@ -72,50 +64,172 @@ actor LibrarySyncEngine {
 	private init() {}
 
 	// MARK: - Sync
-	/// Runs a delta sync for every library kind belonging to the given account.
+	/// Runs a delta sync across every stream belonging to the given account.
 	///
 	/// - Parameter userSlug: The user's account slug.
 	func syncAll(forUserSlug userSlug: String) async {
+		await LibraryOutbox.shared.flush(force: true)
+		await self.pull(forUserSlug: userSlug)
+	}
+
+	/// Runs a delta sync without flushing the outbox first.
+	///
+	/// - Parameter userSlug: The user's account slug.
+	func pull(forUserSlug userSlug: String) async {
 		self.installPathMonitorIfNeeded()
 		await self.repairCursorsIfNeeded(forUserSlug: userSlug)
-		await LibraryOutbox.shared.flush(force: true)
 
-		if let existing = self.syncAllInFlight[userSlug] {
+		if let existing = self.inFlight[userSlug] {
 			// The in-flight round's delta predates this trigger.
-			self.syncAllRerunRequested.insert(userSlug)
+			self.rerunRequested.insert(userSlug)
 			await existing.value
+			return
+		}
+
+		if let throttledUntil = self.throttledUntil[userSlug], throttledUntil > Date() {
+			syncLogger.info("THROTTLED skip resumesIn=\(Int(throttledUntil.timeIntervalSinceNow))s")
 			return
 		}
 
 		let task = Task<Void, Never> { [weak self] in
 			guard let self = self else { return }
-			for kind in LibraryKind.allCases {
-				do {
-					try await self.sync(kind, forUserSlug: userSlug)
-				} catch {
-					syncLogger.error("\(kind.stringValue) sync failed: \(error.librarySyncDescription, privacy: .public)")
-				}
-			}
+			await self.runSync(forUserSlug: userSlug)
 		}
-		self.syncAllInFlight[userSlug] = task
+		self.inFlight[userSlug] = task
 		await task.value
-		self.syncAllInFlight[userSlug] = nil
+		self.inFlight[userSlug] = nil
 
 		#if !os(watchOS)
 		await self.refreshLibraryArt(forUserSlug: userSlug)
+		await AiringNotificationScheduler.shared.refresh()
 		#endif
-		await LibrarySyncDiagnostics.logState(forUserSlug: userSlug, reason: "syncAll")
+		await LibrarySyncDiagnostics.logState(forUserSlug: userSlug, reason: "pull")
 
-		if self.syncAllRerunRequested.remove(userSlug) != nil {
-			await self.syncAll(forUserSlug: userSlug)
+		if self.rerunRequested.remove(userSlug) != nil {
+			await self.pull(forUserSlug: userSlug)
 		}
 	}
 
+	/// Makes the account's next sync drop its cursors.
+	///
+	/// - Parameter userSlug: The user's account slug.
+	func reconcile(forUserSlug userSlug: String) async {
+		syncLogger.notice("RECONCILE")
+		self.fullPullRequested.insert(userSlug)
+		await self.pull(forUserSlug: userSlug)
+	}
+
+	private func runSync(forUserSlug userSlug: String) async {
+		// A delta applied now would advance the cursors past state the outbox still owns.
+		if await LibraryOutbox.shared.hasPendingOperations(forUserSlug: userSlug) {
+			syncLogger.info("DEFER reason=pending-ops")
+			return
+		}
+
+		if self.fullPullRequested.remove(userSlug) != nil {
+			await self.clearCursors(LibrarySyncStream.allCases, forUserSlug: userSlug)
+		}
+
+		await LibrarySyncProgress.shared.begin()
+		do {
+			try await self.pullRounds(forUserSlug: userSlug)
+			self.pendingRetries.remove(userSlug)
+		} catch {
+			syncLogger.error("Sync failed: \(error.librarySyncDescription, privacy: .public)")
+			self.pendingRetries.insert(userSlug)
+
+			if let apiError = error as? APIError, apiError.statusCode == 429 {
+				self.throttle(userSlug: userSlug, for: apiError.retryAfterInterval ?? self.defaultThrottleInterval)
+			}
+		}
+		await LibrarySyncProgress.shared.end()
+	}
+
+	private func pullRounds(forUserSlug userSlug: String) async throws {
+		var cursors = await self.readCursors(forUserSlug: userSlug)
+		// A pull without an entry cursor carries no tombstones.
+		var isFullPull = cursors[.entries] == nil
+		var seenEntryIDs: Set<String> = []
+		var appliedCount = 0
+
+		while true {
+			let response: LibrarySyncResponse
+			do {
+				response = try await KService
+					.librarySync()
+					.since(cursors)
+					.limit(self.batchLimit)
+					.response()
+			} catch let error as APIError where error.isCursorExpired {
+				syncLogger.notice("A cursor expired. Restarting as a full pull.")
+				await self.clearCursors(LibrarySyncStream.allCases, forUserSlug: userSlug)
+				cursors = [:]
+				appliedCount = 0
+				isFullPull = true
+				seenEntryIDs = []
+				continue
+			}
+
+			let relationships = response.data.relationships
+			let hasMore = LibrarySyncStream.allCases.contains { response.data.attributes.state(of: $0)?.hasMore == true }
+			let roundCount = relationships.entries.count + relationships.trackables.count
+			let expectedCount = self.expectedCount(in: response, appliedCount: appliedCount)
+
+			syncLogger.info("PULL entries=\(relationships.entries.count) trackables=\(relationships.trackables.count) episodes=\(relationships.episodes.count) hasMore=\(hasMore)")
+
+			try await self.applyRound(response, forUserSlug: userSlug)
+
+			if isFullPull {
+				seenEntryIDs.formUnion(relationships.entries.filter { $0.deletedAt == nil }.map(\.id))
+			}
+
+			appliedCount += roundCount
+			await LibrarySyncProgress.shared.update(appliedCount: appliedCount, expectedCount: expectedCount)
+
+			#if !os(watchOS)
+			var artURLStrings = relationships.trackables.flatMap { [$0.posterURL, $0.bannerURL] }.compactMap(\.self)
+			artURLStrings += relationships.episodes.compactMap(\.bannerURL)
+			await LibraryArtStore.shared.prefetch(artURLStrings)
+			#endif
+
+			cursors = self.advanced(cursors, with: response)
+
+			if !hasMore {
+				if isFullPull {
+					try await self.sweepEntries(notIn: seenEntryIDs, forUserSlug: userSlug)
+				}
+				await self.pruneOrphanedTrackables()
+
+				// Force the fraction to exactly 1.0 before ending.
+				await LibrarySyncProgress.shared.update(appliedCount: appliedCount, expectedCount: appliedCount)
+				break
+			}
+		}
+	}
+
+	/// The number of rows the round expects to apply in total.
+	private nonisolated func expectedCount(in response: LibrarySyncResponse, appliedCount: Int) -> Int? {
+		let totals = LibrarySyncStream.allCases.compactMap { response.data.attributes.state(of: $0)?.total }
+		guard !totals.isEmpty else { return nil }
+		return appliedCount + totals.reduce(0, +)
+	}
+
+	/// The cursors the next round resumes from.
+	private nonisolated func advanced(_ cursors: [LibrarySyncStream: SyncCursor], with response: LibrarySyncResponse) -> [LibrarySyncStream: SyncCursor] {
+		var advanced = cursors
+
+		for stream in LibrarySyncStream.allCases {
+			guard let state = response.data.attributes.state(of: stream) else { continue }
+			advanced[stream] = state.nextSince
+		}
+
+		return advanced
+	}
+
 	#if !os(watchOS)
-	/// Prunes stored art for removed entries and queues every cached entry's
-	/// poster and banner for download.
+	/// Prunes stored art and queues every cached entry's art for download.
 	private func refreshLibraryArt(forUserSlug userSlug: String) async {
-		let artURLStrings = await MainActor.run {
+		var artURLStrings = await MainActor.run {
 			LibraryKind.allCases
 				.flatMap { kind in
 					LibraryStore.shared.entries(forUserSlug: userSlug, kind: kind)
@@ -124,150 +238,29 @@ actor LibrarySyncEngine {
 				.compactMap(\.self)
 		}
 
+		artURLStrings += await self.episodeArtURLStrings(forUserSlug: userSlug)
+
 		await LibraryArtStore.shared.prune(keepingURLStrings: Set(artURLStrings))
 		await LibraryArtStore.shared.prefetch(artURLStrings)
 	}
+
+	/// The art URLs of the account's stored episodes.
+	///
+	/// - Parameter userSlug: The user's account slug.
+	///
+	/// - Returns: The episode banner URLs.
+	private func episodeArtURLStrings(forUserSlug userSlug: String) async -> [String] {
+		let context = PersistenceController.shared.container.newBackgroundContext()
+		context.automaticallyMergesChangesFromParent = true
+
+		return await context.perform {
+			let request = LocalEpisodeSnapshot.fetchRequest()
+			request.predicate = NSPredicate(format: "userSlug == %@ AND bannerURL != nil", userSlug)
+
+			return ((try? context.fetch(request)) ?? []).compactMap(\.bannerURL)
+		}
+	}
 	#endif
-
-	/// Runs a delta sync for the given library kind, looping until the server reports
-	/// no more rows past the current cursor.
-	///
-	/// - Parameters:
-	///    - kind: The library kind to sync.
-	///    - userSlug: The user's account slug.
-	func sync(_ kind: LibraryKind, forUserSlug userSlug: String) async throws {
-		self.installPathMonitorIfNeeded()
-
-		if let throttledUntil = self.throttledUntil[userSlug], throttledUntil > Date() {
-			syncLogger.info("THROTTLED skip kind=\(kind.rawValue) resumesIn=\(Int(throttledUntil.timeIntervalSinceNow))s")
-			return
-		}
-
-		let key = self.coalesceKey(userSlug: userSlug, kind: kind)
-		if let existing = self.inFlight[key] {
-			// The in-flight round's delta predates this trigger.
-			self.rerunRequested.insert(key)
-			try await existing.value
-			return
-		}
-
-		let task = Task { [weak self] in
-			guard let self = self else { return }
-			try await self.runSync(kind, forUserSlug: userSlug)
-		}
-		self.inFlight[key] = task
-		do {
-			try await task.value
-			self.inFlight[key] = nil
-			self.pendingRetries.remove(key)
-		} catch {
-			self.inFlight[key] = nil
-			self.rerunRequested.remove(key)
-			self.pendingRetries.insert(key)
-			if let apiError = error as? APIError, apiError.statusCode == 429 {
-				self.throttle(userSlug: userSlug, for: apiError.retryAfterInterval ?? self.defaultThrottleInterval)
-			}
-			throw error
-		}
-
-		if self.rerunRequested.remove(key) != nil {
-			try await self.sync(kind, forUserSlug: userSlug)
-		}
-	}
-
-	/// Makes the kind's next sync drop its cursor.
-	///
-	/// - Parameters:
-	///    - kind: The library kind to reconcile.
-	///    - userSlug: The user's account slug.
-	func reconcile(_ kind: LibraryKind, forUserSlug userSlug: String) async throws {
-		syncLogger.notice("RECONCILE kind=\(kind.rawValue)")
-		self.fullPullRequested.insert(self.coalesceKey(userSlug: userSlug, kind: kind))
-		try await self.sync(kind, forUserSlug: userSlug)
-	}
-
-	private func runSync(_ kind: LibraryKind, forUserSlug userSlug: String) async throws {
-		// A kind with unflushed mutations is not reconciled with the server; applying a
-		// delta now would advance the cursor past state the outbox still owns.
-		if await LibraryOutbox.shared.hasPendingOperations(forUserSlug: userSlug, kind: kind) {
-			syncLogger.info("DEFER kind=\(kind.rawValue) reason=pending-ops")
-			return
-		}
-
-		if self.fullPullRequested.remove(self.coalesceKey(userSlug: userSlug, kind: kind)) != nil {
-			await self.clearCursor(forUserSlug: userSlug, kind: kind)
-		}
-
-		await LibrarySyncProgress.shared.begin(kind)
-		do {
-			try await self.pullBatches(kind, forUserSlug: userSlug)
-			await LibrarySyncProgress.shared.end(kind)
-		} catch {
-			await LibrarySyncProgress.shared.end(kind)
-			throw error
-		}
-	}
-
-	private func pullBatches(_ kind: LibraryKind, forUserSlug userSlug: String) async throws {
-		var appliedCount = 0
-		// A pull without a cursor carries no tombstones, so the rows it never mentions are
-		// swept at the end instead of being deleted up front.
-		var isFullPull = await self.readCursor(forUserSlug: userSlug, kind: kind) == nil
-		var seenRemoteIDs: Set<String> = []
-
-		while true {
-			let cursor = await self.readCursor(forUserSlug: userSlug, kind: kind)
-
-			let response: LibrarySyncResponse
-			do {
-				response = try await KService
-					.librarySync(kind)
-					.since(cursor)
-					.limit(self.batchLimit)
-					.response()
-			} catch let error as APIError where error.isCursorExpired {
-				syncLogger.notice("Cursor expired for \(kind.stringValue); restarting as a full pull.")
-				await self.clearCursor(forUserSlug: userSlug, kind: kind)
-				appliedCount = 0
-				isFullPull = true
-				seenRemoteIDs = []
-				continue
-			}
-
-			let batch = response.data.relationships.libraries
-			let nextSince = response.data.attributes.nextSince
-			let hasMore = response.data.attributes.hasMore
-			// `total` counts the rows past the requested cursor, including this batch.
-			let expectedCount = response.data.attributes.total.map { appliedCount + $0 }
-			await LibrarySyncProgress.shared.update(kind, appliedCount: appliedCount, expectedCount: expectedCount)
-
-			syncLogger.info("PULL kind=\(kind.rawValue) since=\(cursor?.updatedAt ?? "nil") batch=\(batch.count) hasMore=\(hasMore) next=\(nextSince?.updatedAt ?? "nil")")
-
-			try await self.applyBatch(batch, nextSince: nextSince, forUserSlug: userSlug, kind: kind)
-
-			if isFullPull {
-				seenRemoteIDs.formUnion(batch.filter { $0.deletedAt == nil }.map(\.id))
-			}
-
-			appliedCount += batch.count
-			await LibrarySyncProgress.shared.update(kind, appliedCount: appliedCount, expectedCount: expectedCount)
-
-			#if !os(watchOS)
-			let artURLStrings = batch.filter { $0.deletedAt == nil }.flatMap { [$0.posterURL, $0.bannerURL] }.compactMap(\.self)
-			await LibraryArtStore.shared.prefetch(artURLStrings)
-			#endif
-
-			if !hasMore {
-				if isFullPull {
-					try await self.sweepEntries(notIn: seenRemoteIDs, forUserSlug: userSlug, kind: kind)
-				}
-
-				// Force the fraction to exactly 1.0 before ending.
-				await LibrarySyncProgress.shared.update(kind, appliedCount: appliedCount, expectedCount: appliedCount)
-				break
-			}
-		}
-	}
 
 	// MARK: - Remote Hints
 	/// Answers a hint that the server holds newer state.
@@ -343,7 +336,7 @@ actor LibrarySyncEngine {
 	}
 
 	// MARK: - Network Retry
-	/// Starts watching the network path on first call. Idempotent.
+	/// Starts watching the network path on first call.
 	private func installPathMonitorIfNeeded() {
 		guard self.pathMonitor == nil else { return }
 
@@ -363,8 +356,7 @@ actor LibrarySyncEngine {
 		let wasReachable = self.isNetworkReachable
 		self.isNetworkReachable = isReachable
 
-		// The monitor also reports on start and on every route change while online. Only
-		// the return from offline carries a retry signal.
+		// Only the return from offline carries a retry signal.
 		guard isReachable, wasReachable == false else { return }
 		await self.flushAndSyncIfReachable()
 	}
@@ -382,32 +374,51 @@ actor LibrarySyncEngine {
 
 	// MARK: - Persistence Hops
 	// `context.perform`'s async overload keeps the caller's priority and avoids inversion.
-	private func readCursor(forUserSlug userSlug: String, kind: LibraryKind) async -> SyncCursor? {
+	private func readCursors(forUserSlug userSlug: String) async -> [LibrarySyncStream: SyncCursor] {
 		let context = PersistenceController.shared.container.newBackgroundContext()
 		context.automaticallyMergesChangesFromParent = true
 		context.mergePolicy = NSMergePolicy.mergeByPropertyObjectTrump
+
 		return await context.perform {
-			let row = LocalSyncCursor.upsert(forUserSlug: userSlug, kind: kind, in: context)
+			var cursors: [LibrarySyncStream: SyncCursor] = [:]
+
+			for stream in LibrarySyncStream.allCases {
+				let row = LocalSyncCursor.upsert(forUserSlug: userSlug, stream: stream, in: context)
+				cursors[stream] = row.syncCursor
+			}
+
 			if context.hasChanges {
 				try? context.save()
 			}
-			return row.syncCursor
+
+			return cursors
 		}
 	}
 
-	private func applyBatch(_ batch: [LibrarySyncEntry], nextSince: SyncCursor?, forUserSlug userSlug: String, kind: LibraryKind) async throws {
+	private func applyRound(_ response: LibrarySyncResponse, forUserSlug userSlug: String) async throws {
 		let context = PersistenceController.shared.container.newBackgroundContext()
 		context.automaticallyMergesChangesFromParent = true
 		// Server data is authoritative on constraint collisions.
 		context.mergePolicy = NSMergePolicy.mergeByPropertyObjectTrump
-		// Rethrow save failures — the cursor must not advance past an unapplied batch.
+		// The cursors must not advance past an unapplied round.
 		try await context.perform {
-			for row in batch {
-				LocalLibraryEntry.apply(row, userSlug: userSlug, kind: kind, in: context)
+			let relationships = response.data.relationships
+
+			// The catalog lands first.
+			for row in relationships.trackables {
+				LocalTrackable.apply(row, in: context)
 			}
 
-			let cursorRow = LocalSyncCursor.upsert(forUserSlug: userSlug, kind: kind, in: context)
-			cursorRow.advance(to: nextSince)
+			for row in relationships.entries {
+				LocalLibraryEntry.apply(row, userSlug: userSlug, in: context)
+			}
+
+			LocalEpisodeSnapshot.replace(with: relationships.episodes, userSlug: userSlug, in: context)
+
+			for stream in LibrarySyncStream.allCases {
+				guard let state = response.data.attributes.state(of: stream) else { continue }
+				LocalSyncCursor.upsert(forUserSlug: userSlug, stream: stream, in: context).advance(to: state.nextSince)
+			}
 
 			if context.hasChanges {
 				try context.save()
@@ -415,98 +426,98 @@ actor LibrarySyncEngine {
 		}
 	}
 
-	/// Drops every cursor while the account's local rows cannot be trusted.
+	/// Drops the trackable cursors while the account's local catalog cannot be trusted.
 	///
 	/// - Parameter userSlug: The user's account slug.
 	private func repairCursorsIfNeeded(forUserSlug userSlug: String) async {
-		guard let reason = await self.fullPullReason(forUserSlug: userSlug) else { return }
+		guard await self.hasEntriesWithoutTrackable(forUserSlug: userSlug) else { return }
 
-		syncLogger.info("REPAIR pulling the full library, \(reason, privacy: .public)")
+		syncLogger.info("REPAIR entries are missing their trackable")
 
-		for kind in LibraryKind.allCases {
-			await self.clearCursor(forUserSlug: userSlug, kind: kind)
-		}
+		await self.clearCursors(LibrarySyncStream.allCases.filter { $0.kind != nil }, forUserSlug: userSlug)
 	}
 
-	/// Reports what makes the account's local rows untrustworthy.
+	/// Whether an entry points at a trackable the store does not hold.
 	///
 	/// - Parameter userSlug: The user's account slug.
 	///
-	/// - Returns: The reason a full pull is due.
-	private func fullPullReason(forUserSlug userSlug: String) async -> String? {
+	/// - Returns: `true` when the local catalog has a hole.
+	private func hasEntriesWithoutTrackable(forUserSlug userSlug: String) async -> Bool {
 		let context = PersistenceController.shared.container.newBackgroundContext()
 		context.automaticallyMergesChangesFromParent = true
 		context.mergePolicy = NSMergePolicy.mergeByPropertyObjectTrump
 
 		return await context.perform {
-			let entryRequest = LocalLibraryEntry.fetchRequest()
-			entryRequest.predicate = NSPredicate(format: "userSlug == %@ AND trackable == nil", userSlug)
-			entryRequest.fetchLimit = 1
+			let request = LocalLibraryEntry.fetchRequest()
+			request.predicate = NSPredicate(format: "userSlug == %@ AND trackable == nil", userSlug)
+			request.fetchLimit = 1
 
-			if ((try? context.count(for: entryRequest)) ?? 0) > 0 {
-				return "entries are missing their trackable"
-			}
-
-			let cursorRequest = LocalSyncCursor.fetchRequest()
-			cursorRequest.predicate = NSPredicate(
-				format: "userSlug == %@ AND payloadVersion != %d",
-				userSlug,
-				LocalSyncCursor.currentPayloadVersion
-			)
-			cursorRequest.fetchLimit = 1
-
-			if ((try? context.count(for: cursorRequest)) ?? 0) > 0 {
-				return "the sync payload shape changed"
-			}
-
-			return nil
+			return ((try? context.count(for: request)) ?? 0) > 0
 		}
 	}
 
-	private func clearCursor(forUserSlug userSlug: String, kind: LibraryKind) async {
+	private func clearCursors(_ streams: [LibrarySyncStream], forUserSlug userSlug: String) async {
 		let context = PersistenceController.shared.container.newBackgroundContext()
 		context.automaticallyMergesChangesFromParent = true
 		context.mergePolicy = NSMergePolicy.mergeByPropertyObjectTrump
 		await context.perform {
-			let cursorRequest = LocalSyncCursor.fetchRequest()
-			cursorRequest.predicate = NSPredicate(
-				format: "userSlug == %@ AND kindRaw == %d",
+			let request = LocalSyncCursor.fetchRequest()
+			request.predicate = NSPredicate(
+				format: "userSlug == %@ AND stream IN %@",
 				userSlug,
-				Int64(kind.rawValue)
+				streams.map(\.rawValue)
 			)
 
 			do {
-				for cursor in try context.fetch(cursorRequest) {
+				for cursor in try context.fetch(request) {
 					context.delete(cursor)
 				}
 				if context.hasChanges {
 					try context.save()
 				}
 			} catch {
-				syncLogger.error("Clear cursor failed: \(error.localizedDescription)")
+				syncLogger.error("Clear cursors failed: \(error.localizedDescription)")
 			}
 		}
 	}
 
-	/// Deletes the kind's local rows the full pull never returned.
-	private func sweepEntries(notIn seenRemoteIDs: Set<String>, forUserSlug userSlug: String, kind: LibraryKind) async throws {
+	/// Deletes the trackables no entry points at.
+	private func pruneOrphanedTrackables() async {
+		let context = PersistenceController.shared.container.newBackgroundContext()
+		context.automaticallyMergesChangesFromParent = true
+		context.mergePolicy = NSMergePolicy.mergeByPropertyObjectTrump
+
+		await context.perform {
+			let request = LocalTrackable.fetchRequest()
+			request.predicate = NSPredicate(format: "entries.@count == 0")
+
+			guard let orphaned = try? context.fetch(request), !orphaned.isEmpty else { return }
+
+			for trackable in orphaned {
+				context.delete(trackable)
+			}
+
+			if context.hasChanges {
+				try? context.save()
+			}
+			syncLogger.info("PRUNE trackables=\(orphaned.count)")
+		}
+	}
+
+	/// Deletes the account's local rows the full pull never returned.
+	private func sweepEntries(notIn seenRemoteIDs: Set<String>, forUserSlug userSlug: String) async throws {
 		let context = PersistenceController.shared.container.newBackgroundContext()
 		context.automaticallyMergesChangesFromParent = true
 		context.mergePolicy = NSMergePolicy.mergeByPropertyObjectTrump
 		try await context.perform {
 			let operationRequest = LocalOutboxOperation.fetchRequest()
-			operationRequest.predicate = NSPredicate(
-				format: "userSlug == %@ AND kindRaw == %d",
-				userSlug,
-				Int64(kind.rawValue)
-			)
+			operationRequest.predicate = NSPredicate(format: "userSlug == %@", userSlug)
 			let queuedTrackableIDs = Set(try context.fetch(operationRequest).map(\.trackableID))
 
 			let entryRequest = LocalLibraryEntry.fetchRequest()
 			entryRequest.predicate = NSPredicate(
-				format: "userSlug == %@ AND kindRaw == %d AND NOT (remoteID IN %@)",
+				format: "userSlug == %@ AND NOT (remoteID IN %@)",
 				userSlug,
-				Int64(kind.rawValue),
 				seenRemoteIDs
 			)
 
@@ -519,12 +530,7 @@ actor LibrarySyncEngine {
 			if context.hasChanges {
 				try context.save()
 			}
-			syncLogger.info("SWEEP kind=\(kind.rawValue) removed=\(sweptCount)")
+			syncLogger.info("SWEEP removed=\(sweptCount)")
 		}
-	}
-
-	// MARK: - Helpers
-	private nonisolated func coalesceKey(userSlug: String, kind: LibraryKind) -> String {
-		return "\(userSlug)::\(kind.rawValue)"
 	}
 }

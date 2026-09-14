@@ -110,6 +110,8 @@ enum UserSettingsKey: String, CaseIterable {
 	case notificationsSound
 	/// The key to the selected notification badge option.
 	case notificationsBadge
+	/// The key to the selected option for allowing airing reminders.
+	case airingRemindersAllowed
 	/// The key indicating whether the Watch should mirror the iPhone's notification grouping.
 	case notificationsMirrorWatch
 

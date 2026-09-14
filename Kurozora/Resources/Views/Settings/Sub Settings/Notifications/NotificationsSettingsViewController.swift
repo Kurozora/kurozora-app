@@ -18,7 +18,7 @@ class NotificationsSettingsViewController: SubSettingsViewController, TypedSegue
 	private var allowsNotifications = UserSettings.notificationsAllowed
 
 	private var visibleSections: [Section] {
-		return self.allowsNotifications ? [.allowNotifications, .preferences, .grouping] : [.allowNotifications]
+		return self.allowsNotifications ? [.allowNotifications, .preferences, .airingReminders, .grouping] : [.allowNotifications]
 	}
 
 	// MARK: - Initializers
@@ -87,7 +87,12 @@ class NotificationsSettingsViewController: SubSettingsViewController, TypedSegue
 		case .badges:
 			UserSettings.set(isOn, forKey: .notificationsBadge)
 			NotificationCenter.default.post(name: .KSNotificationsBadgeIsOn, object: nil)
-		case .grouping: break
+		case .airingReminders:
+			UserSettings.set(isOn, forKey: .airingRemindersAllowed)
+			Task {
+				await AiringNotificationScheduler.shared.refresh()
+			}
+		case .testAiringReminder, .grouping: break
 		}
 	}
 
@@ -157,6 +162,18 @@ extension NotificationsSettingsViewController {
 			}
 			self.configureSwitchCell(cell, title: L10n.badges, isOn: UserSettings.notificationsBadge, tag: row)
 			return cell
+		case .airingReminders:
+			guard let cell = tableView.dequeueReusableCell(withIdentifier: SwitchSettingsCell.self, for: indexPath) else {
+				fatalError("Cannot dequeue reusable cell with identifier \(SwitchSettingsCell.reuseID)")
+			}
+			self.configureSwitchCell(cell, title: L10n.airingReminders, isOn: UserSettings.airingRemindersAllowed, tag: row)
+			return cell
+		case .testAiringReminder:
+			guard let cell = tableView.dequeueReusableCell(withIdentifier: SettingsCell.self, for: indexPath) else {
+				fatalError("Cannot dequeue reusable cell with identifier \(SettingsCell.reuseID)")
+			}
+			cell.configure(title: "Send Test Reminder", detail: nil)
+			return cell
 		case .grouping:
 			guard let cell = tableView.dequeueReusableCell(withIdentifier: SettingsCell.self, for: indexPath) else {
 				fatalError("Cannot dequeue reusable cell with identifier \(SettingsCell.reuseID)")
@@ -174,6 +191,8 @@ extension NotificationsSettingsViewController {
 		switch self.visibleSections[contentSection] {
 		case .allowNotifications:
 			return L10n.inAppNotificationsFooter
+		case .airingReminders:
+			return L10n.airingRemindersFooter
 		case .preferences, .grouping:
 			return nil
 		}
@@ -192,6 +211,14 @@ extension NotificationsSettingsViewController {
 
 		switch self.visibleSections[contentSection] {
 		case .allowNotifications, .preferences: break
+		case .airingReminders:
+			#if DEBUG
+			guard self.visibleSections[contentSection].rows[indexPath.row] == .testAiringReminder else { return }
+
+			Task {
+				await AiringNotificationScheduler.shared.fireTestReminder()
+			}
+			#endif
 		case .grouping:
 			self.show(.notificationsGroupingSegue, sender: nil)
 		}
@@ -204,6 +231,7 @@ private extension NotificationsSettingsViewController {
 	enum Section: Int, CaseIterable {
 		case allowNotifications = 0
 		case preferences
+		case airingReminders
 		case grouping
 
 		/// List of rows in the section.
@@ -213,6 +241,12 @@ private extension NotificationsSettingsViewController {
 				return [.allowNotifications]
 			case .preferences:
 				return [.sounds, .badges]
+			case .airingReminders:
+				#if DEBUG
+				return [.airingReminders, .testAiringReminder]
+				#else
+				return [.airingReminders]
+				#endif
 			case .grouping:
 				return [.grouping]
 			}
@@ -224,6 +258,8 @@ private extension NotificationsSettingsViewController {
 		case allowNotifications = 0
 		case sounds
 		case badges
+		case airingReminders
+		case testAiringReminder
 		case grouping
 	}
 }
