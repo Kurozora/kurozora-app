@@ -30,14 +30,14 @@ actor AppBootstrap {
 	private init() {}
 
 	// MARK: - Functions
-	/// Runs the bootstrap closure once, reporting whether this call performed it.
+	/// Starts the bootstrap closure once.
 	///
 	/// - Parameter bootstrap: The process-level work to perform exactly once.
 	///
-	/// - Returns: Whether this call performed the bootstrap, and the resulting outcome.
-	func run(_ bootstrap: @escaping @Sendable () async -> BootstrapOutcome) async -> (isColdLaunch: Bool, outcome: BootstrapOutcome) {
+	/// - Returns: Whether this call started the bootstrap, and the task carrying its outcome.
+	func begin(_ bootstrap: @escaping @Sendable () async -> BootstrapOutcome) -> (isColdLaunch: Bool, task: Task<BootstrapOutcome, Never>) {
 		if let task = self.task {
-			return (false, await task.value)
+			return (false, task)
 		}
 
 		let task = Task {
@@ -45,10 +45,10 @@ actor AppBootstrap {
 		}
 		self.task = task
 
-		return (true, await task.value)
+		return (true, task)
 	}
 
-	/// Clears a blocked bootstrap; the next `run(_:)` retries it.
+	/// Clears a blocked bootstrap so the next `begin(_:)` retries it.
 	///
 	/// A `ready` outcome is kept for the life of the process and is never cleared.
 	func resetIfBlocked() async {

@@ -103,13 +103,7 @@ final class KurozoraDelegate {
 			}
 		}
 
-		// Register Home Screen shortcut items
 		self.registerHomeScreenShortcutItems()
-
-		// Play chime
-		if UserSettings.startupSoundAllowed {
-			Chime.shared.play()
-		}
 
 		return .ready
 	}
@@ -141,17 +135,30 @@ final class KurozoraDelegate {
 
 	/// Runs the process bootstrap if needed and installs the resulting interface in the given window.
 	///
-	/// The bootstrap runs once per process. Later windows reuse its outcome and skip the splash.
-	///
 	/// - Parameters:
 	///    - window: The window to set up.
-	///    - animatesSplash: Whether the splash animation may play. Honored only on cold launch.
+	///    - animatesSplash: Whether the splash may play its scheduled chime and animation.
 	func startInterface(in window: UIWindow?, animatesSplash: Bool) {
 		Task { @MainActor in
-			let result = await AppBootstrap.shared.run {
+			let (isColdLaunch, bootstrapTask) = await AppBootstrap.shared.begin {
 				await KurozoraDelegate.shared.performProcessBootstrap()
 			}
-			self.installInterface(in: window, animatesSplash: animatesSplash && result.isColdLaunch, outcome: result.outcome)
+
+			let splashViewController = animatesSplash && isColdLaunch
+				? window?.rootViewController as? SplashscreenViewController
+				: nil
+			splashViewController?.startLaunchExperience()
+
+			let outcome = await bootstrapTask.value
+
+			switch outcome {
+			case .blocked:
+				splashViewController?.cancelLaunchExperience()
+			case .ready:
+				await splashViewController?.waitForLaunchExperience()
+			}
+
+			self.installInterface(in: window, outcome: outcome)
 		}
 	}
 
@@ -159,10 +166,9 @@ final class KurozoraDelegate {
 	///
 	/// - Parameters:
 	///    - window: The window whose root view controller will be set.
-	///    - animatesSplash: Whether to play the splash animation before showing the main interface.
 	///    - outcome: The result of the process bootstrap.
 	@MainActor
-	private func installInterface(in window: UIWindow?, animatesSplash: Bool, outcome: BootstrapOutcome) {
+	private func installInterface(in window: UIWindow?, outcome: BootstrapOutcome) {
 		guard let window = window else { return }
 
 		switch outcome {
@@ -173,17 +179,8 @@ final class KurozoraDelegate {
 			window.rootViewController = warningViewController
 
 		case .ready:
-			let rootViewController = self.makeRootViewController()
-
-			if animatesSplash, let splashViewController = window.rootViewController as? SplashscreenViewController {
-				splashViewController.animateLogo { _ in
-					window.rootViewController = rootViewController
-					AuthenticationManager.shared.authenticateIfRequired()
-				}
-			} else {
-				window.rootViewController = rootViewController
-				AuthenticationManager.shared.authenticateIfRequired()
-			}
+			window.rootViewController = self.makeRootViewController()
+			AuthenticationManager.shared.authenticateIfRequired()
 		}
 	}
 

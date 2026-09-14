@@ -30,8 +30,8 @@
                 <constraint firstAttribute="trailing" secondItem="J4c-lr-ccx" secondAttribute="trailing" id="EQh-jB-eAX"/>
                 <constraint firstItem="J4c-lr-ccx" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="SRf-Po-dK0"/>
                 <constraint firstItem="J4c-lr-ccx" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" id="f4t-qv-DIr"/>
-                <constraint firstItem="CGz-qn-85c" firstAttribute="centerY" secondItem="iN0-l3-epB" secondAttribute="centerYWithinMargins" id="fLg-GR-f9q"/>
-                <constraint firstItem="CGz-qn-85c" firstAttribute="centerX" secondItem="iN0-l3-epB" secondAttribute="centerXWithinMargins" id="jdC-CN-Nzf"/>
+                <constraint firstItem="CGz-qn-85c" firstAttribute="centerY" secondItem="iN0-l3-epB" secondAttribute="centerY" id="fLg-GR-f9q"/>
+                <constraint firstItem="CGz-qn-85c" firstAttribute="centerX" secondItem="iN0-l3-epB" secondAttribute="centerX" id="jdC-CN-Nzf"/>
                 <constraint firstAttribute="bottom" secondItem="J4c-lr-ccx" secondAttribute="bottom" id="vN2-gR-rEZ"/>
             </constraints>
             <point key="canvasLocation" x="33.5" y="53.5"/>

@@ -21,4 +21,26 @@ enum SplashScreenAnimation: Int {
 
 	/// A collection of all values of this type.
 	static let allCases: [SplashScreenAnimation] = [.default, .anvil, .bounce, .heartbeat, .scale, .shake, .spin]
+
+	/// The time a single pass of the animation takes.
+	var duration: TimeInterval {
+		switch self {
+		case .none:
+			return 1.0
+		case .default:
+			return 1.4
+		case .shake:
+			return 0.6
+		case .scale:
+			return 0.5
+		case .anvil:
+			return 0.55
+		case .spin:
+			return 1.0
+		case .bounce:
+			return 0.87
+		case .heartbeat:
+			return 1.0
+		}
+	}
 }

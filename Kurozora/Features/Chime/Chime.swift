@@ -46,11 +46,50 @@ final class Chime: NSObject {
 
 	/// Plays the specified chime file.
 	///
-	/// The user's selected chime is played when `nil` is given.
-	///
 	/// - Parameters:
 	///    - chimeFile: The file to play as a chime.
 	func play(_ chimeFile: String? = nil) {
+		guard let url = self.url(for: chimeFile) else { return }
+
+		AudioSessionManager.shared.setActive(true) { [weak self] in
+			guard let self = self else { return }
+
+			Task {
+				await self.chimePlayer.loadAndStart(for: url, delegate: self)
+			}
+		}
+	}
+
+	/// Loads the specified chime file for playback.
+	///
+	/// - Parameters:
+	///    - chimeFile: The file to load as a chime.
+	///
+	/// - Returns: The loaded chime's duration.
+	func prepare(_ chimeFile: String? = nil) async -> TimeInterval {
+		guard let url = self.url(for: chimeFile) else { return 0.0 }
+
+		return await self.chimePlayer.load(for: url, delegate: self)
+	}
+
+	/// Starts playback of the loaded chime.
+	func playPrepared() {
+		AudioSessionManager.shared.setActive(true) { [weak self] in
+			guard let self = self else { return }
+
+			Task {
+				await self.chimePlayer.start()
+			}
+		}
+	}
+
+	/// Returns the location of the specified chime file.
+	///
+	/// - Parameters:
+	///    - chimeFile: The file to resolve.
+	///
+	/// - Returns: The chime's location in the bundle.
+	private func url(for chimeFile: String?) -> URL? {
 		let selectedChime = UserSettings.selectedChime
 		let chimeFileName = chimeFile ?? {
 			if selectedChime.isEmpty {
@@ -63,16 +102,10 @@ final class Chime: NSObject {
 					?? self.appChimeGroups.first?.chimes.first?.first?.file
 			}
 		}()
-		guard let chimeFileComponents = chimeFileName?.components(separatedBy: ".") else { return }
-		guard let url = Bundle.main.url(forResource: chimeFileComponents.first, withExtension: chimeFileComponents.last) else { return }
 
-		AudioSessionManager.shared.setActive(true) { [weak self] in
-			guard let self = self else { return }
+		guard let chimeFileComponents = chimeFileName?.components(separatedBy: ".") else { return nil }
 
-			Task {
-				await self.chimePlayer.start(for: url, delegate: self)
-			}
-		}
+		return Bundle.main.url(forResource: chimeFileComponents.first, withExtension: chimeFileComponents.last)
 	}
 
 	/// Change the chime to the specified chime.

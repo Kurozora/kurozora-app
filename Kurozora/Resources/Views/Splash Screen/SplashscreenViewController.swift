@@ -8,6 +8,7 @@
 
 import UIKit
 
+/// The screen shown while the app performs its process bootstrap.
 final class SplashscreenViewController: KViewController {
 	// MARK: - Views
 	private lazy var logoImageView: UIImageView = {
@@ -19,6 +20,13 @@ final class SplashscreenViewController: KViewController {
 		return imageView
 	}()
 
+	// MARK: - Properties
+	/// The scheduled logo animation.
+	private var launchExperienceTask: Task<Void, Never>?
+
+	/// The scheduled chime.
+	private var chimeTask: Task<Void, Never>?
+
 	// MARK: - View
 	override func viewDidLoad() {
 		super.viewDidLoad()
@@ -26,18 +34,76 @@ final class SplashscreenViewController: KViewController {
 		self.view.addSubview(self.logoImageView)
 
 		NSLayoutConstraint.activate([
-			self.logoImageView.centerXAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.centerXAnchor),
-			self.logoImageView.centerYAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.centerYAnchor),
+			self.logoImageView.centerXAnchor.constraint(equalTo: self.view.centerXAnchor),
+			self.logoImageView.centerYAnchor.constraint(equalTo: self.view.centerYAnchor),
 			self.logoImageView.widthAnchor.constraint(equalToConstant: 128.0),
 			self.logoImageView.widthAnchor.constraint(equalTo: self.logoImageView.heightAnchor, multiplier: 21.0 / 22.0)
 		])
 	}
 
 	// MARK: - Functions
-	/// Plays the splash logo animation.
+	/// Schedules the chime and the logo animation to land together.
+	func startLaunchExperience() {
+		let startedAt = CACurrentMediaTime()
+
+		self.launchExperienceTask = Task { @MainActor in
+			let chimeDuration = UserSettings.startupSoundAllowed ? await Chime.shared.prepare() : 0.0
+			let splashDuration = Animation.shared.selectedAnimation.duration
+
+			if chimeDuration > 0.0 {
+				self.scheduleChime(at: startedAt + max(0.0, splashDuration - chimeDuration))
+			}
+
+			guard !Task.isCancelled else { return }
+
+			await self.animateLogo()
+			await Self.sleep(until: startedAt + splashDuration)
+		}
+	}
+
+	/// Waits for the scheduled chime and logo animation to finish.
+	func waitForLaunchExperience() async {
+		await self.launchExperienceTask?.value
+	}
+
+	/// Cancels the scheduled chime and logo animation.
+	func cancelLaunchExperience() {
+		self.chimeTask?.cancel()
+		self.chimeTask = nil
+		self.launchExperienceTask?.cancel()
+		self.launchExperienceTask = nil
+	}
+
+	/// Starts the prepared chime at the given media time.
 	///
-	/// - Parameter completion: Called when the animation finishes, with a flag indicating success.
-	func animateLogo(completion: (@MainActor @Sendable (Bool) -> Void)?) {
-		Animation.shared.playAnimation(on: self.logoImageView, completion: completion)
+	/// - Parameter deadline: The media time at which playback starts.
+	private func scheduleChime(at deadline: TimeInterval) {
+		self.chimeTask = Task { @MainActor in
+			await Self.sleep(until: deadline)
+
+			guard !Task.isCancelled else { return }
+
+			Chime.shared.playPrepared()
+		}
+	}
+
+	/// Plays the splash logo animation.
+	private func animateLogo() async {
+		await withCheckedContinuation { continuation in
+			Animation.shared.playAnimation(on: self.logoImageView) { _ in
+				continuation.resume()
+			}
+		}
+	}
+
+	/// Suspends until the given media time.
+	///
+	/// - Parameter deadline: The media time to wake at.
+	private static func sleep(until deadline: TimeInterval) async {
+		let delay = deadline - CACurrentMediaTime()
+
+		guard delay > 0.0 else { return }
+
+		try? await Task.sleep(nanoseconds: UInt64(delay * 1_000_000_000))
 	}
 }

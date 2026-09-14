@@ -46,11 +46,17 @@ final class Animation {
 	/// The shared instance of `Animation`.
 	static let shared = Animation()
 
-	/// The time the logo is held on screen when no animation plays.
-	fileprivate static let staticLogoDuration: TimeInterval = 1.0
-
 	private var playbackTasks: [UUID: Task<Void, Never>] = [:]
 	private var playbackViews: [UUID: WeakView] = [:]
+
+	/// The animation the splash will play.
+	var selectedAnimation: SplashScreenAnimation {
+		if self.shouldReduceMotion {
+			return .none
+		}
+
+		return UserSettings.currentSplashScreenAnimation
+	}
 
 	// MARK: Initializers
 	private init() {
@@ -209,13 +215,7 @@ private extension Animation {
 
 	/// Plays the selected animation once.
 	func playAnimationPass(on view: UIView, completion: (@MainActor @Sendable (Bool) -> Void)?) {
-		// Check accessibility settings
-		if self.shouldReduceMotion {
-			self.playNoneAnimation(on: view, completion: completion)
-			return
-		}
-
-		switch UserSettings.currentSplashScreenAnimation {
+		switch self.selectedAnimation {
 		case .none:
 			self.playNoneAnimation(on: view, completion: completion)
 		case .default:
@@ -253,7 +253,7 @@ private extension Animation {
 		view.transform = .identity
 		view.alpha = 1.0
 
-		DispatchQueue.main.asyncAfter(deadline: .now() + Animation.staticLogoDuration) {
+		DispatchQueue.main.asyncAfter(deadline: .now() + SplashScreenAnimation.none.duration) {
 			completion?(true)
 		}
 	}
