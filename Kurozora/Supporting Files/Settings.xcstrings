@@ -16600,6 +16600,239 @@
         }
       }
     },
+    "Get a reminder when an episode, chapter, or game you're reminded about is released. Reminders are scheduled on your device from your last sync, so they work without a connection." : {
+      "comment" : "The footer string for the 'Airing Reminders' settings.",
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "احصل على تذكير عند صدور حلقة أو فصل أو لعبة فعّلت التذكير لها. تُجدول التذكيرات على جهازك انطلاقًا من آخر مزامنة، لذا تعمل دون اتصال."
+          }
+        },
+        "bn" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "যে পর্ব, অধ্যায় বা গেমের জন্য রিমাইন্ডার চালু করেছ, সেটি প্রকাশ পেলে জানিয়ে দেওয়া হবে। রিমাইন্ডারগুলো তোমার শেষ সিঙ্ক থেকে ডিভাইসেই নির্ধারিত হয়, তাই ইন্টারনেট ছাড়াও কাজ করে।"
+          }
+        },
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Dostaneš připomenutí, jakmile vyjde epizoda, kapitola nebo hra, u které máš připomenutí zapnuté. Připomenutí se plánují přímo v zařízení podle poslední synchronizace, takže fungují i bez připojení."
+          }
+        },
+        "da" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Få en påmindelse, når et afsnit, kapitel eller spil, du har slået påmindelse til for, udkommer. Påmindelser planlægges på din enhed ud fra din seneste synkronisering, så de virker uden forbindelse."
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Erhalte eine Erinnerung, sobald eine Folge, ein Kapitel oder ein Spiel erscheint, für das du eine Erinnerung aktiviert hast. Erinnerungen werden ab deiner letzten Synchronisierung auf deinem Gerät geplant und funktionieren daher auch ohne Verbindung."
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Λάβε υπενθύμιση μόλις κυκλοφορήσει ένα επεισόδιο, κεφάλαιο ή παιχνίδι για το οποίο έχεις ενεργοποιήσει υπενθύμιση. Οι υπενθυμίσεις προγραμματίζονται στη συσκευή σου από τον τελευταίο συγχρονισμό, οπότε λειτουργούν χωρίς σύνδεση."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Recibe un recordatorio cuando salga un episodio, capítulo o juego para el que hayas activado un recordatorio. Los recordatorios se programan en tu dispositivo desde tu última sincronización, así que funcionan sin conexión."
+          }
+        },
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Recibe un recordatorio cuando salga un episodio, capítulo o juego para el que hayas activado un recordatorio. Los recordatorios se programan en tu dispositivo desde tu última sincronización, así que funcionan sin conexión."
+          }
+        },
+        "fa" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "وقتی قسمت، فصل یا بازی‌ای که برایش یادآور فعال کرده‌ای منتشر شود، یادآوری دریافت می‌کنی. یادآورها بر اساس آخرین همگام‌سازی روی دستگاهت زمان‌بندی می‌شوند، پس بدون اتصال هم کار می‌کنند."
+          }
+        },
+        "fi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Saat muistutuksen, kun jakso, luku tai peli, jolle olet ottanut muistutuksen käyttöön, julkaistaan. Muistutukset ajoitetaan laitteellasi viimeisimmän synkronoinnin perusteella, joten ne toimivat ilman yhteyttä."
+          }
+        },
+        "fil" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Makakatanggap ka ng paalala kapag lumabas ang episode, kabanata, o larong pinaalalahanan mo. Naka-schedule ang mga paalala sa device mo mula sa huli mong sync, kaya gumagana ang mga ito nang walang koneksyon."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Reçois un rappel dès qu'un épisode, un chapitre ou un jeu pour lequel tu as activé un rappel sort. Les rappels sont planifiés sur ton appareil à partir de ta dernière synchronisation, ils fonctionnent donc sans connexion."
+          }
+        },
+        "he" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "קבל תזכורת כשפרק, פרק מנגה או משחק שהפעלת עבורו תזכורת יוצא. התזכורות מתוזמנות במכשיר שלך מהסנכרון האחרון, ולכן הן פועלות גם בלי חיבור."
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "जिस एपिसोड, चैप्टर या गेम के लिए आपने रिमाइंडर लगाया है, उसके रिलीज़ होने पर आपको याद दिलाया जाएगा। रिमाइंडर आपके पिछले सिंक के आधार पर आपके डिवाइस पर ही शेड्यूल होते हैं, इसलिए वे बिना कनेक्शन के भी काम करते हैं।"
+          }
+        },
+        "hu" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Emlékeztetőt kapsz, amikor megjelenik egy epizód, fejezet vagy játék, amelyhez emlékeztetőt kértél. Az emlékeztetők a legutóbbi szinkronizálás alapján az eszközödön ütemeződnek, így kapcsolat nélkül is működnek."
+          }
+        },
+        "hy" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Կստանաս հիշեցում, երբ թողարկվի դրվագը, գլուխը կամ խաղը, որի համար հիշեցում ես միացրել։ Հիշեցումները պլանավորվում են քո սարքում վերջին համաժամացումից, ուստի աշխատում են առանց կապի։"
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Dapatkan pengingat saat episode, bab, atau game yang kamu pasang pengingatnya dirilis. Pengingat dijadwalkan di perangkatmu berdasarkan sinkronisasi terakhir, jadi tetap bekerja tanpa koneksi."
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ricevi un promemoria quando esce un episodio, un capitolo o un gioco per cui hai attivato un promemoria. I promemoria vengono pianificati sul tuo dispositivo a partire dall'ultima sincronizzazione, quindi funzionano anche senza connessione."
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "リマインダーを設定したエピソード、チャプター、ゲームが配信されるとお知らせします。リマインダーは最後の同期をもとにデバイス上で予定されるため、接続がなくても動作します。"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "리마인더를 설정한 에피소드, 챕터, 게임이 공개되면 알려드립니다. 리마인더는 마지막 동기화를 기준으로 기기에서 예약되므로 연결 없이도 작동합니다."
+          }
+        },
+        "ms" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Dapatkan peringatan apabila episod, bab atau permainan yang kamu tetapkan peringatannya dikeluarkan. Peringatan dijadualkan pada peranti kamu dari penyegerakan terakhir, jadi ia berfungsi tanpa sambungan."
+          }
+        },
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Få en påminnelse når en episode, et kapittel eller et spill du har slått på påminnelse for, slippes. Påminnelser planlegges på enheten din ut fra siste synkronisering, så de fungerer uten tilkobling."
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Krijg een herinnering zodra een aflevering, hoofdstuk of game waarvoor je een herinnering hebt ingesteld uitkomt. Herinneringen worden op je apparaat ingepland vanaf je laatste synchronisatie, dus ze werken zonder verbinding."
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Otrzymasz przypomnienie, gdy ukaże się odcinek, rozdział lub gra, dla których włączono przypomnienie. Przypomnienia są planowane na urządzeniu na podstawie ostatniej synchronizacji, więc działają bez połączenia."
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Receba um lembrete quando sair um episódio, capítulo ou jogo para o qual você ativou um lembrete. Os lembretes são agendados no seu dispositivo a partir da última sincronização, então funcionam sem conexão."
+          }
+        },
+        "pt-PT" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Recebe um lembrete quando sair um episódio, capítulo ou jogo para o qual ativaste um lembrete. Os lembretes são agendados no teu dispositivo a partir da última sincronização, por isso funcionam sem ligação."
+          }
+        },
+        "ro" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Primești un memento când apare un episod, capitol sau joc pentru care ai activat un memento. Mementourile sunt programate pe dispozitivul tău pornind de la ultima sincronizare, așa că funcționează fără conexiune."
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Получай напоминание, когда выйдет серия, глава или игра, для которой ты включил напоминание. Напоминания планируются на устройстве по последней синхронизации, поэтому работают без подключения."
+          }
+        },
+        "sv" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Få en påminnelse när ett avsnitt, kapitel eller spel som du har påminnelse för släpps. Påminnelser schemaläggs på din enhet utifrån din senaste synkronisering, så de fungerar utan anslutning."
+          }
+        },
+        "ta" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "நீ நினைவூட்டல் அமைத்த எபிசோட், அத்தியாயம் அல்லது கேம் வெளியாகும்போது அறிவிப்பு கிடைக்கும். நினைவூட்டல்கள் கடைசி ஒத்திசைவின் அடிப்படையில் உன் சாதனத்திலேயே திட்டமிடப்படுகின்றன, எனவே இணைப்பு இல்லாமலும் வேலை செய்யும்."
+          }
+        },
+        "te" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "నువ్వు రిమైండర్ పెట్టిన ఎపిసోడ్, అధ్యాయం లేదా గేమ్ విడుదలైనప్పుడు గుర్తు చేస్తాం. రిమైండర్‌లు చివరి సమకాలీకరణ ఆధారంగా నీ పరికరంలోనే షెడ్యూల్ అవుతాయి, కాబట్టి కనెక్షన్ లేకపోయినా పని చేస్తాయి."
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "รับการเตือนเมื่อตอน บท หรือเกมที่คุณตั้งเตือนไว้ออกวางจำหน่าย การเตือนจะถูกตั้งไว้บนอุปกรณ์ของคุณจากการซิงก์ครั้งล่าสุด จึงทำงานได้แม้ไม่มีการเชื่อมต่อ"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Hatırlatıcı kurduğun bir bölüm, bölüm veya oyun yayımlandığında haber alırsın. Hatırlatıcılar son eşitlemenden itibaren cihazında planlanır, bu yüzden bağlantı olmadan da çalışır."
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Отримуй нагадування, коли вийде серія, розділ або гра, для якої ти увімкнув нагадування. Нагадування плануються на твоєму пристрої за останньою синхронізацією, тож працюють без підключення."
+          }
+        },
+        "ur" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "جس ایپیسوڈ، باب یا گیم کے لیے آپ نے یاد دہانی لگائی ہے، اس کے ریلیز ہونے پر اطلاع ملے گی۔ یاد دہانیاں آپ کی آخری سِنک کی بنیاد پر آپ کے آلے پر شیڈول ہوتی ہیں، اس لیے یہ بغیر کنکشن کے بھی کام کرتی ہیں۔"
+          }
+        },
+        "vi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Nhận nhắc nhở khi tập, chương hoặc trò chơi mà bạn đã đặt nhắc nhở được phát hành. Nhắc nhở được lên lịch trên thiết bị của bạn từ lần đồng bộ gần nhất, nên vẫn hoạt động khi không có kết nối."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "当你设置了提醒的剧集、章节或游戏上线时，会收到提醒。提醒会根据上次同步在设备上排定，因此无需联网也能生效。"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "當你設定了提醒的劇集、章節或遊戲上線時，會收到提醒。提醒會根據上次同步在裝置上排定，因此無需連網也能生效。"
+          }
+        }
+      }
+    },
     "Get off my lawn!" : {
       "comment" : "The string for grass theme description.",
       "localizations" : {
@@ -20830,6 +21063,239 @@
         }
       }
     },
+    "Library Artwork on Wi-Fi Only" : {
+      "comment" : "The title of the setting that limits library artwork downloads to Wi-Fi.",
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "صور المكتبة عبر Wi-Fi فقط"
+          }
+        },
+        "bn" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "লাইব্রেরি আর্টওয়ার্ক শুধু Wi-Fi–তে"
+          }
+        },
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Obrázky knihovny jen přes Wi-Fi"
+          }
+        },
+        "da" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Biblioteksgrafik kun via Wi-Fi"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Mediathek-Bilder nur über WLAN"
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Εικόνες βιβλιοθήκης μόνο με Wi-Fi"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Imágenes de la biblioteca solo con Wi-Fi"
+          }
+        },
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Imágenes de la biblioteca solo con Wi-Fi"
+          }
+        },
+        "fa" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "تصاویر کتابخانه فقط با Wi-Fi"
+          }
+        },
+        "fi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Kirjaston kuvat vain Wi-Fi-yhteydellä"
+          }
+        },
+        "fil" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Artwork ng library sa Wi-Fi lang"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Images de la bibliothèque en Wi-Fi uniquement"
+          }
+        },
+        "he" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "תמונות הספרייה ב-Wi-Fi בלבד"
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "लाइब्रेरी आर्टवर्क सिर्फ़ Wi-Fi पर"
+          }
+        },
+        "hu" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Könyvtári képek csak Wi-Fin"
+          }
+        },
+        "hy" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Գրադարանի պատկերները միայն Wi-Fi-ով"
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Gambar pustaka hanya lewat Wi-Fi"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Immagini della libreria solo con Wi-Fi"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ライブラリ画像はWi-Fiのみ"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "보관함 이미지는 Wi-Fi에서만"
+          }
+        },
+        "ms" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Imej pustaka melalui Wi-Fi sahaja"
+          }
+        },
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Bibliotekbilder kun over Wi-Fi"
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Bibliotheekafbeeldingen alleen via wifi"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Grafiki biblioteki tylko przez Wi-Fi"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Imagens da biblioteca somente no Wi-Fi"
+          }
+        },
+        "pt-PT" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Imagens da biblioteca só por Wi-Fi"
+          }
+        },
+        "ro" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Imagini din bibliotecă doar pe Wi-Fi"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Обложки библиотеки только по Wi-Fi"
+          }
+        },
+        "sv" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Biblioteksbilder endast via Wi-Fi"
+          }
+        },
+        "ta" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "நூலகப் படங்கள் Wi-Fi இல் மட்டும்"
+          }
+        },
+        "te" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "లైబ్రరీ చిత్రాలు Wi-Fi లో మాత్రమే"
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ภาพปกคลังเฉพาะ Wi-Fi"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Kitaplık görselleri yalnızca Wi-Fi'de"
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Обкладинки бібліотеки лише через Wi-Fi"
+          }
+        },
+        "ur" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "لائبریری آرٹ ورک صرف Wi-Fi پر"
+          }
+        },
+        "vi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ảnh thư viện chỉ qua Wi-Fi"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "仅在 Wi-Fi 下载资料库图片"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "僅在 Wi-Fi 下載資料庫圖片"
+          }
+        }
+      }
+    },
     "Library Import" : {
       "comment" : "The string for the 'library import' notification type",
       "localizations" : {
@@ -24325,6 +24791,239 @@
         }
       }
     },
+    "New Episode" : {
+      "comment" : "The string for the 'new episode' notification type",
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "حلقة جديدة"
+          }
+        },
+        "bn" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "নতুন পর্ব"
+          }
+        },
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Nová epizoda"
+          }
+        },
+        "da" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Nyt afsnit"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Neue Folge"
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Νέο επεισόδιο"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Nuevo episodio"
+          }
+        },
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Nuevo episodio"
+          }
+        },
+        "fa" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "قسمت جدید"
+          }
+        },
+        "fi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Uusi jakso"
+          }
+        },
+        "fil" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Bagong episode"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Nouvel épisode"
+          }
+        },
+        "he" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "פרק חדש"
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "नया एपिसोड"
+          }
+        },
+        "hu" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Új epizód"
+          }
+        },
+        "hy" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Նոր դրվագ"
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Episode baru"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Nuovo episodio"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "新エピソード"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "새 에피소드"
+          }
+        },
+        "ms" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Episod baharu"
+          }
+        },
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ny episode"
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Nieuwe aflevering"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Nowy odcinek"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Novo episódio"
+          }
+        },
+        "pt-PT" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Novo episódio"
+          }
+        },
+        "ro" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Episod nou"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Новая серия"
+          }
+        },
+        "sv" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Nytt avsnitt"
+          }
+        },
+        "ta" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "புதிய எபிசோட்"
+          }
+        },
+        "te" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "కొత్త ఎపిసోడ్"
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ตอนใหม่"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Yeni bölüm"
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Нова серія"
+          }
+        },
+        "ur" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "نیا ایپیسوڈ"
+          }
+        },
+        "vi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tập mới"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "新剧集"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "新劇集"
+          }
+        }
+      }
+    },
     "New Session" : {
       "comment" : "The string for the 'new session' notification type",
       "localizations" : {
@@ -26888,6 +27587,239 @@
         }
       }
     },
+    "Posters and banners are stored for offline use. Turn this on to download them over Wi-Fi only." : {
+      "comment" : "The footer message explaining what the library artwork setting does.",
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "تُحفظ الملصقات واللافتات للاستخدام دون اتصال. فعّل هذا لتنزيلها عبر Wi-Fi فقط."
+          }
+        },
+        "bn" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "পোস্টার ও ব্যানার অফলাইনে ব্যবহারের জন্য সংরক্ষণ করা হয়। শুধু Wi-Fi–তে ডাউনলোড করতে এটি চালু করো।"
+          }
+        },
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Plakáty a bannery se ukládají pro offline použití. Zapni tuto možnost, aby se stahovaly jen přes Wi-Fi."
+          }
+        },
+        "da" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Plakater og bannere gemmes til offline brug. Slå dette til for kun at hente dem via Wi-Fi."
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Poster und Banner werden für die Offline-Nutzung gespeichert. Aktiviere diese Option, um sie nur über WLAN zu laden."
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Οι αφίσες και τα banner αποθηκεύονται για offline χρήση. Ενεργοποίησέ το για λήψη μόνο μέσω Wi-Fi."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Los pósteres y banners se guardan para usarlos sin conexión. Activa esto para descargarlos solo con Wi-Fi."
+          }
+        },
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Los pósteres y banners se guardan para usarlos sin conexión. Activa esto para descargarlos solo con Wi-Fi."
+          }
+        },
+        "fa" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "پوسترها و بنرها برای استفاده آفلاین ذخیره می‌شوند. این را روشن کن تا فقط با Wi-Fi دانلود شوند."
+          }
+        },
+        "fi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Julisteet ja bannerit tallennetaan offline-käyttöä varten. Ota tämä käyttöön, niin ne ladataan vain Wi-Fi-yhteydellä."
+          }
+        },
+        "fil" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Iniimbak ang mga poster at banner para magamit offline. I-on ito para i-download ang mga ito sa Wi-Fi lang."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Les affiches et bannières sont enregistrées pour une utilisation hors ligne. Active cette option pour les télécharger en Wi-Fi uniquement."
+          }
+        },
+        "he" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "פוסטרים ובאנרים נשמרים לשימוש במצב לא מקוון. הפעל אפשרות זו כדי להוריד אותם ב-Wi-Fi בלבד."
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "पोस्टर और बैनर ऑफ़लाइन इस्तेमाल के लिए सेव किए जाते हैं। इन्हें सिर्फ़ Wi-Fi पर डाउनलोड करने के लिए यह चालू करें।"
+          }
+        },
+        "hu" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "A plakátokat és bannereket offline használatra mentjük. Kapcsold be, hogy csak Wi-Fin töltődjenek le."
+          }
+        },
+        "hy" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Պաստառներն ու բանները պահվում են անցանց օգտագործման համար։ Միացրու սա՝ դրանք միայն Wi-Fi-ով ներբեռնելու համար։"
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Poster dan banner disimpan untuk penggunaan offline. Aktifkan ini agar hanya diunduh lewat Wi-Fi."
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Poster e banner vengono salvati per l'uso offline. Attiva questa opzione per scaricarli solo con Wi-Fi."
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ポスターとバナーはオフラインで使えるように保存されます。これをオンにすると、Wi-Fi接続時のみダウンロードします。"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "포스터와 배너는 오프라인에서 쓸 수 있도록 저장됩니다. 이 옵션을 켜면 Wi-Fi에서만 다운로드합니다."
+          }
+        },
+        "ms" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Poster dan sepanduk disimpan untuk kegunaan luar talian. Hidupkan ini untuk memuat turunnya melalui Wi-Fi sahaja."
+          }
+        },
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Plakater og bannere lagres for offline bruk. Slå på dette for å laste dem ned kun over Wi-Fi."
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Posters en banners worden bewaard voor offline gebruik. Zet dit aan om ze alleen via wifi te downloaden."
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Plakaty i banery są zapisywane do użytku offline. Włącz tę opcję, aby pobierać je tylko przez Wi-Fi."
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Pôsteres e banners são salvos para uso offline. Ative isto para baixá-los somente no Wi-Fi."
+          }
+        },
+        "pt-PT" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Os cartazes e banners são guardados para utilização offline. Ativa isto para os transferires só por Wi-Fi."
+          }
+        },
+        "ro" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Afișele și bannerele sunt salvate pentru utilizare offline. Activează asta pentru a le descărca doar pe Wi-Fi."
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Постеры и баннеры сохраняются для офлайн-доступа. Включи, чтобы загружать их только по Wi-Fi."
+          }
+        },
+        "sv" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Affischer och banderoller sparas för offlineanvändning. Slå på detta för att bara hämta dem via Wi-Fi."
+          }
+        },
+        "ta" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "போஸ்டர்களும் பேனர்களும் ஆஃப்லைன் பயன்பாட்டுக்காகச் சேமிக்கப்படுகின்றன. Wi-Fi இல் மட்டும் பதிவிறக்க இதை இயக்கு."
+          }
+        },
+        "te" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "పోస్టర్లు, బ్యానర్లు ఆఫ్‌లైన్ వినియోగం కోసం సేవ్ చేయబడతాయి. Wi-Fi లో మాత్రమే డౌన్‌లోడ్ చేయడానికి దీన్ని ఆన్ చేయి."
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "โปสเตอร์และแบนเนอร์จะถูกเก็บไว้ใช้แบบออฟไลน์ เปิดตัวเลือกนี้เพื่อดาวน์โหลดผ่าน Wi-Fi เท่านั้น"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Posterler ve afişler çevrimdışı kullanım için saklanır. Yalnızca Wi-Fi'de indirmek için bunu aç."
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Постери та банери зберігаються для офлайн-використання. Увімкни, щоб завантажувати їх лише через Wi-Fi."
+          }
+        },
+        "ur" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "پوسٹرز اور بینرز آف لائن استعمال کے لیے محفوظ کیے جاتے ہیں۔ انہیں صرف Wi-Fi پر ڈاؤن لوڈ کرنے کے لیے یہ آن کریں۔"
+          }
+        },
+        "vi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Áp phích và băng rôn được lưu để dùng ngoại tuyến. Bật tùy chọn này để chỉ tải chúng qua Wi-Fi."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "海报和横幅会保存以便离线使用。开启后仅在 Wi-Fi 下下载。"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "海報和橫幅會儲存以便離線使用。開啟後僅在 Wi-Fi 下下載。"
+          }
+        }
+      }
+    },
     "Pronunciation" : {
       "comment" : "The pronunciation larger-text option.",
       "localizations" : {
@@ -28981,6 +29913,239 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "降低 Kurozora 中各處動畫與動態效果的強度。"
+          }
+        }
+      }
+    },
+    "Release Reminders" : {
+      "comment" : "The title string for the 'Release Reminders' settings.",
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "تذكيرات الإصدار"
+          }
+        },
+        "bn" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "রিলিজ রিমাইন্ডার"
+          }
+        },
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Připomenutí vydání"
+          }
+        },
+        "da" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Påmindelser om udgivelser"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Release-Erinnerungen"
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Υπενθυμίσεις κυκλοφορίας"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Recordatorios de estrenos"
+          }
+        },
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Recordatorios de estrenos"
+          }
+        },
+        "fa" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "یادآورهای انتشار"
+          }
+        },
+        "fi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Julkaisumuistutukset"
+          }
+        },
+        "fil" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Mga paalala sa paglabas"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Rappels de sortie"
+          }
+        },
+        "he" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "תזכורות יציאה"
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "रिलीज़ रिमाइंडर"
+          }
+        },
+        "hu" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Megjelenési emlékeztetők"
+          }
+        },
+        "hy" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Թողարկման հիշեցումներ"
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Pengingat rilis"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Promemoria di uscita"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "配信リマインダー"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "공개 리마인더"
+          }
+        },
+        "ms" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Peringatan keluaran"
+          }
+        },
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Påminnelser om utgivelser"
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Herinneringen voor releases"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Przypomnienia o premierach"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Lembretes de lançamento"
+          }
+        },
+        "pt-PT" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Lembretes de lançamento"
+          }
+        },
+        "ro" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Mementouri de lansare"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Напоминания о выходе"
+          }
+        },
+        "sv" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Påminnelser om släpp"
+          }
+        },
+        "ta" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "வெளியீட்டு நினைவூட்டல்கள்"
+          }
+        },
+        "te" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "విడుదల రిమైండర్‌లు"
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "การเตือนวันออกอากาศ"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Yayın hatırlatıcıları"
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Нагадування про вихід"
+          }
+        },
+        "ur" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ریلیز یاد دہانیاں"
+          }
+        },
+        "vi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Nhắc nhở phát hành"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "上线提醒"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "上線提醒"
           }
         }
       }

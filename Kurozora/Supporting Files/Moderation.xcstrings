@@ -7233,232 +7233,232 @@
     "NSFW": {
       "comment": "Timeout reason label.",
       "localizations": {
-        "nl": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "NSFW"
-          }
-        },
         "ar": {
           "stringUnit": {
             "state": "translated",
-            "value": "NSFW"
-          }
-        },
-        "es-419": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "NSFW"
-          }
-        },
-        "id": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "NSFW"
-          }
-        },
-        "ja": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "NSFW"
-          }
-        },
-        "pt-BR": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "NSFW"
-          }
-        },
-        "de": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "NSFW"
-          }
-        },
-        "fr": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "NSFW"
-          }
-        },
-        "it": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "NSFW"
-          }
-        },
-        "ko": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "NSFW"
-          }
-        },
-        "pl": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "NSFW"
-          }
-        },
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "NSFW"
-          }
-        },
-        "uk": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "NSFW"
-          }
-        },
-        "zh-Hans": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "NSFW"
-          }
-        },
-        "zh-Hant": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "NSFW"
-          }
-        },
-        "th": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "NSFW"
-          }
-        },
-        "tr": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "NSFW"
-          }
-        },
-        "vi": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "NSFW"
-          }
-        },
-        "es": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "NSFW"
-          }
-        },
-        "fil": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "NSFW"
-          }
-        },
-        "hi": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "NSFW"
-          }
-        },
-        "fa": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "NSFW"
-          }
-        },
-        "he": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "NSFW"
-          }
-        },
-        "ms": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "NSFW"
-          }
-        },
-        "ro": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "NSFW"
-          }
-        },
-        "sv": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "NSFW"
-          }
-        },
-        "cs": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "NSFW"
-          }
-        },
-        "el": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "NSFW"
+            "value": "محتوى حساس"
           }
         },
         "bn": {
           "stringUnit": {
             "state": "translated",
-            "value": "NSFW"
+            "value": "সংবেদনশীল কনটেন্ট"
           }
         },
-        "ta": {
+        "cs": {
           "stringUnit": {
             "state": "translated",
-            "value": "NSFW"
-          }
-        },
-        "te": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "NSFW"
+            "value": "Citlivý obsah"
           }
         },
         "da": {
           "stringUnit": {
             "state": "translated",
-            "value": "NSFW"
+            "value": "Følsomt indhold"
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Sensible Inhalte"
+          }
+        },
+        "el": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ευαίσθητο περιεχόμενο"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Contenido sensible"
+          }
+        },
+        "es-419": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Contenido sensible"
+          }
+        },
+        "fa": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "محتوای حساس"
           }
         },
         "fi": {
           "stringUnit": {
             "state": "translated",
-            "value": "NSFW"
+            "value": "Arkaluonteinen sisältö"
+          }
+        },
+        "fil": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Sensitibong content"
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Contenu sensible"
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "תוכן רגיש"
+          }
+        },
+        "hi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "संवेदनशील सामग्री"
           }
         },
         "hu": {
           "stringUnit": {
             "state": "translated",
-            "value": "NSFW"
-          }
-        },
-        "ur": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "NSFW"
-          }
-        },
-        "pt-PT": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "NSFW"
+            "value": "Érzékeny tartalom"
           }
         },
         "hy": {
           "stringUnit": {
             "state": "translated",
-            "value": "NSFW"
+            "value": "Զգայուն բովանդակություն"
+          }
+        },
+        "id": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Konten sensitif"
+          }
+        },
+        "it": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Contenuti sensibili"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "閲覧注意"
+          }
+        },
+        "ko": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "열람 주의"
+          }
+        },
+        "ms": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Kandungan sensitif"
           }
         },
         "nb": {
           "stringUnit": {
             "state": "translated",
-            "value": "NSFW"
+            "value": "Sensitivt innhold"
+          }
+        },
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Gevoelige inhoud"
+          }
+        },
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Treści wrażliwe"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Conteúdo sensível"
+          }
+        },
+        "pt-PT": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Conteúdo sensível"
+          }
+        },
+        "ro": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Conținut sensibil"
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Деликатный контент"
+          }
+        },
+        "sv": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Känsligt innehåll"
+          }
+        },
+        "ta": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "உணர்திறன் உள்ளடக்கம்"
+          }
+        },
+        "te": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "సున్నితమైన కంటెంట్"
+          }
+        },
+        "th": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "เนื้อหาละเอียดอ่อน"
+          }
+        },
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Hassas içerik"
+          }
+        },
+        "uk": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Делікатний контент"
+          }
+        },
+        "ur": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "حساس مواد"
+          }
+        },
+        "vi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Nội dung nhạy cảm"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "限制级"
+          }
+        },
+        "zh-Hant": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "工作場所不宜"
           }
         }
       }

@@ -935,236 +935,7 @@
     },
     "%1$lld/%2$lld" : {
       "comment" : "The guesses a player spent out of the guesses allowed.",
-      "localizations" : {
-        "ar" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "%1$lld/%2$lld"
-          }
-        },
-        "bn" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "%1$lld/%2$lld"
-          }
-        },
-        "cs" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "%1$lld/%2$lld"
-          }
-        },
-        "da" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "%1$lld/%2$lld"
-          }
-        },
-        "de" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "%1$lld/%2$lld"
-          }
-        },
-        "el" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "%1$lld/%2$lld"
-          }
-        },
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "%1$lld/%2$lld"
-          }
-        },
-        "es-419" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "%1$lld/%2$lld"
-          }
-        },
-        "fa" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "%1$lld/%2$lld"
-          }
-        },
-        "fi" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "%1$lld/%2$lld"
-          }
-        },
-        "fil" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "%1$lld/%2$lld"
-          }
-        },
-        "fr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "%1$lld/%2$lld"
-          }
-        },
-        "he" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "%1$lld/%2$lld"
-          }
-        },
-        "hi" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "%1$lld/%2$lld"
-          }
-        },
-        "hu" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "%1$lld/%2$lld"
-          }
-        },
-        "hy" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "%1$lld/%2$lld"
-          }
-        },
-        "id" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "%1$lld/%2$lld"
-          }
-        },
-        "it" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "%1$lld/%2$lld"
-          }
-        },
-        "ja" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "%1$lld/%2$lld"
-          }
-        },
-        "ko" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "%1$lld/%2$lld"
-          }
-        },
-        "ms" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "%1$lld/%2$lld"
-          }
-        },
-        "nb" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "%1$lld/%2$lld"
-          }
-        },
-        "nl" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "%1$lld/%2$lld"
-          }
-        },
-        "pl" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "%1$lld/%2$lld"
-          }
-        },
-        "pt-BR" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "%1$lld/%2$lld"
-          }
-        },
-        "pt-PT" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "%1$lld/%2$lld"
-          }
-        },
-        "ro" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "%1$lld/%2$lld"
-          }
-        },
-        "ru" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "%1$lld/%2$lld"
-          }
-        },
-        "sv" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "%1$lld/%2$lld"
-          }
-        },
-        "ta" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "%1$lld/%2$lld"
-          }
-        },
-        "te" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "%1$lld/%2$lld"
-          }
-        },
-        "th" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "%1$lld/%2$lld"
-          }
-        },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "%1$lld/%2$lld"
-          }
-        },
-        "uk" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "%1$lld/%2$lld"
-          }
-        },
-        "ur" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "%1$lld/%2$lld"
-          }
-        },
-        "vi" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "%1$lld/%2$lld"
-          }
-        },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "%1$lld/%2$lld"
-          }
-        },
-        "zh-Hant" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "%1$lld/%2$lld"
-          }
-        }
-      }
+      "shouldTranslate" : false
     },
     "%@ Re:CAP is still in progress. Check back in a week." : {
       "comment" : "The ReCap in-progress header shown in December.",
@@ -16754,7 +16525,237 @@
       }
     },
     "Afternoon" : {
-      "comment" : "The 'Afternoon' search filter option."
+      "comment" : "The 'Afternoon' search filter option.",
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "بعد الظهر"
+          }
+        },
+        "bn" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "দুপুর"
+          }
+        },
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Odpoledne"
+          }
+        },
+        "da" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Eftermiddag"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Nachmittag"
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Απόγευμα"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tarde"
+          }
+        },
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tarde"
+          }
+        },
+        "fa" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "بعدازظهر"
+          }
+        },
+        "fi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Iltapäivä"
+          }
+        },
+        "fil" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Hapon"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Après-midi"
+          }
+        },
+        "he" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "אחר הצהריים"
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "दोपहर"
+          }
+        },
+        "hu" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Délután"
+          }
+        },
+        "hy" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Կեսօր"
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Siang"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Pomeriggio"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "昼"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "오후"
+          }
+        },
+        "ms" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tengah hari"
+          }
+        },
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ettermiddag"
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Middag"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Popołudnie"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tarde"
+          }
+        },
+        "pt-PT" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tarde"
+          }
+        },
+        "ro" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "După-amiază"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "День"
+          }
+        },
+        "sv" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Eftermiddag"
+          }
+        },
+        "ta" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "மதியம்"
+          }
+        },
+        "te" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "మధ్యాహ్నం"
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ช่วงบ่าย"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Öğleden sonra"
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "День"
+          }
+        },
+        "ur" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "دوپہر"
+          }
+        },
+        "vi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Buổi chiều"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "下午"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "下午"
+          }
+        }
+      }
     },
     "Age (years)" : {
       "comment" : "The 'Age (years)' search filter label.",
@@ -18854,7 +18855,237 @@
       }
     },
     "Any" : {
-      "comment" : "The value shown for a search filter the user has left unset."
+      "comment" : "The value shown for a search filter the user has left unset.",
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "الكل"
+          }
+        },
+        "bn" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "যেকোনো"
+          }
+        },
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Libovolné"
+          }
+        },
+        "da" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Alle"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Beliebig"
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Οποιοδήποτε"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Cualquiera"
+          }
+        },
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Cualquiera"
+          }
+        },
+        "fa" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "هر کدام"
+          }
+        },
+        "fi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Mikä tahansa"
+          }
+        },
+        "fil" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Kahit ano"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Peu importe"
+          }
+        },
+        "he" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "הכול"
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "कोई भी"
+          }
+        },
+        "hu" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Bármelyik"
+          }
+        },
+        "hy" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ցանկացած"
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Semua"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Qualsiasi"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "指定なし"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "전체"
+          }
+        },
+        "ms" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Semua"
+          }
+        },
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Alle"
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Alle"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Dowolne"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Qualquer"
+          }
+        },
+        "pt-PT" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Qualquer"
+          }
+        },
+        "ro" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Oricare"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Любой"
+          }
+        },
+        "sv" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Alla"
+          }
+        },
+        "ta" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ஏதேனும்"
+          }
+        },
+        "te" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ఏదైనా"
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ทั้งหมด"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Fark etmez"
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Будь-який"
+          }
+        },
+        "ur" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "کوئی بھی"
+          }
+        },
+        "vi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Bất kỳ"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "不限"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "不限"
+          }
+        }
+      }
     },
     "Aquarius" : {
       "comment" : "The display value 'Aquarius'.",
@@ -25847,7 +26078,237 @@
       }
     },
     "CM" : {
-      "comment" : "The display value 'CM'."
+      "comment" : "The display value 'CM'.",
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "إعلان"
+          }
+        },
+        "bn" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "বিজ্ঞাপন"
+          }
+        },
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Reklama"
+          }
+        },
+        "da" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Reklame"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Werbespot"
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Διαφήμιση"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Anuncio"
+          }
+        },
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Anuncio"
+          }
+        },
+        "fa" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "تبلیغ"
+          }
+        },
+        "fi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Mainos"
+          }
+        },
+        "fil" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Patalastas"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Publicité"
+          }
+        },
+        "he" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "פרסומת"
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "विज्ञापन"
+          }
+        },
+        "hu" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Reklám"
+          }
+        },
+        "hy" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Գովազդ"
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Iklan"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Spot"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "CM"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "광고"
+          }
+        },
+        "ms" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Iklan"
+          }
+        },
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Reklame"
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Reclame"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Reklama"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Comercial"
+          }
+        },
+        "pt-PT" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Anúncio"
+          }
+        },
+        "ro" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Reclamă"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Реклама"
+          }
+        },
+        "sv" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Reklam"
+          }
+        },
+        "ta" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "விளம்பரம்"
+          }
+        },
+        "te" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ప్రకటన"
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "โฆษณา"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Reklam"
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Реклама"
+          }
+        },
+        "ur" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "اشتہار"
+          }
+        },
+        "vi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Quảng cáo"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "广告"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "廣告"
+          }
+        }
+      }
     },
     "Calendar" : {
       "comment" : "The Apple Calendar app destination.",
@@ -30510,7 +30971,237 @@
       }
     },
     "Choose Date…" : {
-      "comment" : "The action that opens a date picker for a search filter."
+      "comment" : "The action that opens a date picker for a search filter.",
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "اختيار التاريخ…"
+          }
+        },
+        "bn" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "তারিখ বাছুন…"
+          }
+        },
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Vybrat datum…"
+          }
+        },
+        "da" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Vælg dato…"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Datum wählen…"
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Επιλογή ημερομηνίας…"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Elegir fecha…"
+          }
+        },
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Elegir fecha…"
+          }
+        },
+        "fa" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "انتخاب تاریخ…"
+          }
+        },
+        "fi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Valitse päivä…"
+          }
+        },
+        "fil" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Pumili ng petsa…"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Choisir une date…"
+          }
+        },
+        "he" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "בחירת תאריך…"
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "तारीख़ चुनें…"
+          }
+        },
+        "hu" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Dátum választása…"
+          }
+        },
+        "hy" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ընտրել ամսաթիվը…"
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Pilih tanggal…"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Scegli data…"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "日付を選択…"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "날짜 선택…"
+          }
+        },
+        "ms" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Pilih tarikh…"
+          }
+        },
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Velg dato…"
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Datum kiezen…"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Wybierz datę…"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Escolher data…"
+          }
+        },
+        "pt-PT" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Escolher data…"
+          }
+        },
+        "ro" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Alege data…"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Выбрать дату…"
+          }
+        },
+        "sv" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Välj datum…"
+          }
+        },
+        "ta" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "தேதியைத் தேர்ந்தெடு…"
+          }
+        },
+        "te" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "తేదీని ఎంచుకోండి…"
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "เลือกวันที่…"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tarih seç…"
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Вибрати дату…"
+          }
+        },
+        "ur" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "تاریخ منتخب کریں…"
+          }
+        },
+        "vi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Chọn ngày…"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "选择日期…"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "選擇日期…"
+          }
+        }
+      }
     },
     "Color" : {
       "comment" : "The accessibility label for the color action.",
@@ -33314,13 +34005,13 @@
         "ar" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "DLC"
+            "value" : "محتوى قابل للتنزيل"
           }
         },
         "bn" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "DLC"
+            "value" : "ডাউনলোডযোগ্য কনটেন্ট"
           }
         },
         "cs" : {
@@ -33362,7 +34053,7 @@
         "fa" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "DLC"
+            "value" : "محتوای دانلودی"
           }
         },
         "fi" : {
@@ -33386,13 +34077,13 @@
         "he" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "DLC"
+            "value" : "תוכן להורדה"
           }
         },
         "hi" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "DLC"
+            "value" : "डाउनलोड करने योग्य सामग्री"
           }
         },
         "hu" : {
@@ -33488,19 +34179,19 @@
         "ta" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "DLC"
+            "value" : "பதிவிறக்கக்கூடிய உள்ளடக்கம்"
           }
         },
         "te" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "DLC"
+            "value" : "డౌన్‌లోడ్ చేయదగిన కంటెంట్"
           }
         },
         "th" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "DLC"
+            "value" : "เนื้อหาเสริม"
           }
         },
         "tr" : {
@@ -33518,7 +34209,7 @@
         "ur" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "DLC"
+            "value" : "ڈاؤن لوڈ کے قابل مواد"
           }
         },
         "vi" : {
@@ -33530,13 +34221,13 @@
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "DLC"
+            "value" : "可下载内容"
           }
         },
         "zh-Hant" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "DLC"
+            "value" : "可下載內容"
           }
         }
       }
@@ -39134,7 +39825,237 @@
       }
     },
     "Duration in Under" : {
-      "comment" : "The header above the durations a search filter offers. Reads as a sentence with the option below it, such as 'Duration in under 30 min'."
+      "comment" : "The header above the durations a search filter offers. Reads as a sentence with the option below it, such as 'Duration in under 30 min'.",
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "مدة أقل من"
+          }
+        },
+        "bn" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "সময়কাল এর কম"
+          }
+        },
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Délka do"
+          }
+        },
+        "da" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Varighed under"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Dauer unter"
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Διάρκεια έως"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Duración de menos de"
+          }
+        },
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Duración de menos de"
+          }
+        },
+        "fa" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "مدت کمتر از"
+          }
+        },
+        "fi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Kesto alle"
+          }
+        },
+        "fil" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tagal na wala pang"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Durée de moins de"
+          }
+        },
+        "he" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "אורך של פחות מ־"
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "इससे कम अवधि"
+          }
+        },
+        "hu" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ennél rövidebb"
+          }
+        },
+        "hy" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Տևողությունը պակաս քան"
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Durasi di bawah"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Durata inferiore a"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "再生時間（以内）"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "재생 시간 이하"
+          }
+        },
+        "ms" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tempoh bawah"
+          }
+        },
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Varighet under"
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Duur onder"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Czas poniżej"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Duração de menos de"
+          }
+        },
+        "pt-PT" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Duração inferior a"
+          }
+        },
+        "ro" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Durată sub"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Длительность менее"
+          }
+        },
+        "sv" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Längd under"
+          }
+        },
+        "ta" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "கால அளவு இதற்குக் கீழ்"
+          }
+        },
+        "te" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "వ్యవధి దీని కంటే తక్కువ"
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ความยาวไม่เกิน"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Şundan kısa süre"
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Тривалість менше"
+          }
+        },
+        "ur" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "دورانیہ اس سے کم"
+          }
+        },
+        "vi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Thời lượng dưới"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "时长少于"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "時長少於"
+          }
+        }
+      }
     },
     "Early Supporter" : {
       "comment" : "The title shown on the early-supporter profile badge.",
@@ -40768,7 +41689,237 @@
       }
     },
     "Effects" : {
-      "comment" : "The title of the effects splash screen animations category."
+      "comment" : "The title of the effects splash screen animations category.",
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "مؤثرات"
+          }
+        },
+        "bn" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ইফেক্ট"
+          }
+        },
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Efekty"
+          }
+        },
+        "da" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Effekter"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Effekte"
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Εφέ"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Efectos"
+          }
+        },
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Efectos"
+          }
+        },
+        "fa" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "جلوه‌ها"
+          }
+        },
+        "fi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tehosteet"
+          }
+        },
+        "fil" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Mga effect"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Effets"
+          }
+        },
+        "he" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "אפקטים"
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "इफ़ेक्ट"
+          }
+        },
+        "hu" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Effektek"
+          }
+        },
+        "hy" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Էֆեկտներ"
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Efek"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Effetti"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "エフェクト"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "효과"
+          }
+        },
+        "ms" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Kesan"
+          }
+        },
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Effekter"
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Effecten"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Efekty"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Efeitos"
+          }
+        },
+        "pt-PT" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Efeitos"
+          }
+        },
+        "ro" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Efecte"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Эффекты"
+          }
+        },
+        "sv" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Effekter"
+          }
+        },
+        "ta" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "விளைவுகள்"
+          }
+        },
+        "te" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ఎఫెక్ట్‌లు"
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "เอฟเฟกต์"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Efektler"
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ефекти"
+          }
+        },
+        "ur" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ایفیکٹس"
+          }
+        },
+        "vi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Hiệu ứng"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "特效"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "特效"
+          }
+        }
+      }
     },
     "Enable this option so that Kurozora is locked whenever you close it. You'll be asked to authenticate through Face ID or your device's passcode when you reopen the app." : {
       "comment" : "The authentication settings description for Face ID.",
@@ -42402,10 +43553,470 @@
       }
     },
     "Episode %1$lld (%2$lld) is airing now." : {
-      "comment" : "The message of a reminder naming the episode that is airing. The first argument is the episode number within its season and the second is its number within the series."
+      "comment" : "The message of a reminder naming the episode that is airing. The first argument is the episode number within its season and the second is its number within the series.",
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "الحلقة %1$lld (%2$lld) تُعرض الآن."
+          }
+        },
+        "bn" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "পর্ব %1$lld (%2$lld) এখন সম্প্রচারিত হচ্ছে।"
+          }
+        },
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Epizoda %1$lld (%2$lld) se právě vysílá."
+          }
+        },
+        "da" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Afsnit %1$lld (%2$lld) sendes nu."
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Folge %1$lld (%2$lld) läuft jetzt."
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Το επεισόδιο %1$lld (%2$lld) προβάλλεται τώρα."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "El episodio %1$lld (%2$lld) se está emitiendo."
+          }
+        },
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "El episodio %1$lld (%2$lld) se está transmitiendo."
+          }
+        },
+        "fa" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "قسمت %1$lld (%2$lld) در حال پخش است."
+          }
+        },
+        "fi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Jakso %1$lld (%2$lld) on nyt lähetyksessä."
+          }
+        },
+        "fil" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Umeere na ang episode %1$lld (%2$lld)."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "L'épisode %1$lld (%2$lld) est diffusé maintenant."
+          }
+        },
+        "he" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "פרק %1$lld (%2$lld) משודר עכשיו."
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "एपिसोड %1$lld (%2$lld) अभी प्रसारित हो रहा है।"
+          }
+        },
+        "hu" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "A(z) %1$lld. (%2$lld.) epizód most megy."
+          }
+        },
+        "hy" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%1$lld (%2$lld) դրվագը հեռարձակվում է հիմա։"
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Episode %1$lld (%2$lld) sedang tayang."
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "L'episodio %1$lld (%2$lld) è in onda ora."
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "第%1$lld話（%2$lld）が放送中です。"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%1$lld화(%2$lld)가 지금 방송 중입니다."
+          }
+        },
+        "ms" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Episod %1$lld (%2$lld) sedang disiarkan."
+          }
+        },
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Episode %1$lld (%2$lld) sendes nå."
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Aflevering %1$lld (%2$lld) wordt nu uitgezonden."
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Odcinek %1$lld (%2$lld) jest właśnie emitowany."
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "O episódio %1$lld (%2$lld) está no ar."
+          }
+        },
+        "pt-PT" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "O episódio %1$lld (%2$lld) está no ar."
+          }
+        },
+        "ro" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Episodul %1$lld (%2$lld) se difuzează acum."
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Серия %1$lld (%2$lld) выходит в эфир."
+          }
+        },
+        "sv" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Avsnitt %1$lld (%2$lld) sänds nu."
+          }
+        },
+        "ta" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "எபிசோட் %1$lld (%2$lld) இப்போது ஒளிபரப்பாகிறது."
+          }
+        },
+        "te" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ఎపిసోడ్ %1$lld (%2$lld) ఇప్పుడు ప్రసారమవుతోంది."
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ตอนที่ %1$lld (%2$lld) กำลังออกอากาศ"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%1$lld. (%2$lld) bölüm şimdi yayında."
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Серія %1$lld (%2$lld) виходить в ефір."
+          }
+        },
+        "ur" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ایپیسوڈ %1$lld (%2$lld) ابھی نشر ہو رہا ہے۔"
+          }
+        },
+        "vi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tập %1$lld (%2$lld) đang phát sóng."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "第 %1$lld 集（%2$lld）正在播出。"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "第 %1$lld 集（%2$lld）正在播出。"
+          }
+        }
+      }
     },
     "Episode %lld is airing now." : {
-      "comment" : "The message of a reminder naming the episode that is airing. The argument is the episode number."
+      "comment" : "The message of a reminder naming the episode that is airing. The argument is the episode number.",
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "الحلقة %lld تُعرض الآن."
+          }
+        },
+        "bn" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "পর্ব %lld এখন সম্প্রচারিত হচ্ছে।"
+          }
+        },
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Epizoda %lld se právě vysílá."
+          }
+        },
+        "da" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Afsnit %lld sendes nu."
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Folge %lld läuft jetzt."
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Το επεισόδιο %lld προβάλλεται τώρα."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "El episodio %lld se está emitiendo."
+          }
+        },
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "El episodio %lld se está transmitiendo."
+          }
+        },
+        "fa" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "قسمت %lld در حال پخش است."
+          }
+        },
+        "fi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Jakso %lld on nyt lähetyksessä."
+          }
+        },
+        "fil" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Umeere na ang episode %lld."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "L'épisode %lld est diffusé maintenant."
+          }
+        },
+        "he" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "פרק %lld משודר עכשיו."
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "एपिसोड %lld अभी प्रसारित हो रहा है।"
+          }
+        },
+        "hu" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "A(z) %lld. epizód most megy."
+          }
+        },
+        "hy" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%lld դրվագը հեռարձակվում է հիմա։"
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Episode %lld sedang tayang."
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "L'episodio %lld è in onda ora."
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "第%lld話が放送中です。"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%lld화가 지금 방송 중입니다."
+          }
+        },
+        "ms" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Episod %lld sedang disiarkan."
+          }
+        },
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Episode %lld sendes nå."
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Aflevering %lld wordt nu uitgezonden."
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Odcinek %lld jest właśnie emitowany."
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "O episódio %lld está no ar."
+          }
+        },
+        "pt-PT" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "O episódio %lld está no ar."
+          }
+        },
+        "ro" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Episodul %lld se difuzează acum."
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Серия %lld выходит в эфир."
+          }
+        },
+        "sv" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Avsnitt %lld sänds nu."
+          }
+        },
+        "ta" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "எபிசோட் %lld இப்போது ஒளிபரப்பாகிறது."
+          }
+        },
+        "te" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ఎపిసోడ్ %lld ఇప్పుడు ప్రసారమవుతోంది."
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ตอนที่ %lld กำลังออกอากาศ"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%lld. bölüm şimdi yayında."
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Серія %lld виходить в ефір."
+          }
+        },
+        "ur" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ایپیسوڈ %lld ابھی نشر ہو رہا ہے۔"
+          }
+        },
+        "vi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tập %lld đang phát sóng."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "第 %lld 集正在播出。"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "第 %lld 集正在播出。"
+          }
+        }
+      }
     },
     "Episode: %@" : {
       "comment" : "The label naming the episodes a song appears in.",
@@ -42874,7 +44485,237 @@
       }
     },
     "Evening" : {
-      "comment" : "The 'Evening' search filter option."
+      "comment" : "The 'Evening' search filter option.",
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "المساء"
+          }
+        },
+        "bn" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "সন্ধ্যা"
+          }
+        },
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Večer"
+          }
+        },
+        "da" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Aften"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Abend"
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Βράδυ"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Noche"
+          }
+        },
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Noche"
+          }
+        },
+        "fa" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "عصر"
+          }
+        },
+        "fi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ilta"
+          }
+        },
+        "fil" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Gabi"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Soir"
+          }
+        },
+        "he" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ערב"
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "शाम"
+          }
+        },
+        "hu" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Este"
+          }
+        },
+        "hy" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Երեկո"
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Malam"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sera"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "夕方"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "저녁"
+          }
+        },
+        "ms" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Petang"
+          }
+        },
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Kveld"
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Avond"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Wieczór"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Noite"
+          }
+        },
+        "pt-PT" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Noite"
+          }
+        },
+        "ro" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Seară"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Вечер"
+          }
+        },
+        "sv" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Kväll"
+          }
+        },
+        "ta" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "மாலை"
+          }
+        },
+        "te" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "సాయంత్రం"
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ช่วงเย็น"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Akşam"
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Вечір"
+          }
+        },
+        "ur" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "شام"
+          }
+        },
+        "vi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Buổi tối"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "傍晚"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "傍晚"
+          }
+        }
+      }
     },
     "Favorited %@ will show up on this page!" : {
       "comment" : "The favorites empty-state detail for your own profile.",
@@ -49405,10 +51246,470 @@
       }
     },
     "Gleam" : {
-      "comment" : "The display value 'Gleam'."
+      "comment" : "The display value 'Gleam'.",
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "لمعان"
+          }
+        },
+        "bn" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ঝলক"
+          }
+        },
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Záblesk"
+          }
+        },
+        "da" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Glimt"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Schimmer"
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Λάμψη"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Destello"
+          }
+        },
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Destello"
+          }
+        },
+        "fa" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "درخشش"
+          }
+        },
+        "fi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Kimallus"
+          }
+        },
+        "fil" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Kislap"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Éclat"
+          }
+        },
+        "he" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "נצנוץ"
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "चमक"
+          }
+        },
+        "hu" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Csillanás"
+          }
+        },
+        "hy" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Փայլ"
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Kilau"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Bagliore"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "きらめき"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "광택"
+          }
+        },
+        "ms" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Kilau"
+          }
+        },
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Glimt"
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Glans"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Połysk"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Brilho"
+          }
+        },
+        "pt-PT" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Brilho"
+          }
+        },
+        "ro" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sclipire"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Блик"
+          }
+        },
+        "sv" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Glimt"
+          }
+        },
+        "ta" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "மின்னல்"
+          }
+        },
+        "te" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "మెరుపు"
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ประกาย"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Parıltı"
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Відблиск"
+          }
+        },
+        "ur" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "چمک"
+          }
+        },
+        "vi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ánh sáng"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "流光"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "流光"
+          }
+        }
+      }
     },
     "Glitch" : {
-      "comment" : "The display value 'Glitch'."
+      "comment" : "The display value 'Glitch'.",
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "خلل"
+          }
+        },
+        "bn" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "গ্লিচ"
+          }
+        },
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Glitch"
+          }
+        },
+        "da" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Glitch"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Glitch"
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Glitch"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Glitch"
+          }
+        },
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Glitch"
+          }
+        },
+        "fa" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "گلیچ"
+          }
+        },
+        "fi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Häiriö"
+          }
+        },
+        "fil" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Glitch"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Glitch"
+          }
+        },
+        "he" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "גליץ'"
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ग्लिच"
+          }
+        },
+        "hu" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Glitch"
+          }
+        },
+        "hy" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Խափանում"
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Glitch"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Glitch"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "グリッチ"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "글리치"
+          }
+        },
+        "ms" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Glitch"
+          }
+        },
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Glitch"
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Glitch"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Glitch"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Glitch"
+          }
+        },
+        "pt-PT" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Glitch"
+          }
+        },
+        "ro" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Glitch"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Глитч"
+          }
+        },
+        "sv" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Glitch"
+          }
+        },
+        "ta" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "கோளாறு"
+          }
+        },
+        "te" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "గ్లిచ్"
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "กลิตช์"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Glitch"
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Глітч"
+          }
+        },
+        "ur" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "گلچ"
+          }
+        },
+        "vi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Nhiễu"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "故障"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "故障"
+          }
+        }
+      }
     },
     "Go To" : {
       "comment" : "The string for the 'Go To' context menu option.",
@@ -54309,7 +56610,237 @@
       }
     },
     "Impact" : {
-      "comment" : "The display value 'Impact'."
+      "comment" : "The display value 'Impact'.",
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ارتطام"
+          }
+        },
+        "bn" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ইমপ্যাক্ট"
+          }
+        },
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Náraz"
+          }
+        },
+        "da" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sammenstød"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Aufprall"
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Πρόσκρουση"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Impacto"
+          }
+        },
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Impacto"
+          }
+        },
+        "fa" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ضربه"
+          }
+        },
+        "fi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Isku"
+          }
+        },
+        "fil" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Impact"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Impact"
+          }
+        },
+        "he" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "חבטה"
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "प्रहार"
+          }
+        },
+        "hu" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Becsapódás"
+          }
+        },
+        "hy" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Հարված"
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Hentakan"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Impatto"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "インパクト"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "임팩트"
+          }
+        },
+        "ms" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Hentakan"
+          }
+        },
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sammenstøt"
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Impact"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Uderzenie"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Impacto"
+          }
+        },
+        "pt-PT" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Impacto"
+          }
+        },
+        "ro" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Impact"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Удар"
+          }
+        },
+        "sv" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Islag"
+          }
+        },
+        "ta" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "தாக்கம்"
+          }
+        },
+        "te" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ఇంపాక్ట్"
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "อิมแพกต์"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Darbe"
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Удар"
+          }
+        },
+        "ur" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ٹکراؤ"
+          }
+        },
+        "vi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Va chạm"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "冲击"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "衝擊"
+          }
+        }
+      }
     },
     "In Apple Music Library" : {
       "comment" : "The menu action shown when a song is already in the Apple Music library.",
@@ -57342,236 +59873,7 @@
     },
     "Kotodama" : {
       "comment" : "The name of the Kotodama minigame.",
-      "localizations" : {
-        "ar" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Kotodama"
-          }
-        },
-        "bn" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Kotodama"
-          }
-        },
-        "cs" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Kotodama"
-          }
-        },
-        "da" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Kotodama"
-          }
-        },
-        "de" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Kotodama"
-          }
-        },
-        "el" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Kotodama"
-          }
-        },
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Kotodama"
-          }
-        },
-        "es-419" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Kotodama"
-          }
-        },
-        "fa" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Kotodama"
-          }
-        },
-        "fi" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Kotodama"
-          }
-        },
-        "fil" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Kotodama"
-          }
-        },
-        "fr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Kotodama"
-          }
-        },
-        "he" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Kotodama"
-          }
-        },
-        "hi" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Kotodama"
-          }
-        },
-        "hu" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Kotodama"
-          }
-        },
-        "hy" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Kotodama"
-          }
-        },
-        "id" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Kotodama"
-          }
-        },
-        "it" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Kotodama"
-          }
-        },
-        "ja" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Kotodama"
-          }
-        },
-        "ko" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Kotodama"
-          }
-        },
-        "ms" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Kotodama"
-          }
-        },
-        "nb" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Kotodama"
-          }
-        },
-        "nl" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Kotodama"
-          }
-        },
-        "pl" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Kotodama"
-          }
-        },
-        "pt-BR" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Kotodama"
-          }
-        },
-        "pt-PT" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Kotodama"
-          }
-        },
-        "ro" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Kotodama"
-          }
-        },
-        "ru" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Kotodama"
-          }
-        },
-        "sv" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Kotodama"
-          }
-        },
-        "ta" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Kotodama"
-          }
-        },
-        "te" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Kotodama"
-          }
-        },
-        "th" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Kotodama"
-          }
-        },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Kotodama"
-          }
-        },
-        "uk" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Kotodama"
-          }
-        },
-        "ur" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Kotodama"
-          }
-        },
-        "vi" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Kotodama"
-          }
-        },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Kotodama"
-          }
-        },
-        "zh-Hant" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Kotodama"
-          }
-        }
-      }
+      "shouldTranslate" : false
     },
     "Kotodama keeps your streak and stats on your account." : {
       "comment" : "The description shown when Kotodama is opened without being signed in.",
@@ -58980,7 +61282,237 @@
       }
     },
     "Late Night" : {
-      "comment" : "The 'Late Night' search filter option."
+      "comment" : "The 'Late Night' search filter option.",
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "وقت متأخر من الليل"
+          }
+        },
+        "bn" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "গভীর রাত"
+          }
+        },
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Pozdní noc"
+          }
+        },
+        "da" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sen nat"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Spätnacht"
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Αργά το βράδυ"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Madrugada"
+          }
+        },
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Madrugada"
+          }
+        },
+        "fa" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "آخر شب"
+          }
+        },
+        "fi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Myöhäisilta"
+          }
+        },
+        "fil" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Hatinggabi"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Fin de soirée"
+          }
+        },
+        "he" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "לילה מאוחר"
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "देर रात"
+          }
+        },
+        "hu" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Késő éjjel"
+          }
+        },
+        "hy" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ուշ գիշեր"
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Larut malam"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Notte fonda"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "深夜"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "심야"
+          }
+        },
+        "ms" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Lewat malam"
+          }
+        },
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sen natt"
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Late nacht"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Późna noc"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Madrugada"
+          }
+        },
+        "pt-PT" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Madrugada"
+          }
+        },
+        "ro" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Noaptea târziu"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ночь"
+          }
+        },
+        "sv" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sen natt"
+          }
+        },
+        "ta" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "நள்ளிரவு"
+          }
+        },
+        "te" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "అర్ధరాత్రి"
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ดึก"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Gece geç saat"
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ніч"
+          }
+        },
+        "ur" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "رات گئے"
+          }
+        },
+        "vi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Đêm khuya"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "深夜"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "深夜"
+          }
+        }
+      }
     },
     "Leaderboard" : {
       "comment" : "The title shown on the reputation leaderboard screen.",
@@ -60149,236 +62681,7 @@
     },
     "Library.xml" : {
       "comment" : "The placeholder string for the library xml file name.",
-      "localizations" : {
-        "ar" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Library.xml"
-          }
-        },
-        "bn" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Library.xml"
-          }
-        },
-        "cs" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Library.xml"
-          }
-        },
-        "da" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Library.xml"
-          }
-        },
-        "de" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Library.xml"
-          }
-        },
-        "el" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Library.xml"
-          }
-        },
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Library.xml"
-          }
-        },
-        "es-419" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Library.xml"
-          }
-        },
-        "fa" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Library.xml"
-          }
-        },
-        "fi" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Library.xml"
-          }
-        },
-        "fil" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Library.xml"
-          }
-        },
-        "fr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Library.xml"
-          }
-        },
-        "he" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Library.xml"
-          }
-        },
-        "hi" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Library.xml"
-          }
-        },
-        "hu" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Library.xml"
-          }
-        },
-        "hy" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Library.xml"
-          }
-        },
-        "id" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Library.xml"
-          }
-        },
-        "it" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Library.xml"
-          }
-        },
-        "ja" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Library.xml"
-          }
-        },
-        "ko" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Library.xml"
-          }
-        },
-        "ms" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Library.xml"
-          }
-        },
-        "nb" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Library.xml"
-          }
-        },
-        "nl" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Library.xml"
-          }
-        },
-        "pl" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Library.xml"
-          }
-        },
-        "pt-BR" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Library.xml"
-          }
-        },
-        "pt-PT" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Library.xml"
-          }
-        },
-        "ro" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Library.xml"
-          }
-        },
-        "ru" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Library.xml"
-          }
-        },
-        "sv" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Library.xml"
-          }
-        },
-        "ta" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Library.xml"
-          }
-        },
-        "te" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Library.xml"
-          }
-        },
-        "th" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Library.xml"
-          }
-        },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Library.xml"
-          }
-        },
-        "uk" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Library.xml"
-          }
-        },
-        "ur" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Library.xml"
-          }
-        },
-        "vi" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Library.xml"
-          }
-        },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Library.xml"
-          }
-        },
-        "zh-Hant" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Library.xml"
-          }
-        }
-      }
+      "shouldTranslate" : false
     },
     "Light Novel" : {
       "comment" : "The display value 'Light Novel'.",
@@ -62955,109 +65258,109 @@
         "ar" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "MOD"
+            "value" : "تعديل"
           }
         },
         "bn" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "MOD"
+            "value" : "মড"
           }
         },
         "cs" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "MOD"
+            "value" : "Mod"
           }
         },
         "da" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "MOD"
+            "value" : "Mod"
           }
         },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "MOD"
+            "value" : "Mod"
           }
         },
         "el" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "MOD"
+            "value" : "Mod"
           }
         },
         "es" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "MOD"
+            "value" : "Mod"
           }
         },
         "es-419" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "MOD"
+            "value" : "Mod"
           }
         },
         "fa" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "MOD"
+            "value" : "ماد"
           }
         },
         "fi" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "MOD"
+            "value" : "Mod"
           }
         },
         "fil" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "MOD"
+            "value" : "Mod"
           }
         },
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "MOD"
+            "value" : "Mod"
           }
         },
         "he" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "MOD"
+            "value" : "מוד"
           }
         },
         "hi" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "MOD"
+            "value" : "मॉड"
           }
         },
         "hu" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "MOD"
+            "value" : "Mod"
           }
         },
         "hy" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "MOD"
+            "value" : "Մոդ"
           }
         },
         "id" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "MOD"
+            "value" : "Mod"
           }
         },
         "it" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "MOD"
+            "value" : "Mod"
           }
         },
         "ja" : {
@@ -63069,115 +65372,115 @@
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "MOD"
+            "value" : "모드"
           }
         },
         "ms" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "MOD"
+            "value" : "Mod"
           }
         },
         "nb" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "MOD"
+            "value" : "Mod"
           }
         },
         "nl" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "MOD"
+            "value" : "Mod"
           }
         },
         "pl" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "MOD"
+            "value" : "Mod"
           }
         },
         "pt-BR" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "MOD"
+            "value" : "Mod"
           }
         },
         "pt-PT" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "MOD"
+            "value" : "Mod"
           }
         },
         "ro" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "MOD"
+            "value" : "Mod"
           }
         },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "MOD"
+            "value" : "Мод"
           }
         },
         "sv" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "MOD"
+            "value" : "Mod"
           }
         },
         "ta" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "MOD"
+            "value" : "மாட்"
           }
         },
         "te" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "MOD"
+            "value" : "మాడ్"
           }
         },
         "th" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "MOD"
+            "value" : "ม็อด"
           }
         },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "MOD"
+            "value" : "Mod"
           }
         },
         "uk" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "MOD"
+            "value" : "Мод"
           }
         },
         "ur" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "MOD"
+            "value" : "موڈ"
           }
         },
         "vi" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "MOD"
+            "value" : "Mod"
           }
         },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "MOD"
+            "value" : "模组"
           }
         },
         "zh-Hant" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "MOD"
+            "value" : "模組"
           }
         }
       }
@@ -67377,7 +69680,237 @@
       }
     },
     "Morning" : {
-      "comment" : "The 'Morning' search filter option."
+      "comment" : "The 'Morning' search filter option.",
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "الصباح"
+          }
+        },
+        "bn" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "সকাল"
+          }
+        },
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ráno"
+          }
+        },
+        "da" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Morgen"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Morgen"
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Πρωί"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Mañana"
+          }
+        },
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Mañana"
+          }
+        },
+        "fa" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "صبح"
+          }
+        },
+        "fi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Aamu"
+          }
+        },
+        "fil" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Umaga"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Matin"
+          }
+        },
+        "he" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "בוקר"
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "सुबह"
+          }
+        },
+        "hu" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Reggel"
+          }
+        },
+        "hy" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Առավոտ"
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Pagi"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Mattina"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "朝"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "오전"
+          }
+        },
+        "ms" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Pagi"
+          }
+        },
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Morgen"
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ochtend"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Rano"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Manhã"
+          }
+        },
+        "pt-PT" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Manhã"
+          }
+        },
+        "ro" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Dimineață"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Утро"
+          }
+        },
+        "sv" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Morgon"
+          }
+        },
+        "ta" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "காலை"
+          }
+        },
+        "te" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ఉదయం"
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ช่วงเช้า"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sabah"
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ранок"
+          }
+        },
+        "ur" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "صبح"
+          }
+        },
+        "vi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Buổi sáng"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "上午"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "上午"
+          }
+        }
+      }
     },
     "Most Anticipated" : {
       "comment" : "The string for the 'most anticipated' browse option.",
@@ -68783,229 +71316,229 @@
         "ar" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "NSFW"
+            "value" : "محتوى حساس"
           }
         },
         "bn" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "NSFW"
+            "value" : "সংবেদনশীল কনটেন্ট"
           }
         },
         "cs" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "NSFW"
+            "value" : "Citlivý obsah"
           }
         },
         "da" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "NSFW"
+            "value" : "Følsomt indhold"
           }
         },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "NSFW"
+            "value" : "Sensible Inhalte"
           }
         },
         "el" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "NSFW"
+            "value" : "Ευαίσθητο περιεχόμενο"
           }
         },
         "es" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "NSFW"
+            "value" : "Contenido sensible"
           }
         },
         "es-419" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "NSFW"
+            "value" : "Contenido sensible"
           }
         },
         "fa" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "NSFW"
+            "value" : "محتوای حساس"
           }
         },
         "fi" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "NSFW"
+            "value" : "Arkaluonteinen sisältö"
           }
         },
         "fil" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "NSFW"
+            "value" : "Sensitibong content"
           }
         },
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "NSFW"
+            "value" : "Contenu sensible"
           }
         },
         "he" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "NSFW"
+            "value" : "תוכן רגיש"
           }
         },
         "hi" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "NSFW"
+            "value" : "संवेदनशील सामग्री"
           }
         },
         "hu" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "NSFW"
+            "value" : "Érzékeny tartalom"
           }
         },
         "hy" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "NSFW"
+            "value" : "Զգայուն բովանդակություն"
           }
         },
         "id" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "NSFW"
+            "value" : "Konten sensitif"
           }
         },
         "it" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "NSFW"
+            "value" : "Contenuti sensibili"
           }
         },
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "NSFW"
+            "value" : "閲覧注意"
           }
         },
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "NSFW"
+            "value" : "열람 주의"
           }
         },
         "ms" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "NSFW"
+            "value" : "Kandungan sensitif"
           }
         },
         "nb" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "NSFW"
+            "value" : "Sensitivt innhold"
           }
         },
         "nl" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "NSFW"
+            "value" : "Gevoelige inhoud"
           }
         },
         "pl" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "NSFW"
+            "value" : "Treści wrażliwe"
           }
         },
         "pt-BR" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "NSFW"
+            "value" : "Conteúdo sensível"
           }
         },
         "pt-PT" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "NSFW"
+            "value" : "Conteúdo sensível"
           }
         },
         "ro" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "NSFW"
+            "value" : "Conținut sensibil"
           }
         },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "NSFW"
+            "value" : "Деликатный контент"
           }
         },
         "sv" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "NSFW"
+            "value" : "Känsligt innehåll"
           }
         },
         "ta" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "NSFW"
+            "value" : "உணர்திறன் உள்ளடக்கம்"
           }
         },
         "te" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "NSFW"
+            "value" : "సున్నితమైన కంటెంట్"
           }
         },
         "th" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "NSFW"
+            "value" : "เนื้อหาละเอียดอ่อน"
           }
         },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "NSFW"
+            "value" : "Hassas içerik"
           }
         },
         "uk" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "NSFW"
+            "value" : "Делікатний контент"
           }
         },
         "ur" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "NSFW"
+            "value" : "حساس مواد"
           }
         },
         "vi" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "NSFW"
+            "value" : "Nội dung nhạy cảm"
           }
         },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "NSFW"
+            "value" : "限制级"
           }
         },
         "zh-Hant" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "NSFW"
+            "value" : "工作場所不宜"
           }
         }
       }
@@ -76239,229 +78772,229 @@
         "ar" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "OEL"
+            "value" : "مانغا عالمية"
           }
         },
         "bn" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "OEL"
+            "value" : "গ্লোবাল মাঙ্গা"
           }
         },
         "cs" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "OEL"
+            "value" : "Globální manga"
           }
         },
         "da" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "OEL"
+            "value" : "Global manga"
           }
         },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "OEL"
+            "value" : "Global Manga"
           }
         },
         "el" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "OEL"
+            "value" : "Παγκόσμιο manga"
           }
         },
         "es" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "OEL"
+            "value" : "Manga global"
           }
         },
         "es-419" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "OEL"
+            "value" : "Manga global"
           }
         },
         "fa" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "OEL"
+            "value" : "مانگای جهانی"
           }
         },
         "fi" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "OEL"
+            "value" : "Globaali manga"
           }
         },
         "fil" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "OEL"
+            "value" : "Global manga"
           }
         },
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "OEL"
+            "value" : "Manga global"
           }
         },
         "he" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "OEL"
+            "value" : "מנגה גלובלית"
           }
         },
         "hi" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "OEL"
+            "value" : "ग्लोबल मंगा"
           }
         },
         "hu" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "OEL"
+            "value" : "Globális manga"
           }
         },
         "hy" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "OEL"
+            "value" : "Գլոբալ մանգա"
           }
         },
         "id" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "OEL"
+            "value" : "Manga global"
           }
         },
         "it" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "OEL"
+            "value" : "Manga globale"
           }
         },
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "OEL"
+            "value" : "海外マンガ"
           }
         },
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "OEL"
+            "value" : "해외 만화"
           }
         },
         "ms" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "OEL"
+            "value" : "Manga global"
           }
         },
         "nb" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "OEL"
+            "value" : "Global manga"
           }
         },
         "nl" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "OEL"
+            "value" : "Global manga"
           }
         },
         "pl" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "OEL"
+            "value" : "Global manga"
           }
         },
         "pt-BR" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "OEL"
+            "value" : "Mangá global"
           }
         },
         "pt-PT" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "OEL"
+            "value" : "Manga global"
           }
         },
         "ro" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "OEL"
+            "value" : "Manga global"
           }
         },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "OEL"
+            "value" : "Глобальная манга"
           }
         },
         "sv" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "OEL"
+            "value" : "Global manga"
           }
         },
         "ta" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "OEL"
+            "value" : "குளோபல் மங்கா"
           }
         },
         "te" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "OEL"
+            "value" : "గ్లోబల్ మాంగా"
           }
         },
         "th" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "OEL"
+            "value" : "มังงะสากล"
           }
         },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "OEL"
+            "value" : "Global manga"
           }
         },
         "uk" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "OEL"
+            "value" : "Глобальна манґа"
           }
         },
         "ur" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "OEL"
+            "value" : "گلوبل مانگا"
           }
         },
         "vi" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "OEL"
+            "value" : "Manga toàn cầu"
           }
         },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "OEL"
+            "value" : "海外漫画"
           }
         },
         "zh-Hant" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "OEL"
+            "value" : "海外漫畫"
           }
         }
       }
@@ -76819,7 +79352,7 @@
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "ONA"
+            "value" : "웹 애니메이션"
           }
         },
         "ms" : {
@@ -76921,13 +79454,13 @@
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "ONA"
+            "value" : "网络动画"
           }
         },
         "zh-Hant" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "ONA"
+            "value" : "網路動畫"
           }
         }
       }
@@ -77004,7 +79537,7 @@
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "OVA"
+            "value" : "OAV"
           }
         },
         "he" : {
@@ -82188,7 +84721,237 @@
       }
     },
     "PV" : {
-      "comment" : "The display value 'PV'."
+      "comment" : "The display value 'PV'.",
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "إعلان ترويجي"
+          }
+        },
+        "bn" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ট্রেলার"
+          }
+        },
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Upoutávka"
+          }
+        },
+        "da" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Trailer"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Trailer"
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Τρέιλερ"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tráiler"
+          }
+        },
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tráiler"
+          }
+        },
+        "fa" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "تیزر"
+          }
+        },
+        "fi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Traileri"
+          }
+        },
+        "fil" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Trailer"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Bande-annonce"
+          }
+        },
+        "he" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "טריילר"
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ट्रेलर"
+          }
+        },
+        "hu" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Előzetes"
+          }
+        },
+        "hy" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Թրեյլեր"
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Trailer"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Trailer"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "PV"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "PV"
+          }
+        },
+        "ms" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Treler"
+          }
+        },
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Trailer"
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Trailer"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Zwiastun"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Trailer"
+          }
+        },
+        "pt-PT" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Trailer"
+          }
+        },
+        "ro" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Trailer"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Трейлер"
+          }
+        },
+        "sv" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Trailer"
+          }
+        },
+        "ta" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "டிரெய்லர்"
+          }
+        },
+        "te" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ట్రైలర్"
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ตัวอย่าง"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Fragman"
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Трейлер"
+          }
+        },
+        "ur" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ٹریلر"
+          }
+        },
+        "vi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Trailer"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "PV"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "PV"
+          }
+        }
+      }
     },
     "Pages" : {
       "comment" : "The 'Pages' search filter label.",
@@ -94307,7 +97070,237 @@
       }
     },
     "Remind Me in an Hour" : {
-      "comment" : "The action that repeats a reminder an hour later."
+      "comment" : "The action that repeats a reminder an hour later.",
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ذكّرني بعد ساعة"
+          }
+        },
+        "bn" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "এক ঘণ্টা পরে মনে করিয়ে দাও"
+          }
+        },
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Připomenout za hodinu"
+          }
+        },
+        "da" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Påmind mig om en time"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "In einer Stunde erinnern"
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Υπενθύμιση σε μία ώρα"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Recordar en una hora"
+          }
+        },
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Recordar en una hora"
+          }
+        },
+        "fa" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "یک ساعت دیگر یادآوری کن"
+          }
+        },
+        "fi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Muistuta tunnin kuluttua"
+          }
+        },
+        "fil" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ipaalala sa loob ng isang oras"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Me rappeler dans une heure"
+          }
+        },
+        "he" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "להזכיר לי בעוד שעה"
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "एक घंटे बाद याद दिलाएँ"
+          }
+        },
+        "hu" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Emlékeztess egy óra múlva"
+          }
+        },
+        "hy" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Հիշեցնել մեկ ժամից"
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ingatkan dalam satu jam"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ricordamelo tra un'ora"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "1時間後に通知"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "1시간 후에 알림"
+          }
+        },
+        "ms" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ingatkan dalam sejam"
+          }
+        },
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Påminn meg om en time"
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Over een uur herinneren"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Przypomnij za godzinę"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Lembrar em uma hora"
+          }
+        },
+        "pt-PT" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Lembrar daqui a uma hora"
+          }
+        },
+        "ro" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Amintește-mi într-o oră"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Напомнить через час"
+          }
+        },
+        "sv" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Påminn mig om en timme"
+          }
+        },
+        "ta" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ஒரு மணி நேரத்தில் நினைவூட்டு"
+          }
+        },
+        "te" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ఒక గంటలో గుర్తు చేయి"
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "เตือนอีกครั้งในหนึ่งชั่วโมง"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Bir saat sonra hatırlat"
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Нагадати через годину"
+          }
+        },
+        "ur" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ایک گھنٹے بعد یاد دلائیں"
+          }
+        },
+        "vi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Nhắc tôi sau một giờ"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "1 小时后提醒"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "1 小時後提醒"
+          }
+        }
+      }
     },
     "Remove Community Pick" : {
       "comment" : "Context-menu action that makes a review the item's Community Pick.",
@@ -112088,7 +115081,237 @@
       }
     },
     "TV Special" : {
-      "comment" : "The display value 'TV Special'."
+      "comment" : "The display value 'TV Special'.",
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "حلقة تلفزيونية خاصة"
+          }
+        },
+        "bn" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "টিভি স্পেশাল"
+          }
+        },
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "TV speciál"
+          }
+        },
+        "da" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "TV-special"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "TV-Special"
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Τηλεοπτικό σπέσιαλ"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Especial de TV"
+          }
+        },
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Especial de TV"
+          }
+        },
+        "fa" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ویژه‌برنامه تلویزیونی"
+          }
+        },
+        "fi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "TV-erikoisjakso"
+          }
+        },
+        "fil" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "TV Special"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Spécial TV"
+          }
+        },
+        "he" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ספיישל טלוויזיה"
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "टीवी स्पेशल"
+          }
+        },
+        "hu" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "TV-különkiadás"
+          }
+        },
+        "hy" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Հեռուստատեսային հատուկ թողարկում"
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Spesial TV"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Speciale TV"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "TVスペシャル"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "TV 스페셜"
+          }
+        },
+        "ms" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Istimewa TV"
+          }
+        },
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "TV-spesial"
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "TV-special"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Specjał TV"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Especial de TV"
+          }
+        },
+        "pt-PT" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Especial de TV"
+          }
+        },
+        "ro" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Special TV"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ТВ-спешл"
+          }
+        },
+        "sv" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "TV-special"
+          }
+        },
+        "ta" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "டிவி சிறப்பு"
+          }
+        },
+        "te" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "టీవీ స్పెషల్"
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ทีวีสเปเชียล"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "TV Özel"
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ТВ-спешл"
+          }
+        },
+        "ur" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ٹی وی اسپیشل"
+          }
+        },
+        "vi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Đặc biệt TV"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "TV特别篇"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "TV特別篇"
+          }
+        }
+      }
     },
     "Table" : {
       "comment" : "The display value 'Table'.",
@@ -123747,7 +126970,237 @@
       }
     },
     "Traditional" : {
-      "comment" : "The title of the traditional splash screen animations category."
+      "comment" : "The title of the traditional splash screen animations category.",
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "تقليدي"
+          }
+        },
+        "bn" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ঐতিহ্যবাহী"
+          }
+        },
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tradiční"
+          }
+        },
+        "da" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Traditionel"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Traditionell"
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Παραδοσιακά"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tradicional"
+          }
+        },
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tradicional"
+          }
+        },
+        "fa" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "سنتی"
+          }
+        },
+        "fi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Perinteiset"
+          }
+        },
+        "fil" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tradisyonal"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Traditionnel"
+          }
+        },
+        "he" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "מסורתי"
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "पारंपरिक"
+          }
+        },
+        "hu" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Hagyományos"
+          }
+        },
+        "hy" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ավանդական"
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tradisional"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tradizionale"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "和風"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "전통"
+          }
+        },
+        "ms" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tradisional"
+          }
+        },
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tradisjonell"
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Traditioneel"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tradycyjne"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tradicional"
+          }
+        },
+        "pt-PT" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tradicional"
+          }
+        },
+        "ro" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tradițional"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Традиционные"
+          }
+        },
+        "sv" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Traditionell"
+          }
+        },
+        "ta" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "பாரம்பரியம்"
+          }
+        },
+        "te" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "సాంప్రదాయ"
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ดั้งเดิม"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Geleneksel"
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Традиційні"
+          }
+        },
+        "ur" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "روایتی"
+          }
+        },
+        "vi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Truyền thống"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "传统"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "傳統"
+          }
+        }
+      }
     },
     "Translate into" : {
       "comment" : "The label of the control choosing which language content is translated into.",
@@ -124915,7 +128368,237 @@
       }
     },
     "Turn Off Reminder" : {
-      "comment" : "The action that stops a show's reminders."
+      "comment" : "The action that stops a show's reminders.",
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "إيقاف التذكير"
+          }
+        },
+        "bn" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "রিমাইন্ডার বন্ধ করো"
+          }
+        },
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Vypnout připomenutí"
+          }
+        },
+        "da" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Slå påmindelse fra"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Erinnerung ausschalten"
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Απενεργοποίηση υπενθύμισης"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Desactivar recordatorio"
+          }
+        },
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Desactivar recordatorio"
+          }
+        },
+        "fa" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "خاموش کردن یادآور"
+          }
+        },
+        "fi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Poista muistutus käytöstä"
+          }
+        },
+        "fil" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "I-off ang paalala"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Désactiver le rappel"
+          }
+        },
+        "he" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "כיבוי התזכורת"
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "रिमाइंडर बंद करें"
+          }
+        },
+        "hu" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Emlékeztető kikapcsolása"
+          }
+        },
+        "hy" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Անջատել հիշեցումը"
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Matikan pengingat"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Disattiva promemoria"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "リマインダーをオフ"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "알림 끄기"
+          }
+        },
+        "ms" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Matikan peringatan"
+          }
+        },
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Slå av påminnelse"
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Herinnering uitschakelen"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Wyłącz przypomnienie"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Desativar lembrete"
+          }
+        },
+        "pt-PT" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Desativar lembrete"
+          }
+        },
+        "ro" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Dezactivează mementoul"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Отключить напоминание"
+          }
+        },
+        "sv" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Stäng av påminnelse"
+          }
+        },
+        "ta" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "நினைவூட்டலை அணை"
+          }
+        },
+        "te" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "రిమైండర్‌ను ఆఫ్ చేయి"
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ปิดการเตือน"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Hatırlatıcıyı kapat"
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Вимкнути нагадування"
+          }
+        },
+        "ur" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "یاد دہانی بند کریں"
+          }
+        },
+        "vi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tắt nhắc nhở"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "关闭提醒"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "關閉提醒"
+          }
+        }
+      }
     },
     "Type a guess and press the return key. The tiles change color after every guess to show how close you are." : {
       "comment" : "The paragraph explaining how to submit a guess on the Kotodama how-to-play screen.",
@@ -125850,7 +129533,237 @@
       }
     },
     "Under %@" : {
-      "comment" : "The label of a search filter matching everything shorter than a duration. The argument is a duration such as 30 min."
+      "comment" : "The label of a search filter matching everything shorter than a duration. The argument is a duration such as 30 min.",
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "أقل من %@"
+          }
+        },
+        "bn" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%@-এর কম"
+          }
+        },
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Do %@"
+          }
+        },
+        "da" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Under %@"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Unter %@"
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Έως %@"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Menos de %@"
+          }
+        },
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Menos de %@"
+          }
+        },
+        "fa" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "کمتر از %@"
+          }
+        },
+        "fi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Alle %@"
+          }
+        },
+        "fil" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Wala pang %@"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Moins de %@"
+          }
+        },
+        "he" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "פחות מ־%@"
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%@ से कम"
+          }
+        },
+        "hu" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%@ alatt"
+          }
+        },
+        "hy" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%@-ից պակաս"
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Di bawah %@"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Meno di %@"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%@以内"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%@ 이하"
+          }
+        },
+        "ms" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Bawah %@"
+          }
+        },
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Under %@"
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Onder %@"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Poniżej %@"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Menos de %@"
+          }
+        },
+        "pt-PT" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Menos de %@"
+          }
+        },
+        "ro" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sub %@"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Менее %@"
+          }
+        },
+        "sv" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Under %@"
+          }
+        },
+        "ta" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%@-க்கும் குறைவு"
+          }
+        },
+        "te" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%@ కంటే తక్కువ"
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ไม่เกิน %@"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%@ altı"
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Менше %@"
+          }
+        },
+        "ur" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%@ سے کم"
+          }
+        },
+        "vi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Dưới %@"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "少于 %@"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "少於 %@"
+          }
+        }
+      }
     },
     "Undo Re-share" : {
       "comment" : "The string for the 'Undo Re-share' context menu option.",

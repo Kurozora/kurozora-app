@@ -11135,10 +11135,238 @@
       "comment" : "The footer shown below the account actions while the device is offline.",
       "extractionState" : "extracted_with_value",
       "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "يجب أن يكون %@ متصلاً بالإنترنت لتسجيل الخروج أو حذف حسابك."
+          }
+        },
+        "bn" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "সাইন আউট করতে বা অ্যাকাউন্ট মুছতে আপনার %@ ইন্টারনেটে সংযুক্ত থাকতে হবে।"
+          }
+        },
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Váš %@ musí být připojen k internetu, abyste se mohli odhlásit nebo smazat účet."
+          }
+        },
+        "da" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Din %@ skal have forbindelse til internettet for at logge ud eller slette din konto."
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ihr %@ muss mit dem Internet verbunden sein, um sich abzumelden oder Ihr Konto zu löschen."
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Το %@ σας πρέπει να είναι συνδεδεμένο στο Internet για αποσύνδεση ή διαγραφή του λογαριασμού σας."
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "new",
             "value" : "Your %@ must be connected to the Internet to sign out or delete your account."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tu %@ debe estar conectado a Internet para cerrar sesión o eliminar tu cuenta."
+          }
+        },
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tu %@ debe estar conectado a Internet para cerrar sesión o eliminar tu cuenta."
+          }
+        },
+        "fa" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "برای خروج از حساب یا حذف آن، %@ شما باید به اینترنت متصل باشد."
+          }
+        },
+        "fi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%@-laitteesi on oltava yhteydessä internetiin, jotta voit kirjautua ulos tai poistaa tilisi."
+          }
+        },
+        "fil" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Kailangang nakakonekta sa Internet ang iyong %@ para mag-sign out o burahin ang iyong account."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Votre %@ doit être connecté à Internet pour vous déconnecter ou supprimer votre compte."
+          }
+        },
+        "he" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ה-%@ שלך חייב להיות מחובר לאינטרנט כדי להתנתק או למחוק את החשבון."
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "साइन आउट करने या अपना खाता हटाने के लिए आपका %@ इंटरनेट से कनेक्ट होना चाहिए।"
+          }
+        },
+        "hu" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "A(z) %@ készülékének csatlakoznia kell az internethez a kijelentkezéshez vagy a fiók törléséhez."
+          }
+        },
+        "hy" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ձեր %@-ը պետք է միացած լինի ինտերնետին՝ դուրս գալու կամ հաշիվը ջնջելու համար։"
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%@ Anda harus terhubung ke Internet untuk keluar atau menghapus akun Anda."
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Il tuo %@ deve essere connesso a Internet per disconnetterti o eliminare il tuo account."
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "サインアウトまたはアカウントを削除するには、%@がインターネットに接続されている必要があります。"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "로그아웃하거나 계정을 삭제하려면 %@이(가) 인터넷에 연결되어 있어야 합니다."
+          }
+        },
+        "ms" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%@ anda mesti disambungkan ke Internet untuk log keluar atau memadam akaun anda."
+          }
+        },
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%@-en din må være koblet til internett for å logge ut eller slette kontoen din."
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Uw %@ moet verbonden zijn met internet om u af te melden of uw account te verwijderen."
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Twój %@ musi być połączony z internetem, aby wylogować się lub usunąć konto."
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Seu %@ precisa estar conectado à Internet para sair ou excluir sua conta."
+          }
+        },
+        "pt-PT" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "O seu %@ tem de estar ligado à Internet para terminar sessão ou eliminar a sua conta."
+          }
+        },
+        "ro" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%@-ul dvs. trebuie să fie conectat la internet pentru a vă deconecta sau a vă șterge contul."
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ваш %@ должен быть подключён к интернету, чтобы выйти из аккаунта или удалить его."
+          }
+        },
+        "sv" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Din %@ måste vara ansluten till internet för att logga ut eller radera ditt konto."
+          }
+        },
+        "ta" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "வெளியேற அல்லது கணக்கை நீக்க உங்கள் %@ இணையத்துடன் இணைக்கப்பட்டிருக்க வேண்டும்."
+          }
+        },
+        "te" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "సైన్ అవుట్ చేయడానికి లేదా ఖాతాను తొలగించడానికి మీ %@ ఇంటర్నెట్‌కు కనెక్ట్ అయి ఉండాలి."
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%@ ของคุณต้องเชื่อมต่ออินเทอร์เน็ตเพื่อออกจากระบบหรือลบบัญชี"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Oturumu kapatmak veya hesabınızı silmek için %@ cihazınızın internete bağlı olması gerekir."
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ваш %@ має бути підключений до інтернету, щоб вийти або видалити обліковий запис."
+          }
+        },
+        "ur" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "سائن آؤٹ کرنے یا اپنا اکاؤنٹ حذف کرنے کے لیے آپ کا %@ انٹرنیٹ سے منسلک ہونا ضروری ہے۔"
+          }
+        },
+        "vi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%@ của bạn phải được kết nối Internet để đăng xuất hoặc xóa tài khoản."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "你的 %@ 需要连接互联网才能退出登录或删除账户。"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "你的 %@ 需要連接網際網路才能登出或刪除帳户。"
           }
         }
       }

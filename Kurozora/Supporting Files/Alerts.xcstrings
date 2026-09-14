@@ -1167,7 +1167,237 @@
       }
     },
     "Can't Switch Account 😔" : {
-      "comment" : "The alert title shown when switching accounts fails."
+      "comment" : "The alert title shown when switching accounts fails.",
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "تعذّر تبديل الحساب 😔"
+          }
+        },
+        "bn" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "অ্যাকাউন্ট বদলানো গেল না 😔"
+          }
+        },
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Účet nelze přepnout 😔"
+          }
+        },
+        "da" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Kan ikke skifte konto 😔"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Konto kann nicht gewechselt werden 😔"
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Δεν είναι δυνατή η αλλαγή λογαριασμού 😔"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "No se puede cambiar de cuenta 😔"
+          }
+        },
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "No se puede cambiar de cuenta 😔"
+          }
+        },
+        "fa" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "تعویض حساب ممکن نیست 😔"
+          }
+        },
+        "fi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tiliä ei voi vaihtaa 😔"
+          }
+        },
+        "fil" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Hindi mapalitan ang account 😔"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Impossible de changer de compte 😔"
+          }
+        },
+        "he" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "לא ניתן להחליף חשבון 😔"
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "खाता नहीं बदल सके 😔"
+          }
+        },
+        "hu" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Nem sikerült fiókot váltani 😔"
+          }
+        },
+        "hy" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Հաշիվը չհաջողվեց փոխել 😔"
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tidak bisa ganti akun 😔"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Impossibile cambiare account 😔"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "アカウントを切り替えられません 😔"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "계정을 전환할 수 없어요 😔"
+          }
+        },
+        "ms" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tidak dapat tukar akaun 😔"
+          }
+        },
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Kan ikke bytte konto 😔"
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Kan niet van account wisselen 😔"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Nie można przełączyć konta 😔"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Não dá para trocar de conta 😔"
+          }
+        },
+        "pt-PT" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Não é possível mudar de conta 😔"
+          }
+        },
+        "ro" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Nu se poate schimba contul 😔"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Не удалось сменить аккаунт 😔"
+          }
+        },
+        "sv" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Kan inte byta konto 😔"
+          }
+        },
+        "ta" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "கணக்கை மாற்ற முடியவில்லை 😔"
+          }
+        },
+        "te" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ఖాతాను మార్చలేకపోయాం 😔"
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "สลับบัญชีไม่ได้ 😔"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Hesap değiştirilemiyor 😔"
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Не вдалося змінити акаунт 😔"
+          }
+        },
+        "ur" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "اکاؤنٹ تبدیل نہیں ہو سکا 😔"
+          }
+        },
+        "vi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Không thể chuyển tài khoản 😔"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "无法切换账户 😔"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "無法切換帳户 😔"
+          }
+        }
+      }
     },
     "Can't Update Your Library 😔" : {
       "comment" : "The alert title shown when updating a library item fails.",
@@ -2568,7 +2798,237 @@
       }
     },
     "This account has no saved profile on this device. Connect to the Internet and try again." : {
-      "comment" : "The alert message shown when switching accounts fails."
+      "comment" : "The alert message shown when switching accounts fails.",
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "لا يوجد ملف شخصي محفوظ لهذا الحساب على هذا الجهاز. اتصل بالإنترنت وحاول مرة أخرى."
+          }
+        },
+        "bn" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "এই ডিভাইসে এই অ্যাকাউন্টের কোনো সংরক্ষিত প্রোফাইল নেই। ইন্টারনেটে সংযুক্ত হয়ে আবার চেষ্টা করো।"
+          }
+        },
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Pro tento účet není v zařízení uložený žádný profil. Připoj se k internetu a zkus to znovu."
+          }
+        },
+        "da" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Der er ingen gemt profil for denne konto på enheden. Opret forbindelse til internettet, og prøv igen."
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Für dieses Konto ist auf diesem Gerät kein Profil gespeichert. Stelle eine Internetverbindung her und versuche es erneut."
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Δεν υπάρχει αποθηκευμένο προφίλ για αυτόν τον λογαριασμό σε αυτή τη συσκευή. Σύνδεσου στο Internet και δοκίμασε ξανά."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Esta cuenta no tiene un perfil guardado en este dispositivo. Conéctate a Internet e inténtalo de nuevo."
+          }
+        },
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Esta cuenta no tiene un perfil guardado en este dispositivo. Conéctate a Internet e inténtalo de nuevo."
+          }
+        },
+        "fa" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "برای این حساب پروفایلی روی این دستگاه ذخیره نشده است. به اینترنت وصل شو و دوباره تلاش کن."
+          }
+        },
+        "fi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tälle tilille ei ole tallennettua profiilia tällä laitteella. Yhdistä internetiin ja yritä uudelleen."
+          }
+        },
+        "fil" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Walang naka-save na profile ang account na ito sa device na ito. Kumonekta sa Internet at subukan ulit."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Aucun profil enregistré pour ce compte sur cet appareil. Connecte-toi à Internet et réessaie."
+          }
+        },
+        "he" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "אין פרופיל שמור לחשבון הזה במכשיר. התחבר לאינטרנט ונסה שוב."
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "इस डिवाइस पर इस खाते का कोई सेव किया हुआ प्रोफ़ाइल नहीं है। इंटरनेट से कनेक्ट करें और फिर कोशिश करें।"
+          }
+        },
+        "hu" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ehhez a fiókhoz nincs mentett profil ezen az eszközön. Csatlakozz az internethez, és próbáld újra."
+          }
+        },
+        "hy" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Այս սարքում այս հաշվի համար պահված պրոֆիլ չկա։ Միացիր ինտերնետին և կրկին փորձիր։"
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Akun ini tidak punya profil tersimpan di perangkat ini. Hubungkan ke Internet lalu coba lagi."
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Questo account non ha un profilo salvato su questo dispositivo. Connettiti a Internet e riprova."
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "このデバイスにこのアカウントのプロフィールは保存されていません。インターネットに接続してもう一度お試しください。"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "이 기기에 이 계정의 저장된 프로필이 없어요. 인터넷에 연결한 뒤 다시 시도해 주세요."
+          }
+        },
+        "ms" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Akaun ini tiada profil tersimpan pada peranti ini. Sambung ke Internet dan cuba lagi."
+          }
+        },
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Denne kontoen har ingen lagret profil på denne enheten. Koble til internett og prøv igjen."
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Dit account heeft geen opgeslagen profiel op dit apparaat. Maak verbinding met internet en probeer het opnieuw."
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "To konto nie ma zapisanego profilu na tym urządzeniu. Połącz się z internetem i spróbuj ponownie."
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Esta conta não tem um perfil salvo neste dispositivo. Conecte-se à Internet e tente de novo."
+          }
+        },
+        "pt-PT" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Esta conta não tem um perfil guardado neste dispositivo. Liga-te à Internet e tenta novamente."
+          }
+        },
+        "ro" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Acest cont nu are un profil salvat pe acest dispozitiv. Conectează-te la internet și încearcă din nou."
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Для этого аккаунта на устройстве нет сохранённого профиля. Подключись к интернету и попробуй ещё раз."
+          }
+        },
+        "sv" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Det finns ingen sparad profil för det här kontot på enheten. Anslut till internet och försök igen."
+          }
+        },
+        "ta" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "இந்தச் சாதனத்தில் இந்தக் கணக்குக்குச் சேமித்த சுயவிவரம் இல்லை. இணையத்துடன் இணைத்து மீண்டும் முயற்சி செய்."
+          }
+        },
+        "te" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ఈ పరికరంలో ఈ ఖాతాకు సేవ్ చేసిన ప్రొఫైల్ లేదు. ఇంటర్నెట్‌కు కనెక్ట్ చేసి మళ్లీ ప్రయత్నించు."
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "บัญชีนี้ไม่มีโปรไฟล์ที่บันทึกไว้บนอุปกรณ์นี้ เชื่อมต่ออินเทอร์เน็ตแล้วลองอีกครั้ง"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Bu hesabın bu cihazda kayıtlı profili yok. İnternete bağlanıp tekrar dene."
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Для цього акаунта на пристрої немає збереженого профілю. Підключись до інтернету й спробуй ще раз."
+          }
+        },
+        "ur" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "اس آلے پر اس اکاؤنٹ کا کوئی محفوظ پروفائل نہیں ہے۔ انٹرنیٹ سے منسلک ہو کر دوبارہ کوشش کریں۔"
+          }
+        },
+        "vi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tài khoản này chưa có hồ sơ được lưu trên thiết bị. Hãy kết nối Internet rồi thử lại."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "此设备上没有该账户的已保存资料。请连接互联网后重试。"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "此裝置上沒有該帳户的已儲存資料。請連接網際網路後重試。"
+          }
+        }
+      }
     },
     "Update Available" : {
       "comment" : "The string for the force update warning title.",
