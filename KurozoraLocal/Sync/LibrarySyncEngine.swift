@@ -23,7 +23,7 @@ actor LibrarySyncEngine {
 	private let batchLimit = 500
 
 	/// The in-flight sync tasks per user.
-	private var inFlight: [String: Task<Void, Never>] = [:]
+	private var inFlight: [String: Task<Int, Never>] = [:]
 
 	/// Users whose in-flight sync runs once more after it finishes.
 	private var rerunRequested: Set<String> = []
@@ -91,17 +91,21 @@ actor LibrarySyncEngine {
 			return
 		}
 
-		let task = Task<Void, Never> { [weak self] in
-			guard let self = self else { return }
-			await self.runSync(forUserSlug: userSlug)
+		let task = Task<Int, Never> { [weak self] in
+			guard let self = self else { return 0 }
+			return await self.runSync(forUserSlug: userSlug)
 		}
 		self.inFlight[userSlug] = task
-		await task.value
+		let appliedCount = await task.value
 		self.inFlight[userSlug] = nil
 
 		#if !os(watchOS)
 		await self.refreshLibraryArt(forUserSlug: userSlug)
 		await AiringNotificationScheduler.shared.refresh()
+
+		if appliedCount > 0 {
+			await SpotlightManager.shared.refresh(forUserSlug: userSlug)
+		}
 		#endif
 		await LibrarySyncDiagnostics.logState(forUserSlug: userSlug, reason: "pull")
 
@@ -119,20 +123,22 @@ actor LibrarySyncEngine {
 		await self.pull(forUserSlug: userSlug)
 	}
 
-	private func runSync(forUserSlug userSlug: String) async {
+	private func runSync(forUserSlug userSlug: String) async -> Int {
 		// A delta applied now would advance the cursors past state the outbox still owns.
 		if await LibraryOutbox.shared.hasPendingOperations(forUserSlug: userSlug) {
 			syncLogger.info("DEFER reason=pending-ops")
-			return
+			return 0
 		}
 
 		if self.fullPullRequested.remove(userSlug) != nil {
 			await self.clearCursors(LibrarySyncStream.allCases, forUserSlug: userSlug)
 		}
 
+		var appliedCount = 0
+
 		await LibrarySyncProgress.shared.begin()
 		do {
-			try await self.pullRounds(forUserSlug: userSlug)
+			appliedCount = try await self.pullRounds(forUserSlug: userSlug)
 			self.pendingRetries.remove(userSlug)
 		} catch {
 			syncLogger.error("Sync failed: \(error.librarySyncDescription, privacy: .public)")
@@ -143,9 +149,12 @@ actor LibrarySyncEngine {
 			}
 		}
 		await LibrarySyncProgress.shared.end()
+
+		return appliedCount
 	}
 
-	private func pullRounds(forUserSlug userSlug: String) async throws {
+	@discardableResult
+	private func pullRounds(forUserSlug userSlug: String) async throws -> Int {
 		var cursors = await self.readCursors(forUserSlug: userSlug)
 		// A pull without an entry cursor carries no tombstones.
 		var isFullPull = cursors[.entries] == nil
@@ -205,6 +214,8 @@ actor LibrarySyncEngine {
 				break
 			}
 		}
+
+		return appliedCount
 	}
 
 	/// The number of rows the round expects to apply in total.

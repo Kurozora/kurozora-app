@@ -121,6 +121,8 @@ actor LibraryArtStore {
 	///
 	/// - Parameter urlStrings: The source URLs to prefetch. Already-stored URLs are skipped.
 	func prefetch(_ urlStrings: [String]) async {
+		guard await Self.isDownloadAllowed() else { return }
+
 		let missingURLStrings = Array(Set(urlStrings)).filter { urlString in
 			guard !urlString.isEmpty, !self.inFlightURLStrings.contains(urlString) else { return false }
 			return Self.storedFileURL(forURLString: urlString) == nil
@@ -186,6 +188,16 @@ actor LibraryArtStore {
 	}
 
 	// MARK: - Helpers
+	/// Whether the current connection may carry art downloads.
+	///
+	/// - Returns: `true` when the Wi-Fi-only preference is met.
+	private static func isDownloadAllowed() async -> Bool {
+		return await MainActor.run {
+			guard UserSettings.libraryArtWiFiOnly else { return true }
+			return KNetworkManager.isOnWiFi
+		}
+	}
+
 	private static func downloadAndStore(_ urlString: String) async {
 		guard let sourceURL = URL(string: urlString) else { return }
 

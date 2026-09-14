@@ -2406,6 +2406,36 @@ extension L10n {
 		}
 	}
 
+	/// The title of the 'Library Artwork' setting.
+	///
+	/// - Tag: L10n-libraryArtwork
+	static var libraryArtwork: String {
+		L10n.resolve {
+			String(
+				localized: "Library Artwork on Wi-Fi Only",
+				table: "Settings",
+				bundle: LanguageManager.shared.bundle,
+				locale: LanguageManager.shared.locale,
+				comment: "The title of the setting that limits library artwork downloads to Wi-Fi."
+			)
+		}
+	}
+
+	/// The footer message of the 'Library Artwork' setting.
+	///
+	/// - Tag: L10n-libraryArtworkFooterMessage
+	static var libraryArtworkFooterMessage: String {
+		L10n.resolve {
+			String(
+				localized: "Posters and banners are stored for offline use. Turn this on to download them over Wi-Fi only.",
+				table: "Settings",
+				bundle: LanguageManager.shared.bundle,
+				locale: LanguageManager.shared.locale,
+				comment: "The footer message explaining what the library artwork setting does."
+			)
+		}
+	}
+
 	// MARK: - Rating Style
 	/// The title of the 'Rating Style' settings.
 	static var ratingStyle: String {

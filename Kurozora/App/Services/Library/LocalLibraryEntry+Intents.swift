@@ -69,7 +69,7 @@ extension LocalLibraryEntry {
 			attributeSet.keywords = [title]
 		}
 		if let urlString = trackable?.posterURL {
-			attributeSet.thumbnailURL = URL(string: urlString)
+			attributeSet.thumbnailURL = LibraryArtStore.storedFileURL(forURLString: urlString) ?? URL(string: urlString)
 		}
 		if let score = trackable?.publicRating {
 			attributeSet.rating = score
@@ -79,6 +79,16 @@ extension LocalLibraryEntry {
 		attributeSet.url = URL(string: self.webpageURLString)
 		attributeSet.domainIdentifier = self.persistentIdentifierPrefix
 		return attributeSet
+	}
+
+	/// The identifier the entry's Spotlight item carries.
+	var spotlightIdentifier: String {
+		return "\(self.persistentIdentifierPrefix):\(self.trackableID)"
+	}
+
+	/// The domain the entry's Spotlight item belongs to.
+	var spotlightDomainIdentifier: String {
+		return self.persistentIdentifierPrefix
 	}
 
 	// MARK: - Helpers

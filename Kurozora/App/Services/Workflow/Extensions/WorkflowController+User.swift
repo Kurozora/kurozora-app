@@ -225,6 +225,7 @@ extension WorkflowController {
 			LibraryStore.shared.clear(forUserSlug: slug)
 			await LibraryOutbox.shared.clear(forUserSlug: slug)
 			await AiringNotificationScheduler.shared.cancelAll()
+			await SpotlightManager.shared.clear()
 			WatchedStore.shared.clear()
 			await LibraryArtStore.shared.removeAll()
 			WatchSessionManager.shared.sendAuthState(slug: nil, token: nil)
@@ -253,6 +254,7 @@ extension WorkflowController {
 			LibraryStore.shared.clear(forUserSlug: slug)
 			await LibraryOutbox.shared.clear(forUserSlug: slug)
 			await AiringNotificationScheduler.shared.cancelAll()
+			await SpotlightManager.shared.clear()
 			WatchedStore.shared.clear()
 			await LibraryArtStore.shared.removeAll()
 			return true

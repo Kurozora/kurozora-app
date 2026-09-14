@@ -340,6 +340,10 @@ extension UserSettings {
 		return self.shared.bool(forKey: #function)
 	}
 
+	/// Returns a boolean indicating if library art only downloads on Wi-Fi.
+	static var libraryArtWiFiOnly: Bool {
+		return self.shared.bool(forKey: #function)
+	}
 
 	/// Returns a boolean indicating if the Watch should mirror the iPhone's notification grouping.
 	static var notificationsMirrorWatch: Bool {

@@ -112,6 +112,8 @@ enum UserSettingsKey: String, CaseIterable {
 	case notificationsBadge
 	/// The key to the selected option for allowing airing reminders.
 	case airingRemindersAllowed
+	/// The key to the selected option for downloading library art on Wi-Fi only.
+	case libraryArtWiFiOnly
 	/// The key indicating whether the Watch should mirror the iPhone's notification grouping.
 	case notificationsMirrorWatch
 

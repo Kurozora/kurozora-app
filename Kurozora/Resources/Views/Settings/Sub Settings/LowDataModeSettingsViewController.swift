@@ -68,7 +68,7 @@ class LowDataModeSettingsViewController: SubSettingsViewController, TypedSegueHa
 // MARK: - KTableViewDataSource
 extension LowDataModeSettingsViewController {
 	override func registerCells(for tableView: UITableView) -> [UITableViewCell.Type] {
-		return super.registerCells(for: tableView) + [SettingsCell.self]
+		return super.registerCells(for: tableView) + [SettingsCell.self, SwitchSettingsCell.self]
 	}
 }
 
@@ -94,16 +94,32 @@ extension LowDataModeSettingsViewController {
 		guard
 			let contentSection = self.contentSection(for: indexPath.section),
 			let section = self.sections[safe: contentSection],
-			let row = section.rows[safe: indexPath.row],
-			let cell = tableView.dequeueReusableCell(withIdentifier: SettingsCell.self, for: indexPath)
+			let row = section.rows[safe: indexPath.row]
 		else {
 			return UITableViewCell()
 		}
 
-		cell.configure(title: row.title, detail: row.detail)
-		cell.detailLabel?.isHidden = false
-		cell.chevronImageView?.isHidden = false
-		return cell
+		switch row {
+		case .libraryArtWiFiOnly:
+			guard let cell = tableView.dequeueReusableCell(withIdentifier: SwitchSettingsCell.self, for: indexPath) else {
+				return UITableViewCell()
+			}
+
+			cell.configure(title: row.title, isOn: UserSettings.libraryArtWiFiOnly, tag: 0, action: UIAction { action in
+				guard let sender = action.sender as? KSwitch else { return }
+				UserSettings.set(sender.isOn, forKey: .libraryArtWiFiOnly)
+			})
+			return cell
+		case .autoplay, .wifiQuality, .cellularQuality:
+			guard let cell = tableView.dequeueReusableCell(withIdentifier: SettingsCell.self, for: indexPath) else {
+				return UITableViewCell()
+			}
+
+			cell.configure(title: row.title, detail: row.detail)
+			cell.detailLabel?.isHidden = false
+			cell.chevronImageView?.isHidden = false
+			return cell
+		}
 	}
 
 	override func tableView(_ tableView: UITableView, titleForFooterInSection section: Int) -> String? {
@@ -133,11 +149,14 @@ extension LowDataModeSettingsViewController {
 private extension LowDataModeSettingsViewController {
 	enum Section: Int, CaseIterable {
 		case media = 0
+		case library = 1
 
 		var rows: [Row] {
 			switch self {
 			case .media:
 				return [.autoplay, .wifiQuality, .cellularQuality]
+			case .library:
+				return [.libraryArtWiFiOnly]
 			}
 		}
 
@@ -145,6 +164,8 @@ private extension LowDataModeSettingsViewController {
 			switch self {
 			case .media:
 				return nil
+			case .library:
+				return L10n.libraryArtworkFooterMessage
 			}
 		}
 	}
@@ -153,6 +174,7 @@ private extension LowDataModeSettingsViewController {
 		case autoplay
 		case wifiQuality
 		case cellularQuality
+		case libraryArtWiFiOnly
 
 		var title: String {
 			switch self {
@@ -162,6 +184,8 @@ private extension LowDataModeSettingsViewController {
 				return L10n.wifiQuality
 			case .cellularQuality:
 				return L10n.cellularQuality
+			case .libraryArtWiFiOnly:
+				return L10n.libraryArtwork
 			}
 		}
 
@@ -173,6 +197,8 @@ private extension LowDataModeSettingsViewController {
 				return UserSettings.wifiVideoQuality.titleValue
 			case .cellularQuality:
 				return UserSettings.cellularVideoQuality.titleValue
+			case .libraryArtWiFiOnly:
+				return ""
 			}
 		}
 
@@ -184,6 +210,8 @@ private extension LowDataModeSettingsViewController {
 				return .wifiQualitySegue
 			case .cellularQuality:
 				return .cellularQualitySegue
+			case .libraryArtWiFiOnly:
+				return nil
 			}
 		}
 	}

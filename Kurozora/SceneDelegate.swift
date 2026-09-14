@@ -6,6 +6,7 @@
 //  Copyright © 2019 Kurozora. All rights reserved.
 //
 
+import CoreSpotlight
 import KurozoraKit
 import UIKit
 #if DEBUG
@@ -242,6 +243,11 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 	///    - scene: The object that represents one instance of the app's user interface.
 	///    - userActivity: A representation of the state of your app at a moment in time.
 	func configure(scene: UIScene?, with userActivity: NSUserActivity) {
+		if userActivity.activityType == CSSearchableItemActionType {
+			self.configure(scene: scene, withSpotlightActivity: userActivity)
+			return
+		}
+
 		guard
 			let activityType = ActivityType(rawValue: userActivity.activityType),
 			let kurozoraID = (try? userActivity.typedPayload([String: KurozoraItemID].self))?["id"],
@@ -271,5 +277,35 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 		}
 
 		print("----- Succeeded to restore from \(userActivity)")
+	}
+
+	/// Opens the library entry a Spotlight result points at.
+	///
+	/// - Parameters:
+	///    - scene: The scene the result opens in.
+	///    - userActivity: The activity Spotlight handed back.
+	private func configure(scene: UIScene?, withSpotlightActivity userActivity: NSUserActivity) {
+		guard
+			let identifier = userActivity.userInfo?[CSSearchableItemActivityIdentifier] as? String,
+			let scene = scene
+		else {
+			print("----- Failed to restore from \(userActivity)")
+			return
+		}
+
+		let components = identifier.split(separator: ":", maxSplits: 1)
+
+		guard
+			components.count == 2,
+			let host = Scheme(rawValue: String(components[0])),
+			let url = URL(string: "kurozora://\(host.rawValue)/\(components[1])")
+		else {
+			print("----- Url construction failed for \(identifier)")
+			return
+		}
+
+		Task {
+			await NavigationManager.shared.schemeHandler(scene, open: url)
+		}
 	}
 }
