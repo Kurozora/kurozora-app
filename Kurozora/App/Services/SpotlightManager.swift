@@ -41,8 +41,11 @@ actor SpotlightManager {
 		}
 	}
 
-	/// Removes every item the app has indexed.
+	/// Removes every item the app has put into system search.
 	func clear() async {
+		// Donated activities live outside the searchable index.
+		await NSUserActivity.deleteAllSavedUserActivities()
+
 		guard CSSearchableIndex.isIndexingAvailable() else { return }
 
 		do {

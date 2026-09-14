@@ -25,6 +25,7 @@ nonisolated class UserSettings: UserDefaults {
 			UserSettingsKey.notificationsBadge.rawValue: true,
 			UserSettingsKey.notificationsMirrorWatch.rawValue: true,
 			UserSettingsKey.airingRemindersAllowed.rawValue: true,
+			UserSettingsKey.libraryArtWiFiOnly.rawValue: true,
 			UserSettingsKey.startupSoundAllowed.rawValue: true,
 			UserSettingsKey.uiSoundsAllowed.rawValue: true,
 			UserSettingsKey.hapticsAllowed.rawValue: true,
