@@ -47,11 +47,13 @@ final class SplashscreenViewController: KViewController {
 		let startedAt = CACurrentMediaTime()
 
 		self.launchExperienceTask = Task { @MainActor in
-			let chimeDuration = UserSettings.startupSoundAllowed ? await Chime.shared.prepare() : 0.0
-			let splashDuration = Animation.shared.selectedAnimation.duration
+			let chime = UserSettings.startupSoundAllowed ? await Chime.shared.prepare() : (duration: 0.0, onset: 0.0)
+			let animation = Animation.shared.selectedAnimation
+			let splashDuration = animation.duration
 
-			if chimeDuration > 0.0 {
-				self.scheduleChime(at: startedAt + max(0.0, splashDuration - chimeDuration))
+			if chime.duration > 0.0 {
+				let chimeStart = animation.accent.map { $0 - chime.onset } ?? (splashDuration - chime.duration)
+				self.scheduleChime(at: startedAt + max(0.0, chimeStart))
 			}
 
 			guard !Task.isCancelled else { return }

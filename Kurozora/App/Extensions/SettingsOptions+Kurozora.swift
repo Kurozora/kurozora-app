@@ -119,8 +119,22 @@ extension SplashScreenAnimation {
 			return L10n.disabled
 		case .default:
 			return L10n.default
+		case .furin:
+			return L10n.furin
+		case .iai:
+			return L10n.iai
 		case .shake:
 			return L10n.shake
+		case .shishiOdoshi:
+			return L10n.shishiOdoshi
+		case .sumie:
+			return L10n.sumie
+		case .gleam:
+			return L10n.gleam
+		case .glitch:
+			return L10n.glitch
+		case .impact:
+			return L10n.impact
 		case .scale:
 			return L10n.scale
 		case .anvil:

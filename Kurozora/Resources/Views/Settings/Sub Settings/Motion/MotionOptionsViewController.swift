@@ -13,9 +13,8 @@ protocol MotionOptionsViewControllerDelegate: AnyObject {
 }
 
 class MotionOptionsViewController: SubSettingsViewController {
-	private enum Section: Int, CaseIterable {
+	private enum Section: Int {
 		case preview
-		case options
 	}
 
 	// MARK: - Properties
@@ -109,30 +108,35 @@ class MotionOptionsViewController: SubSettingsViewController {
 		self.previewCell?.stopPlayback()
 		Animation.shared.cancelPlayback(with: self.previewPlaybackID)
 	}
+
+	/// Returns the animation group shown in the given section.
+	///
+	/// - Parameter section: The section to resolve.
+	///
+	/// - Returns: The group, or `nil` for the preview section.
+	private func group(forSection section: Int) -> SplashScreenAnimationGroup? {
+		let index = section - 1
+
+		guard index >= 0, index < SplashScreenAnimationGroup.allCases.count else { return nil }
+
+		return SplashScreenAnimationGroup.allCases[index]
+	}
 }
 
 // MARK: - UITableViewDataSource
 extension MotionOptionsViewController {
 	override func numberOfSections(in tableView: UITableView) -> Int {
-		return Section.allCases.count
+		return 1 + SplashScreenAnimationGroup.allCases.count
 	}
 
 	override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-		guard let section = Section(rawValue: section) else { return 0 }
+		guard let group = self.group(forSection: section) else { return 1 }
 
-		switch section {
-		case .preview:
-			return 1
-		case .options:
-			return SplashScreenAnimation.allCases.count
-		}
+		return group.animations.count
 	}
 
 	override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-		guard let section = Section(rawValue: indexPath.section) else { return UITableViewCell() }
-
-		switch section {
-		case .preview:
+		guard let group = self.group(forSection: indexPath.section) else {
 			guard let cell = tableView.dequeueReusableCell(withIdentifier: MotionAnimationPreviewCell.self, for: indexPath) else {
 				fatalError("Couldn't dequeue cell with identifier \(MotionAnimationPreviewCell.reuseID)")
 			}
@@ -145,42 +149,47 @@ extension MotionOptionsViewController {
 			}
 
 			return cell
-		case .options:
-			guard let iconTableViewCell = tableView.dequeueReusableCell(withIdentifier: IconTableViewCell.self, for: indexPath) else {
-				fatalError("Couldn't dequeue cell with identifier \(IconTableViewCell.reuseID)")
-			}
-			let animation = SplashScreenAnimation.allCases[indexPath.row]
-			let currentAnimation = self.selectedAnimation
-
-			iconTableViewCell.setSelected(animation.titleValue == currentAnimation.titleValue)
-			iconTableViewCell.configureCell(using: animation)
-
-			return iconTableViewCell
 		}
+
+		guard let iconTableViewCell = tableView.dequeueReusableCell(withIdentifier: IconTableViewCell.self, for: indexPath) else {
+			fatalError("Couldn't dequeue cell with identifier \(IconTableViewCell.reuseID)")
+		}
+		let animation = group.animations[indexPath.row]
+
+		iconTableViewCell.setSelected(animation == self.selectedAnimation)
+		iconTableViewCell.configureCell(using: animation)
+
+		return iconTableViewCell
 	}
 
 	override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-		guard let section = Section(rawValue: section) else { return nil }
-		switch section {
-		case .preview:
-			return L10n.preview
-		case .options:
-			return L10n.animations
-		}
+		guard let group = self.group(forSection: section) else { return L10n.preview }
+
+		guard !group.animations.isEmpty else { return nil }
+
+		return group.titleValue
 	}
 }
 
 // MARK: - UITableViewDelegate
 extension MotionOptionsViewController {
 	override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-		guard
-			let section = Section(rawValue: indexPath.section),
-			section == .options
-		else { return }
+		guard let group = self.group(forSection: indexPath.section) else { return }
 
-		let animation = SplashScreenAnimation.allCases[indexPath.row]
+		let animation = group.animations[indexPath.row]
 
-		self.changeAnimation(animation)
+		guard group.isPremium else {
+			self.changeAnimation(animation)
+			return
+		}
+
+		Task { [weak self] in
+			guard let self = self else { return }
+
+			if await WorkflowController.shared.isProOrSubscribed(on: self) {
+				self.changeAnimation(animation)
+			}
+		}
 	}
 
 	private func changeAnimation(_ animation: SplashScreenAnimation) {
@@ -191,7 +200,7 @@ extension MotionOptionsViewController {
 
 		self.stopPreview()
 		self.restartPreview(forceResume: true)
-		self.tableView.reloadSections(IndexSet(integer: Section.options.rawValue), with: .none)
+		self.tableView.reloadSections(IndexSet(1 ..< self.tableView.numberOfSections), with: .none)
 	}
 }
 

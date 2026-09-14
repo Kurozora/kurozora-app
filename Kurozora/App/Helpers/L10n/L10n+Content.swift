@@ -3379,6 +3379,132 @@ extension L10n {
             )
 		}
 	}
+	/// The display value 'Gleam'.
+	///
+	/// - Tag: L10n-gleam
+	static var gleam: String {
+		L10n.resolve {
+			String(
+                localized: "Gleam",
+                table: "Content",
+                bundle: LanguageManager.shared.bundle,
+                locale: LanguageManager.shared.locale,
+                comment: "The display value 'Gleam'."
+            )
+		}
+	}
+	/// The display value 'Glitch'.
+	///
+	/// - Tag: L10n-glitch
+	static var glitch: String {
+		L10n.resolve {
+			String(
+                localized: "Glitch",
+                table: "Content",
+                bundle: LanguageManager.shared.bundle,
+                locale: LanguageManager.shared.locale,
+                comment: "The display value 'Glitch'."
+            )
+		}
+	}
+	/// The display value 'Impact'.
+	///
+	/// - Tag: L10n-impact
+	static var impact: String {
+		L10n.resolve {
+			String(
+                localized: "Impact",
+                table: "Content",
+                bundle: LanguageManager.shared.bundle,
+                locale: LanguageManager.shared.locale,
+                comment: "The display value 'Impact'."
+            )
+		}
+	}
+	/// The display value 'Sumie'.
+	///
+	/// - Tag: L10n-sumie
+	static var sumie: String {
+		L10n.resolve {
+			String(
+                localized: "Sumie",
+                table: "Content",
+                bundle: LanguageManager.shared.bundle,
+                locale: LanguageManager.shared.locale,
+                comment: "The display value 'Sumie'."
+            )
+		}
+	}
+	/// The display value 'Traditional'.
+	///
+	/// - Tag: L10n-traditional
+	static var traditional: String {
+		L10n.resolve {
+			String(
+                localized: "Traditional",
+                table: "Content",
+                bundle: LanguageManager.shared.bundle,
+                locale: LanguageManager.shared.locale,
+                comment: "The title of the traditional splash screen animations category."
+            )
+		}
+	}
+	/// The display value 'Effects'.
+	///
+	/// - Tag: L10n-effects
+	static var effects: String {
+		L10n.resolve {
+			String(
+                localized: "Effects",
+                table: "Content",
+                bundle: LanguageManager.shared.bundle,
+                locale: LanguageManager.shared.locale,
+                comment: "The title of the effects splash screen animations category."
+            )
+		}
+	}
+	/// The display value 'Shishi-Odoshi'.
+	///
+	/// - Tag: L10n-shishiOdoshi
+	static var shishiOdoshi: String {
+		L10n.resolve {
+			String(
+                localized: "Shishi-Odoshi",
+                table: "Content",
+                bundle: LanguageManager.shared.bundle,
+                locale: LanguageManager.shared.locale,
+                comment: "The display value 'Shishi-Odoshi'."
+            )
+		}
+	}
+	/// The display value 'Furin'.
+	///
+	/// - Tag: L10n-furin
+	static var furin: String {
+		L10n.resolve {
+			String(
+                localized: "Furin",
+                table: "Content",
+                bundle: LanguageManager.shared.bundle,
+                locale: LanguageManager.shared.locale,
+                comment: "The display value 'Furin'."
+            )
+		}
+	}
+	/// The display value 'Iai'.
+	///
+	/// - Tag: L10n-iai
+	static var iai: String {
+		L10n.resolve {
+			String(
+                localized: "Iai",
+                table: "Content",
+                bundle: LanguageManager.shared.bundle,
+                locale: LanguageManager.shared.locale,
+                comment: "The display value 'Iai'."
+            )
+		}
+	}
 	/// The display value 'Anvil'.
 	///
 	/// - Tag: L10n-anvil

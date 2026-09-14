@@ -65,9 +65,9 @@ final class Chime: NSObject {
 	/// - Parameters:
 	///    - chimeFile: The file to load as a chime.
 	///
-	/// - Returns: The loaded chime's duration.
-	func prepare(_ chimeFile: String? = nil) async -> TimeInterval {
-		guard let url = self.url(for: chimeFile) else { return 0.0 }
+	/// - Returns: The loaded chime's duration and the time of its loudest attack.
+	func prepare(_ chimeFile: String? = nil) async -> (duration: TimeInterval, onset: TimeInterval) {
+		guard let url = self.url(for: chimeFile) else { return (0.0, 0.0) }
 
 		return await self.chimePlayer.load(for: url, delegate: self)
 	}

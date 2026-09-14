@@ -40767,6 +40767,9 @@
         }
       }
     },
+    "Effects" : {
+      "comment" : "The title of the effects splash screen animations category."
+    },
     "Enable this option so that Kurozora is locked whenever you close it. You'll be asked to authenticate through Face ID or your device's passcode when you reopen the app." : {
       "comment" : "The authentication settings description for Face ID.",
       "localizations" : {
@@ -42397,6 +42400,12 @@
           }
         }
       }
+    },
+    "Episode %1$lld (%2$lld) is airing now." : {
+      "comment" : "The message of a reminder naming the episode that is airing. The first argument is the episode number within its season and the second is its number within the series."
+    },
+    "Episode %lld is airing now." : {
+      "comment" : "The message of a reminder naming the episode that is airing. The argument is the episode number."
     },
     "Episode: %@" : {
       "comment" : "The label naming the episodes a song appears in.",
@@ -48226,6 +48235,10 @@
         }
       }
     },
+    "Furin" : {
+      "comment" : "The display value 'Furin'.",
+      "shouldTranslate" : false
+    },
     "Game" : {
       "comment" : "The display value 'Game'.",
       "localizations" : {
@@ -49390,6 +49403,12 @@
           }
         }
       }
+    },
+    "Gleam" : {
+      "comment" : "The display value 'Gleam'."
+    },
+    "Glitch" : {
+      "comment" : "The display value 'Glitch'."
     },
     "Go To" : {
       "comment" : "The string for the 'Go To' context menu option.",
@@ -54052,6 +54071,10 @@
         }
       }
     },
+    "Iai" : {
+      "comment" : "The display value 'Iai'.",
+      "shouldTranslate" : false
+    },
     "If you have an export of your anime or manga library from other services, such as MyAnimeList, you can select it below." : {
       "comment" : "The subheadline string for the Library Import view.",
       "localizations" : {
@@ -54284,6 +54307,9 @@
           }
         }
       }
+    },
+    "Impact" : {
+      "comment" : "The display value 'Impact'."
     },
     "In Apple Music Library" : {
       "comment" : "The menu action shown when a song is already in the Apple Music library.",
@@ -94280,6 +94306,9 @@
         }
       }
     },
+    "Remind Me in an Hour" : {
+      "comment" : "The action that repeats a reminder an hour later."
+    },
     "Remove Community Pick" : {
       "comment" : "Context-menu action that makes a review the item's Community Pick.",
       "localizations" : {
@@ -102201,6 +102230,10 @@
           }
         }
       }
+    },
+    "Shishi-Odoshi" : {
+      "comment" : "The display value 'Shishi-Odoshi'.",
+      "shouldTranslate" : false
     },
     "Short reviews" : {
       "comment" : "Title of the section holding the reviews sorted to the bottom.",
@@ -110362,6 +110395,10 @@
           }
         }
       }
+    },
+    "Sumie" : {
+      "comment" : "The display value 'Sumie'.",
+      "shouldTranslate" : false
     },
     "Summary" : {
       "comment" : "Header for the Parental Guide summary section.",
@@ -123709,6 +123746,9 @@
         }
       }
     },
+    "Traditional" : {
+      "comment" : "The title of the traditional splash screen animations category."
+    },
     "Translate into" : {
       "comment" : "The label of the control choosing which language content is translated into.",
       "localizations" : {
@@ -124873,6 +124913,9 @@
           }
         }
       }
+    },
+    "Turn Off Reminder" : {
+      "comment" : "The action that stops a show's reminders."
     },
     "Type a guess and press the return key. The tiles change color after every guess to show how close you are." : {
       "comment" : "The paragraph explaining how to submit a guess on the Kotodama how-to-play screen.",
