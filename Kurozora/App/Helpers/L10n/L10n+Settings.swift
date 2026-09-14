@@ -334,11 +334,11 @@ extension L10n {
 	static var airingReminders: String {
 		L10n.resolve {
 			String(
-				localized: "Airing Reminders",
+				localized: "Release Reminders",
 				table: "Settings",
 				bundle: LanguageManager.shared.bundle,
 				locale: LanguageManager.shared.locale,
-				comment: "The title string for the 'Airing Reminders' settings."
+				comment: "The title string for the 'Release Reminders' settings."
 			)
 		}
 	}
@@ -348,7 +348,7 @@ extension L10n {
 	static var airingRemindersFooter: String {
 		L10n.resolve {
 			String(
-				localized: "Get a reminder when a title you follow airs or releases. Reminders are scheduled on your device from your last sync, so they work without a connection.",
+				localized: "Get a reminder when an episode, chapter, or game you're reminded about is released. Reminders are scheduled on your device from your last sync, so they work without a connection.",
 				table: "Settings",
 				bundle: LanguageManager.shared.bundle,
 				locale: LanguageManager.shared.locale,
