@@ -84,10 +84,8 @@ final class KurozoraDelegate {
 		// Start real time notification observer.
 		NotificationsRealtimeBridge.shared.start()
 
-		// Initialize the local Core Data store
 		_ = PersistenceController.shared
 
-		// Get settings and restore the user session concurrently
 		async let settings: Void = WorkflowController.shared.getSettings()
 		async let sessionRestored = WorkflowController.shared.restoreCurrentUserSession(updateAuthenticationKey: false)
 		await settings
