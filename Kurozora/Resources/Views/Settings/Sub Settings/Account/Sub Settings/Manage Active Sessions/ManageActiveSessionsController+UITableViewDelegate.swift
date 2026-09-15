@@ -89,7 +89,7 @@ extension ManageActiveSessionsController {
 					case .accessToken(let accessToken):
 						await accessToken.signOutOfAccessToken(at: indexPath)
 					case .sessionIdentity:
-						if let session = self.cache[indexPath] as? Session {
+						if let session = self.cachedItem(at: indexPath) as? Session {
 							await session.signOutOfSession(at: indexPath)
 						}
 					}
@@ -120,7 +120,7 @@ extension ManageActiveSessionsController {
 			case .accessToken(let accessToken):
 				return accessToken.contextMenuConfiguration(in: self, userInfo: ["indexPath": indexPath], sourceView: tableViewCell?.contentView, barButtonItem: nil)
 			case .sessionIdentity:
-				guard let session = self.cache[indexPath] as? Session else { return nil }
+				guard let session = self.cachedItem(at: indexPath) as? Session else { return nil }
 				return session.contextMenuConfiguration(in: self, userInfo: ["indexPath": indexPath], sourceView: tableViewCell?.contentView, barButtonItem: nil)
 			}
 		}

@@ -42,7 +42,7 @@ class CharactersListCollectionViewController: ListCollectionViewController, Sect
 	var charactersListFetchType: CharactersListFetchType = .search
 
 	// MARK: - SectionFetchable
-	var cache: [IndexPath: KurozoraItem] = [:]
+	var cache: [ItemKind: KurozoraItem] = [:]
 	var isFetchingSection: Set<SectionLayoutKind> = []
 
 	var dataSource: UICollectionViewDiffableDataSource<SectionLayoutKind, ItemKind>!
@@ -200,7 +200,7 @@ extension CharactersListCollectionViewController {
 
 				if character == nil, let section = self.snapshot.sectionIdentifier(containingItem: itemKind), !self.isFetchingSection.contains(section) {
 					Task {
-						await self.fetchSectionIfNeeded(ResourceCollection<Character>.self, CharacterIdentity.self, at: indexPath, itemKind: itemKind)
+						await self.fetchSectionIfNeeded(ResourceCollection<Character>.self, CharacterIdentity.self, for: itemKind)
 					}
 				}
 
@@ -231,7 +231,7 @@ extension CharactersListCollectionViewController {
 // MARK: - UICollectionViewDelegate
 extension CharactersListCollectionViewController {
 	override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-		guard let character = self.cache[indexPath] as? Character else { return }
+		guard let character = self.cachedItem(at: indexPath) as? Character else { return }
 
 		self.show(.characterDetailsSegue, sender: character)
 	}
@@ -241,7 +241,7 @@ extension CharactersListCollectionViewController {
 	}
 
 	override func collectionView(_ collectionView: UICollectionView, contextMenuConfigurationForItemAt indexPath: IndexPath, point: CGPoint) -> UIContextMenuConfiguration? {
-		guard let character = self.cache[indexPath] as? Character else { return nil }
+		guard let character = self.cachedItem(at: indexPath) as? Character else { return nil }
 
 		let collectionViewCell = collectionView.cellForItem(at: indexPath)
 		return character.contextMenuConfiguration(in: self, userInfo: ["indexPath": indexPath], sourceView: collectionViewCell?.contentView, barButtonItem: nil)

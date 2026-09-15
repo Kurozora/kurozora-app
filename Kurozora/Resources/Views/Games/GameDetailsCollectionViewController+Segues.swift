@@ -127,7 +127,7 @@ extension GameDetailsCollectionViewController {
 				let characterDetailsCollectionViewController = destination as? CharacterDetailsCollectionViewController,
 				let cell = sender as? CastCollectionViewCell,
 				let indexPath = self.collectionView.indexPath(for: cell),
-				let cast = self.cache[indexPath] as? Cast,
+				let cast = self.cachedItem(at: indexPath) as? Cast,
 				let character = cast.relationships.characters.data.first
 			else { return }
 			characterDetailsCollectionViewController.character = character
@@ -137,7 +137,7 @@ extension GameDetailsCollectionViewController {
 				let personDetailsCollectionViewController = destination as? PersonDetailsCollectionViewController,
 				let cell = sender as? CastCollectionViewCell,
 				let indexPath = self.collectionView.indexPath(for: cell),
-				let cast = self.cache[indexPath] as? Cast,
+				let cast = self.cachedItem(at: indexPath) as? Cast,
 				let person = cast.relationships.people?.data.first
 			else { return }
 			personDetailsCollectionViewController.person = person

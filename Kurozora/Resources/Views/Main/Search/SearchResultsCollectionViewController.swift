@@ -21,7 +21,7 @@ enum SearchViewKind {
 }
 
 /// The collection view controller in charge of providing the necessary functionalities for searching shows, threads and users.
-class SearchResultsCollectionViewController: KCollectionViewController, SectionFetchable, TypedSegueHandling {
+class SearchResultsCollectionViewController: KCollectionViewController, SectionFetchable, MusicResolving, TypedSegueHandling {
 	// MARK: - Enums
 	enum SegueIdentifiers: String, SegueIdentifier {
 		case scheduleSegue
@@ -109,13 +109,13 @@ class SearchResultsCollectionViewController: KCollectionViewController, SectionF
 	var appliedFilterChips: [FilterChip] = []
 
 	/// Per-search-type model caches.
-	private var cachesByType: [SearchType: [IndexPath: KurozoraItem]] = [:]
+	private var cachesByType: [SearchType: [ItemKind: KurozoraItem]] = [:]
 
 	/// The resolved Apple Music songs keyed by Apple Music identifier.
 	var resolvedSongs: [Int: MKSong] = [:]
 
 	/// The hydrated models keyed by index path.
-	var cache: [IndexPath: KurozoraItem] {
+	var cache: [ItemKind: KurozoraItem] {
 		get {
 			guard let type = self.searchTypes[safe: self.currentIndex] else { return [:] }
 			return self.cachesByType[type] ?? [:]
@@ -342,54 +342,30 @@ class SearchResultsCollectionViewController: KCollectionViewController, SectionF
 	}
 
 	/// Refreshes the play button glyph and artwork of every visible song cell.
-	private func refreshVisibleMusicCells() {
-		for case let cell as MusicLockupCollectionViewCell in self.collectionView.visibleCells {
-			guard
-				let indexPath = self.collectionView.indexPath(for: cell),
-				let song = self.fetchModel(at: indexPath) as Song?
-			else { continue }
-			cell.updatePlayButton(for: song)
-			cell.updateArtwork(for: song, resolvedSong: song.attributes.amID.flatMap { self.resolvedSongs[$0] })
-		}
+	func song(at indexPath: IndexPath) -> KKSong? {
+		return self.fetchModel(at: indexPath) as Song?
 	}
 
 	/// Updates every search result whose underlying show/literature/game matches the given trackable identity.
 	private func applyLibraryEntryChange(forTrackableID trackableID: String, userSlug: String, kind: LibraryKind, isRemoval: Bool) {
-		var matchedItems: [SearchResults.Item] = []
-		let currentSnapshot = self.dataSource.snapshot()
-
-		for item in currentSnapshot.itemIdentifiers {
+		self.reconfigureItems { item in
 			switch (item, kind) {
-			case (.show(let show), .shows) where show.id.rawValue == trackableID:
-				matchedItems.append(item)
-			case (.literature(let literature), .literatures) where literature.id.rawValue == trackableID:
-				matchedItems.append(item)
-			case (.game(let game), .games) where game.id.rawValue == trackableID:
-				matchedItems.append(item)
-			case (.showIdentity(let identity), .shows) where identity.id.rawValue == trackableID:
-				if let indexPath = self.dataSource.indexPath(for: item),
-				   self.cache[indexPath] is Show {
-					matchedItems.append(item)
-				}
-			case (.literatureIdentity(let identity), .literatures) where identity.id.rawValue == trackableID:
-				if let indexPath = self.dataSource.indexPath(for: item),
-				   self.cache[indexPath] is Literature {
-					matchedItems.append(item)
-				}
-			case (.gameIdentity(let identity), .games) where identity.id.rawValue == trackableID:
-				if let indexPath = self.dataSource.indexPath(for: item),
-				   self.cache[indexPath] is Game {
-					matchedItems.append(item)
-				}
+			case (.show(let show), .shows):
+				return show.id.rawValue == trackableID
+			case (.literature(let literature), .literatures):
+				return literature.id.rawValue == trackableID
+			case (.game(let game), .games):
+				return game.id.rawValue == trackableID
+			case (.showIdentity(let identity), .shows):
+				return identity.id.rawValue == trackableID && self.cache[item] is Show
+			case (.literatureIdentity(let identity), .literatures):
+				return identity.id.rawValue == trackableID && self.cache[item] is Literature
+			case (.gameIdentity(let identity), .games):
+				return identity.id.rawValue == trackableID && self.cache[item] is Game
 			default:
-				break
+				return false
 			}
 		}
-
-		guard !matchedItems.isEmpty else { return }
-		var snapshot = currentSnapshot
-		snapshot.reconfigureItems(matchedItems)
-		self.dataSource.apply(snapshot, animatingDifferences: false)
 	}
 
 	/// Used to reload the episode whose watch status has been updated.
@@ -775,33 +751,28 @@ class SearchResultsCollectionViewController: KCollectionViewController, SectionF
 	///    - snapshot: The snapshot whose items are inspected.
 	fileprivate func prefetch(section: SearchResults.Section, snapshot: NSDiffableDataSourceSnapshot<SearchResults.Section, SearchResults.Item>) async {
 		let items = snapshot.itemIdentifiers(inSection: section)
-		guard let sectionIndex = snapshot.indexOfSection(section) else { return }
 
-		guard let firstUncachedOffset = items.indices.first(where: { offset in
-			self.cache[IndexPath(item: offset, section: sectionIndex)] == nil
-		}) else { return }
-		let indexPath = IndexPath(item: firstUncachedOffset, section: sectionIndex)
-		let itemKind = items[firstUncachedOffset]
+		guard let itemKind = items.first(where: { self.cache[$0] == nil }) else { return }
 
 		switch section {
 		case .characters:
-			await self.fetchSectionIfNeeded(ResourceCollection<Character>.self, CharacterIdentity.self, at: indexPath, itemKind: itemKind)
+			await self.fetchSectionIfNeeded(ResourceCollection<Character>.self, CharacterIdentity.self, for: itemKind)
 		case .episodes:
-			await self.fetchSectionIfNeeded(ResourceCollection<Episode>.self, EpisodeIdentity.self, at: indexPath, itemKind: itemKind)
+			await self.fetchSectionIfNeeded(ResourceCollection<Episode>.self, EpisodeIdentity.self, for: itemKind)
 		case .games:
-			await self.fetchSectionIfNeeded(ResourceCollection<Game>.self, GameIdentity.self, at: indexPath, itemKind: itemKind)
+			await self.fetchSectionIfNeeded(ResourceCollection<Game>.self, GameIdentity.self, for: itemKind)
 		case .literatures:
-			await self.fetchSectionIfNeeded(ResourceCollection<Literature>.self, LiteratureIdentity.self, at: indexPath, itemKind: itemKind)
+			await self.fetchSectionIfNeeded(ResourceCollection<Literature>.self, LiteratureIdentity.self, for: itemKind)
 		case .people:
-			await self.fetchSectionIfNeeded(ResourceCollection<Person>.self, PersonIdentity.self, at: indexPath, itemKind: itemKind)
+			await self.fetchSectionIfNeeded(ResourceCollection<Person>.self, PersonIdentity.self, for: itemKind)
 		case .shows:
-			await self.fetchSectionIfNeeded(ResourceCollection<Show>.self, ShowIdentity.self, at: indexPath, itemKind: itemKind)
+			await self.fetchSectionIfNeeded(ResourceCollection<Show>.self, ShowIdentity.self, for: itemKind)
 		case .songs:
-			await self.fetchSongsSection(at: indexPath, itemKind: itemKind, sectionIndex: sectionIndex, itemCount: items.count)
+			await self.fetchSongsSection(for: itemKind, in: items)
 		case .studios:
-			await self.fetchSectionIfNeeded(ResourceCollection<Studio>.self, StudioIdentity.self, at: indexPath, itemKind: itemKind)
+			await self.fetchSectionIfNeeded(ResourceCollection<Studio>.self, StudioIdentity.self, for: itemKind)
 		case .users:
-			await self.fetchSectionIfNeeded(ResourceCollection<User>.self, UserIdentity.self, at: indexPath, itemKind: itemKind)
+			await self.fetchSectionIfNeeded(ResourceCollection<User>.self, UserIdentity.self, for: itemKind)
 		case .discover, .browse:
 			break
 		}
@@ -810,16 +781,13 @@ class SearchResultsCollectionViewController: KCollectionViewController, SectionF
 	/// Fetches the details for the songs section and preloads the corresponding Apple Music entries.
 	///
 	/// - Parameters:
-	///    - indexPath: The first index path of the songs section.
-	///    - itemKind: The item at `indexPath`.
-	///    - sectionIndex: The index of the songs section in the snapshot.
-	///    - itemCount: The number of items in the songs section.
-	fileprivate func fetchSongsSection(at indexPath: IndexPath, itemKind: SearchResults.Item, sectionIndex: Int, itemCount: Int) async {
-		await self.fetchSectionIfNeeded(ResourceCollection<Song>.self, SongIdentity.self, at: indexPath, itemKind: itemKind)
+	///    - itemKind: The first uncached item of the songs section.
+	///    - items: The items of the songs section.
+	fileprivate func fetchSongsSection(for itemKind: SearchResults.Item, in items: [SearchResults.Item]) async {
+		await self.fetchSectionIfNeeded(ResourceCollection<Song>.self, SongIdentity.self, for: itemKind)
 
-		let appleMusicIDs: [Int] = (0 ..< itemCount).compactMap { offset in
-			let ip = IndexPath(item: offset, section: sectionIndex)
-			return (self.fetchModel(at: ip) as Song?)?.attributes.amID
+		let appleMusicIDs: [Int] = items.compactMap { itemKind in
+			return (self.fetchModel(for: itemKind) as Song?)?.attributes.amID
 		}
 		if !appleMusicIDs.isEmpty {
 			_ = await MusicManager.shared.getSongs(for: appleMusicIDs)
@@ -1499,24 +1467,7 @@ extension SearchResultsCollectionViewController: MusicLockupCollectionViewCellDe
 	func showButtonPressed(_ sender: UIButton, indexPath: IndexPath) {}
 
 	func musicLockupCollectionViewCell(_ cell: MusicLockupCollectionViewCell, didTapPlayButtonAt indexPath: IndexPath) {
-		let itemCount = self.collectionView.numberOfItems(inSection: indexPath.section)
-		let kkSongs: [KKSong?] = (0 ..< itemCount).map { item in
-			self.fetchModel(at: IndexPath(item: item, section: indexPath.section)) as Song?
-		}
-
-		MusicManager.shared.play(kkSongs: kkSongs, startingAt: indexPath.item)
-	}
-
-	/// Resolves and caches the Apple Music song for the given Kurozora song.
-	///
-	/// - Parameter song: The Kurozora song to resolve.
-	func resolveMusicSong(_ song: KKSong) {
-		guard let appleMusicID = song.attributes.amID, self.resolvedSongs[appleMusicID] == nil else { return }
-
-		Task { [weak self] in
-			self?.resolvedSongs[appleMusicID] = await MusicManager.shared.getSong(for: appleMusicID)
-			self?.refreshVisibleMusicCells()
-		}
+		self.playSongs(startingAt: indexPath)
 	}
 }
 

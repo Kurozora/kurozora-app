@@ -185,16 +185,4 @@ extension CharacterDetailsCollectionViewController {
 		self.snapshot = newSnapshot
 		self.dataSource.apply(newSnapshot)
 	}
-
-	func fetchModel<M: KurozoraItem>(at indexPath: IndexPath) -> M? {
-		return self.cache[indexPath] as? M
-	}
-
-	func setSectionNeedsUpdate(_ section: SectionLayoutKind) {
-		var snapshot = self.dataSource.snapshot()
-		guard snapshot.indexOfSection(section) != nil else { return }
-		let itemsInSection = snapshot.itemIdentifiers(inSection: section)
-		snapshot.reconfigureItems(itemsInSection)
-		self.dataSource.apply(snapshot, animatingDifferences: true)
-	}
 }

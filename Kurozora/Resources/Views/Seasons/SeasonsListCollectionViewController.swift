@@ -31,7 +31,7 @@ class SeasonsListCollectionViewController: ListCollectionViewController, Section
 	var seasonIdentities: [SeasonIdentity] = []
 
 	// MARK: - SectionFetchable
-	var cache: [IndexPath: KurozoraItem] = [:]
+	var cache: [ItemKind: KurozoraItem] = [:]
 	var isFetchingSection: Set<SectionLayoutKind> = []
 
 	var dataSource: UICollectionViewDiffableDataSource<SectionLayoutKind, ItemKind>!
@@ -146,7 +146,7 @@ extension SeasonsListCollectionViewController {
 
 				if season == nil, let section = self.snapshot.sectionIdentifier(containingItem: itemKind), !self.isFetchingSection.contains(section) {
 					Task {
-						await self.fetchSectionIfNeeded(ResourceCollection<Season>.self, SeasonIdentity.self, at: indexPath, itemKind: itemKind)
+						await self.fetchSectionIfNeeded(ResourceCollection<Season>.self, SeasonIdentity.self, for: itemKind)
 					}
 				}
 
@@ -177,7 +177,7 @@ extension SeasonsListCollectionViewController {
 // MARK: - UICollectionViewDelegate
 extension SeasonsListCollectionViewController {
 	override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-		guard let season = self.cache[indexPath] as? Season else { return }
+		guard let season = self.cachedItem(at: indexPath) as? Season else { return }
 
 		self.show(.episodesListSegue, sender: season)
 	}
@@ -188,7 +188,7 @@ extension SeasonsListCollectionViewController {
 
 	override func collectionView(_ collectionView: UICollectionView, contextMenuConfigurationForItemAt indexPath: IndexPath, point: CGPoint) -> UIContextMenuConfiguration? {
 		guard
-			let season = self.cache[indexPath] as? Season,
+			let season = self.cachedItem(at: indexPath) as? Season,
 			let collectionViewCell = collectionView.cellForItem(at: indexPath) as? SeasonLockupCollectionViewCell
 		else { return nil }
 

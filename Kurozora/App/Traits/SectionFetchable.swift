@@ -23,8 +23,8 @@ protocol SectionFetchable: AnyObject {
 		DataSource.ItemIdentifierType == ItemKind
 
 	// MARK: - Properties
-	/// A cache of fetched models keyed by their index path.
-	var cache: [IndexPath: KurozoraItem] { get set }
+	/// A cache of fetched models keyed by the item they fill.
+	var cache: [ItemKind: KurozoraItem] { get set }
 	/// The set of sections that currently have an in-flight fetch.
 	var isFetchingSection: Set<SectionLayoutKind> { get set }
 
@@ -47,22 +47,53 @@ extension SectionFetchable {
 	///
 	/// - Parameter indexPath: The index path whose model you want to retrieve.
 	///
-	/// - Returns: The cached model of type `M`, or `nil` if no model is cached at that index path.
+	/// - Returns: The cached model of type `M`.
 	func fetchModel<M: KurozoraItem>(at indexPath: IndexPath) -> M? {
-		self.cache[indexPath] as? M
+		return self.cachedItem(at: indexPath) as? M
 	}
 
-	/// Returns the cached models of the given section, keyed by their item index.
+	/// Returns the cached model of the given item.
+	///
+	/// - Parameter itemKind: The item whose model you want to retrieve.
+	///
+	/// - Returns: The cached model of type `M`.
+	func fetchModel<M: KurozoraItem>(for itemKind: ItemKind) -> M? {
+		return self.cache[itemKind] as? M
+	}
+
+	/// Returns the cached model at the given index path, whatever its type.
+	///
+	/// - Parameter indexPath: The index path whose model you want to retrieve.
+	///
+	/// - Returns: The cached model.
+	func cachedItem(at indexPath: IndexPath) -> KurozoraItem? {
+		guard let itemKind = self.dataSource.itemIdentifier(for: indexPath) else { return nil }
+
+		return self.cache[itemKind]
+	}
+
+	/// Returns the items the given section lays out.
+	///
+	/// - Parameter section: The section whose items you want to retrieve.
+	///
+	/// - Returns: The items of the section.
+	func itemKinds(inSection section: Int) -> [ItemKind] {
+		guard let sectionIdentifier = self.snapshot?.sectionIdentifiers[safe: section] else { return [] }
+
+		return self.snapshot.itemIdentifiers(inSection: sectionIdentifier)
+	}
+
+	/// Returns the cached models of the given section.
 	///
 	/// - Parameter section: The section whose models you want to retrieve.
 	///
-	/// - Returns: The cached models of type `Model`, keyed by their item index.
+	/// - Returns: The cached models of type `Model`.
 	func cachedModels<Model: KurozoraItem>(inSection section: Int) -> [Int: Model] {
 		var models: [Int: Model] = [:]
 
-		for (indexPath, item) in self.cache where indexPath.section == section {
-			guard let model = item as? Model else { continue }
-			models[indexPath.item] = model
+		for (index, itemKind) in self.itemKinds(inSection: section).enumerated() {
+			guard let model = self.cache[itemKind] as? Model else { continue }
+			models[index] = model
 		}
 
 		return models
@@ -76,29 +107,29 @@ extension SectionFetchable {
 	func cachedItems(inSection section: Int) -> [Int: KurozoraItem] {
 		var items: [Int: KurozoraItem] = [:]
 
-		for (indexPath, item) in self.cache where indexPath.section == section {
-			items[indexPath.item] = item
+		for (index, itemKind) in self.itemKinds(inSection: section).enumerated() {
+			guard let item = self.cache[itemKind] else { continue }
+			items[index] = item
 		}
 
 		return items
 	}
 
-	/// Returns the cached model at the given index path, starting a batched section fetch when no model is cached.
+	/// Returns the cached model of the given item and fetches its section when nothing is cached.
 	///
 	/// - Parameters:
-	///    - indexPath: The index path whose model you want to retrieve.
-	///    - itemKind: The item at the given index path.
+	///    - itemKind: The item whose model you want to retrieve.
 	///    - response: The response type used to fetch the section.
 	///    - identity: The identity type extracted from each item in the section.
 	///
-	/// - Returns: The cached model of type `Model`, or `nil` if no model is cached yet.
-	func fetchModelOrTriggerSectionFetch<Model: KurozoraItem, Response: KurozoraRequestable, Identity: Fetchable>(at indexPath: IndexPath, itemKind: ItemKind, response: Response.Type, identity: Identity.Type) -> Model? where Identity.Response == Response {
-		let model: Model? = self.fetchModel(at: indexPath)
+	/// - Returns: The cached model of type `Model`.
+	func fetchModelOrTriggerSectionFetch<Model: KurozoraItem, Response: KurozoraRequestable, Identity: Fetchable>(for itemKind: ItemKind, response: Response.Type, identity: Identity.Type) -> Model? where Identity.Response == Response {
+		let model: Model? = self.fetchModel(for: itemKind)
 
 		if model == nil,
 		   let section = self.snapshot.sectionIdentifier(containingItem: itemKind),
 		   !self.isFetchingSection.contains(section) {
-			Task { await self.fetchSectionIfNeeded(Response.self, Identity.self, at: indexPath, itemKind: itemKind) }
+			Task { await self.fetchSectionIfNeeded(Response.self, Identity.self, for: itemKind) }
 		}
 
 		return model
@@ -117,19 +148,30 @@ extension SectionFetchable {
 		self.dataSource.apply(snapshot, animatingDifferences: true, completion: nil)
 	}
 
-	/// Fetches details for every uncached item in the section that contains the given index path.
+	/// Reconfigures every item the given predicate matches.
 	///
-	/// Items are fetched in chunks and applied to the snapshot as each chunk completes,
-	/// so rows become visible without waiting for the entire section to load.
+	/// - Parameter matches: Returns whether the item needs to be redrawn.
+	func reconfigureItems(where matches: (ItemKind) -> Bool) {
+		guard let dataSource = self.dataSource else { return }
+
+		var snapshot = dataSource.snapshot()
+		let matchedItems = snapshot.itemIdentifiers.filter(matches)
+
+		guard !matchedItems.isEmpty else { return }
+
+		snapshot.reconfigureItems(matchedItems)
+		dataSource.apply(snapshot, animatingDifferences: false, completion: nil)
+	}
+
+	/// Fetches details for every uncached item in the section that holds the given item.
 	///
 	/// - Parameters:
 	///    - response: The response type used to fetch the items.
 	///    - item: The identity type extracted from each item in the section.
-	///    - indexPath: An index path within the section to fetch.
-	///    - itemKind: The item at the given index path.
-	func fetchSectionIfNeeded<I: KurozoraRequestable, Element: Fetchable>(_ response: I.Type, _ item: Element.Type, at indexPath: IndexPath, itemKind: ItemKind) async where Element.Response == I {
+	///    - itemKind: The item whose section to fetch.
+	func fetchSectionIfNeeded<I: KurozoraRequestable, Element: Fetchable>(_ response: I.Type, _ item: Element.Type, for itemKind: ItemKind) async where Element.Response == I {
 		guard
-			self.cache[indexPath] == nil,
+			self.cache[itemKind] == nil,
 			let section = self.snapshot.sectionIdentifier(containingItem: itemKind),
 			!self.isFetchingSection.contains(section)
 		else { return }
@@ -144,14 +186,14 @@ extension SectionFetchable {
 				let currentSnapshot = self.dataSource.snapshot()
 				guard currentSnapshot.indexOfSection(section) != nil else { break }
 
-				let identities: [Element] = currentSnapshot
+				let uncached: [(itemKind: ItemKind, identity: Element)] = currentSnapshot
 					.itemIdentifiers(inSection: section)
-					.compactMap { self.extractIdentity(from: $0) }
+					.compactMap { itemKind in
+						guard self.cache[itemKind] == nil else { return nil }
+						guard let identity: Element = self.extractIdentity(from: itemKind) else { return nil }
 
-				let uncached: [(index: Int, identity: Element)] = identities.enumerated().compactMap { index, id in
-					let ip = IndexPath(item: index, section: indexPath.section)
-					return self.cache[ip] == nil ? (index, id) : nil
-				}
+						return (itemKind, identity)
+					}
 
 				guard !uncached.isEmpty else { break }
 
@@ -162,34 +204,23 @@ extension SectionFetchable {
 				// If the section is no longer in the snapshot, abandon this fetch.
 				guard self.dataSource.snapshot().indexOfSection(section) != nil else { break }
 
-				let orderLookup = Dictionary(identitiesToFetch.enumerated().map { ($1.id, $0) }, uniquingKeysWith: { first, _ in first })
-				let sorted = response.data.sorted {
-					guard
-						let lhsIndex = orderLookup[$0.id],
-						let rhsIndex = orderLookup[$1.id]
-					else { return false }
-					return lhsIndex < rhsIndex
-				}
+				let itemKinds = Dictionary(chunk.map { ($0.identity.id, $0.itemKind) }, uniquingKeysWith: { first, _ in first })
+				var cachedThisIteration: [ItemKind] = []
 
-				let chunkLookup = Dictionary(chunk.map { ($0.identity.id, $0.index) }, uniquingKeysWith: { first, _ in first })
-				var cachedThisIteration = 0
-				for model in sorted {
-					if let originalIndex = chunkLookup[model.id] {
-						let ip = IndexPath(item: originalIndex, section: indexPath.section)
-						self.cache[ip] = model
-						cachedThisIteration += 1
-					}
+				for model in response.data {
+					guard let itemKind = itemKinds[model.id] else { continue }
+
+					self.cache[itemKind] = model
+					cachedThisIteration.append(itemKind)
 				}
 
 				// Avoid re-requesting the same uncached set when the server returns nothing usable.
-				guard cachedThisIteration > 0 else { break }
+				guard !cachedThisIteration.isEmpty else { break }
 
-				let postFetchSnapshot = self.dataSource.snapshot()
-				let sectionItems = postFetchSnapshot.itemIdentifiers(inSection: section)
-				let reconfigured: [ItemKind] = chunk.compactMap { sectionItems[safe: $0.index] }
+				var snapshot = self.dataSource.snapshot()
+				let reconfigured = cachedThisIteration.filter { snapshot.indexOfItem($0) != nil }
 
 				if !reconfigured.isEmpty {
-					var snapshot = postFetchSnapshot
 					snapshot.reconfigureItems(reconfigured)
 					self.dataSource.apply(snapshot, animatingDifferences: true, completion: nil)
 				}

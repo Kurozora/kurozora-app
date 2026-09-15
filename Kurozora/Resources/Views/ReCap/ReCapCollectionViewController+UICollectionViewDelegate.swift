@@ -16,19 +16,19 @@ extension ReCapCollectionViewController {
 		     .topGenres(let recapItem), .topThemes(let recapItem):
 			switch recapItem.attributes.recapItemType {
 			case .shows:
-				guard let show = self.cache[indexPath] as? Show else { return }
+				guard let show = self.cachedItem(at: indexPath) as? Show else { return }
 				self.show(.showDetailsSegue, sender: show)
 			case .literatures:
-				guard let literature = self.cache[indexPath] as? Literature else { return }
+				guard let literature = self.cachedItem(at: indexPath) as? Literature else { return }
 				self.show(.literatureDetailsSegue, sender: literature)
 			case .games:
-				guard let game = self.cache[indexPath] as? Game else { return }
+				guard let game = self.cachedItem(at: indexPath) as? Game else { return }
 				self.show(.gameDetailsSegue, sender: game)
 			case .genres:
-				guard let genre = self.cache[indexPath] as? Genre else { return }
+				guard let genre = self.cachedItem(at: indexPath) as? Genre else { return }
 				self.show(.genresSegue, sender: genre)
 			case .themes:
-				guard let theme = self.cache[indexPath] as? Theme else { return }
+				guard let theme = self.cachedItem(at: indexPath) as? Theme else { return }
 				self.show(.themesSegue, sender: theme)
 			}
 		default: break
@@ -45,19 +45,19 @@ extension ReCapCollectionViewController {
 		     .topGenres(let recapItem), .topThemes(let recapItem):
 			switch recapItem.attributes.recapItemType {
 			case .shows:
-				guard let shows = self.cache[indexPath] as? Show else { return nil }
+				guard let shows = self.cachedItem(at: indexPath) as? Show else { return nil }
 				return shows.contextMenuConfiguration(in: self, userInfo: ["indexPath": indexPath], sourceView: collectionViewCell?.contentView, barButtonItem: nil)
 			case .literatures:
-				guard let literatures = self.cache[indexPath] as? Literature else { return nil }
+				guard let literatures = self.cachedItem(at: indexPath) as? Literature else { return nil }
 				return literatures.contextMenuConfiguration(in: self, userInfo: ["indexPath": indexPath], sourceView: collectionViewCell?.contentView, barButtonItem: nil)
 			case .games:
-				guard let games = self.cache[indexPath] as? Game else { return nil }
+				guard let games = self.cachedItem(at: indexPath) as? Game else { return nil }
 				return games.contextMenuConfiguration(in: self, userInfo: ["indexPath": indexPath], sourceView: collectionViewCell?.contentView, barButtonItem: nil)
 			case .genres:
-				guard let genres = self.cache[indexPath] as? Genre else { return nil }
+				guard let genres = self.cachedItem(at: indexPath) as? Genre else { return nil }
 				return genres.contextMenuConfiguration(in: self, userInfo: ["indexPath": indexPath], sourceView: collectionViewCell?.contentView, barButtonItem: nil)
 			case .themes:
-				guard let themes = self.cache[indexPath] as? Theme else { return nil }
+				guard let themes = self.cachedItem(at: indexPath) as? Theme else { return nil }
 				return themes.contextMenuConfiguration(in: self, userInfo: ["indexPath": indexPath], sourceView: collectionViewCell?.contentView, barButtonItem: nil)
 			}
 		case .header, .milestones: return nil

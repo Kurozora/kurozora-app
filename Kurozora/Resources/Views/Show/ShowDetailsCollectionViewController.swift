@@ -13,7 +13,7 @@ import IntentsUI
 import KurozoraKit
 import UIKit
 
-class ShowDetailsCollectionViewController: DetailsCollectionViewController, SectionFetchable, TypedSegueHandling {
+class ShowDetailsCollectionViewController: DetailsCollectionViewController, SectionFetchable, MusicResolving, TypedSegueHandling {
 	// MARK: - Properties
 	var showIdentity: ShowIdentity?
 
@@ -94,7 +94,7 @@ class ShowDetailsCollectionViewController: DetailsCollectionViewController, Sect
 	/// The index path of the song that is currently playing.
 	var currentPlayerIndexPath: IndexPath?
 
-	var cache: [IndexPath: KurozoraItem] = [:]
+	var cache: [ItemKind: KurozoraItem] = [:]
 	var isFetchingSection: Set<SectionLayoutKind> = []
 
 	/// The resolved Apple Music songs keyed by Apple Music identifier.
@@ -248,15 +248,8 @@ class ShowDetailsCollectionViewController: DetailsCollectionViewController, Sect
 	}
 
 	/// Refreshes the play button glyph and artwork of every visible song cell.
-	private func refreshVisibleMusicCells() {
-		for case let cell as MusicLockupCollectionViewCell in self.collectionView.visibleCells {
-			guard
-				let indexPath = self.collectionView.indexPath(for: cell),
-				let song = self.showSongs[safe: indexPath.item]?.song
-			else { continue }
-			cell.updatePlayButton(for: song)
-			cell.updateArtwork(for: song, resolvedSong: song.attributes.amID.flatMap { self.resolvedSongs[$0] })
-		}
+	func song(at indexPath: IndexPath) -> KKSong? {
+		return self.showSongs[safe: indexPath.item]?.song
 	}
 
 	override func motionEnded(_ motion: UIEvent.EventSubtype, with event: UIEvent?) {
@@ -442,7 +435,7 @@ class ShowDetailsCollectionViewController: DetailsCollectionViewController, Sect
 		switch kind {
 		case .shows:
 			switch self.dataSource.sectionIdentifier(for: indexPath.section) {
-			case .moreByStudio: return self.cache[indexPath] as? Show
+			case .moreByStudio: return self.cachedItem(at: indexPath) as? Show
 			case .relatedShows: return self.relatedShows[safe: indexPath.item]?.show
 			default: return nil
 			}
@@ -536,17 +529,5 @@ extension ShowDetailsCollectionViewController: MusicLockupCollectionViewCellDele
 
 	func musicLockupCollectionViewCell(_ cell: MusicLockupCollectionViewCell, didTapPlayButtonAt indexPath: IndexPath) {
 		MusicManager.shared.play(kkSongs: self.showSongs.map { $0.song }, startingAt: indexPath.item)
-	}
-
-	/// Resolves and caches the Apple Music song for the given Kurozora song.
-	///
-	/// - Parameter song: The Kurozora song to resolve.
-	func resolveMusicSong(_ song: KKSong) {
-		guard let appleMusicID = song.attributes.amID, self.resolvedSongs[appleMusicID] == nil else { return }
-
-		Task { [weak self] in
-			self?.resolvedSongs[appleMusicID] = await MusicManager.shared.getSong(for: appleMusicID)
-			self?.refreshVisibleMusicCells()
-		}
 	}
 }

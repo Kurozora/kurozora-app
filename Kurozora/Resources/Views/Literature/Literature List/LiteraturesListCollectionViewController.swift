@@ -62,7 +62,7 @@ class LiteraturesListCollectionViewController: ListCollectionViewController, Sec
 	private var dimLibraryBarButtonItem: UIBarButtonItem!
 
 	// MARK: - SectionFetchable
-	var cache: [IndexPath: KurozoraItem] = [:]
+	var cache: [ItemKind: KurozoraItem] = [:]
 	var isFetchingSection: Set<SectionLayoutKind> = []
 
 	/// Whether titles already in the user's library are dimmed.
@@ -129,28 +129,14 @@ class LiteraturesListCollectionViewController: ListCollectionViewController, Sec
 
 	/// Updates every visible cell whose underlying literature matches the given entry's trackable identity.
 	private func applyLibraryEntryChange(forTrackableID trackableID: String, isRemoval: Bool) {
-		var matchedItems: [ItemKind] = []
-		let currentSnapshot = self.dataSource.snapshot()
-
-		for item in currentSnapshot.itemIdentifiers {
+		self.reconfigureItems { item in
 			switch item {
 			case .literatureIdentity(let identity):
-				if identity.id.rawValue == trackableID,
-				   let index = currentSnapshot.indexOfItem(item),
-				   self.cache[IndexPath(item: index, section: 0)] is Literature {
-					matchedItems.append(item)
-				}
+				return identity.id.rawValue == trackableID && self.cache[item] is Literature
 			case .relatedLiterature(let relatedLiterature):
-				if relatedLiterature.literature.id.rawValue == trackableID {
-					matchedItems.append(item)
-				}
+				return relatedLiterature.literature.id.rawValue == trackableID
 			}
 		}
-
-		guard !matchedItems.isEmpty else { return }
-		var snapshot = currentSnapshot
-		snapshot.reconfigureItems(matchedItems)
-		self.dataSource.apply(snapshot, animatingDifferences: false)
 	}
 
 	/// Creates the bar button item that dims titles already in the user's library.
@@ -209,7 +195,7 @@ class LiteraturesListCollectionViewController: ListCollectionViewController, Sec
 	/// - Returns: `true` when dimming is on and the underlying literature is in the user's library.
 	private func isDimmed(at indexPath: IndexPath) -> Bool {
 		guard self.dimsLibraryEntries else { return false }
-		guard let literature = (self.cache[indexPath] as? Literature) ?? self.relatedLiteratures[safe: indexPath.item]?.literature else { return false }
+		guard let literature = (self.cachedItem(at: indexPath) as? Literature) ?? self.relatedLiteratures[safe: indexPath.item]?.literature else { return false }
 		return self.isLiteratureInLibrary(literature)
 	}
 
@@ -442,7 +428,7 @@ extension LiteraturesListCollectionViewController {
 
 				if literature == nil, let section = self.snapshot.sectionIdentifier(containingItem: itemKind), !self.isFetchingSection.contains(section) {
 					Task {
-						await self.fetchSectionIfNeeded(ResourceCollection<Literature>.self, LiteratureIdentity.self, at: indexPath, itemKind: itemKind)
+						await self.fetchSectionIfNeeded(ResourceCollection<Literature>.self, LiteratureIdentity.self, for: itemKind)
 					}
 				}
 
@@ -467,7 +453,7 @@ extension LiteraturesListCollectionViewController {
 
 				if literature == nil, let section = self.snapshot.sectionIdentifier(containingItem: itemKind), !self.isFetchingSection.contains(section) {
 					Task {
-						await self.fetchSectionIfNeeded(ResourceCollection<Literature>.self, LiteratureIdentity.self, at: indexPath, itemKind: itemKind)
+						await self.fetchSectionIfNeeded(ResourceCollection<Literature>.self, LiteratureIdentity.self, for: itemKind)
 					}
 				}
 
@@ -505,7 +491,7 @@ extension LiteraturesListCollectionViewController {
 // MARK: - UICollectionViewDelegate
 extension LiteraturesListCollectionViewController {
 	override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-		let literature = self.cache[indexPath] as? Literature
+		let literature = self.cachedItem(at: indexPath) as? Literature
 		let relatedLiterature = self.relatedLiteratures[safe: indexPath.item]?.literature
 		guard let literature = literature ?? relatedLiterature else { return }
 
@@ -529,7 +515,7 @@ extension LiteraturesListCollectionViewController {
 			guard let literature = self.relatedLiteratures[safe: indexPath.item]?.literature else { return nil }
 			return literature.contextMenuConfiguration(in: self, userInfo: ["indexPath": indexPath], sourceView: collectionViewCell?.contentView, barButtonItem: nil)
 		default:
-			guard let literature = self.cache[indexPath] as? Literature else { return nil }
+			guard let literature = self.cachedItem(at: indexPath) as? Literature else { return nil }
 			return literature.contextMenuConfiguration(in: self, userInfo: ["indexPath": indexPath], sourceView: collectionViewCell?.contentView, barButtonItem: nil)
 		}
 	}
@@ -541,7 +527,7 @@ extension LiteraturesListCollectionViewController: BaseLockupCollectionViewCellD
 		let signedIn = await WorkflowController.shared.isSignedIn(on: self)
 		guard signedIn else { return }
 		guard let indexPath = self.collectionView.indexPath(for: cell) else { return }
-		let literature = (self.cache[indexPath] as? Literature) ?? self.relatedLiteratures[indexPath.item].literature
+		let literature = (self.cachedItem(at: indexPath) as? Literature) ?? self.relatedLiteratures[indexPath.item].literature
 
 		let oldLibraryStatus = cell.libraryStatus
 		let actionSheetAlertController = UIAlertController.actionSheetWithItems(items: LibraryStatus.alertControllerItems(for: cell.libraryKind), currentSelection: oldLibraryStatus, action: { title, value in

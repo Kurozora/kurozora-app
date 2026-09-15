@@ -13,7 +13,7 @@ extension SongDetailsCollectionViewController {
 	override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
 		switch self.snapshot.sectionIdentifiers[indexPath.section] {
 		case .shows:
-			guard let show = self.cache[indexPath] as? Show else { return }
+			guard let show = self.cachedItem(at: indexPath) as? Show else { return }
 			self.show(.showDetailsSegue, sender: show)
 		case .reviews:
 			guard let review = self.review(at: indexPath) else { return }
@@ -28,7 +28,7 @@ extension SongDetailsCollectionViewController {
 
 		switch self.snapshot.sectionIdentifiers[indexPath.section] {
 		case .shows:
-			guard let show = self.cache[indexPath] as? Show else { return nil }
+			guard let show = self.cachedItem(at: indexPath) as? Show else { return nil }
 			return show.contextMenuConfiguration(in: self, userInfo: ["indexPath": indexPath], sourceView: collectionViewCell?.contentView, barButtonItem: nil)
 		case .reviews:
 			guard let review = self.review(at: indexPath) else { return nil }

@@ -48,14 +48,14 @@ extension LiteratureDetailsCollectionViewController {
 				return
 			}
 		case .cast:
-			guard let cast = self.cache[indexPath] as? Cast else { return }
+			guard let cast = self.cachedItem(at: indexPath) as? Cast else { return }
 			guard let character = cast.relationships.characters.data.first else { return }
 			self.show( .characterDetailsSegue, sender: character)
 		case .studios:
-			guard let studio = self.cache[indexPath] as? Studio else { return }
+			guard let studio = self.cachedItem(at: indexPath) as? Studio else { return }
 			self.show( .studioDetailsSegue, sender: studio)
 		case .moreByStudio:
-			guard let literature = self.cache[indexPath]  as? Literature else { return }
+			guard let literature = self.cachedItem(at: indexPath)  as? Literature else { return }
 			self.show( .literatureDetailsSegue, sender: literature)
 		case .relatedLiteratures:
 			guard let literature = self.relatedLiteratures[safe: indexPath.item]?.literature else { return }
@@ -92,13 +92,13 @@ extension LiteratureDetailsCollectionViewController {
 				return nil
 			}
 		case .cast:
-			guard let cast = self.cache[indexPath] as? Cast else { return nil }
+			guard let cast = self.cachedItem(at: indexPath) as? Cast else { return nil }
 			return cast.contextMenuConfiguration(in: self, userInfo: ["indexPath": indexPath], sourceView: collectionViewCell?.contentView, barButtonItem: nil)
 		case .studios:
-			guard let studio = self.cache[indexPath] as? Studio else { return nil }
+			guard let studio = self.cachedItem(at: indexPath) as? Studio else { return nil }
 			return studio.contextMenuConfiguration(in: self, userInfo: ["indexPath": indexPath], sourceView: collectionViewCell?.contentView, barButtonItem: nil)
 		case .moreByStudio:
-			guard let literature = self.cache[indexPath] as? Literature else { return nil }
+			guard let literature = self.cachedItem(at: indexPath) as? Literature else { return nil }
 			return literature.contextMenuConfiguration(in: self, userInfo: ["indexPath": indexPath], sourceView: collectionViewCell?.contentView, barButtonItem: nil)
 		case .relatedLiteratures:
 			return self.relatedLiteratures[indexPath.item].literature.contextMenuConfiguration(in: self, userInfo: ["indexPath": indexPath], sourceView: collectionViewCell?.contentView, barButtonItem: nil)

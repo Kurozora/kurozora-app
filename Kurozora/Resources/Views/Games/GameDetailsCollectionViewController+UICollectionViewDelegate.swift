@@ -49,15 +49,15 @@ extension GameDetailsCollectionViewController {
 			}
 		case .cast:
 			guard
-				let cast = self.cache[indexPath] as? Cast,
+				let cast = self.cachedItem(at: indexPath) as? Cast,
 				let character = cast.relationships.characters.data.first
 			else { return }
 			self.show(.characterDetailsSegue, sender: character)
 		case .studios:
-			guard let studio = self.cache[indexPath] as? Studio else { return }
+			guard let studio = self.cachedItem(at: indexPath) as? Studio else { return }
 			self.show(.studioDetailsSegue, sender: studio)
 		case .moreByStudio:
-			guard let game = self.cache[indexPath] as? Game else { return }
+			guard let game = self.cachedItem(at: indexPath) as? Game else { return }
 			self.show(.gameDetailsSegue, sender: game)
 		case .relatedGames:
 			guard let game = self.relatedGames[safe: indexPath.item]?.game else { return }
@@ -96,13 +96,13 @@ extension GameDetailsCollectionViewController {
 				return nil
 			}
 		case .cast:
-			guard let cast = self.cache[indexPath] as? Cast else { return nil }
+			guard let cast = self.cachedItem(at: indexPath) as? Cast else { return nil }
 			return cast.contextMenuConfiguration(in: self, userInfo: ["indexPath": indexPath], sourceView: collectionViewCell?.contentView, barButtonItem: nil)
 		case .studios:
-			guard let studio = self.cache[indexPath] as? Studio else { return nil }
+			guard let studio = self.cachedItem(at: indexPath) as? Studio else { return nil }
 			return studio.contextMenuConfiguration(in: self, userInfo: ["indexPath": indexPath], sourceView: collectionViewCell?.contentView, barButtonItem: nil)
 		case .moreByStudio:
-			guard let game = self.cache[indexPath] as? Game else { return nil }
+			guard let game = self.cachedItem(at: indexPath) as? Game else { return nil }
 			return game.contextMenuConfiguration(in: self, userInfo: ["indexPath": indexPath], sourceView: collectionViewCell?.contentView, barButtonItem: nil)
 		case .relatedGames:
 			return self.relatedGames[indexPath.item].game.contextMenuConfiguration(in: self, userInfo: ["indexPath": indexPath], sourceView: collectionViewCell?.contentView, barButtonItem: nil)

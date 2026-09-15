@@ -61,7 +61,7 @@ class SongDetailsCollectionViewController: DetailsCollectionViewController, Sect
 		return text.isEmpty ? nil : text
 	}
 
-	var cache: [IndexPath: KurozoraItem] = [:]
+	var cache: [ItemKind: KurozoraItem] = [:]
 	var isFetchingSection: Set<SectionLayoutKind> = []
 
 	/// Observes local library mutations to refresh visible cells.
@@ -128,28 +128,16 @@ class SongDetailsCollectionViewController: DetailsCollectionViewController, Sect
 	///    - trackableID: The trackable identity of the mutated entry.
 	///    - kind: The library kind of the mutated entry.
 	private func applyLibraryEntryChange(forTrackableID trackableID: String, kind: LibraryKind) {
-		guard let dataSource = self.dataSource else { return }
-		var matchedItems: [ItemKind] = []
-		let currentSnapshot = dataSource.snapshot()
-
-		for item in currentSnapshot.itemIdentifiers {
-			let matches: Bool
+		self.reconfigureItems { item in
+			guard self.cache[item] != nil else { return false }
 
 			switch (item, kind) {
 			case (.showIdentity(let identity), .shows):
-				matches = identity.id.rawValue == trackableID
+				return identity.id.rawValue == trackableID
 			default:
-				matches = false
+				return false
 			}
-
-			guard matches, let indexPath = dataSource.indexPath(for: item), self.cache[indexPath] != nil else { continue }
-			matchedItems.append(item)
 		}
-
-		guard !matchedItems.isEmpty else { return }
-		var snapshot = currentSnapshot
-		snapshot.reconfigureItems(matchedItems)
-		dataSource.apply(snapshot, animatingDifferences: false)
 	}
 
 	override func fetchDetails() async {
@@ -267,11 +255,11 @@ class SongDetailsCollectionViewController: DetailsCollectionViewController, Sect
 	}
 
 	override func libraryStatusTarget(at indexPath: IndexPath, kind: LibraryKind) -> (any Libraryable)? {
-		return self.cache[indexPath] as? any Libraryable
+		return self.cachedItem(at: indexPath) as? any Libraryable
 	}
 
 	override func reminderTarget(at indexPath: IndexPath) -> Show? {
-		return self.cache[indexPath] as? Show
+		return self.cachedItem(at: indexPath) as? Show
 	}
 
 	override func didDeleteReview() {
@@ -497,7 +485,7 @@ extension SongDetailsCollectionViewController {
 
 				if show == nil, let section = self.snapshot.sectionIdentifier(containingItem: itemKind), !self.isFetchingSection.contains(section) {
 					Task {
-						await self.fetchSectionIfNeeded(ResourceCollection<Show>.self, ShowIdentity.self, at: indexPath, itemKind: itemKind)
+						await self.fetchSectionIfNeeded(ResourceCollection<Show>.self, ShowIdentity.self, for: itemKind)
 					}
 				}
 

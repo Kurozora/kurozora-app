@@ -65,7 +65,7 @@ extension UserReviewsListCollectionViewController {
 
 			if game == nil {
 				Task {
-					await self.fetchReviewSectionIfNeeded(ResourceCollection<Game>.self, GameIdentity.self, at: indexPath, itemKind: itemKind)
+					await self.fetchReviewSectionIfNeeded(ResourceCollection<Game>.self, GameIdentity.self, for: itemKind)
 				}
 			}
 
@@ -83,7 +83,7 @@ extension UserReviewsListCollectionViewController {
 
 				if show == nil {
 					Task {
-						await self.fetchReviewSectionIfNeeded(ResourceCollection<Show>.self, ShowIdentity.self, at: indexPath, itemKind: itemKind)
+						await self.fetchReviewSectionIfNeeded(ResourceCollection<Show>.self, ShowIdentity.self, for: itemKind)
 					}
 				}
 
@@ -93,7 +93,7 @@ extension UserReviewsListCollectionViewController {
 
 				if literature == nil {
 					Task {
-						await self.fetchReviewSectionIfNeeded(ResourceCollection<Literature>.self, LiteratureIdentity.self, at: indexPath, itemKind: itemKind)
+						await self.fetchReviewSectionIfNeeded(ResourceCollection<Literature>.self, LiteratureIdentity.self, for: itemKind)
 					}
 				}
 
@@ -114,7 +114,7 @@ extension UserReviewsListCollectionViewController {
 
 			if song == nil {
 				Task {
-					await self.fetchReviewSectionIfNeeded(ResourceCollection<Song>.self, SongIdentity.self, at: indexPath, itemKind: itemKind)
+					await self.fetchReviewSectionIfNeeded(ResourceCollection<Song>.self, SongIdentity.self, for: itemKind)
 				}
 			}
 
@@ -131,7 +131,7 @@ extension UserReviewsListCollectionViewController {
 
 			if episode == nil {
 				Task {
-					await self.fetchReviewSectionIfNeeded(ResourceCollection<Episode>.self, EpisodeIdentity.self, at: indexPath, itemKind: itemKind)
+					await self.fetchReviewSectionIfNeeded(ResourceCollection<Episode>.self, EpisodeIdentity.self, for: itemKind)
 				}
 			}
 
@@ -149,7 +149,7 @@ extension UserReviewsListCollectionViewController {
 
 				if character == nil {
 					Task {
-						await self.fetchReviewSectionIfNeeded(ResourceCollection<Character>.self, CharacterIdentity.self, at: indexPath, itemKind: itemKind)
+						await self.fetchReviewSectionIfNeeded(ResourceCollection<Character>.self, CharacterIdentity.self, for: itemKind)
 					}
 				}
 
@@ -159,7 +159,7 @@ extension UserReviewsListCollectionViewController {
 
 				if person == nil {
 					Task {
-						await self.fetchReviewSectionIfNeeded(ResourceCollection<Person>.self, PersonIdentity.self, at: indexPath, itemKind: itemKind)
+						await self.fetchReviewSectionIfNeeded(ResourceCollection<Person>.self, PersonIdentity.self, for: itemKind)
 					}
 				}
 
@@ -169,7 +169,7 @@ extension UserReviewsListCollectionViewController {
 
 				if studio == nil {
 					Task {
-						await self.fetchReviewSectionIfNeeded(ResourceCollection<Studio>.self, StudioIdentity.self, at: indexPath, itemKind: itemKind)
+						await self.fetchReviewSectionIfNeeded(ResourceCollection<Studio>.self, StudioIdentity.self, for: itemKind)
 					}
 				}
 

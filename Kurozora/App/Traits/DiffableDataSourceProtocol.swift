@@ -23,6 +23,14 @@ protocol DiffableDataSourceProtocol {
 	@preconcurrency
 	func snapshot() -> NSDiffableDataSourceSnapshot<SectionIdentifierType, ItemIdentifierType>
 
+	/// Returns the identifier of the item at the given index path.
+	///
+	/// - Parameter indexPath: The index path of the item in the collection or table view.
+	///
+	/// - Returns: The item's identifier.
+	@preconcurrency
+	func itemIdentifier(for indexPath: IndexPath) -> ItemIdentifierType?
+
 	/// Updates the UI to reflect the state of the data in the snapshot, optionally animating the UI changes and executing a completion handler.
 	///
 	/// The diffable data source computes the difference between the collection or table view’s current state and the new state in the applied snapshot, which is an O(_n_) operation, where n is the number of items in the snapshot.

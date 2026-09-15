@@ -38,7 +38,7 @@ class ManageActiveSessionsController: KTableViewController, SectionFetchable {
 	/// The user's web sessions.
 	var webSessions: [Session] = []
 
-	var cache: [IndexPath: KurozoraItem] = [:]
+	var cache: [ItemKind: KurozoraItem] = [:]
 	var isFetchingSection: Set<SectionLayoutKind> = []
 
 	var dataSource: SessionDataSource!
@@ -481,7 +481,7 @@ extension ManageActiveSessionsController {
 
 				if session == nil, let section = self.snapshot.sectionIdentifier(containingItem: itemKind), !self.isFetchingSection.contains(section) {
 					Task {
-						await self.fetchSectionIfNeeded(ResourceCollection<Session>.self, SessionIdentity.self, at: indexPath, itemKind: itemKind)
+						await self.fetchSectionIfNeeded(ResourceCollection<Session>.self, SessionIdentity.self, for: itemKind)
 					}
 				}
 

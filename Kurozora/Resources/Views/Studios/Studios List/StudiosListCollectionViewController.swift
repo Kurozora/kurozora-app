@@ -44,7 +44,7 @@ class StudiosListCollectionViewController: ListCollectionViewController, Section
 	var studiosListFetchType: StudiosListFetchType = .search
 
 	// MARK: - SectionFetchable
-	var cache: [IndexPath: KurozoraItem] = [:]
+	var cache: [ItemKind: KurozoraItem] = [:]
 	var isFetchingSection: Set<SectionLayoutKind> = []
 
 	var dataSource: UICollectionViewDiffableDataSource<SectionLayoutKind, ItemKind>!
@@ -213,7 +213,7 @@ extension StudiosListCollectionViewController {
 
 				if studio == nil, let section = self.snapshot.sectionIdentifier(containingItem: itemKind), !self.isFetchingSection.contains(section) {
 					Task {
-						await self.fetchSectionIfNeeded(ResourceCollection<Studio>.self, StudioIdentity.self, at: indexPath, itemKind: itemKind)
+						await self.fetchSectionIfNeeded(ResourceCollection<Studio>.self, StudioIdentity.self, for: itemKind)
 					}
 				}
 
@@ -244,7 +244,7 @@ extension StudiosListCollectionViewController {
 // MARK: - UICollectionViewDelegate
 extension StudiosListCollectionViewController {
 	override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-		guard let studio = self.cache[indexPath] as? Studio else { return }
+		guard let studio = self.cachedItem(at: indexPath) as? Studio else { return }
 
 		self.show(.studioDetailsSegue, sender: studio)
 	}
@@ -254,7 +254,7 @@ extension StudiosListCollectionViewController {
 	}
 
 	override func collectionView(_ collectionView: UICollectionView, contextMenuConfigurationForItemAt indexPath: IndexPath, point: CGPoint) -> UIContextMenuConfiguration? {
-		guard let studio = self.cache[indexPath] as? Studio else { return nil }
+		guard let studio = self.cachedItem(at: indexPath) as? Studio else { return nil }
 
 		let collectionViewCell = collectionView.cellForItem(at: indexPath)
 		return studio.contextMenuConfiguration(in: self, userInfo: ["indexPath": indexPath], sourceView: collectionViewCell?.contentView, barButtonItem: nil)

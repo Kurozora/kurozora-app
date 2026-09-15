@@ -24,7 +24,7 @@ enum SongsListFetchType {
 }
 
 /// A list of songs for a show, grouped by song type.
-class ShowSongsListCollectionViewController: ListCollectionViewController, SectionFetchable, TypedSegueHandling {
+class ShowSongsListCollectionViewController: ListCollectionViewController, SectionFetchable, MusicResolving, TypedSegueHandling {
 	// MARK: - Enums
 	enum SegueIdentifiers: String, SegueIdentifier {
 		case showDetailsSegue
@@ -65,7 +65,7 @@ class ShowSongsListCollectionViewController: ListCollectionViewController, Secti
 	var currentPlayerIndexPath: IndexPath?
 
 	// MARK: - SectionFetchable
-	var cache: [IndexPath: KurozoraItem] = [:]
+	var cache: [ItemKind: KurozoraItem] = [:]
 	var isFetchingSection: Set<SectionLayoutKind> = []
 
 	var dataSource: UICollectionViewDiffableDataSource<SectionLayoutKind, ItemKind>!
@@ -115,15 +115,8 @@ class ShowSongsListCollectionViewController: ListCollectionViewController, Secti
 	}
 
 	/// Refreshes the play button glyph and artwork of every visible song cell.
-	private func refreshVisibleMusicCells() {
-		for case let cell as MusicLockupCollectionViewCell in self.collectionView.visibleCells {
-			guard
-				let indexPath = self.collectionView.indexPath(for: cell),
-				let song = self.showSongs[safe: indexPath.item]?.song ?? self.songs[safe: indexPath.item] ?? self.cache[indexPath] as? Song
-			else { continue }
-			cell.updatePlayButton(for: song)
-			cell.updateArtwork(for: song, resolvedSong: song.attributes.amID.flatMap { self.resolvedSongs[$0] })
-		}
+	func song(at indexPath: IndexPath) -> KKSong? {
+		return self.showSongs[safe: indexPath.item]?.song ?? self.songs[safe: indexPath.item] ?? self.cachedItem(at: indexPath) as? Song
 	}
 
 	override func viewWillDisappear(_ animated: Bool) {
@@ -330,7 +323,7 @@ extension ShowSongsListCollectionViewController {
 
 				if song == nil, let section = self.snapshot.sectionIdentifier(containingItem: itemKind), !self.isFetchingSection.contains(section) {
 					Task {
-						await self.fetchSectionIfNeeded(ResourceCollection<Song>.self, SongIdentity.self, at: indexPath, itemKind: itemKind)
+						await self.fetchSectionIfNeeded(ResourceCollection<Song>.self, SongIdentity.self, for: itemKind)
 					}
 				}
 
@@ -374,7 +367,7 @@ extension ShowSongsListCollectionViewController {
 extension ShowSongsListCollectionViewController {
 	override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
 		if self.songsListFetchType == .charts {
-			guard let song = self.cache[indexPath] as? Song else { return }
+			guard let song = self.cachedItem(at: indexPath) as? Song else { return }
 
 			self.show(.songDetailsSegue, sender: song)
 		} else if !self.showSongs.isEmpty {
@@ -399,7 +392,7 @@ extension ShowSongsListCollectionViewController {
 
 		if self.songsListFetchType == .charts {
 			guard
-				let song = self.cache[indexPath] as? Song,
+				let song = self.cachedItem(at: indexPath) as? Song,
 				let appleMusicID = song.attributes.amID,
 				let resolvedSong = self.resolvedSongs[appleMusicID]
 			else { return nil }
@@ -440,30 +433,7 @@ extension ShowSongsListCollectionViewController: MusicLockupCollectionViewCellDe
 		self.show(.showDetailsSegue, sender: show)
 	}
 
-	/// Resolves and caches the Apple Music song for the given Kurozora song.
-	///
-	/// - Parameter song: The Kurozora song to resolve.
-	func resolveMusicSong(_ song: KKSong) {
-		guard let appleMusicID = song.attributes.amID, self.resolvedSongs[appleMusicID] == nil else { return }
-
-		Task { [weak self] in
-			self?.resolvedSongs[appleMusicID] = await MusicManager.shared.getSong(for: appleMusicID)
-			self?.refreshVisibleMusicCells()
-		}
-	}
-
 	func musicLockupCollectionViewCell(_ cell: MusicLockupCollectionViewCell, didTapPlayButtonAt indexPath: IndexPath) {
-		switch self.songsListFetchType {
-		case .show:
-			let kkSongs = self.showSongs.isEmpty ? self.songs : self.showSongs.map { $0.song }
-
-			MusicManager.shared.play(kkSongs: kkSongs, startingAt: indexPath.item)
-		case .charts:
-			let kkSongs: [KKSong?] = self.songIdentities.indices.map { index in
-				self.cache[IndexPath(item: index, section: 0)] as? Song
-			}
-
-			MusicManager.shared.play(kkSongs: kkSongs, startingAt: indexPath.item)
-		}
+		self.playSongs(startingAt: indexPath)
 	}
 }

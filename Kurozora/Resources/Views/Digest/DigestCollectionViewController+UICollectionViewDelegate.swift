@@ -15,16 +15,16 @@ extension DigestCollectionViewController {
 
 		switch section {
 		case .hero, .becauseYouWatched, .dropIn, .rescueOnHold, .rescuePlanning, .premiering:
-			guard let show = self.cache[indexPath] as? Show else { return }
+			guard let show = self.cachedItem(at: indexPath) as? Show else { return }
 			self.show(.showDetailsSegue, sender: show)
 		case .newReleases, .releasing:
-			guard let game = self.cache[indexPath] as? Game else { return }
+			guard let game = self.cachedItem(at: indexPath) as? Game else { return }
 			self.show(.gameDetailsSegue, sender: game)
 		case .newEpisodes, .finales, .trending:
-			guard let episode = self.cache[indexPath] as? Episode else { return }
+			guard let episode = self.cachedItem(at: indexPath) as? Episode else { return }
 			self.show(.episodeDetailsSegue, sender: [indexPath: episode])
 		case .birthdays:
-			guard let person = self.cache[indexPath] as? Person else { return }
+			guard let person = self.cachedItem(at: indexPath) as? Person else { return }
 			self.show(.personDetailsSegue, sender: person)
 		case .momentum, .growth:
 			break
@@ -38,16 +38,16 @@ extension DigestCollectionViewController {
 
 		switch section {
 		case .hero, .becauseYouWatched, .dropIn, .rescueOnHold, .rescuePlanning, .premiering:
-			guard let show = self.cache[indexPath] as? Show else { return nil }
+			guard let show = self.cachedItem(at: indexPath) as? Show else { return nil }
 			return show.contextMenuConfiguration(in: self, userInfo: ["indexPath": indexPath], sourceView: collectionViewCell?.contentView, barButtonItem: nil)
 		case .newReleases, .releasing:
-			guard let game = self.cache[indexPath] as? Game else { return nil }
+			guard let game = self.cachedItem(at: indexPath) as? Game else { return nil }
 			return game.contextMenuConfiguration(in: self, userInfo: ["indexPath": indexPath], sourceView: collectionViewCell?.contentView, barButtonItem: nil)
 		case .newEpisodes, .finales, .trending:
-			guard let episode = self.cache[indexPath] as? Episode else { return nil }
+			guard let episode = self.cachedItem(at: indexPath) as? Episode else { return nil }
 			return episode.contextMenuConfiguration(in: self, userInfo: ["indexPath": indexPath], sourceView: collectionViewCell?.contentView, barButtonItem: nil)
 		case .birthdays:
-			guard let person = self.cache[indexPath] as? Person else { return nil }
+			guard let person = self.cachedItem(at: indexPath) as? Person else { return nil }
 			return person.contextMenuConfiguration(in: self, userInfo: ["indexPath": indexPath], sourceView: collectionViewCell?.contentView, barButtonItem: nil)
 		case .momentum, .growth:
 			return nil

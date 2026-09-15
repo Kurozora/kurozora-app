@@ -42,7 +42,7 @@ class PeopleListCollectionViewController: ListCollectionViewController, SectionF
 	var peopleListFetchType: PeopleListFetchType = .search
 
 	// MARK: - SectionFetchable
-	var cache: [IndexPath: KurozoraItem] = [:]
+	var cache: [ItemKind: KurozoraItem] = [:]
 	var isFetchingSection: Set<SectionLayoutKind> = []
 
 	var dataSource: UICollectionViewDiffableDataSource<SectionLayoutKind, ItemKind>!
@@ -200,7 +200,7 @@ extension PeopleListCollectionViewController {
 
 				if person == nil, let section = self.snapshot.sectionIdentifier(containingItem: itemKind), !self.isFetchingSection.contains(section) {
 					Task {
-						await self.fetchSectionIfNeeded(ResourceCollection<Person>.self, PersonIdentity.self, at: indexPath, itemKind: itemKind)
+						await self.fetchSectionIfNeeded(ResourceCollection<Person>.self, PersonIdentity.self, for: itemKind)
 					}
 				}
 
@@ -231,7 +231,7 @@ extension PeopleListCollectionViewController {
 // MARK: - UICollectionViewDelegate
 extension PeopleListCollectionViewController {
 	override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-		guard let person = self.cache[indexPath] as? Person else { return }
+		guard let person = self.cachedItem(at: indexPath) as? Person else { return }
 
 		self.show(.personDetailsSegue, sender: person)
 	}
@@ -241,7 +241,7 @@ extension PeopleListCollectionViewController {
 	}
 
 	override func collectionView(_ collectionView: UICollectionView, contextMenuConfigurationForItemAt indexPath: IndexPath, point: CGPoint) -> UIContextMenuConfiguration? {
-		guard let person = self.cache[indexPath] as? Person else { return nil }
+		guard let person = self.cachedItem(at: indexPath) as? Person else { return nil }
 
 		let collectionViewCell = collectionView.cellForItem(at: indexPath)
 		return person.contextMenuConfiguration(in: self, userInfo: ["indexPath": indexPath], sourceView: collectionViewCell?.contentView, barButtonItem: nil)

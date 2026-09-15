@@ -132,7 +132,7 @@ class EpisodesListCollectionViewController: ListCollectionViewController, Sectio
 	}
 
 	// MARK: - SectionFetchable
-	var cache: [IndexPath: KurozoraItem] = [:]
+	var cache: [ItemKind: KurozoraItem] = [:]
 	var isFetchingSection: Set<SectionLayoutKind> = []
 
 	var dataSource: UICollectionViewDiffableDataSource<SectionLayoutKind, ItemKind>!
@@ -415,7 +415,9 @@ class EpisodesListCollectionViewController: ListCollectionViewController, Sectio
 	}
 
 	fileprivate func prepareUpNextRefresh(_ indexPath: IndexPath) {
-		self.cache.removeValue(forKey: indexPath)
+		guard let itemKind = self.dataSource.itemIdentifier(for: indexPath) else { return }
+
+		self.cache.removeValue(forKey: itemKind)
 	}
 
 	/// Refetches the Up Next queue once the watch status has reached the server.
@@ -648,7 +650,7 @@ extension EpisodesListCollectionViewController {
 
 				if episode == nil, let section = self.snapshot.sectionIdentifier(containingItem: itemKind), !self.isFetchingSection.contains(section) {
 					Task {
-						await self.fetchSectionIfNeeded(ResourceCollection<Episode>.self, EpisodeIdentity.self, at: indexPath, itemKind: itemKind)
+						await self.fetchSectionIfNeeded(ResourceCollection<Episode>.self, EpisodeIdentity.self, for: itemKind)
 					}
 				}
 
@@ -680,7 +682,7 @@ extension EpisodesListCollectionViewController {
 // MARK: - UICollectionViewDelegate
 extension EpisodesListCollectionViewController {
 	override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-		guard let episode = self.cache[indexPath] as? Episode else { return }
+		guard let episode = self.cachedItem(at: indexPath) as? Episode else { return }
 
 		self.show(.episodeDetailsSegue, sender: [indexPath: episode])
 	}
@@ -690,7 +692,7 @@ extension EpisodesListCollectionViewController {
 	}
 
 	override func collectionView(_ collectionView: UICollectionView, contextMenuConfigurationForItemAt indexPath: IndexPath, point: CGPoint) -> UIContextMenuConfiguration? {
-		guard let episode = self.cache[indexPath] as? Episode else { return nil }
+		guard let episode = self.cachedItem(at: indexPath) as? Episode else { return nil }
 
 		let collectionViewCell = collectionView.cellForItem(at: indexPath)
 		return episode.contextMenuConfiguration(in: self, userInfo: ["indexPath": indexPath], sourceView: collectionViewCell?.contentView, barButtonItem: nil)
@@ -711,7 +713,7 @@ extension EpisodesListCollectionViewController: EpisodeLockupCollectionViewCellD
 		guard
 			signedIn,
 			let indexPath = self.collectionView.indexPath(for: cell),
-			let episode = self.cache[indexPath] as? Episode
+			let episode = self.cachedItem(at: indexPath) as? Episode
 		else { return }
 
 		cell.watchStatusButton.isEnabled = false
@@ -731,7 +733,7 @@ extension EpisodesListCollectionViewController: EpisodeLockupCollectionViewCellD
 	func episodeLockupCollectionViewCell(_ cell: EpisodeLockupCollectionViewCell, didPressShowButton button: UIButton) async {
 		guard
 			let indexPath = collectionView.indexPath(for: cell),
-			let episode = self.cache[indexPath] as? Episode,
+			let episode = self.cachedItem(at: indexPath) as? Episode,
 			let showIdentity = episode.relationships?.shows?.data.first
 		else { return }
 
@@ -741,7 +743,7 @@ extension EpisodesListCollectionViewController: EpisodeLockupCollectionViewCellD
 	func episodeLockupCollectionViewCell(_ cell: EpisodeLockupCollectionViewCell, didPressSeasonButton button: UIButton) async {
 		guard
 			let indexPath = collectionView.indexPath(for: cell),
-			let episode = self.cache[indexPath] as? Episode,
+			let episode = self.cachedItem(at: indexPath) as? Episode,
 			let seasonIdentity = episode.relationships?.seasons?.data.first
 		else { return }
 

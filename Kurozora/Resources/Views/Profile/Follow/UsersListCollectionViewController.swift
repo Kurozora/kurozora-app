@@ -87,7 +87,7 @@ class UsersListCollectionViewController: ListCollectionViewController, SectionFe
 	var isDismissingMentionSearch = false
 
 	// MARK: SectionFetchable
-	var cache: [IndexPath: KurozoraItem] = [:]
+	var cache: [ItemKind: KurozoraItem] = [:]
 	var isFetchingSection: Set<SectionLayoutKind> = []
 
 	var dataSource: UICollectionViewDiffableDataSource<SectionLayoutKind, ItemKind>!
@@ -204,8 +204,9 @@ class UsersListCollectionViewController: ListCollectionViewController, SectionFe
 			  let changedUserID = notification.object as? KurozoraItemID
 		else { return }
 
-		for (indexPath, item) in self.cache {
+		for (itemKind, item) in self.cache {
 			guard let user = item as? User, user.id == changedUserID else { continue }
+			guard let indexPath = self.dataSource.indexPath(for: itemKind) else { continue }
 
 			let cell = self.collectionView.cellForItem(at: indexPath) as? UserLockupCollectionViewCell
 			cell?.updateBlockButton(isBlocked: user.attributes.blockStatus == .blocked)
@@ -515,7 +516,7 @@ extension UsersListCollectionViewController {
 
 				if user == nil, let section = self.snapshot.sectionIdentifier(containingItem: itemKind), !self.isFetchingSection.contains(section) {
 					Task {
-						await self.fetchSectionIfNeeded(ResourceCollection<User>.self, UserIdentity.self, at: indexPath, itemKind: itemKind)
+						await self.fetchSectionIfNeeded(ResourceCollection<User>.self, UserIdentity.self, for: itemKind)
 					}
 				}
 
@@ -548,7 +549,7 @@ extension UsersListCollectionViewController {
 
 				if user == nil, let section = self.snapshot.sectionIdentifier(containingItem: itemKind), !self.isFetchingSection.contains(section) {
 					Task {
-						await self.fetchSectionIfNeeded(ResourceCollection<User>.self, UserIdentity.self, at: indexPath, itemKind: itemKind)
+						await self.fetchSectionIfNeeded(ResourceCollection<User>.self, UserIdentity.self, for: itemKind)
 					}
 				}
 
@@ -587,7 +588,7 @@ extension UsersListCollectionViewController {
 // MARK: - UICollectionViewDelegate
 extension UsersListCollectionViewController {
 	override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-		guard let user = self.cache[indexPath] as? User else { return }
+		guard let user = self.cachedItem(at: indexPath) as? User else { return }
 
 		if let mentionDelegate = self.mentionSelectionDelegate {
 			guard !self.isDismissingMentionSearch else { return }
@@ -613,7 +614,7 @@ extension UsersListCollectionViewController {
 	}
 
 	override func collectionView(_ collectionView: UICollectionView, contextMenuConfigurationForItemAt indexPath: IndexPath, point: CGPoint) -> UIContextMenuConfiguration? {
-		guard let user = self.cache[indexPath] as? User else { return nil }
+		guard let user = self.cachedItem(at: indexPath) as? User else { return nil }
 
 		if self.usersListFetchType == .blocked {
 			return user.blockedRowContextMenuConfiguration(in: self, userInfo: ["indexPath": indexPath])
@@ -629,7 +630,7 @@ extension UsersListCollectionViewController: UserLockupCollectionViewCellDelegat
 	func userLockupCollectionViewCell(_ cell: UserLockupCollectionViewCell, didPressFollow button: UIButton) {
 		guard
 			let indexPath = self.collectionView.indexPath(for: cell),
-			let user = self.cache[indexPath] as? User
+			let user = self.cachedItem(at: indexPath) as? User
 		else { return }
 
 		let userIdentity = UserIdentity(id: user.id)
@@ -651,7 +652,7 @@ extension UsersListCollectionViewController: UserLockupCollectionViewCellDelegat
 	func userLockupCollectionViewCell(_ cell: UserLockupCollectionViewCell, didPressBlockToggle button: UIButton) {
 		guard
 			let indexPath = self.collectionView.indexPath(for: cell),
-			let user = self.cache[indexPath] as? User
+			let user = self.cachedItem(at: indexPath) as? User
 		else { return }
 
 		Task { [weak self] in

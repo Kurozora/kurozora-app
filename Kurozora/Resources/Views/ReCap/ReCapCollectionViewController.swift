@@ -54,7 +54,7 @@ class ReCapCollectionViewController: KCollectionViewController, SectionFetchable
 	/// The chips that switch the page between the year's months.
 	let chipsView = KChipsView()
 
-	var cache: [IndexPath: KurozoraItem] = [:]
+	var cache: [ItemKind: KurozoraItem] = [:]
 	var isFetchingSection: Set<SectionLayoutKind> = []
 
 	/// Observes local library mutations to refresh visible cells.
@@ -143,39 +143,18 @@ class ReCapCollectionViewController: KCollectionViewController, SectionFetchable
 
 	/// Updates every cached show/literature/game whose identity matches the given trackable identity.
 	private func applyLibraryEntryChange(forTrackableID trackableID: String, userSlug: String, kind: LibraryKind, isRemoval: Bool) {
-		var matchedItems: [ItemKind] = []
-		let currentSnapshot = self.dataSource.snapshot()
-
-		for item in currentSnapshot.itemIdentifiers {
-			let matches: Bool
+		self.reconfigureItems { item in
 			switch (item, kind) {
 			case (.showIdentity(let identity, _), .shows):
-				matches = identity.id.rawValue == trackableID
+				return identity.id.rawValue == trackableID && self.cache[item] is Show
 			case (.literatureIdentity(let identity, _), .literatures):
-				matches = identity.id.rawValue == trackableID
+				return identity.id.rawValue == trackableID && self.cache[item] is Literature
 			case (.gameIdentity(let identity, _), .games):
-				matches = identity.id.rawValue == trackableID
+				return identity.id.rawValue == trackableID && self.cache[item] is Game
 			default:
-				matches = false
+				return false
 			}
-			guard matches else { continue }
-
-			guard let indexPath = self.dataSource.indexPath(for: item) else { continue }
-			switch kind {
-			case .shows:
-				guard self.cache[indexPath] is Show else { continue }
-			case .literatures:
-				guard self.cache[indexPath] is Literature else { continue }
-			case .games:
-				guard self.cache[indexPath] is Game else { continue }
-			}
-			matchedItems.append(item)
 		}
-
-		guard !matchedItems.isEmpty else { return }
-		var snapshot = currentSnapshot
-		snapshot.reconfigureItems(matchedItems)
-		self.dataSource.apply(snapshot, animatingDifferences: false)
 	}
 
 	func configureView() {
@@ -361,7 +340,7 @@ extension ReCapCollectionViewController: BaseLockupCollectionViewCellDelegate {
 		guard signedIn else { return }
 		guard
 			let indexPath = self.collectionView.indexPath(for: cell),
-			let target = self.cache[indexPath] as? Libraryable
+			let target = self.cachedItem(at: indexPath) as? Libraryable
 		else { return }
 
 		let oldLibraryStatus = cell.libraryStatus
@@ -397,7 +376,7 @@ extension ReCapCollectionViewController: BaseLockupCollectionViewCellDelegate {
 	func baseLockupCollectionViewCell(_ cell: BaseLockupCollectionViewCell, didPressReminder button: UIButton) async {
 		guard
 			let indexPath = self.collectionView.indexPath(for: cell),
-			let show = self.cache[indexPath] as? Show
+			let show = self.cachedItem(at: indexPath) as? Show
 		else { return }
 		await show.toggleReminder(on: self)
 		cell.configureReminderButton(for: show.libraryAttributes?.reminderStatus)
@@ -504,7 +483,7 @@ extension ReCapCollectionViewController {
 
 				if show == nil, let section = self.snapshot.sectionIdentifier(containingItem: itemKind), !self.isFetchingSection.contains(section) {
 					Task {
-						await self.fetchSectionIfNeeded(ResourceCollection<Show>.self, ShowIdentity.self, at: indexPath, itemKind: itemKind)
+						await self.fetchSectionIfNeeded(ResourceCollection<Show>.self, ShowIdentity.self, for: itemKind)
 					}
 				}
 
@@ -515,7 +494,7 @@ extension ReCapCollectionViewController {
 
 				if literature == nil, let section = self.snapshot.sectionIdentifier(containingItem: itemKind), !self.isFetchingSection.contains(section) {
 					Task {
-						await self.fetchSectionIfNeeded(ResourceCollection<Literature>.self, LiteratureIdentity.self, at: indexPath, itemKind: itemKind)
+						await self.fetchSectionIfNeeded(ResourceCollection<Literature>.self, LiteratureIdentity.self, for: itemKind)
 					}
 				}
 
@@ -556,7 +535,7 @@ extension ReCapCollectionViewController {
 
 				if game == nil, let section = self.snapshot.sectionIdentifier(containingItem: itemKind), !self.isFetchingSection.contains(section) {
 					Task {
-						await self.fetchSectionIfNeeded(ResourceCollection<Game>.self, GameIdentity.self, at: indexPath, itemKind: itemKind)
+						await self.fetchSectionIfNeeded(ResourceCollection<Game>.self, GameIdentity.self, for: itemKind)
 					}
 				}
 
@@ -577,7 +556,7 @@ extension ReCapCollectionViewController {
 
 				if genre == nil, let section = self.snapshot.sectionIdentifier(containingItem: itemKind), !self.isFetchingSection.contains(section) {
 					Task {
-						await self.fetchSectionIfNeeded(ResourceCollection<Genre>.self, GenreIdentity.self, at: indexPath, itemKind: itemKind)
+						await self.fetchSectionIfNeeded(ResourceCollection<Genre>.self, GenreIdentity.self, for: itemKind)
 					}
 				}
 
@@ -587,7 +566,7 @@ extension ReCapCollectionViewController {
 
 				if theme == nil, let section = self.snapshot.sectionIdentifier(containingItem: itemKind), !self.isFetchingSection.contains(section) {
 					Task {
-						await self.fetchSectionIfNeeded(ResourceCollection<Theme>.self, ThemeIdentity.self, at: indexPath, itemKind: itemKind)
+						await self.fetchSectionIfNeeded(ResourceCollection<Theme>.self, ThemeIdentity.self, for: itemKind)
 					}
 				}
 

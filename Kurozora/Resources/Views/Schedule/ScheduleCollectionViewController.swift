@@ -43,7 +43,7 @@ class ScheduleCollectionViewController: KCollectionViewController, SectionFetcha
 	/// The day the list is scrolling to, held until it lands on the section's real top.
 	private var pendingDayScrollIndex: Int?
 
-	var cache: [IndexPath: KurozoraItem] = [:]
+	var cache: [ItemKind: KurozoraItem] = [:]
 	var isFetchingSection: Set<SectionLayoutKind> = []
 
 	/// Observes local library mutations to refresh visible cells.
@@ -133,26 +133,18 @@ class ScheduleCollectionViewController: KCollectionViewController, SectionFetcha
 
 	/// Updates every item whose embedded show/literature/game matches the given trackable identity.
 	private func applyLibraryEntryChange(forTrackableID trackableID: String, userSlug: String, kind: LibraryKind, isRemoval: Bool) {
-		var matchedItems: [ItemKind] = []
-		let currentSnapshot = self.dataSource.snapshot()
-
-		for item in currentSnapshot.itemIdentifiers {
+		self.reconfigureItems { item in
 			switch (item, kind) {
-			case (.show(let show, _), .shows) where show.id.rawValue == trackableID:
-				matchedItems.append(item)
-			case (.literature(let literature, _), .literatures) where literature.id.rawValue == trackableID:
-				matchedItems.append(item)
-			case (.game(let game, _), .games) where game.id.rawValue == trackableID:
-				matchedItems.append(item)
+			case (.show(let show, _), .shows):
+				return show.id.rawValue == trackableID
+			case (.literature(let literature, _), .literatures):
+				return literature.id.rawValue == trackableID
+			case (.game(let game, _), .games):
+				return game.id.rawValue == trackableID
 			default:
-				break
+				return false
 			}
 		}
-
-		guard !matchedItems.isEmpty else { return }
-		var snapshot = currentSnapshot
-		snapshot.reconfigureItems(matchedItems)
-		self.dataSource.apply(snapshot, animatingDifferences: false)
 	}
 
 	/// Configures the profile bar button item.

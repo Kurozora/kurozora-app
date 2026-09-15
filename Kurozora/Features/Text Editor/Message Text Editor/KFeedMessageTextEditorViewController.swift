@@ -828,7 +828,7 @@ extension KFeedMessageTextEditorViewController: MentionAutocompleteControllerDel
 		self.insertMention(slug: user.attributes.slug, replacingRange: range)
 	}
 
-	func mentionAutocompleteControllerDidSelectSearch(_ controller: MentionAutocompleteController, query: String, userIdentities: [UserIdentity], cache: [IndexPath: KurozoraItem]) {
+	func mentionAutocompleteControllerDidSelectSearch(_ controller: MentionAutocompleteController, query: String, userIdentities: [UserIdentity], users: [UserIdentity: User]) {
 		self.pendingMentionRange = MentionTracker.activeMention(in: self.commentTextView)?.range
 
 		let usersListVC = UsersListCollectionViewController()
@@ -838,7 +838,9 @@ extension KFeedMessageTextEditorViewController: MentionAutocompleteControllerDel
 		if !query.isEmpty {
 			usersListVC.searchQuery = query
 			usersListVC.userIdentities = userIdentities
-			usersListVC.cache = cache
+			usersListVC.cache = users.reduce(into: [:]) { cache, entry in
+				cache[.userIdentity(entry.key)] = entry.value
+			}
 		}
 
 		let navigationController = KNavigationController(rootViewController: usersListVC)

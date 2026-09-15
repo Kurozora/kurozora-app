@@ -28,7 +28,7 @@ class UserReviewsListCollectionViewController: KCollectionViewController, Sectio
 	var user: User?
 	var reviews: [Review] = []
 
-	var cache: [IndexPath: KurozoraItem] = [:]
+	var cache: [ItemKind: KurozoraItem] = [:]
 	var isFetchingSection: Set<SectionLayoutKind> = []
 	var isFetchingType: Set<String> = []
 	var fetchGeneration: Int = 0
@@ -418,13 +418,14 @@ extension UserReviewsListCollectionViewController {
 		}
 	}
 
-	/// Fetches details for all uncached identities of a specific type across the section.
+	/// Fetches details for every uncached item of one identity type in the section.
 	///
-	/// Unlike `fetchSectionIfNeeded`, this method preserves global index paths for
-	/// heterogeneous sections where items reference different identity types.
-	/// Uses `isFetchingType` (per-type) instead of `isFetchingSection` (per-section).
-	func fetchReviewSectionIfNeeded<I: KurozoraRequestable, Identity: Fetchable>(_ response: I.Type, _ identityType: Identity.Type, at indexPath: IndexPath, itemKind: ItemKind) async where Identity.Response == I {
-		guard self.cache[indexPath] == nil else { return }
+	/// - Parameters:
+	///    - response: The response type used to fetch the items.
+	///    - identityType: The identity type to fetch.
+	///    - itemKind: The item whose details are needed.
+	func fetchReviewSectionIfNeeded<I: KurozoraRequestable, Identity: Fetchable>(_ response: I.Type, _ identityType: Identity.Type, for itemKind: ItemKind) async where Identity.Response == I {
+		guard self.cache[itemKind] == nil else { return }
 
 		let typeKey = String(describing: Identity.self)
 		guard !self.isFetchingType.contains(typeKey) else { return }
@@ -433,15 +434,13 @@ extension UserReviewsListCollectionViewController {
 
 		let generation = self.fetchGeneration
 
-		// Enumerate all items preserving global index
-		let allItems = self.snapshot.itemIdentifiers(inSection: .main)
-		let uncached: [(globalIndex: Int, identity: Identity)] = allItems
-			.enumerated()
-			.compactMap { globalIndex, item -> (Int, Identity)? in
-				guard let identity: Identity = self.extractIdentity(from: item) else { return nil }
-				let ip = IndexPath(item: globalIndex, section: indexPath.section)
-				guard self.cache[ip] == nil else { return nil }
-				return (globalIndex, identity)
+		let uncached: [(itemKind: ItemKind, identity: Identity)] = self.snapshot
+			.itemIdentifiers(inSection: .main)
+			.compactMap { itemKind in
+				guard self.cache[itemKind] == nil else { return nil }
+				guard let identity: Identity = self.extractIdentity(from: itemKind) else { return nil }
+
+				return (itemKind, identity)
 			}
 
 		guard !uncached.isEmpty else { return }
@@ -457,30 +456,19 @@ extension UserReviewsListCollectionViewController {
 				// Bail if the snapshot was rebuilt
 				guard generation == self.fetchGeneration else { return }
 
-				let orderLookup = Dictionary(
-					identitiesToFetch.enumerated().map { ($1.id, $0) },
-					uniquingKeysWith: { first, _ in first }
-				)
-				let sorted = fetchedResponse.data.sorted {
-					guard let l = orderLookup[$0.id], let r = orderLookup[$1.id] else { return false }
-					return l < r
+				// One model can back several reviews.
+				var itemKinds: [KurozoraItemID: [ItemKind]] = [:]
+				for entry in chunk {
+					itemKinds[entry.identity.id, default: []].append(entry.itemKind)
 				}
 
-				// Build lookup mapping identity ID to all global indexes (handles
-				// duplicate reviews for the same model)
-				var chunkLookup: [KurozoraItemID: [Int]] = [:]
-				for entry in chunk {
-					chunkLookup[entry.identity.id, default: []].append(entry.globalIndex)
-				}
-				for model in sorted {
-					if let globalIndexes = chunkLookup[model.id] {
-						for globalIndex in globalIndexes {
-							self.cache[IndexPath(item: globalIndex, section: indexPath.section)] = model
-						}
+				for model in fetchedResponse.data {
+					for itemKind in itemKinds[model.id] ?? [] {
+						self.cache[itemKind] = model
 					}
 				}
 
-				let appleMusicIDs = sorted.compactMap { ($0 as? Song)?.attributes.amID }
+				let appleMusicIDs = fetchedResponse.data.compactMap { ($0 as? Song)?.attributes.amID }
 				if !appleMusicIDs.isEmpty {
 					_ = await MusicManager.shared.getSongs(for: appleMusicIDs)
 				}
@@ -496,9 +484,8 @@ extension UserReviewsListCollectionViewController {
 // MARK: - MusicReviewLockupCollectionViewCellDelegate
 extension UserReviewsListCollectionViewController: MusicReviewLockupCollectionViewCellDelegate {
 	func musicReviewLockupCollectionViewCell(_ cell: MusicReviewLockupCollectionViewCell, didTapPlayButtonAt indexPath: IndexPath) {
-		let itemCount = self.collectionView.numberOfItems(inSection: indexPath.section)
-		let kkSongs: [KKSong?] = (0 ..< itemCount).map { item in
-			self.cache[IndexPath(item: item, section: indexPath.section)] as? Song
+		let kkSongs: [KKSong?] = self.itemKinds(inSection: indexPath.section).map { itemKind in
+			self.cache[itemKind] as? Song
 		}
 
 		MusicManager.shared.play(kkSongs: kkSongs, startingAt: indexPath.item)

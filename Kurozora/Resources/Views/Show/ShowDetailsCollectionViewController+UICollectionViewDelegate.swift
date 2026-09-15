@@ -48,16 +48,16 @@ extension ShowDetailsCollectionViewController {
 				return
 			}
 		case .seasons:
-			guard let season = self.cache[indexPath] as? Season else { return }
+			guard let season = self.cachedItem(at: indexPath) as? Season else { return }
 			self.show(.episodesListSegue, sender: season)
 		case .songs:
 			guard let song = self.showSongs[safe: indexPath.item]?.song else { return }
 			self.show(.songDetailsSegue, sender: song)
 		case .studios:
-			guard let studio = self.cache[indexPath] as? Studio else { return }
+			guard let studio = self.cachedItem(at: indexPath) as? Studio else { return }
 			self.show(.studioDetailsSegue, sender: studio)
 		case .moreByStudio:
-			guard let show = self.cache[indexPath] as? Show else { return }
+			guard let show = self.cachedItem(at: indexPath) as? Show else { return }
 			self.show(.showDetailsSegue, sender: show)
 		case .relatedShows:
 			guard let show = self.relatedShows[safe: indexPath.item]?.show else { return }
@@ -94,10 +94,10 @@ extension ShowDetailsCollectionViewController {
 				return nil
 			}
 		case .seasons:
-			guard let season = self.cache[indexPath] as? Season else { return nil }
+			guard let season = self.cachedItem(at: indexPath) as? Season else { return nil }
 			return season.contextMenuConfiguration(in: self, userInfo: ["indexPath": indexPath], sourceView: collectionViewCell?.contentView, barButtonItem: nil)
 		case .cast:
-			guard let cast = self.cache[indexPath] as? Cast else { return nil }
+			guard let cast = self.cachedItem(at: indexPath) as? Cast else { return nil }
 			return cast.contextMenuConfiguration(in: self, userInfo: ["indexPath": indexPath], sourceView: collectionViewCell?.contentView, barButtonItem: nil)
 		case .songs:
 			guard
@@ -110,10 +110,10 @@ extension ShowDetailsCollectionViewController {
 				"song": song
 			], sourceView: collectionViewCell?.contentView, barButtonItem: nil)
 		case .studios:
-			guard let studio = self.cache[indexPath] as? Studio else { return nil }
+			guard let studio = self.cachedItem(at: indexPath) as? Studio else { return nil }
 			return studio.contextMenuConfiguration(in: self, userInfo: ["indexPath": indexPath], sourceView: collectionViewCell?.contentView, barButtonItem: nil)
 		case .moreByStudio:
-			guard let show = self.cache[indexPath] as? Show else { return nil }
+			guard let show = self.cachedItem(at: indexPath) as? Show else { return nil }
             return show.contextMenuConfiguration(in: self, userInfo: ["indexPath": indexPath], sourceView: collectionViewCell?.contentView, barButtonItem: nil)
 		case .relatedShows:
             return self.relatedShows[indexPath.item].show.contextMenuConfiguration(in: self, userInfo: ["indexPath": indexPath], sourceView: collectionViewCell?.contentView, barButtonItem: nil)

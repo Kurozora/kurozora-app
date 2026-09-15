@@ -76,7 +76,7 @@ class AdaptedCollectionViewController: KCollectionViewController, SectionFetchab
 	var isRequestInProgress: Bool = false
 
 	// MARK: - SectionFetchable
-	var cache: [IndexPath: KurozoraItem] = [:]
+	var cache: [ItemKind: KurozoraItem] = [:]
 	var isFetchingSection: Set<SectionLayoutKind> = []
 
 	/// Whether titles already in the user's library are dimmed.
@@ -386,7 +386,7 @@ class AdaptedCollectionViewController: KCollectionViewController, SectionFetchab
 		guard self.dimsLibraryEntries else { return false }
 
 		let libraryKind: LibraryKind = self.kind == .games ? .games : .literatures
-		guard let trackable = self.cache[indexPath] else { return false }
+		guard let trackable = self.cachedItem(at: indexPath) else { return false }
 		let libraryStatus = LibraryStore.shared.effectiveLibrary(forTrackableID: trackable.id.rawValue, kind: libraryKind)?.status ?? .none
 		return libraryStatus != .none
 	}
@@ -488,7 +488,7 @@ extension AdaptedCollectionViewController {
 
 			if literature == nil, let section = self.snapshot.sectionIdentifier(containingItem: itemKind), !self.isFetchingSection.contains(section) {
 				Task {
-					await self.fetchSectionIfNeeded(ResourceCollection<Literature>.self, LiteratureIdentity.self, at: indexPath, itemKind: itemKind)
+					await self.fetchSectionIfNeeded(ResourceCollection<Literature>.self, LiteratureIdentity.self, for: itemKind)
 				}
 			}
 
@@ -506,7 +506,7 @@ extension AdaptedCollectionViewController {
 
 			if game == nil, let section = self.snapshot.sectionIdentifier(containingItem: itemKind), !self.isFetchingSection.contains(section) {
 				Task {
-					await self.fetchSectionIfNeeded(ResourceCollection<Game>.self, GameIdentity.self, at: indexPath, itemKind: itemKind)
+					await self.fetchSectionIfNeeded(ResourceCollection<Game>.self, GameIdentity.self, for: itemKind)
 				}
 			}
 
@@ -539,10 +539,10 @@ extension AdaptedCollectionViewController {
 	override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
 		switch self.kind {
 		case .literatures:
-			guard let literature = self.cache[indexPath] as? Literature else { return }
+			guard let literature = self.cachedItem(at: indexPath) as? Literature else { return }
 			self.show(.literatureDetailsSegue, sender: literature)
 		case .games:
-			guard let game = self.cache[indexPath] as? Game else { return }
+			guard let game = self.cachedItem(at: indexPath) as? Game else { return }
 			self.show(.gameDetailsSegue, sender: game)
 		}
 	}
@@ -556,10 +556,10 @@ extension AdaptedCollectionViewController {
 
 		switch self.kind {
 		case .literatures:
-			guard let literature = self.cache[indexPath] as? Literature else { return nil }
+			guard let literature = self.cachedItem(at: indexPath) as? Literature else { return nil }
 			return literature.contextMenuConfiguration(in: self, userInfo: ["indexPath": indexPath], sourceView: collectionViewCell?.contentView, barButtonItem: nil)
 		case .games:
-			guard let game = self.cache[indexPath] as? Game else { return nil }
+			guard let game = self.cachedItem(at: indexPath) as? Game else { return nil }
 			return game.contextMenuConfiguration(in: self, userInfo: ["indexPath": indexPath], sourceView: collectionViewCell?.contentView, barButtonItem: nil)
 		}
 	}
@@ -577,7 +577,7 @@ extension AdaptedCollectionViewController: BaseLockupCollectionViewCellDelegate 
 	func baseLockupCollectionViewCell(_ cell: BaseLockupCollectionViewCell, didPressStatus button: UIButton) async {
 		let signedIn = await WorkflowController.shared.isSignedIn(on: self)
 		guard signedIn else { return }
-		guard let indexPath = self.collectionView.indexPath(for: cell), let target = self.cache[indexPath] as? Libraryable else { return }
+		guard let indexPath = self.collectionView.indexPath(for: cell), let target = self.cachedItem(at: indexPath) as? Libraryable else { return }
 
 		let oldLibraryStatus = cell.libraryStatus
 		let actionSheetAlertController = UIAlertController.actionSheetWithItems(items: LibraryStatus.alertControllerItems(for: cell.libraryKind), currentSelection: oldLibraryStatus, action: { title, value in

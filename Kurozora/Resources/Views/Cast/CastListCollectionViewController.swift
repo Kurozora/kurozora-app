@@ -42,7 +42,7 @@ class CastListCollectionViewController: ListCollectionViewController, SectionFet
 	var castIdentities: [CastIdentity] = []
 
 	// MARK: - SectionFetchable
-	var cache: [IndexPath: KurozoraItem] = [:]
+	var cache: [ItemKind: KurozoraItem] = [:]
 	var isFetchingSection: Set<SectionLayoutKind> = []
 
 	var dataSource: UICollectionViewDiffableDataSource<SectionLayoutKind, ItemKind>!
@@ -194,7 +194,7 @@ extension CastListCollectionViewController {
 
 				if cast == nil, let section = self.snapshot.sectionIdentifier(containingItem: itemKind), !self.isFetchingSection.contains(section) {
 					Task {
-						await self.fetchSectionIfNeeded(ResourceCollection<Cast>.self, CastIdentity.self, at: indexPath, itemKind: itemKind)
+						await self.fetchSectionIfNeeded(ResourceCollection<Cast>.self, CastIdentity.self, for: itemKind)
 					}
 				}
 
@@ -214,7 +214,7 @@ extension CastListCollectionViewController {
 
 				if cast == nil, let section = self.snapshot.sectionIdentifier(containingItem: itemKind), !self.isFetchingSection.contains(section) {
 					Task {
-						await self.fetchSectionIfNeeded(ResourceCollection<Cast>.self, CastIdentity.self, at: indexPath, itemKind: itemKind)
+						await self.fetchSectionIfNeeded(ResourceCollection<Cast>.self, CastIdentity.self, for: itemKind)
 					}
 				}
 
@@ -258,7 +258,7 @@ extension CastListCollectionViewController {
 			break
 		case .literature:
 			guard
-				let cast = self.cache[indexPath] as? Cast,
+				let cast = self.cachedItem(at: indexPath) as? Cast,
 				let character = cast.relationships.characters.data.first
 			else { return }
 
@@ -271,7 +271,7 @@ extension CastListCollectionViewController {
 	}
 
 	override func collectionView(_ collectionView: UICollectionView, contextMenuConfigurationForItemAt indexPath: IndexPath, point: CGPoint) -> UIContextMenuConfiguration? {
-		guard let cast = self.cache[indexPath] as? Cast else { return nil }
+		guard let cast = self.cachedItem(at: indexPath) as? Cast else { return nil }
 
 		let collectionViewCell = collectionView.cellForItem(at: indexPath)
 		return cast.contextMenuConfiguration(in: self, userInfo: ["indexPath": indexPath], sourceView: collectionViewCell?.contentView, barButtonItem: nil)
@@ -282,7 +282,7 @@ extension CastListCollectionViewController {
 extension CastListCollectionViewController: CastCollectionViewCellDelegate {
 	func castCollectionViewCell(_ cell: CastCollectionViewCell, didPressPersonButton button: UIButton) {
 		guard let indexPath = collectionView.indexPath(for: cell) else { return }
-		guard let cast = self.cache[indexPath] as? Cast else { return }
+		guard let cast = self.cachedItem(at: indexPath) as? Cast else { return }
 		guard let person = cast.relationships.people?.data.first else { return }
 
 		self.show(.personDetailsSegue, sender: person)
@@ -290,7 +290,7 @@ extension CastListCollectionViewController: CastCollectionViewCellDelegate {
 
 	func castCollectionViewCell(_ cell: CastCollectionViewCell, didPressCharacterButton button: UIButton) {
 		guard let indexPath = collectionView.indexPath(for: cell) else { return }
-		guard let cast = self.cache[indexPath] as? Cast else { return }
+		guard let cast = self.cachedItem(at: indexPath) as? Cast else { return }
 		guard let character = cast.relationships.characters.data.first else { return }
 
 		self.show(.characterDetailsSegue, sender: character)

@@ -11,7 +11,7 @@ import UIKit
 
 protocol MentionAutocompleteControllerDelegate: AnyObject {
 	func mentionAutocompleteController(_ controller: MentionAutocompleteController, didSelectUser user: User, forMentionIn range: NSRange)
-	func mentionAutocompleteControllerDidSelectSearch(_ controller: MentionAutocompleteController, query: String, userIdentities: [UserIdentity], cache: [IndexPath: KurozoraItem])
+	func mentionAutocompleteControllerDidSelectSearch(_ controller: MentionAutocompleteController, query: String, userIdentities: [UserIdentity], users: [UserIdentity: User])
 	func mentionAutocompleteController(_ controller: MentionAutocompleteController, didUpdateVisibility isVisible: Bool)
 }
 
@@ -32,7 +32,7 @@ class MentionAutocompleteController: NSObject, SectionFetchable {
 	private let collapsedConstraint: NSLayoutConstraint
 	private let expandedConstraint: NSLayoutConstraint
 
-	var cache: [IndexPath: KurozoraItem] = [:]
+	var cache: [ItemKind: KurozoraItem] = [:]
 	var isFetchingSection: Set<SectionLayoutKind> = []
 
 	var dataSource: UICollectionViewDiffableDataSource<SectionLayoutKind, ItemKind>!
@@ -164,7 +164,7 @@ class MentionAutocompleteController: NSObject, SectionFetchable {
 
 				if user == nil, let section = self.snapshot.sectionIdentifier(containingItem: itemKind), !self.isFetchingSection.contains(section) {
 					Task {
-						await self.fetchSectionIfNeeded(ResourceCollection<User>.self, UserIdentity.self, at: indexPath, itemKind: itemKind)
+						await self.fetchSectionIfNeeded(ResourceCollection<User>.self, UserIdentity.self, for: itemKind)
 					}
 				}
 
@@ -210,10 +210,14 @@ extension MentionAutocompleteController: UICollectionViewDelegate {
 
 		switch itemKind {
 		case .userIdentity:
-			guard let user = self.cache[indexPath] as? User else { return }
+			guard let user = self.cachedItem(at: indexPath) as? User else { return }
 			self.delegate?.mentionAutocompleteController(self, didSelectUser: user, forMentionIn: mentionContext.range)
 		case .findUser:
-			self.delegate?.mentionAutocompleteControllerDidSelectSearch(self, query: mentionContext.query, userIdentities: self.userIdentities, cache: self.cache)
+			let users: [UserIdentity: User] = self.userIdentities.reduce(into: [:]) { users, identity in
+				users[identity] = self.cache[.userIdentity(identity)] as? User
+			}
+
+			self.delegate?.mentionAutocompleteControllerDidSelectSearch(self, query: mentionContext.query, userIdentities: self.userIdentities, users: users)
 		}
 	}
 }

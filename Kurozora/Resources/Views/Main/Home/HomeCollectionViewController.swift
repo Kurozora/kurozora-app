@@ -12,7 +12,7 @@ import SPConfetti
 import UIKit
 import WhatsNew
 
-class HomeCollectionViewController: KCollectionViewController, SectionFetchable, ProfileNavigable, TypedSegueHandling {
+class HomeCollectionViewController: KCollectionViewController, SectionFetchable, MusicResolving, ProfileNavigable, TypedSegueHandling {
 	// MARK: - Enums
 	enum SegueIdentifiers: String, SegueIdentifier {
 		case redeemSegue
@@ -94,7 +94,7 @@ class HomeCollectionViewController: KCollectionViewController, SectionFetchable,
 	/// The static ``ItemKind`` values for the Quick Links section, built once so their UUIDs stay stable.
 	lazy var quickLinkItemKinds: [ItemKind] = self.quickLinks.map { .quickLink($0) }
 
-	var cache: [IndexPath: KurozoraItem] = [:]
+	var cache: [ItemKind: KurozoraItem] = [:]
 
 	/// The number of items an explore category shows.
 	static let exploreCategoryItemLimit = 10
@@ -225,63 +225,33 @@ class HomeCollectionViewController: KCollectionViewController, SectionFetchable,
 	/// Reconfigures every cached show/literature/game item once the overlay cache is ready.
 	@objc private func handleLibraryStoreDidHydrate(_ notification: Notification) {
 		Task { @MainActor [weak self] in
-			guard let self = self, self.dataSource != nil else { return }
+			guard let self = self else { return }
 
-			var matchedItems: [ItemKind] = []
-			let currentSnapshot = self.dataSource.snapshot()
-
-			for item in currentSnapshot.itemIdentifiers {
+			self.reconfigureItems { item in
 				switch item {
 				case .showIdentity, .literatureIdentity, .gameIdentity:
-					guard let indexPath = self.dataSource.indexPath(for: item), self.cache[indexPath] != nil else { continue }
-					matchedItems.append(item)
+					return self.cache[item] != nil
 				default:
-					continue
+					return false
 				}
 			}
-
-			guard !matchedItems.isEmpty else { return }
-			var snapshot = currentSnapshot
-			snapshot.reconfigureItems(matchedItems)
-			self.dataSource.apply(snapshot, animatingDifferences: false)
 		}
 	}
 
 	/// Updates every cached show/literature/game whose identity matches the given trackable identity.
 	private func applyLibraryEntryChange(forTrackableID trackableID: String, userSlug: String, kind: LibraryKind, isRemoval: Bool) {
-		var matchedItems: [ItemKind] = []
-		let currentSnapshot = self.dataSource.snapshot()
-
-		for item in currentSnapshot.itemIdentifiers {
-			let matches: Bool
+		self.reconfigureItems { item in
 			switch (item, kind) {
 			case (.showIdentity(let identity, _), .shows):
-				matches = identity.id.rawValue == trackableID
+				return identity.id.rawValue == trackableID && self.cache[item] is Show
 			case (.literatureIdentity(let identity, _), .literatures):
-				matches = identity.id.rawValue == trackableID
+				return identity.id.rawValue == trackableID && self.cache[item] is Literature
 			case (.gameIdentity(let identity, _), .games):
-				matches = identity.id.rawValue == trackableID
+				return identity.id.rawValue == trackableID && self.cache[item] is Game
 			default:
-				matches = false
+				return false
 			}
-			guard matches else { continue }
-
-			guard let indexPath = self.dataSource.indexPath(for: item) else { continue }
-			switch kind {
-			case .shows:
-				guard self.cache[indexPath] is Show else { continue }
-			case .literatures:
-				guard self.cache[indexPath] is Literature else { continue }
-			case .games:
-				guard self.cache[indexPath] is Game else { continue }
-			}
-			matchedItems.append(item)
 		}
-
-		guard !matchedItems.isEmpty else { return }
-		var snapshot = currentSnapshot
-		snapshot.reconfigureItems(matchedItems)
-		self.dataSource.apply(snapshot, animatingDifferences: false)
 	}
 
 	/// Subscribes to playback changes so visible song cells reflect the currently playing song.
@@ -294,15 +264,8 @@ class HomeCollectionViewController: KCollectionViewController, SectionFetchable,
 	}
 
 	/// Refreshes the play button glyph and artwork of every visible song cell.
-	func refreshVisibleMusicCells() {
-		for case let cell as MusicLockupCollectionViewCell in self.collectionView.visibleCells {
-			guard
-				let indexPath = self.collectionView.indexPath(for: cell),
-				let song = (self.cache[indexPath] as? ShowSong)?.song
-			else { continue }
-			cell.updatePlayButton(for: song)
-			cell.updateArtwork(for: song, resolvedSong: song.attributes.amID.flatMap { self.resolvedSongs[$0] })
-		}
+	func song(at indexPath: IndexPath) -> KKSong? {
+		return (self.cachedItem(at: indexPath) as? ShowSong)?.song
 	}
 
 	override func viewWillAppear(_ animated: Bool) {
@@ -500,8 +463,9 @@ class HomeCollectionViewController: KCollectionViewController, SectionFetchable,
 	/// - Parameters:
 	///    - notification: An object containing information broadcast to registered observers that bridges to Notification.
 	@objc func handleEpisodeWatchStatusDidUpdate(_ notification: NSNotification) {
-		if let indexPath = notification.userInfo?["indexPath"] as? IndexPath {
-			self.cache.removeValue(forKey: indexPath)
+		if let indexPath = notification.userInfo?["indexPath"] as? IndexPath,
+		   let itemKind = self.dataSource.itemIdentifier(for: indexPath) {
+			self.cache.removeValue(forKey: itemKind)
 		}
 
 		WatchSessionManager.shared.notifyUpNextDidChange()
@@ -572,18 +536,19 @@ class HomeCollectionViewController: KCollectionViewController, SectionFetchable,
 			}
 			var oldModelsByIdentityID: [KurozoraItemID: KurozoraItem] = [:]
 
-			for (indexPath, model) in self.cache where indexPath.section == index {
+			for item in oldItems {
+				guard let model = self.cache.removeValue(forKey: item) else { continue }
+
 				oldModelsByIdentityID[model.id] = model
 			}
 
-			self.cache = self.cache.filter { $0.key.section != index }
-
-			for (itemIndex, item) in newItems.enumerated() {
+			for item in newItems {
 				guard
 					let id = self.identityID(from: item),
 					let model = oldModelsByIdentityID[id]
 				else { continue }
-				self.cache[IndexPath(item: itemIndex, section: index)] = model
+
+				self.cache[item] = model
 			}
 
 			snapshot.deleteItems(oldItems)

@@ -84,10 +84,6 @@ extension DigestCollectionViewController {
 		self.dataSource.apply(self.snapshot)
 	}
 
-	func fetchModel<M: KurozoraItem>(at indexPath: IndexPath) -> M? {
-		return self.cache[indexPath] as? M
-	}
-
 	// MARK: - Snapshot helpers
 	/// The items to render for the given section.
 	private func items(for section: WeeklyDigestSection, layoutKind: SectionLayoutKind) -> [ItemKind] {

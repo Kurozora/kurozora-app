@@ -35,7 +35,7 @@ class DigestCollectionViewController: KCollectionViewController, SectionFetchabl
 		}
 	}
 
-	var cache: [IndexPath: KurozoraItem] = [:]
+	var cache: [ItemKind: KurozoraItem] = [:]
 	var isFetchingSection: Set<SectionLayoutKind> = []
 
 	/// The server-provided title and subtitle for each rendered section.
@@ -124,37 +124,16 @@ class DigestCollectionViewController: KCollectionViewController, SectionFetchabl
 
 	/// Updates every cached show/game whose identity matches the given trackable identity.
 	private func applyLibraryEntryChange(forTrackableID trackableID: String, userSlug: String, kind: LibraryKind, isRemoval: Bool) {
-		var matchedItems: [ItemKind] = []
-		let currentSnapshot = self.dataSource.snapshot()
-
-		for item in currentSnapshot.itemIdentifiers {
-			let matches: Bool
+		self.reconfigureItems { item in
 			switch (item, kind) {
 			case (.showIdentity(let identity, _), .shows):
-				matches = identity.id.rawValue == trackableID
+				return identity.id.rawValue == trackableID && self.cache[item] is Show
 			case (.gameIdentity(let identity, _), .games):
-				matches = identity.id.rawValue == trackableID
+				return identity.id.rawValue == trackableID && self.cache[item] is Game
 			default:
-				matches = false
+				return false
 			}
-			guard matches else { continue }
-
-			guard let indexPath = self.dataSource.indexPath(for: item) else { continue }
-			switch kind {
-			case .shows:
-				guard self.cache[indexPath] is Show else { continue }
-			case .games:
-				guard self.cache[indexPath] is Game else { continue }
-			case .literatures:
-				continue
-			}
-			matchedItems.append(item)
 		}
-
-		guard !matchedItems.isEmpty else { return }
-		var snapshot = currentSnapshot
-		snapshot.reconfigureItems(matchedItems)
-		self.dataSource.apply(snapshot, animatingDifferences: false)
 	}
 
 	/// Used to reload the episode whose watch status has been updated.
@@ -247,7 +226,7 @@ extension DigestCollectionViewController: BaseLockupCollectionViewCellDelegate {
 		guard signedIn else { return }
 		guard
 			let indexPath = self.collectionView.indexPath(for: cell),
-			let target = self.cache[indexPath] as? Libraryable
+			let target = self.cachedItem(at: indexPath) as? Libraryable
 		else { return }
 
 		let oldLibraryStatus = cell.libraryStatus
@@ -283,7 +262,7 @@ extension DigestCollectionViewController: BaseLockupCollectionViewCellDelegate {
 	func baseLockupCollectionViewCell(_ cell: BaseLockupCollectionViewCell, didPressReminder button: UIButton) async {
 		guard
 			let indexPath = self.collectionView.indexPath(for: cell),
-			let show = self.cache[indexPath] as? Show
+			let show = self.cachedItem(at: indexPath) as? Show
 		else { return }
 		await show.toggleReminder(on: self)
 		cell.configureReminderButton(for: show.libraryAttributes?.reminderStatus)
@@ -298,7 +277,7 @@ extension DigestCollectionViewController: EpisodeLockupCollectionViewCellDelegat
 
 		guard
 			let indexPath = self.collectionView.indexPath(for: cell),
-			let episode = self.cache[indexPath] as? Episode
+			let episode = self.cachedItem(at: indexPath) as? Episode
 		else { return }
 		cell.watchStatusButton.isEnabled = false
 		await episode.updateWatchStatus(userInfo: ["indexPath": indexPath])
@@ -308,7 +287,7 @@ extension DigestCollectionViewController: EpisodeLockupCollectionViewCellDelegat
 	func episodeLockupCollectionViewCell(_ cell: EpisodeLockupCollectionViewCell, didPressShowButton button: UIButton) {
 		guard
 			let indexPath = self.collectionView.indexPath(for: cell),
-			let episode = self.cache[indexPath] as? Episode,
+			let episode = self.cachedItem(at: indexPath) as? Episode,
 			let showIdentity = episode.relationships?.shows?.data.first
 		else { return }
 
@@ -318,7 +297,7 @@ extension DigestCollectionViewController: EpisodeLockupCollectionViewCellDelegat
 	func episodeLockupCollectionViewCell(_ cell: EpisodeLockupCollectionViewCell, didPressSeasonButton button: UIButton) {
 		guard
 			let indexPath = self.collectionView.indexPath(for: cell),
-			let episode = self.cache[indexPath] as? Episode,
+			let episode = self.cachedItem(at: indexPath) as? Episode,
 			let seasonIdentity = episode.relationships?.seasons?.data.first
 		else { return }
 
@@ -403,12 +382,12 @@ extension DigestCollectionViewController {
 // MARK: - Cell Configuration
 extension DigestCollectionViewController {
 	func getConfiguredBannerCell() -> UICollectionView.CellRegistration<BannerLockupCollectionViewCell, ItemKind> {
-		return UICollectionView.CellRegistration<BannerLockupCollectionViewCell, ItemKind>(cellNib: BannerLockupCollectionViewCell.nib) { [weak self] cell, indexPath, itemKind in
+		return UICollectionView.CellRegistration<BannerLockupCollectionViewCell, ItemKind>(cellNib: BannerLockupCollectionViewCell.nib) { [weak self] cell, _, itemKind in
 			guard let self = self else { return }
 
 			switch itemKind {
 			case .showIdentity:
-				let show: Show? = self.fetchModelOrTriggerSectionFetch(at: indexPath, itemKind: itemKind, response: ResourceCollection<Show>.self, identity: ShowIdentity.self)
+				let show: Show? = self.fetchModelOrTriggerSectionFetch(for: itemKind, response: ResourceCollection<Show>.self, identity: ShowIdentity.self)
 				cell.delegate = self
 				cell.configure(using: show)
 			default:
@@ -428,36 +407,36 @@ extension DigestCollectionViewController {
 	}
 
 	func getConfiguredShowCell() -> UICollectionView.CellRegistration<SmallLockupCollectionViewCell, ItemKind> {
-		return UICollectionView.CellRegistration<SmallLockupCollectionViewCell, ItemKind>(cellNib: SmallLockupCollectionViewCell.nib) { [weak self] cell, indexPath, itemKind in
+		return UICollectionView.CellRegistration<SmallLockupCollectionViewCell, ItemKind>(cellNib: SmallLockupCollectionViewCell.nib) { [weak self] cell, _, itemKind in
 			guard let self = self, case .showIdentity = itemKind else { return }
-			let show: Show? = self.fetchModelOrTriggerSectionFetch(at: indexPath, itemKind: itemKind, response: ResourceCollection<Show>.self, identity: ShowIdentity.self)
+			let show: Show? = self.fetchModelOrTriggerSectionFetch(for: itemKind, response: ResourceCollection<Show>.self, identity: ShowIdentity.self)
 			cell.delegate = self
 			cell.configure(using: show)
 		}
 	}
 
 	func getConfiguredGameCell() -> UICollectionView.CellRegistration<GameLockupCollectionViewCell, ItemKind> {
-		return UICollectionView.CellRegistration<GameLockupCollectionViewCell, ItemKind>(cellNib: GameLockupCollectionViewCell.nib) { [weak self] cell, indexPath, itemKind in
+		return UICollectionView.CellRegistration<GameLockupCollectionViewCell, ItemKind>(cellNib: GameLockupCollectionViewCell.nib) { [weak self] cell, _, itemKind in
 			guard let self = self, case .gameIdentity = itemKind else { return }
-			let game: Game? = self.fetchModelOrTriggerSectionFetch(at: indexPath, itemKind: itemKind, response: ResourceCollection<Game>.self, identity: GameIdentity.self)
+			let game: Game? = self.fetchModelOrTriggerSectionFetch(for: itemKind, response: ResourceCollection<Game>.self, identity: GameIdentity.self)
 			cell.delegate = self
 			cell.configure(using: game)
 		}
 	}
 
 	func getConfiguredEpisodeCell() -> UICollectionView.CellRegistration<EpisodeLockupCollectionViewCell, ItemKind> {
-		return UICollectionView.CellRegistration<EpisodeLockupCollectionViewCell, ItemKind>(cellNib: EpisodeLockupCollectionViewCell.nib) { [weak self] cell, indexPath, itemKind in
+		return UICollectionView.CellRegistration<EpisodeLockupCollectionViewCell, ItemKind>(cellNib: EpisodeLockupCollectionViewCell.nib) { [weak self] cell, _, itemKind in
 			guard let self = self, case .episodeIdentity = itemKind else { return }
-			let episode: Episode? = self.fetchModelOrTriggerSectionFetch(at: indexPath, itemKind: itemKind, response: ResourceCollection<Episode>.self, identity: EpisodeIdentity.self)
+			let episode: Episode? = self.fetchModelOrTriggerSectionFetch(for: itemKind, response: ResourceCollection<Episode>.self, identity: EpisodeIdentity.self)
 			cell.delegate = self
 			cell.configure(using: episode)
 		}
 	}
 
 	func getConfiguredPersonCell() -> UICollectionView.CellRegistration<ProfileLockupCollectionViewCell, ItemKind> {
-		return UICollectionView.CellRegistration<ProfileLockupCollectionViewCell, ItemKind>(cellNib: ProfileLockupCollectionViewCell.nib) { [weak self] cell, indexPath, itemKind in
+		return UICollectionView.CellRegistration<ProfileLockupCollectionViewCell, ItemKind>(cellNib: ProfileLockupCollectionViewCell.nib) { [weak self] cell, _, itemKind in
 			guard let self = self, case .personIdentity = itemKind else { return }
-			let person: Person? = self.fetchModelOrTriggerSectionFetch(at: indexPath, itemKind: itemKind, response: ResourceCollection<Person>.self, identity: PersonIdentity.self)
+			let person: Person? = self.fetchModelOrTriggerSectionFetch(for: itemKind, response: ResourceCollection<Person>.self, identity: PersonIdentity.self)
 			cell.configure(using: person)
 		}
 	}

@@ -53,11 +53,10 @@ extension ManageActiveSessionsController {
 		}
 
 		// Pre-fill the cache with resolved web sessions so their cells render without a lazy fetch.
-		let otherSectionIndex = currentAccessToken != nil ? 1 : 0
-		for (index, entry) in sessionEntries.enumerated() {
-			if let session = entry.session {
-				self.cache[IndexPath(item: index, section: otherSectionIndex)] = session
-			}
+		for entry in sessionEntries {
+			guard let session = entry.session else { continue }
+
+			self.cache[entry.item] = session
 		}
 
 		self.dataSource.apply(self.snapshot)

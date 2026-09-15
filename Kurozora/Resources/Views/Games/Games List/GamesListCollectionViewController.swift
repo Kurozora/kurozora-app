@@ -62,7 +62,7 @@ class GamesListCollectionViewController: ListCollectionViewController, SectionFe
 	private var dimLibraryBarButtonItem: UIBarButtonItem!
 
 	// MARK: - SectionFetchable
-	var cache: [IndexPath: KurozoraItem] = [:]
+	var cache: [ItemKind: KurozoraItem] = [:]
 	var isFetchingSection: Set<SectionLayoutKind> = []
 
 	/// Whether titles already in the user's library are dimmed.
@@ -129,28 +129,14 @@ class GamesListCollectionViewController: ListCollectionViewController, SectionFe
 
 	/// Updates every visible cell whose underlying game matches the given entry's trackable identity.
 	private func applyLibraryEntryChange(forTrackableID trackableID: String, isRemoval: Bool) {
-		var matchedItems: [ItemKind] = []
-		let currentSnapshot = self.dataSource.snapshot()
-
-		for item in currentSnapshot.itemIdentifiers {
+		self.reconfigureItems { item in
 			switch item {
 			case .gameIdentity(let identity):
-				if identity.id.rawValue == trackableID,
-				   let index = currentSnapshot.indexOfItem(item),
-				   self.cache[IndexPath(item: index, section: 0)] is Game {
-					matchedItems.append(item)
-				}
+				return identity.id.rawValue == trackableID && self.cache[item] is Game
 			case .relatedGame(let relatedGame):
-				if relatedGame.game.id.rawValue == trackableID {
-					matchedItems.append(item)
-				}
+				return relatedGame.game.id.rawValue == trackableID
 			}
 		}
-
-		guard !matchedItems.isEmpty else { return }
-		var snapshot = currentSnapshot
-		snapshot.reconfigureItems(matchedItems)
-		self.dataSource.apply(snapshot, animatingDifferences: false)
 	}
 
 	/// Creates the bar button item that dims titles already in the user's library.
@@ -209,7 +195,7 @@ class GamesListCollectionViewController: ListCollectionViewController, SectionFe
 	/// - Returns: `true` when dimming is on and the underlying game is in the user's library.
 	private func isDimmed(at indexPath: IndexPath) -> Bool {
 		guard self.dimsLibraryEntries else { return false }
-		guard let game = (self.cache[indexPath] as? Game) ?? self.relatedGames[safe: indexPath.item]?.game else { return false }
+		guard let game = (self.cachedItem(at: indexPath) as? Game) ?? self.relatedGames[safe: indexPath.item]?.game else { return false }
 		return self.isGameInLibrary(game)
 	}
 
@@ -442,7 +428,7 @@ extension GamesListCollectionViewController {
 
 				if game == nil, let section = self.snapshot.sectionIdentifier(containingItem: itemKind), !self.isFetchingSection.contains(section) {
 					Task {
-						await self.fetchSectionIfNeeded(ResourceCollection<Game>.self, GameIdentity.self, at: indexPath, itemKind: itemKind)
+						await self.fetchSectionIfNeeded(ResourceCollection<Game>.self, GameIdentity.self, for: itemKind)
 					}
 				}
 
@@ -467,7 +453,7 @@ extension GamesListCollectionViewController {
 
 				if game == nil, let section = self.snapshot.sectionIdentifier(containingItem: itemKind), !self.isFetchingSection.contains(section) {
 					Task {
-						await self.fetchSectionIfNeeded(ResourceCollection<Game>.self, GameIdentity.self, at: indexPath, itemKind: itemKind)
+						await self.fetchSectionIfNeeded(ResourceCollection<Game>.self, GameIdentity.self, for: itemKind)
 					}
 				}
 
@@ -505,7 +491,7 @@ extension GamesListCollectionViewController {
 // MARK: - UICollectionViewDelegate
 extension GamesListCollectionViewController {
 	override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-		let game = self.cache[indexPath] as? Game
+		let game = self.cachedItem(at: indexPath) as? Game
 		let relatedGame = self.relatedGames[safe: indexPath.item]?.game
 		guard let game = game ?? relatedGame else { return }
 
@@ -529,7 +515,7 @@ extension GamesListCollectionViewController {
 			guard let game = self.relatedGames[safe: indexPath.item]?.game else { return nil }
 			return game.contextMenuConfiguration(in: self, userInfo: ["indexPath": indexPath], sourceView: collectionViewCell?.contentView, barButtonItem: nil)
 		default:
-			guard let game = self.cache[indexPath] as? Game else { return nil }
+			guard let game = self.cachedItem(at: indexPath) as? Game else { return nil }
 			return game.contextMenuConfiguration(in: self, userInfo: ["indexPath": indexPath], sourceView: collectionViewCell?.contentView, barButtonItem: nil)
 		}
 	}
@@ -541,7 +527,7 @@ extension GamesListCollectionViewController: BaseLockupCollectionViewCellDelegat
 		let signedIn = await WorkflowController.shared.isSignedIn(on: self)
 		guard signedIn else { return }
 		guard let indexPath = self.collectionView.indexPath(for: cell) else { return }
-		let game = (self.cache[indexPath] as? Game) ?? self.relatedGames[indexPath.item].game
+		let game = (self.cachedItem(at: indexPath) as? Game) ?? self.relatedGames[indexPath.item].game
 
 		let oldLibraryStatus = cell.libraryStatus
 		let actionSheetAlertController = UIAlertController.actionSheetWithItems(items: LibraryStatus.alertControllerItems(for: cell.libraryKind), currentSelection: oldLibraryStatus, action: { title, value in

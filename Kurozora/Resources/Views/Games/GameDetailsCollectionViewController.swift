@@ -71,7 +71,7 @@ class GameDetailsCollectionViewController: DetailsCollectionViewController, Sect
 	/// fetch resolves, or when the game has none.
 	var editorial: Editorial?
 
-	var cache: [IndexPath: KurozoraItem] = [:]
+	var cache: [ItemKind: KurozoraItem] = [:]
 	var isFetchingSection: Set<SectionLayoutKind> = []
 
 	/// Observes local library mutations to refresh the header.
@@ -364,7 +364,7 @@ class GameDetailsCollectionViewController: DetailsCollectionViewController, Sect
 			return self.relatedLiteratures[safe: indexPath.item]?.literature
 		case .games:
 			switch self.dataSource.sectionIdentifier(for: indexPath.section) {
-			case .moreByStudio: return self.cache[indexPath] as? Game
+			case .moreByStudio: return self.cachedItem(at: indexPath) as? Game
 			case .relatedGames: return self.relatedGames[safe: indexPath.item]?.game
 			default: return nil
 			}
@@ -460,7 +460,7 @@ extension GameDetailsCollectionViewController {
 
 				if cast == nil, let section = self.snapshot.sectionIdentifier(containingItem: itemKind), !self.isFetchingSection.contains(section) {
 					Task {
-						await self.fetchSectionIfNeeded(ResourceCollection<Cast>.self, CastIdentity.self, at: indexPath, itemKind: itemKind)
+						await self.fetchSectionIfNeeded(ResourceCollection<Cast>.self, CastIdentity.self, for: itemKind)
 					}
 				}
 
@@ -481,7 +481,7 @@ extension GameDetailsCollectionViewController {
 
 				if game == nil, let section = self.snapshot.sectionIdentifier(containingItem: itemKind), !self.isFetchingSection.contains(section) {
 					Task {
-						await self.fetchSectionIfNeeded(ResourceCollection<Game>.self, GameIdentity.self, at: indexPath, itemKind: itemKind)
+						await self.fetchSectionIfNeeded(ResourceCollection<Game>.self, GameIdentity.self, for: itemKind)
 					}
 				}
 
@@ -502,7 +502,7 @@ extension GameDetailsCollectionViewController {
 
 				if studio == nil, let section = self.snapshot.sectionIdentifier(containingItem: itemKind), !self.isFetchingSection.contains(section) {
 					Task {
-						await self.fetchSectionIfNeeded(ResourceCollection<Studio>.self, StudioIdentity.self, at: indexPath, itemKind: itemKind)
+						await self.fetchSectionIfNeeded(ResourceCollection<Studio>.self, StudioIdentity.self, for: itemKind)
 					}
 				}
 

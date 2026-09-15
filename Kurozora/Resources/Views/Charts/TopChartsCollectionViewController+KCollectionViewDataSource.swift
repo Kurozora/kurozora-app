@@ -118,10 +118,10 @@ extension TopChartsCollectionViewController {
 
 			switch itemKind {
 			case .showIdentity:
-				let show: Show? = self.fetchModelOrTriggerSectionFetch(at: indexPath, itemKind: itemKind, response: ResourceCollection<Show>.self, identity: ShowIdentity.self)
+				let show: Show? = self.fetchModelOrTriggerSectionFetch(for: itemKind, response: ResourceCollection<Show>.self, identity: ShowIdentity.self)
 				cell.configure(using: show, rank: indexPath.item + 1)
 			case .literatureIdentity:
-				let literature: Literature? = self.fetchModelOrTriggerSectionFetch(at: indexPath, itemKind: itemKind, response: ResourceCollection<Literature>.self, identity: LiteratureIdentity.self)
+				let literature: Literature? = self.fetchModelOrTriggerSectionFetch(for: itemKind, response: ResourceCollection<Literature>.self, identity: LiteratureIdentity.self)
 				cell.configure(using: literature, rank: indexPath.item + 1)
 			case .pending(let chartKind, _):
 				switch chartKind {
@@ -146,7 +146,7 @@ extension TopChartsCollectionViewController {
 
 			switch itemKind {
 			case .gameIdentity:
-				let game: Game? = self.fetchModelOrTriggerSectionFetch(at: indexPath, itemKind: itemKind, response: ResourceCollection<Game>.self, identity: GameIdentity.self)
+				let game: Game? = self.fetchModelOrTriggerSectionFetch(for: itemKind, response: ResourceCollection<Game>.self, identity: GameIdentity.self)
 				cell.configure(using: game, rank: indexPath.item + 1)
 			case .pending:
 				let game: Game? = nil
@@ -164,10 +164,10 @@ extension TopChartsCollectionViewController {
 
 			switch itemKind {
 			case .characterIdentity:
-				let character: Character? = self.fetchModelOrTriggerSectionFetch(at: indexPath, itemKind: itemKind, response: ResourceCollection<Character>.self, identity: CharacterIdentity.self)
+				let character: Character? = self.fetchModelOrTriggerSectionFetch(for: itemKind, response: ResourceCollection<Character>.self, identity: CharacterIdentity.self)
 				cell.configure(using: character, rank: indexPath.item + 1)
 			case .personIdentity:
-				let person: Person? = self.fetchModelOrTriggerSectionFetch(at: indexPath, itemKind: itemKind, response: ResourceCollection<Person>.self, identity: PersonIdentity.self)
+				let person: Person? = self.fetchModelOrTriggerSectionFetch(for: itemKind, response: ResourceCollection<Person>.self, identity: PersonIdentity.self)
 				cell.configure(using: person, rank: indexPath.item + 1)
 			case .pending(let chartKind, _):
 				switch chartKind {
@@ -190,7 +190,7 @@ extension TopChartsCollectionViewController {
 
 			switch itemKind {
 			case .episodeIdentity:
-				let episode: Episode? = self.fetchModelOrTriggerSectionFetch(at: indexPath, itemKind: itemKind, response: ResourceCollection<Episode>.self, identity: EpisodeIdentity.self)
+				let episode: Episode? = self.fetchModelOrTriggerSectionFetch(for: itemKind, response: ResourceCollection<Episode>.self, identity: EpisodeIdentity.self)
 				cell.configure(using: episode, rank: indexPath.item + 1)
 			case .pending:
 				let episode: Episode? = nil
@@ -207,7 +207,7 @@ extension TopChartsCollectionViewController {
 
 			switch itemKind {
 			case .songIdentity:
-				let song: Song? = self.fetchModelOrTriggerSectionFetch(at: indexPath, itemKind: itemKind, response: ResourceCollection<Song>.self, identity: SongIdentity.self)
+				let song: Song? = self.fetchModelOrTriggerSectionFetch(for: itemKind, response: ResourceCollection<Song>.self, identity: SongIdentity.self)
 				let resolvedSong = song?.attributes.amID.flatMap { self.resolvedSongs[$0] }
 				cell.configure(using: song, at: indexPath, rank: indexPath.item + 1, resolvedSong: resolvedSong)
 
@@ -228,7 +228,7 @@ extension TopChartsCollectionViewController {
 
 			switch itemKind {
 			case .studioIdentity:
-				let studio: Studio? = self.fetchModelOrTriggerSectionFetch(at: indexPath, itemKind: itemKind, response: ResourceCollection<Studio>.self, identity: StudioIdentity.self)
+				let studio: Studio? = self.fetchModelOrTriggerSectionFetch(for: itemKind, response: ResourceCollection<Studio>.self, identity: StudioIdentity.self)
 				cell.configure(using: studio, rank: indexPath.item + 1)
 			case .pending:
 				let studio: Studio? = nil

@@ -148,7 +148,7 @@ class TrailersCollectionViewController: ListCollectionViewController, SectionFet
 	var gameIdentities: [GameIdentity] = []
 
 	// MARK: - SectionFetchable
-	var cache: [IndexPath: KurozoraItem] = [:]
+	var cache: [ItemKind: KurozoraItem] = [:]
 	var isFetchingSection: Set<SectionLayoutKind> = []
 
 	/// Whether titles already in the user's library are dimmed.
@@ -603,7 +603,6 @@ class TrailersCollectionViewController: ListCollectionViewController, SectionFet
 		guard
 			let featuredIdentityID = self.featuredIdentityID,
 			let item = self.currentItems.first(where: { $0.identityID == featuredIdentityID }),
-			let indexPath = self.dataSource.indexPath(for: item),
 			let section = self.snapshot.sectionIdentifier(containingItem: item)
 		else { return }
 
@@ -612,9 +611,9 @@ class TrailersCollectionViewController: ListCollectionViewController, SectionFet
 
 			switch item {
 			case .showIdentity:
-				await self.fetchSectionIfNeeded(ResourceCollection<Show>.self, ShowIdentity.self, at: indexPath, itemKind: item)
+				await self.fetchSectionIfNeeded(ResourceCollection<Show>.self, ShowIdentity.self, for: item)
 			case .gameIdentity:
-				await self.fetchSectionIfNeeded(ResourceCollection<Game>.self, GameIdentity.self, at: indexPath, itemKind: item)
+				await self.fetchSectionIfNeeded(ResourceCollection<Game>.self, GameIdentity.self, for: item)
 			case .featured:
 				return
 			}
@@ -790,16 +789,16 @@ class TrailersCollectionViewController: ListCollectionViewController, SectionFet
 	///
 	/// - Parameter trackableID: The identifier of the title whose entry changed.
 	private func applyLibraryEntryChange(forTrackableID trackableID: String) {
-		var snapshot = self.dataSource.snapshot()
-		var matchedItems = snapshot.itemIdentifiers.filter { $0.identityID?.rawValue == trackableID }
+		let featuredMatches = self.featuredIdentityID?.rawValue == trackableID
 
-		if self.featuredIdentityID?.rawValue == trackableID, snapshot.itemIdentifiers.contains(.featured) {
-			matchedItems.append(.featured)
+		self.reconfigureItems { item in
+			switch item {
+			case .featured:
+				return featuredMatches
+			default:
+				return item.identityID?.rawValue == trackableID
+			}
 		}
-
-		guard !matchedItems.isEmpty else { return }
-		snapshot.reconfigureItems(matchedItems)
-		self.dataSource.apply(snapshot, animatingDifferences: false)
 	}
 
 	/// Handles dim library button pressed.
@@ -819,7 +818,7 @@ class TrailersCollectionViewController: ListCollectionViewController, SectionFet
 		guard self.dimsLibraryEntries else { return false }
 
 		let libraryKind: LibraryKind = self.kind == .games ? .games : .shows
-		guard let trackable = self.cachedModel(at: indexPath) else { return false }
+		guard let trackable = self.cachedItem(at: indexPath) else { return false }
 		let libraryStatus = LibraryStore.shared.effectiveLibrary(forTrackableID: trackable.id.rawValue, kind: libraryKind)?.status ?? .none
 		return libraryStatus != .none
 	}
@@ -852,20 +851,6 @@ class TrailersCollectionViewController: ListCollectionViewController, SectionFet
 		case .showIdentity(let id): return id as? Element
 		case .gameIdentity(let id): return id as? Element
 		}
-	}
-
-	/// Returns the cached model at the given index path.
-	///
-	/// - Parameter indexPath: The index path of the item.
-	///
-	/// - Returns: The cached model.
-	private func cachedModel(at indexPath: IndexPath) -> KurozoraItem? {
-		guard let model = self.cache[indexPath] else { return nil }
-		guard model.id == self.dataSource.itemIdentifier(for: indexPath)?.identityID else {
-			self.cache[indexPath] = nil
-			return nil
-		}
-		return model
 	}
 
 	// MARK: - Segue
@@ -917,6 +902,7 @@ extension TrailersCollectionViewController {
 		self.updateSnapshot()
 		self.dataSource.apply(self.snapshot)
 		self.collectionView.collectionViewLayout.invalidateLayout()
+		self.cachedFeaturedTop = nil
 	}
 
 	/// Rebuilds the snapshot from the loaded identities.
@@ -943,21 +929,21 @@ extension TrailersCollectionViewController {
 		case .featured:
 			return (nil, nil)
 		case .showIdentity:
-			let show = self.cachedModel(at: indexPath) as? Show
+			let show = self.cachedItem(at: indexPath) as? Show
 
 			if show == nil, let section = self.snapshot.sectionIdentifier(containingItem: itemKind), !self.isFetchingSection.contains(section) {
 				Task {
-					await self.fetchSectionIfNeeded(ResourceCollection<Show>.self, ShowIdentity.self, at: indexPath, itemKind: itemKind)
+					await self.fetchSectionIfNeeded(ResourceCollection<Show>.self, ShowIdentity.self, for: itemKind)
 				}
 			}
 
 			return (show, nil)
 		case .gameIdentity:
-			let game = self.cachedModel(at: indexPath) as? Game
+			let game = self.cachedItem(at: indexPath) as? Game
 
 			if game == nil, let section = self.snapshot.sectionIdentifier(containingItem: itemKind), !self.isFetchingSection.contains(section) {
 				Task {
-					await self.fetchSectionIfNeeded(ResourceCollection<Game>.self, GameIdentity.self, at: indexPath, itemKind: itemKind)
+					await self.fetchSectionIfNeeded(ResourceCollection<Game>.self, GameIdentity.self, for: itemKind)
 				}
 			}
 
@@ -1028,7 +1014,7 @@ extension TrailersCollectionViewController {
 		if SectionLayoutKind(rawValue: indexPath.section) == .featured {
 			model = self.featuredIdentityID.flatMap { self.cachedModel(withID: $0) }
 		} else {
-			model = self.cachedModel(at: indexPath)
+			model = self.cachedItem(at: indexPath)
 		}
 
 		switch self.kind {
@@ -1051,10 +1037,10 @@ extension TrailersCollectionViewController {
 
 		switch self.kind {
 		case .shows:
-			guard let show = self.cachedModel(at: indexPath) as? Show else { return nil }
+			guard let show = self.cachedItem(at: indexPath) as? Show else { return nil }
 			return show.contextMenuConfiguration(in: self, userInfo: ["indexPath": indexPath], sourceView: collectionViewCell?.contentView, barButtonItem: nil)
 		case .games:
-			guard let game = self.cachedModel(at: indexPath) as? Game else { return nil }
+			guard let game = self.cachedItem(at: indexPath) as? Game else { return nil }
 			return game.contextMenuConfiguration(in: self, userInfo: ["indexPath": indexPath], sourceView: collectionViewCell?.contentView, barButtonItem: nil)
 		}
 	}
@@ -1101,7 +1087,7 @@ extension TrailersCollectionViewController: BaseLockupCollectionViewCellDelegate
 	func baseLockupCollectionViewCell(_ cell: BaseLockupCollectionViewCell, didPressStatus button: UIButton) async {
 		let signedIn = await WorkflowController.shared.isSignedIn(on: self)
 		guard signedIn else { return }
-		guard let indexPath = self.collectionView.indexPath(for: cell), let target = self.cachedModel(at: indexPath) as? Libraryable else { return }
+		guard let indexPath = self.collectionView.indexPath(for: cell), let target = self.cachedItem(at: indexPath) as? Libraryable else { return }
 
 		self.presentLibraryActionSheet(for: target, kind: cell.libraryKind, status: cell.libraryStatus, sourceView: button) { [weak cell] newStatus in
 			cell?.libraryStatus = newStatus
@@ -1109,7 +1095,7 @@ extension TrailersCollectionViewController: BaseLockupCollectionViewCellDelegate
 	}
 
 	func baseLockupCollectionViewCell(_ cell: BaseLockupCollectionViewCell, didPressReminder button: UIButton) async {
-		guard let indexPath = self.collectionView.indexPath(for: cell), let show = self.cachedModel(at: indexPath) as? Show else { return }
+		guard let indexPath = self.collectionView.indexPath(for: cell), let show = self.cachedItem(at: indexPath) as? Show else { return }
 
 		await show.toggleReminder(on: self)
 		cell.configureReminderButton(for: show.libraryAttributes?.reminderStatus)

@@ -62,7 +62,7 @@ class ShowsListCollectionViewController: ListCollectionViewController, SectionFe
 	private var dimLibraryBarButtonItem: UIBarButtonItem!
 
 	// MARK: - SectionFetchable
-	var cache: [IndexPath: KurozoraItem] = [:]
+	var cache: [ItemKind: KurozoraItem] = [:]
 	var isFetchingSection: Set<SectionLayoutKind> = []
 
 	/// Whether titles already in the user's library are dimmed.
@@ -129,28 +129,14 @@ class ShowsListCollectionViewController: ListCollectionViewController, SectionFe
 
 	/// Updates every visible cell whose underlying show matches the given entry's trackable identity.
 	private func applyLibraryEntryChange(forTrackableID trackableID: String, isRemoval: Bool) {
-		var matchedItems: [ItemKind] = []
-		let currentSnapshot = self.dataSource.snapshot()
-
-		for item in currentSnapshot.itemIdentifiers {
+		self.reconfigureItems { item in
 			switch item {
 			case .showIdentity(let identity):
-				if identity.id.rawValue == trackableID,
-				   let index = currentSnapshot.indexOfItem(item),
-				   self.cache[IndexPath(item: index, section: 0)] is Show {
-					matchedItems.append(item)
-				}
+				return identity.id.rawValue == trackableID && self.cache[item] is Show
 			case .relatedShow(let relatedShow):
-				if relatedShow.show.id.rawValue == trackableID {
-					matchedItems.append(item)
-				}
+				return relatedShow.show.id.rawValue == trackableID
 			}
 		}
-
-		guard !matchedItems.isEmpty else { return }
-		var snapshot = currentSnapshot
-		snapshot.reconfigureItems(matchedItems)
-		self.dataSource.apply(snapshot, animatingDifferences: false)
 	}
 
 	/// Creates the bar button item that dims titles already in the user's library.
@@ -209,7 +195,7 @@ class ShowsListCollectionViewController: ListCollectionViewController, SectionFe
 	/// - Returns: `true` when dimming is on and the underlying show is in the user's library.
 	private func isDimmed(at indexPath: IndexPath) -> Bool {
 		guard self.dimsLibraryEntries else { return false }
-		guard let show = (self.cache[indexPath] as? Show) ?? self.relatedShows[safe: indexPath.item]?.show else { return false }
+		guard let show = (self.cachedItem(at: indexPath) as? Show) ?? self.relatedShows[safe: indexPath.item]?.show else { return false }
 		return self.isShowInLibrary(show)
 	}
 
@@ -442,7 +428,7 @@ extension ShowsListCollectionViewController {
 
 				if show == nil, let section = self.snapshot.sectionIdentifier(containingItem: itemKind), !self.isFetchingSection.contains(section) {
 					Task {
-						await self.fetchSectionIfNeeded(ResourceCollection<Show>.self, ShowIdentity.self, at: indexPath, itemKind: itemKind)
+						await self.fetchSectionIfNeeded(ResourceCollection<Show>.self, ShowIdentity.self, for: itemKind)
 					}
 				}
 
@@ -467,7 +453,7 @@ extension ShowsListCollectionViewController {
 
 				if show == nil, let section = self.snapshot.sectionIdentifier(containingItem: itemKind), !self.isFetchingSection.contains(section) {
 					Task {
-						await self.fetchSectionIfNeeded(ResourceCollection<Show>.self, ShowIdentity.self, at: indexPath, itemKind: itemKind)
+						await self.fetchSectionIfNeeded(ResourceCollection<Show>.self, ShowIdentity.self, for: itemKind)
 					}
 				}
 
@@ -505,7 +491,7 @@ extension ShowsListCollectionViewController {
 // MARK: - UICollectionViewDelegate
 extension ShowsListCollectionViewController {
 	override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-		let show = self.cache[indexPath] as? Show
+		let show = self.cachedItem(at: indexPath) as? Show
 		let relatedShow = self.relatedShows[safe: indexPath.item]?.show
 		guard let show = show ?? relatedShow else { return }
 
@@ -529,7 +515,7 @@ extension ShowsListCollectionViewController {
 			guard let show = self.relatedShows[safe: indexPath.item]?.show else { return nil }
 			return show.contextMenuConfiguration(in: self, userInfo: ["indexPath": indexPath], sourceView: collectionViewCell?.contentView, barButtonItem: nil)
 		default:
-			guard let show = self.cache[indexPath] as? Show else { return nil }
+			guard let show = self.cachedItem(at: indexPath) as? Show else { return nil }
 			return show.contextMenuConfiguration(in: self, userInfo: ["indexPath": indexPath], sourceView: collectionViewCell?.contentView, barButtonItem: nil)
 		}
 	}
@@ -541,7 +527,7 @@ extension ShowsListCollectionViewController: BaseLockupCollectionViewCellDelegat
 		let signedIn = await WorkflowController.shared.isSignedIn(on: self)
 		guard signedIn else { return }
 		guard let indexPath = self.collectionView.indexPath(for: cell) else { return }
-		let show = (self.cache[indexPath] as? Show) ?? self.relatedShows[indexPath.item].show
+		let show = (self.cachedItem(at: indexPath) as? Show) ?? self.relatedShows[indexPath.item].show
 
 		let oldLibraryStatus = cell.libraryStatus
 		let actionSheetAlertController = UIAlertController.actionSheetWithItems(items: LibraryStatus.alertControllerItems(for: cell.libraryKind), currentSelection: oldLibraryStatus, action: { title, value in
@@ -574,7 +560,7 @@ extension ShowsListCollectionViewController: BaseLockupCollectionViewCellDelegat
 
 	func baseLockupCollectionViewCell(_ cell: BaseLockupCollectionViewCell, didPressReminder button: UIButton) async {
 		guard let indexPath = self.collectionView.indexPath(for: cell) else { return }
-		let show = (self.cache[indexPath] as? Show) ?? self.relatedShows[indexPath.item].show
+		let show = (self.cachedItem(at: indexPath) as? Show) ?? self.relatedShows[indexPath.item].show
 
 		await show.toggleReminder(on: self)
 		cell.configureReminderButton(for: show.libraryAttributes?.reminderStatus)

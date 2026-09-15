@@ -36,13 +36,13 @@ extension StudioDetailsCollectionViewController {
 				return
 			}
 		case .shows:
-			guard let show = self.cache[indexPath] as? Show else { return }
+			guard let show = self.cachedItem(at: indexPath) as? Show else { return }
 			self.show(.showDetailsSegue, sender: show)
 		case .literatures:
-			guard let literature = self.cache[indexPath] as? Literature else { return }
+			guard let literature = self.cachedItem(at: indexPath) as? Literature else { return }
 			self.show(.literatureDetailsSegue, sender: literature)
 		case .games:
-			guard let game = self.cache[indexPath] as? Game else { return }
+			guard let game = self.cachedItem(at: indexPath) as? Game else { return }
 			self.show(.gameDetailsSegue, sender: game)
 		case .reviews:
 			guard let review = self.review(at: indexPath) else { return }
@@ -60,13 +60,13 @@ extension StudioDetailsCollectionViewController {
 			guard let review = self.review(at: indexPath) else { return nil }
 			return review.contextMenuConfiguration(in: self, userInfo: nil, sourceView: collectionViewCell?.contentView, barButtonItem: nil)
 		case .shows:
-			guard let show = self.cache[indexPath] as? Show else { return nil }
+			guard let show = self.cachedItem(at: indexPath) as? Show else { return nil }
 			return show.contextMenuConfiguration(in: self, userInfo: ["indexPath": indexPath], sourceView: collectionViewCell?.contentView, barButtonItem: nil)
 		case .literatures:
-			guard let literature = self.cache[indexPath] as? Literature else { return nil }
+			guard let literature = self.cachedItem(at: indexPath) as? Literature else { return nil }
 			return literature.contextMenuConfiguration(in: self, userInfo: ["indexPath": indexPath], sourceView: collectionViewCell?.contentView, barButtonItem: nil)
 		case .games:
-			guard let game = self.cache[indexPath] as? Game else { return nil }
+			guard let game = self.cachedItem(at: indexPath) as? Game else { return nil }
 			return game.contextMenuConfiguration(in: self, userInfo: ["indexPath": indexPath], sourceView: collectionViewCell?.contentView, barButtonItem: nil)
 		default: break
 		}

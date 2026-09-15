@@ -10,7 +10,7 @@ import Combine
 import KurozoraKit
 import UIKit
 
-class TopChartsCollectionViewController: KCollectionViewController, SectionFetchable, TypedSegueHandling {
+class TopChartsCollectionViewController: KCollectionViewController, SectionFetchable, MusicResolving, TypedSegueHandling {
 	// MARK: - Enums
 	enum SegueIdentifiers: String, SegueIdentifier {
 		case showsListSegue
@@ -57,7 +57,7 @@ class TopChartsCollectionViewController: KCollectionViewController, SectionFetch
 	private var playbackObserver: AnyCancellable?
 
 	// MARK: - SectionFetchable
-	var cache: [IndexPath: KurozoraItem] = [:]
+	var cache: [ItemKind: KurozoraItem] = [:]
 	var isFetchingSection: Set<SectionLayoutKind> = []
 
 	var dataSource: UICollectionViewDiffableDataSource<SectionLayoutKind, ItemKind>!
@@ -246,31 +246,20 @@ class TopChartsCollectionViewController: KCollectionViewController, SectionFetch
 	///    - trackableID: The trackable identity of the mutated entry.
 	///    - kind: The library kind of the mutated entry.
 	private func applyLibraryEntryChange(forTrackableID trackableID: String, kind: LibraryKind) {
-		var matchedItems: [ItemKind] = []
-		let currentSnapshot = self.dataSource.snapshot()
-
-		for item in currentSnapshot.itemIdentifiers {
-			let matches: Bool
+		self.reconfigureItems { item in
+			guard self.cache[item] != nil else { return false }
 
 			switch (item, kind) {
 			case (.showIdentity(let identity), .shows):
-				matches = identity.id.rawValue == trackableID
+				return identity.id.rawValue == trackableID
 			case (.literatureIdentity(let identity), .literatures):
-				matches = identity.id.rawValue == trackableID
+				return identity.id.rawValue == trackableID
 			case (.gameIdentity(let identity), .games):
-				matches = identity.id.rawValue == trackableID
+				return identity.id.rawValue == trackableID
 			default:
-				matches = false
+				return false
 			}
-
-			guard matches, let indexPath = self.dataSource.indexPath(for: item), self.cache[indexPath] != nil else { continue }
-			matchedItems.append(item)
 		}
-
-		guard !matchedItems.isEmpty else { return }
-		var snapshot = currentSnapshot
-		snapshot.reconfigureItems(matchedItems)
-		self.dataSource.apply(snapshot, animatingDifferences: false)
 	}
 
 	/// Used to reload the episode whose watch status has been updated.
@@ -300,15 +289,8 @@ class TopChartsCollectionViewController: KCollectionViewController, SectionFetch
 	}
 
 	/// Refreshes the play button glyph and artwork of every visible song cell.
-	func refreshVisibleMusicCells() {
-		for case let cell as MusicLockupCollectionViewCell in self.collectionView.visibleCells {
-			guard
-				let indexPath = self.collectionView.indexPath(for: cell),
-				let song = self.cache[indexPath] as? Song
-			else { continue }
-			cell.updatePlayButton(for: song)
-			cell.updateArtwork(for: song, resolvedSong: song.attributes.amID.flatMap { self.resolvedSongs[$0] })
-		}
+	func song(at indexPath: IndexPath) -> KKSong? {
+		return self.cachedItem(at: indexPath) as? Song
 	}
 
 	// MARK: - SectionFetchable
@@ -482,7 +464,7 @@ extension TopChartsCollectionViewController: BaseLockupCollectionViewCellDelegat
 		guard signedIn else { return }
 		guard
 			let indexPath = self.collectionView.indexPath(for: cell),
-			let target = self.cache[indexPath] as? Libraryable
+			let target = self.cachedItem(at: indexPath) as? Libraryable
 		else { return }
 
 		let oldLibraryStatus = cell.libraryStatus
@@ -517,7 +499,7 @@ extension TopChartsCollectionViewController: BaseLockupCollectionViewCellDelegat
 	func baseLockupCollectionViewCell(_ cell: BaseLockupCollectionViewCell, didPressReminder button: UIButton) async {
 		guard
 			let indexPath = self.collectionView.indexPath(for: cell),
-			let show = self.cache[indexPath] as? Show
+			let show = self.cachedItem(at: indexPath) as? Show
 		else { return }
 
 		await show.toggleReminder(on: self)
@@ -532,7 +514,7 @@ extension TopChartsCollectionViewController: EpisodeLockupCollectionViewCellDele
 		guard
 			signedIn,
 			let indexPath = self.collectionView.indexPath(for: cell),
-			let episode = self.cache[indexPath] as? Episode
+			let episode = self.cachedItem(at: indexPath) as? Episode
 		else { return }
 
 		cell.watchStatusButton.isEnabled = false
@@ -543,7 +525,7 @@ extension TopChartsCollectionViewController: EpisodeLockupCollectionViewCellDele
 	func episodeLockupCollectionViewCell(_ cell: EpisodeLockupCollectionViewCell, didPressShowButton button: UIButton) async {
 		guard
 			let indexPath = self.collectionView.indexPath(for: cell),
-			let episode = self.cache[indexPath] as? Episode,
+			let episode = self.cachedItem(at: indexPath) as? Episode,
 			let showIdentity = episode.relationships?.shows?.data.first
 		else { return }
 
@@ -553,7 +535,7 @@ extension TopChartsCollectionViewController: EpisodeLockupCollectionViewCellDele
 	func episodeLockupCollectionViewCell(_ cell: EpisodeLockupCollectionViewCell, didPressSeasonButton button: UIButton) async {
 		guard
 			let indexPath = self.collectionView.indexPath(for: cell),
-			let episode = self.cache[indexPath] as? Episode,
+			let episode = self.cachedItem(at: indexPath) as? Episode,
 			let seasonIdentity = episode.relationships?.seasons?.data.first
 		else { return }
 
@@ -565,24 +547,7 @@ extension TopChartsCollectionViewController: EpisodeLockupCollectionViewCellDele
 extension TopChartsCollectionViewController: MusicLockupCollectionViewCellDelegate {
 	func showButtonPressed(_ sender: UIButton, indexPath: IndexPath) {}
 
-	/// Resolves and caches the Apple Music song for the given Kurozora song.
-	///
-	/// - Parameter song: The Kurozora song to resolve.
-	func resolveMusicSong(_ song: KKSong) {
-		guard let appleMusicID = song.attributes.amID, self.resolvedSongs[appleMusicID] == nil else { return }
-
-		Task { [weak self] in
-			self?.resolvedSongs[appleMusicID] = await MusicManager.shared.getSong(for: appleMusicID)
-			self?.refreshVisibleMusicCells()
-		}
-	}
-
 	func musicLockupCollectionViewCell(_ cell: MusicLockupCollectionViewCell, didTapPlayButtonAt indexPath: IndexPath) {
-		let itemCount = self.collectionView.numberOfItems(inSection: indexPath.section)
-		let kkSongs: [KKSong?] = (0 ..< itemCount).map { item in
-			self.cache[IndexPath(item: item, section: indexPath.section)] as? Song
-		}
-
-		MusicManager.shared.play(kkSongs: kkSongs, startingAt: indexPath.item)
+		self.playSongs(startingAt: indexPath)
 	}
 }
