@@ -2420,6 +2420,36 @@ extension L10n {
 		}
 	}
 
+	/// The description shown in the Reminders settings header.
+	///
+	/// - Tag: L10n-remindersHeaderDescription
+	static var remindersHeaderDescription: String {
+		L10n.resolve {
+			String(
+				localized: "Choose how you're reminded about the titles you follow.",
+				table: "Settings",
+				bundle: LanguageManager.shared.bundle,
+				locale: LanguageManager.shared.locale,
+				comment: "The description shown in the Reminders settings header."
+			)
+		}
+	}
+
+	/// The footer string for the 'Subscribe to Reminders' row.
+	///
+	/// - Tag: L10n-reminderSubscriptionRowFooter
+	static var reminderSubscriptionRowFooter: String {
+		L10n.resolve {
+			String(
+				localized: "Add your reminders to a calendar app to see every upcoming release.",
+				table: "Settings",
+				bundle: LanguageManager.shared.bundle,
+				locale: LanguageManager.shared.locale,
+				comment: "The footer string for the 'Subscribe to Reminders' row."
+			)
+		}
+	}
+
 	/// The title of the 'Library Artwork' setting.
 	///
 	/// - Tag: L10n-libraryArtwork

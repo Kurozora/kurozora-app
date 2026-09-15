@@ -190,6 +190,8 @@ extension AiringNotificationScheduler {
 	///
 	/// - Returns: The name of the show the reminder fires for.
 	func fireTestReminder() async -> String? {
+		let isAllowed = await MainActor.run { UserSettings.airingRemindersAllowed }
+		guard isAllowed else { return nil }
 		guard let userSlug = User.current?.attributes.slug else { return nil }
 		guard let slot = await self.slots(forUserSlug: userSlug).first else { return nil }
 

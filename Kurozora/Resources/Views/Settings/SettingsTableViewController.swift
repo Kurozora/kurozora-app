@@ -27,7 +27,7 @@ class SettingsTableViewController: KTableViewController, TypedSegueHandling {
 		case motionSegue
 		case themeSegue
 		case notificationSegue
-		case reminderSubscriptionSegue
+		case remindersSegue
 		case soundSegue
 		case biometricsSegue
 		case privacySegue
@@ -200,7 +200,7 @@ class SettingsTableViewController: KTableViewController, TypedSegueHandling {
 		case .motionSegue: return MotionSettingsViewController()
 		case .themeSegue: return ManageThemesCollectionViewController()
 		case .notificationSegue: return NotificationsSettingsViewController()
-		case .reminderSubscriptionSegue: return ReminderSubscriptionTableViewController()
+		case .remindersSegue: return RemindersSettingsViewController()
 		case .soundSegue: return SoundSettingsViewController()
 		case .biometricsSegue: return AuthenticationSettingsViewController()
 		case .privacySegue: return PrivacySettingsViewController()
@@ -217,7 +217,7 @@ class SettingsTableViewController: KTableViewController, TypedSegueHandling {
 		case .accountSegue, .switchAccountSegue, .keysSegue, .syncScenariosSegue,
 		     .browserSegue, .displaySegue, .gesturesSegue, .iconSegue,
 		     .librarySegue, .mediaSegue, .musicSegue, .lowDataModeSegue, .motionSegue, .themeSegue,
-		     .notificationSegue, .reminderSubscriptionSegue, .soundSegue,
+		     .notificationSegue, .remindersSegue, .soundSegue,
 		     .biometricsSegue, .privacySegue,
 		     .subscriptionSegue, .tipJarSegue, .requestRefundSegue:
 			return
@@ -372,7 +372,7 @@ extension SettingsTableViewController {
 		case .switchAccount,
 		     .keychain, .syncScenarios,
 		     .browser, .cache, .displayBlindness, .gestures, .icon, .library, .media, .music, .lowDataMode, .motion, .theme,
-		     .soundsAndHaptics,
+		     .soundsAndHaptics, .reminder,
 		     .biometrics, .privacy,
 		     .unlockFeatures, .tipjar, .requestRefund:
 			guard let segueID = sectionRow.segueIdentifier else { return }
@@ -380,13 +380,6 @@ extension SettingsTableViewController {
 		case .account, .notifications:
 			guard let segueID = sectionRow.segueIdentifier else { return }
 			self.authAndSegue(to: segueID)
-		case .reminder:
-			guard let segueID = sectionRow.segueIdentifier else { return }
-			Task { [weak self] in
-				guard let self = self else { return }
-				guard await WorkflowController.shared.isSubscribed(on: self) else { return }
-				self.showSecondary(segueID, sender: nil)
-			}
 		case .signalSticker:
 			UIApplication.shared.open(KService.signalStickerURL)
 		case .telegramSticker:
