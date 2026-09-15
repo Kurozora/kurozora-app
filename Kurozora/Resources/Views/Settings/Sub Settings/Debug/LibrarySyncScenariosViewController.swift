@@ -10,7 +10,7 @@
 import KurozoraKit
 import UIKit
 
-final class LibrarySyncScenariosViewController: UITableViewController {
+final class LibrarySyncScenariosViewController: SubSettingsViewController {
 	// MARK: - Types
 	private enum Section: Int, CaseIterable {
 		case verify
@@ -89,18 +89,19 @@ final class LibrarySyncScenariosViewController: UITableViewController {
 		case .verify:
 			content.text = "Verify Against Server"
 			content.secondaryText = self.verifyVerdicts.isEmpty ? nil : self.verifyVerdicts.map(\.summary).joined(separator: "\n")
-			content.secondaryTextProperties.color = .secondaryLabel
-			content.textProperties.color = self.isBusy ? .secondaryLabel : .tintColor
+			content.secondaryTextProperties.color = KThemePicker.subTextColor.colorValue
+			content.textProperties.color = self.isBusy ? KThemePicker.subTextColor.colorValue : KThemePicker.tintColor.colorValue
 			cell.accessoryView = self.isVerifying ? Self.makeSpinner() : self.verifyAccessoryView()
 		case .runAll:
 			content.text = "Run All"
-			content.textProperties.color = self.isBusy ? .secondaryLabel : .tintColor
+			content.textProperties.color = self.isBusy ? KThemePicker.subTextColor.colorValue : KThemePicker.tintColor.colorValue
 			cell.accessoryView = self.isRunningAll ? Self.makeSpinner() : nil
 		case .scenarios:
 			let scenario = LibrarySyncScenarioRunner.allCases[indexPath.row]
 			content.text = scenario.name
 			content.secondaryText = self.reports[scenario]?.summary
-			content.secondaryTextProperties.color = .secondaryLabel
+			content.textProperties.color = KThemePicker.tableViewCellTitleTextColor.colorValue
+			content.secondaryTextProperties.color = KThemePicker.tableViewCellSubTextColor.colorValue
 			cell.accessoryView = self.accessoryView(for: scenario)
 		case .none:
 			break
@@ -108,6 +109,12 @@ final class LibrarySyncScenariosViewController: UITableViewController {
 
 		cell.contentConfiguration = content
 		cell.selectionStyle = self.isBusy ? .none : .default
+		cell.theme_backgroundColor = KThemePicker.tableViewCellBackgroundColor.rawValue
+
+		let selectedBackgroundView = UIView()
+		selectedBackgroundView.theme_backgroundColor = KThemePicker.tableViewCellSelectedBackgroundColor.rawValue
+		cell.selectedBackgroundView = selectedBackgroundView
+
 		return cell
 	}
 

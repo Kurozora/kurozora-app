@@ -106,6 +106,15 @@ extension SubSettingsViewController {
 	}
 
 	override func tableView(_ tableView: UITableView, didHighlightRowAt indexPath: IndexPath) {
+		if let settingsCell = tableView.cellForRow(at: indexPath) as? SettingsCell, settingsCell.selectionStyle != .none {
+			settingsCell.selectedView?.theme_backgroundColor = KThemePicker.tableViewCellSelectedBackgroundColor.rawValue
+			settingsCell.chevronImageView?.theme_tintColor = KThemePicker.tableViewCellSelectedChevronColor.rawValue
+
+			settingsCell.primaryLabel?.theme_textColor = KThemePicker.tableViewCellSelectedTitleTextColor.rawValue
+			settingsCell.secondaryLabel?.theme_textColor = KThemePicker.tableViewCellSelectedSubTextColor.rawValue
+			settingsCell.detailLabel?.theme_textColor = KThemePicker.tableViewCellSelectedSubTextColor.rawValue
+		}
+
 		if let iconTableViewCell = tableView.cellForRow(at: indexPath) as? IconTableViewCell {
 			iconTableViewCell.selectedView?.theme_backgroundColor = KThemePicker.tableViewCellSelectedBackgroundColor.rawValue
 			iconTableViewCell.chevronImageView?.theme_tintColor = KThemePicker.tableViewCellSelectedChevronColor.rawValue
@@ -116,6 +125,15 @@ extension SubSettingsViewController {
 	}
 
 	override func tableView(_ tableView: UITableView, didUnhighlightRowAt indexPath: IndexPath) {
+		if let settingsCell = tableView.cellForRow(at: indexPath) as? SettingsCell {
+			settingsCell.selectedView?.theme_backgroundColor = KThemePicker.tableViewCellBackgroundColor.rawValue
+			settingsCell.chevronImageView?.theme_tintColor = KThemePicker.tableViewCellChevronColor.rawValue
+
+			settingsCell.primaryLabel?.theme_textColor = KThemePicker.tableViewCellTitleTextColor.rawValue
+			settingsCell.secondaryLabel?.theme_textColor = KThemePicker.tableViewCellSubTextColor.rawValue
+			settingsCell.detailLabel?.theme_textColor = KThemePicker.tableViewCellSubTextColor.rawValue
+		}
+
 		if let iconTableViewCell = tableView.cellForRow(at: indexPath) as? IconTableViewCell {
 			iconTableViewCell.selectedView?.theme_backgroundColor = KThemePicker.tableViewCellBackgroundColor.rawValue
 			iconTableViewCell.chevronImageView?.theme_tintColor = KThemePicker.tableViewCellChevronColor.rawValue

@@ -87,10 +87,9 @@ class UserLockupCollectionViewCell: KCollectionViewCell {
 
 		self.primaryLabel.text = user.attributes.username
 		self.updateFollowStatusLabel(for: user)
+		self.updateFollowButton(using: user.attributes.followStatus)
 
 		user.attributes.profileImage(imageView: self.profileImageView)
-
-		self.updateFollowButton(using: user.attributes.followStatus)
 	}
 
 	/// Configures the cell for a mention-autocomplete row.
@@ -108,12 +107,10 @@ class UserLockupCollectionViewCell: KCollectionViewCell {
 		self.primaryLabel.text = user.attributes.username
 		self.secondaryLabel.text = "@\(user.attributes.slug)"
 
-		user.attributes.profileImage(imageView: self.profileImageView)
+		self.followButton.isHidden = true
+		self.followButton.isUserInteractionEnabled = false
 
-		UIView.performWithoutAnimation {
-			self.followButton.isHidden = true
-			self.followButton.isUserInteractionEnabled = false
-		}
+		user.attributes.profileImage(imageView: self.profileImageView)
 
 		switch user.attributes.followStatus {
 		case .followed:
@@ -152,14 +149,11 @@ class UserLockupCollectionViewCell: KCollectionViewCell {
 		self.primaryLabel.text = user.attributes.username
 		self.secondaryLabel.text = user.attributes.reputationCount.kkFormatted(precision: 0)
 
-		user.attributes.profileImage(imageView: self.profileImageView)
-
 		self.followStatusLabel.isHidden = true
+		self.followButton.isHidden = true
+		self.followButton.isUserInteractionEnabled = false
 
-		UIView.performWithoutAnimation {
-			self.followButton.isHidden = true
-			self.followButton.isUserInteractionEnabled = false
-		}
+		user.attributes.profileImage(imageView: self.profileImageView)
 	}
 
 	/// Configures the cell for a row in the blocked-users list.
@@ -171,17 +165,18 @@ class UserLockupCollectionViewCell: KCollectionViewCell {
 			return
 		}
 
+		self.isInBlockedMode = true
+
 		self.hideSkeleton()
 		self.setRankVisible(false, rank: nil)
-		self.isInBlockedMode = true
 
 		self.primaryLabel.text = user.attributes.username
 		self.secondaryLabel.text = "@\(user.attributes.slug)"
 
-		user.attributes.profileImage(imageView: self.profileImageView)
-
 		self.followStatusLabel.isHidden = true
 		self.updateBlockButton(isBlocked: user.attributes.blockStatus == .blocked)
+
+		user.attributes.profileImage(imageView: self.profileImageView)
 	}
 
 	/// Updates the trailing button to reflect the current block state when the cell is in blocked-list mode.

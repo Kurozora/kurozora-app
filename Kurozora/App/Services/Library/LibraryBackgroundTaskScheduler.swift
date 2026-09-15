@@ -14,7 +14,6 @@ import UIKit
 
 private nonisolated let backgroundTaskLogger = Logger(subsystem: "app.kurozora.Kurozora", category: "LibraryBackgroundTask")
 
-/// Drains the library outbox and refreshes the library while the app is in the background.
 final class LibraryBackgroundTaskScheduler {
 	// MARK: - Properties
 	/// The shared `LibraryBackgroundTaskScheduler` instance.
