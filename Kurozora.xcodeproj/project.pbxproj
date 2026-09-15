@@ -113,7 +113,7 @@
 			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
 			membershipExceptions = (
 				"App Frameworks/Foundation/Extensions/Notification+Kurozora.swift",
-				"Supporting Files/AppIcon Staging.icon",
+				"Supporting Files Dev/AppIcon Staging.icon",
 				"Supporting Files/AppIcon.icon",
 				"Supporting Files/Shared.xcassets",
 			);
