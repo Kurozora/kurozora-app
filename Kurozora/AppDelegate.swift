@@ -234,7 +234,9 @@ extension AppDelegate {
 	}
 
 	/// User chose "Refresh Page" from the View menu.
-	@objc func handleRefreshControl() {}
+	@objc func handleRefreshPage(_ sender: AnyObject) {
+		(UIApplication.topViewController as? PageRefreshable)?.handleRefreshControl()
+	}
 
 	/// User chose "Settings…" from the Application menu.
 	@objc func handleSettings(_ sender: AnyObject) {

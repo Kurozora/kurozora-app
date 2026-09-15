@@ -35,7 +35,7 @@ class MenuController {
 			builder.insertSibling(MenuController.miniPlayerShortcutsMenu(), beforeMenu: .bringAllToFront)
 		}
 
-//		builder.insertSibling(MenuController.refreshPageMenu(), beforeMenu: .fullscreen)
+		builder.insertSibling(MenuController.refreshPageMenu(), beforeMenu: .fullscreen)
 		builder.insertSibling(MenuController.openSettingsMenu(), afterMenu: .about)
 		builder.insertSibling(MenuController.accountMenu(), beforeMenu: .window)
 
@@ -201,7 +201,7 @@ class MenuController {
 	///
 	/// - Returns: The "Refresh Page" UIMenu object.
 	class func refreshPageMenu() -> UIMenu {
-		let refreshPageCommand = UIKeyCommand(title: L10n.refreshPage, action: #selector(AppDelegate.handleRefreshControl), input: "R", modifierFlags: .command, discoverabilityTitle: L10n.refreshPage)
+		let refreshPageCommand = UIKeyCommand(title: L10n.refreshPage, action: #selector(AppDelegate.handleRefreshPage(_:)), input: "R", modifierFlags: .command, discoverabilityTitle: L10n.refreshPage)
 		return UIMenu(title: L10n.refresh, identifier: UIMenu.Identifier("app.kurozora.menus.refreshPage"), options: .displayInline, children: [refreshPageCommand])
 	}
 
