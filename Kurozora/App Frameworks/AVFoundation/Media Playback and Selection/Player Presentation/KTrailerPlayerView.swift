@@ -149,6 +149,12 @@ final class KTrailerPlayerView: UIView {
 	/// Called when the trailer plays to its end, once looping is off.
 	var onPlaybackEnded: (() -> Void)?
 
+	/// Called when the system asks for the trailer after this one.
+	var onNextTrailer: (() -> Void)?
+
+	/// Called when the system asks for the trailer before this one.
+	var onPreviousTrailer: (() -> Void)?
+
 	/// Shares what the trailer belongs to, from the given view.
 	var shareHandler: ((UIView) -> Void)?
 
@@ -482,6 +488,7 @@ final class KTrailerPlayerView: UIView {
 			guard self.isPlaying else { return }
 
 			self.webPlayer?.pause()
+			self.webPlayer?.setWithdrawn(true)
 			self.clearNowPlayingReport()
 			self.isPlaying = false
 			self.updateControls(animated: true)
@@ -581,6 +588,7 @@ final class KTrailerPlayerView: UIView {
 			webPlayer.attach(to: self, isMuted: self.isMuted, delegate: self)
 		}
 
+		webPlayer.setWithdrawn(false)
 		webPlayer.setMuted(self.isMuted)
 		webPlayer.play()
 		return true
@@ -618,6 +626,7 @@ final class KTrailerPlayerView: UIView {
 		// The sound is deliberately left alone: pausing already silences the trailer, and keeping the
 		// reader's choice means scrolling back resumes it exactly as they left it.
 		self.webPlayer?.pause()
+		self.webPlayer?.setWithdrawn(true)
 		self.clearNowPlayingReport()
 		self.isPlaying = false
 		self.areControlsVisible = false
@@ -1357,6 +1366,18 @@ extension KTrailerPlayerView: TrailerWebPlayerDelegate {
 			guard self.videoID == endedVideoID else { return }
 			self.onPlaybackEnded?()
 		}
+	}
+
+	func trailerWebPlayerDidRequestNextTrailer(_ trailerWebPlayer: TrailerWebPlayer) {
+		self.onNextTrailer?()
+	}
+
+	func trailerWebPlayerDidRequestPreviousTrailer(_ trailerWebPlayer: TrailerWebPlayer) {
+		self.onPreviousTrailer?()
+	}
+
+	func trailerWebPlayerHasQueue(_ trailerWebPlayer: TrailerWebPlayer) -> Bool {
+		return self.onNextTrailer != nil || self.onPreviousTrailer != nil
 	}
 
 	func trailerWebPlayer(_ trailerWebPlayer: TrailerWebPlayer, didPlayTo currentTime: Double, duration: Double) {

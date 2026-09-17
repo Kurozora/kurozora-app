@@ -7,12 +7,10 @@
 //
 
 import AVFoundation
+import Kingfisher
+import Obfuscation
 import UIKit
 import WebKit
-
-#if targetEnvironment(macCatalyst)
-import Obfuscation
-#endif
 
 /// Reports playback state changes from a trailer web player.
 @MainActor
@@ -49,6 +47,23 @@ protocol TrailerWebPlayerDelegate: AnyObject {
 	///
 	/// - Parameter trailerWebPlayer: The web player reporting the change.
 	func trailerWebPlayerDidReachEnd(_ trailerWebPlayer: TrailerWebPlayer)
+
+	/// Tells the delegate the system asked for the trailer after this one.
+	///
+	/// - Parameter trailerWebPlayer: The web player reporting the request.
+	func trailerWebPlayerDidRequestNextTrailer(_ trailerWebPlayer: TrailerWebPlayer)
+
+	/// Tells the delegate the system asked for the trailer before this one.
+	///
+	/// - Parameter trailerWebPlayer: The web player reporting the request.
+	func trailerWebPlayerDidRequestPreviousTrailer(_ trailerWebPlayer: TrailerWebPlayer)
+
+	/// Asks the delegate whether the trailer sits in a line of trailers.
+	///
+	/// - Parameter trailerWebPlayer: The web player asking.
+	///
+	/// - Returns: `true` if the system may ask for the next or previous trailer.
+	func trailerWebPlayerHasQueue(_ trailerWebPlayer: TrailerWebPlayer) -> Bool
 }
 
 // MARK: - TrailerWebPlayerDelegate
@@ -56,6 +71,14 @@ extension TrailerWebPlayerDelegate {
 	func trailerWebPlayer(_ trailerWebPlayer: TrailerWebPlayer, didPlayTo currentTime: Double, duration: Double) {}
 
 	func trailerWebPlayerDidReachEnd(_ trailerWebPlayer: TrailerWebPlayer) {}
+
+	func trailerWebPlayerDidRequestNextTrailer(_ trailerWebPlayer: TrailerWebPlayer) {}
+
+	func trailerWebPlayerDidRequestPreviousTrailer(_ trailerWebPlayer: TrailerWebPlayer) {}
+
+	func trailerWebPlayerHasQueue(_ trailerWebPlayer: TrailerWebPlayer) -> Bool {
+		return false
+	}
 }
 
 /// A reusable web view that plays one YouTube trailer through the IFrame Player API.
@@ -79,6 +102,21 @@ final class TrailerWebPlayer: NSObject {
 	/// The selector matching everything in the embed that is neither the video nor an ancestor of it.
 	private static let hiddenChromeSelector = "body *:not(video):not(:has(video.html5-main-video))"
 
+	/// The store every trailer page keeps its site data in.
+	private static let sharedDataStore = WKWebsiteDataStore.nonPersistent()
+
+	/// The trailer web views alive in the app.
+	private static let liveWebViews = NSHashTable<WKWebView>.weakObjects()
+
+	/// The script setting the page's audio category.
+	private static let audioCategoryScript: String = {
+		#if targetEnvironment(macCatalyst)
+		return ""
+		#else
+		return "if (navigator.audioSession) { try { navigator.audioSession.type = 'ambient'; } catch (error) {} }"
+		#endif
+	}()
+
 	/// The script that strips the embed down to its video and takes presses for the app's controls.
 	private static let chromeHidingScript: WKUserScript = {
 		let css = """
@@ -91,6 +129,7 @@ final class TrailerWebPlayer: NSObject {
 		"""
 		let source = """
 		(function() {
+		  \(TrailerWebPlayer.audioCategoryScript)
 		  // The paused frame's native stand-in offers the system menu instead.
 		  document.addEventListener('contextmenu', function(event) { event.preventDefault(); }, true);
 		  // The page never learns the window went away, or the embed would pause itself over it.
@@ -118,6 +157,41 @@ final class TrailerWebPlayer: NSObject {
 		      });
 		    }
 		  } catch (error) {}
+		  var nativeSetActionHandler = null;
+		  var installedControls = null;
+		  function remoteCommand(command) {
+		    return function(details) {
+		      var payload = { event: 'remoteCommand', command: command };
+		      if (details && typeof details.seekTime === 'number') { payload.seekTime = details.seekTime; }
+		      if (details && typeof details.seekOffset === 'number') { payload.seekOffset = details.seekOffset; }
+		      try { window.webkit.messageHandlers.trailer.postMessage(payload); } catch (error) {}
+		    };
+		  }
+		  function applyControls(hasQueue) {
+		    if (!navigator.mediaSession) { return; }
+		    var wanted = hasQueue ? 'queue' : 'skip';
+		    if (installedControls === wanted) { return; }
+		    try {
+		      var controlsPrototype = Object.getPrototypeOf(navigator.mediaSession);
+		      if (!nativeSetActionHandler && controlsPrototype && controlsPrototype.setActionHandler) {
+		        nativeSetActionHandler = controlsPrototype.setActionHandler;
+		        controlsPrototype.setActionHandler = function(action, handler) {
+		          if (!ownsWrite) { return; }
+		          return nativeSetActionHandler.call(this, action, handler);
+		        };
+		      }
+		      if (!nativeSetActionHandler) { return; }
+		      ownsWrite = true;
+		      ['play', 'pause', 'seekto', 'seekbackward', 'seekforward'].forEach(function(action) {
+		        nativeSetActionHandler.call(navigator.mediaSession, action, remoteCommand(action));
+		      });
+		      ['nexttrack', 'previoustrack'].forEach(function(action) {
+		        nativeSetActionHandler.call(navigator.mediaSession, action, hasQueue ? remoteCommand(action) : null);
+		      });
+		      ownsWrite = false;
+		      installedControls = wanted;
+		    } catch (error) { ownsWrite = false; }
+		  }
 		  // The embed overwrites the metadata on every state change.
 		  window.kurozoraApplyNowPlaying = function() {
 		    if (!navigator.mediaSession || !window.MediaMetadata) { return; }
@@ -127,13 +201,18 @@ final class TrailerWebPlayer: NSObject {
 		    if (!request || !request.then) { return; }
 		    request.then(function(info) {
 		      if (!info || !info.title) { return; }
+		      // A fresh fragment makes WebKit send the image again after the page left the display.
+		      var artworkSrc = info.artwork ? info.artwork + '#' + (info.generation || 0) : '';
+		      var artwork = artworkSrc ? [{ src: artworkSrc, sizes: 'any' }] : [];
 		      var current = navigator.mediaSession.metadata;
-		      if (current && current.title === info.title) { return; }
+		      var currentArtwork = current && current.artwork && current.artwork.length ? current.artwork[0].src : '';
+		      if (current && current.title === info.title && currentArtwork === artworkSrc) { return; }
 		      try {
 		        ownsWrite = true;
-		        navigator.mediaSession.metadata = new MediaMetadata({ title: info.title });
+		        navigator.mediaSession.metadata = new MediaMetadata({ title: info.title, artwork: artwork });
 		        ownsWrite = false;
 		      } catch (error) { ownsWrite = false; }
+		      if (info.controls) { applyControls(!!info.queue); }
 		    });
 		  };
 		  if (location.hostname.indexOf('youtube') === -1) {
@@ -286,6 +365,27 @@ final class TrailerWebPlayer: NSObject {
 	/// A Boolean value indicating whether the trailer's sound is off.
 	private(set) var isMuted = true
 
+	/// A Boolean value indicating whether the trailer stepped off the system's display.
+	private var isWithdrawn = false
+
+	/// A Boolean value indicating whether the page last played out loud.
+	private var isPageAudible = false
+
+	/// The count of times the page returned to playing out loud.
+	private var nowPlayingGeneration = 0
+
+	/// The poster last encoded for the page and its address.
+	private var encodedArtwork: (source: String, dataURL: String)?
+
+	/// A Boolean value indicating whether the page waits for the app's audio session.
+	private var isAwaitingAudioSession = false
+
+	/// The player the app's audio session speaks for.
+	private static weak var audibleClaimant: TrailerWebPlayer?
+
+	/// The pending return of the audio session to other apps.
+	private static var sessionReleaseTask: Task<Void, Never>?
+
 	/// A Boolean value indicating whether the trailer starts over when it ends.
 	private(set) var loopsPlayback = true
 
@@ -363,6 +463,9 @@ final class TrailerWebPlayer: NSObject {
 	/// The task that reveals the web view if no playing event arrives.
 	private var revealTask: Task<Void, Never>?
 
+	/// The preferences the page runs with.
+	private let pagePreferences = WKPreferences()
+
 	/// The web view that renders the trailer.
 	private lazy var webView: WKWebView = self.makeWebView()
 
@@ -404,6 +507,7 @@ final class TrailerWebPlayer: NSObject {
 		self.host = host
 		self.delegate = delegate
 		self.isMuted = isMuted
+		self.setWithdrawn(false)
 
 		if #available(iOS 26.0, *) {
 			let videoView = self.videoView ?? TrailerVideoScalingView(webView: self.webView, referenceSize: Self.referenceSize)
@@ -440,6 +544,7 @@ final class TrailerWebPlayer: NSObject {
 		self.revealTask?.cancel()
 		self.revealTask = nil
 		TrailerNowPlayingReporter.shared.clear(for: self)
+		self.setWithdrawn(true)
 
 		self.pause()
 		if self.nativePlayerView?.isFloating == false {
@@ -483,9 +588,8 @@ final class TrailerWebPlayer: NSObject {
 			return
 		}
 
-		guard self.isPlayerReady else { return }
-		self.evaluate("player && player.playVideo();")
-		self.scheduleRevealFallback()
+		guard self.isPlayerReady, !self.isAwaitingAudioSession else { return }
+		self.startPagePlayback()
 	}
 
 	/// Pauses playback, on the device when the trailer is streaming there.
@@ -525,18 +629,84 @@ final class TrailerWebPlayer: NSObject {
 		self.updateAudioSession()
 		TrailerAirPlayStreamer.shared.setMuted(isMuted, from: self)
 
+		#if !targetEnvironment(macCatalyst)
+		Self.setNowPlayingDetailsAllowed(!isMuted, on: self.pagePreferences)
+		#endif
+
 		// The page was muted for the handover.
 		if self.isPlayingNatively {
 			self.nativePlayerView?.setMuted(isMuted)
 			return
 		}
 
-		guard self.isPlayerReady else { return }
-		self.evaluate(isMuted ? "player && player.mute();" : "player && player.unMute();")
+		self.applyPageMute()
+	}
+
+	/// Mutes the page while the trailer is off the system's display.
+	///
+	/// - Parameter isWithdrawn: Whether the trailer stays off the display.
+	func setWithdrawn(_ isWithdrawn: Bool) {
+		#if !targetEnvironment(macCatalyst)
+		guard self.isWithdrawn != isWithdrawn else { return }
+		self.isWithdrawn = isWithdrawn
+		self.updateAudioSession()
+		self.applyPageMute()
+		#endif
+	}
+
+	/// Applies the trailer's sound state to the page.
+	private func applyPageMute() {
+		guard self.isPlayerReady, !self.isPlayingNatively else { return }
+
+		let isPageMuted = self.isMuted || self.isWithdrawn || self.isAwaitingAudioSession
+		if !isPageMuted, !self.isPageAudible {
+			self.nowPlayingGeneration += 1
+		}
+
+		self.isPageAudible = !isPageMuted
+		let muteScript = isPageMuted ? "player && player.mute();" : "player && player.unMute();"
+
+		#if targetEnvironment(macCatalyst)
+		self.evaluate(muteScript)
+		#else
+		let category = isPageMuted ? "ambient" : "playback"
+		self.evaluate("if (navigator.audioSession) { try { navigator.audioSession.type = '\(category)'; } catch (error) {} } " + muteScript)
+		#endif
+	}
+
+	/// Carries out a playback command from the system's display.
+	///
+	/// - Parameters:
+	///    - command: The command's name.
+	///    - seekTime: The point to play from.
+	///    - seekOffset: The seconds to skip by.
+	private func handleRemoteCommand(_ command: String, seekTime: Double?, seekOffset: Double?) {
+		let skipInterval = seekOffset ?? 15.0
+
+		switch command {
+		case "play":
+			self.play()
+		case "pause":
+			self.pause()
+		case "seekto":
+			guard let seekTime = seekTime else { return }
+			self.seek(to: seekTime)
+		case "seekbackward":
+			self.seek(to: max(0.0, self.lastReportedTime - skipInterval))
+		case "seekforward":
+			self.seek(to: self.lastReportedTime + skipInterval)
+		case "nexttrack":
+			self.delegate?.trailerWebPlayerDidRequestNextTrailer(self)
+		case "previoustrack":
+			self.delegate?.trailerWebPlayerDidRequestPreviousTrailer(self)
+		default:
+			break
+		}
 	}
 
 	/// Claims the audio session while the trailer is audible and releases it otherwise.
 	private func updateAudioSession() {
+		#if targetEnvironment(macCatalyst)
 		let isAudible = !self.isMuted && !self.isPaused
 		TrailerNowPlayingReporter.shared.update(for: self)
 
@@ -547,7 +717,82 @@ final class TrailerWebPlayer: NSObject {
 			AudioSessionManager.shared.setCategory(.ambient)
 			AudioSessionManager.shared.setActive(false, options: [.notifyOthersOnDeactivation])
 		}
+		#else
+		let isAudible = !self.isMuted && !self.isPaused && !self.isWithdrawn
+
+		if isAudible {
+			self.claimAudioSession()
+		} else {
+			self.releaseAudioSession()
+		}
+		#endif
 	}
+
+	/// Takes the audio session before the page plays out loud.
+	private func claimAudioSession() {
+		Self.sessionReleaseTask?.cancel()
+		Self.sessionReleaseTask = nil
+
+		guard Self.audibleClaimant !== self else { return }
+		Self.audibleClaimant = self
+		self.isAwaitingAudioSession = true
+
+		AudioSessionManager.shared.setCategory(.playback)
+		AudioSessionManager.shared.setActive(true) { [weak self] in
+			guard let self = self else { return }
+			self.isAwaitingAudioSession = false
+
+			guard Self.audibleClaimant === self else { return }
+			self.applyPageMute()
+
+			if !self.isPaused, self.isPlayerReady, !self.isPlayingNatively {
+				self.startPagePlayback()
+			}
+		}
+	}
+
+	/// Hands the audio session back to other apps.
+	private func releaseAudioSession() {
+		guard Self.audibleClaimant === self else { return }
+		Self.sessionReleaseTask?.cancel()
+
+		Self.sessionReleaseTask = Task { @MainActor in
+			try? await Task.sleep(nanoseconds: 300_000_000)
+			guard !Task.isCancelled else { return }
+
+			Self.audibleClaimant = nil
+			Self.sessionReleaseTask = nil
+
+			AudioSessionManager.shared.setActive(true)
+			AudioSessionManager.shared.setActive(false, options: [.notifyOthersOnDeactivation])
+			AudioSessionManager.shared.setCategory(.ambient)
+		}
+	}
+
+	/// Starts the page's video.
+	private func startPagePlayback() {
+		self.evaluate("player && player.playVideo();")
+		self.scheduleRevealFallback()
+	}
+
+	#if !targetEnvironment(macCatalyst)
+	/// Keeps a new page in the process of the trailer pages already alive.
+	///
+	/// - Parameter configuration: The configuration of the page being made.
+	private static func relate(_ configuration: WKWebViewConfiguration) {
+		guard let anchor = Self.liveWebViews.anyObject else { return }
+		let relateSelector = NSSelectorFromString(#obfuscated("_setRelatedWebView:"))
+
+		guard configuration.responds(to: relateSelector) else {
+			print("----- [Trailer] WebKit keeps each trailer page in its own process")
+			return
+		}
+
+		typealias RelatedSetter = @convention(c) (NSObject, Selector, WKWebView?) -> Void
+		let setRelated = unsafeBitCast(configuration.method(for: relateSelector), to: RelatedSetter.self)
+		setRelated(configuration, relateSelector, anchor)
+	}
+	#endif
 
 	/// Sets the playback rate on the page's video element.
 	///
@@ -1524,6 +1769,7 @@ final class TrailerWebPlayer: NSObject {
 		userContentController.addUserScript(Self.chromeHidingScript)
 
 		let configuration = WKWebViewConfiguration()
+		configuration.preferences = self.pagePreferences
 		// Without Safari's own tokens, the embed withholds its adaptive streams and caps out at 360p.
 		#if targetEnvironment(macCatalyst)
 		configuration.applicationNameForUserAgent = "Version/26.0 Safari/605.1.15"
@@ -1535,14 +1781,22 @@ final class TrailerWebPlayer: NSObject {
 		configuration.allowsPictureInPictureMediaPlayback = true
 		configuration.allowsAirPlayForMediaPlayback = true
 		configuration.userContentController = userContentController
+		#if targetEnvironment(macCatalyst)
 		configuration.websiteDataStore = .nonPersistent()
+		#else
+		configuration.websiteDataStore = Self.sharedDataStore
+		Self.relate(configuration)
+		#endif
 
 		#if targetEnvironment(macCatalyst)
 		Self.keepRenderingWhileHidden(configuration)
-		Self.allowNowPlayingDetails(configuration)
+		Self.setNowPlayingDetailsAllowed(true, on: self.pagePreferences)
 		#endif
 
 		let webView = WKWebView(frame: .zero, configuration: configuration)
+		#if !targetEnvironment(macCatalyst)
+		Self.liveWebViews.add(webView)
+		#endif
 		webView.isOpaque = false
 		webView.backgroundColor = .clear
 		webView.scrollView.backgroundColor = .clear
@@ -1552,12 +1806,12 @@ final class TrailerWebPlayer: NSObject {
 		return webView
 	}
 
-	#if targetEnvironment(macCatalyst)
-	/// Allows a non-persistent page to report now playing details to the system.
+	/// Allows or denies a non-persistent page reporting now playing details to the system.
 	///
-	/// - Parameter configuration: The configuration to allow it on.
-	private static func allowNowPlayingDetails(_ configuration: WKWebViewConfiguration) {
-		let preferences = configuration.preferences
+	/// - Parameters:
+	///    - isAllowed: Whether the page may report its details.
+	///    - preferences: The preferences the page runs with.
+	private static func setNowPlayingDetailsAllowed(_ isAllowed: Bool, on preferences: WKPreferences) {
 		let allowSelector = NSSelectorFromString(#obfuscated("_setAllowPrivacySensitiveOperationsInNonPersistentDataStores:"))
 
 		guard preferences.responds(to: allowSelector) else {
@@ -1567,9 +1821,10 @@ final class TrailerWebPlayer: NSObject {
 
 		typealias AllowSetter = @convention(c) (NSObject, Selector, Bool) -> Void
 		let setAllowed = unsafeBitCast(preferences.method(for: allowSelector), to: AllowSetter.self)
-		setAllowed(preferences, allowSelector, true)
+		setAllowed(preferences, allowSelector, isAllowed)
 	}
 
+	#if targetEnvironment(macCatalyst)
 	/// Keeps the page rendering while its window is out of sight.
 	///
 	/// - Parameter configuration: The configuration of the web view to keep rendering.
@@ -1787,7 +2042,57 @@ extension TrailerWebPlayer: WKScriptMessageHandlerWithReply {
 			return
 		}
 
-		replyHandler(["title": L10n.trailerTitle(metadata.title)], nil)
+		let title = L10n.trailerTitle(metadata.title)
+
+		#if targetEnvironment(macCatalyst)
+		replyHandler(["title": title], nil)
+		#else
+		let artworkURL = metadata.artworkURL
+
+		let hasQueue = self.delegate?.trailerWebPlayerHasQueue(self) ?? false
+		let generation = self.nowPlayingGeneration
+
+		Task { @MainActor in
+			var details: [String: Any] = ["title": title, "controls": true, "queue": hasQueue, "generation": generation]
+
+			if let artwork = await self.artworkDataURL(for: artworkURL) {
+				details["artwork"] = artwork
+			}
+
+			replyHandler(details, nil)
+		}
+		#endif
+	}
+
+	/// Encodes the poster at the given address as an inline image address.
+	///
+	/// - Parameter urlString: The poster's address.
+	///
+	/// - Returns: The inline address.
+	private func artworkDataURL(for urlString: String?) async -> String? {
+		guard let urlString = urlString, let url = URL(string: urlString) else { return nil }
+
+		if let encodedArtwork = self.encodedArtwork, encodedArtwork.source == urlString {
+			return encodedArtwork.dataURL
+		}
+
+		guard let image = try? await KingfisherManager.shared.retrieveImage(with: url).image else { return nil }
+
+		let longEdge = max(image.size.width, image.size.height)
+		let scale = min(1.0, 512.0 / max(longEdge, 1.0))
+		let size = CGSize(width: image.size.width * scale, height: image.size.height * scale)
+		let format = UIGraphicsImageRendererFormat()
+		format.scale = 1.0
+		format.opaque = true
+
+		let scaled = UIGraphicsImageRenderer(size: size, format: format).image { _ in
+			image.draw(in: CGRect(origin: .zero, size: size))
+		}
+
+		guard let data = scaled.jpegData(compressionQuality: 0.8) else { return nil }
+		let dataURL = "data:image/jpeg;base64," + data.base64EncodedString()
+		self.encodedArtwork = (urlString, dataURL)
+		return dataURL
 	}
 }
 
@@ -1804,6 +2109,11 @@ extension TrailerWebPlayer: WKScriptMessageHandler {
 
 		if event == "pictureInPictureError" {
 			print("----- [Trailer] Picture in picture refused: \(body["message"] as? String ?? "unknown")")
+			return
+		}
+
+		if event == "remoteCommand" {
+			self.handleRemoteCommand(body["command"] as? String ?? "", seekTime: body["seekTime"] as? Double, seekOffset: body["seekOffset"] as? Double)
 			return
 		}
 

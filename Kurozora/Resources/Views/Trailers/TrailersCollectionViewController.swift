@@ -218,6 +218,16 @@ class TrailersCollectionViewController: ListCollectionViewController, SectionFet
 			self.featureNextItem()
 		}
 
+		self.featuredPlayerView.onNextTrailer = { [weak self] in
+			guard let self = self else { return }
+			self.featureNextItem()
+		}
+
+		self.featuredPlayerView.onPreviousTrailer = { [weak self] in
+			guard let self = self else { return }
+			self.featurePreviousItem()
+		}
+
 		self.featuredPlayerView.onPictureVisibilityChanged = { [weak self] in
 			guard let self = self else { return }
 			self.refreshPlayerSkeleton()
@@ -535,6 +545,19 @@ class TrailersCollectionViewController: ListCollectionViewController, SectionFet
 		guard nextItem.identityID != featuredIdentityID else { return }
 
 		self.feature(nextItem, byReader: false)
+		self.featuredPlayerView.playByReader()
+	}
+
+	/// Features the item before the current one.
+	private func featurePreviousItem() {
+		guard let featuredIdentityID = self.featuredIdentityID else { return }
+		let items = self.currentItems
+		guard let currentIndex = items.firstIndex(where: { $0.identityID == featuredIdentityID }) else { return }
+
+		let previousItem = items[(currentIndex + items.count - 1) % items.count]
+		guard previousItem.identityID != featuredIdentityID else { return }
+
+		self.feature(previousItem, byReader: false)
 		self.featuredPlayerView.playByReader()
 	}
 
@@ -902,7 +925,6 @@ extension TrailersCollectionViewController {
 		self.updateSnapshot()
 		self.dataSource.apply(self.snapshot)
 		self.collectionView.collectionViewLayout.invalidateLayout()
-		self.cachedFeaturedTop = nil
 	}
 
 	/// Rebuilds the snapshot from the loaded identities.
