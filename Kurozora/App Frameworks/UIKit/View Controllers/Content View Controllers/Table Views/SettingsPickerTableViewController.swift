@@ -41,21 +41,58 @@ class SettingsPickerTableViewController: KTableViewController {
 	private var filteredItems: [ItemKind] = []
 	private var selectedKey: String?
 	private var descriptionText: String?
+	private var footerText: String?
+	private var isSearchable = false
 
 	private lazy var searchController = KSearchController(searchResultsController: nil)
 
-	private var dataSource: UITableViewDiffableDataSource<Section, ItemKind>!
+	private var dataSource: PickerDataSource!
 
 	weak var delegate: SettingsPickerTableViewControllerDelegate?
 
+	/// The closure run when the user picks a row.
+	var selectionHandler: ((String) async -> Void)?
+
 	// MARK: - Init
+	/// Creates a picker over an unordered set of options.
+	///
+	/// - Parameters:
+	///    - items: The options keyed by their stored value.
+	///    - selectedKey: The key of the option to check.
+	///    - descriptionText: The text shown above the options.
 	convenience init(items: [String: String], selectedKey: String? = nil, descriptionText: String? = nil) {
-		self.init(style: .insetGrouped)
-		self.allItems = items.map { ItemKind(key: $0.key, value: $0.value) }
+		let sortedItems = items.map { ItemKind(key: $0.key, value: $0.value) }
 			.sorted { $0.value.localizedCaseInsensitiveCompare($1.value) == .orderedAscending }
-		self.filteredItems = self.allItems
+		self.init(items: sortedItems, selectedKey: selectedKey, descriptionText: descriptionText, isSearchable: true)
+	}
+
+	/// Creates a picker over an ordered list of options.
+	///
+	/// - Parameters:
+	///    - items: The options in the order they are offered.
+	///    - selectedKey: The key of the option to check.
+	///    - descriptionText: The text shown above the options.
+	///    - footerText: The text shown below the options.
+	///    - isSearchable: Whether the picker offers a search bar.
+	convenience init(items: [ItemKind], selectedKey: String? = nil, descriptionText: String? = nil, footerText: String? = nil, isSearchable: Bool = false) {
+		self.init(style: .insetGrouped)
+		self.allItems = items
+		self.filteredItems = items
 		self.selectedKey = selectedKey
 		self.descriptionText = descriptionText
+		self.footerText = footerText
+		self.isSearchable = isSearchable
+	}
+
+	/// Returns picker rows for the given options.
+	///
+	/// - Parameters:
+	///    - options: The options in the order they are offered.
+	///    - title: The title of each option.
+	///
+	/// - Returns: The rows for the given options.
+	static func items<Option: RawRepresentable>(for options: [Option], title: (Option) -> String) -> [ItemKind] where Option.RawValue == Int {
+		return options.map { ItemKind(key: String($0.rawValue), value: title($0)) }
 	}
 
 	// MARK: - View
@@ -142,6 +179,8 @@ class SettingsPickerTableViewController: KTableViewController {
 	}
 
 	private func configureSearchController() {
+		guard self.isSearchable else { return }
+
 		self.searchController.searchBar.placeholder = L10n.search
 		self.searchController.searchResultsUpdater = self
 		self.searchController.obscuresBackgroundDuringPresentation = false
@@ -185,9 +224,10 @@ extension SettingsPickerTableViewController {
 	func configureDataSource() {
 		let iconTableViewCellRegistration = self.getConfiguredIconTableViewCell()
 
-		self.dataSource = UITableViewDiffableDataSource<Section, ItemKind>(tableView: self.tableView) { tableView, indexPath, itemKind in
+		self.dataSource = PickerDataSource(tableView: self.tableView) { tableView, indexPath, itemKind in
 			tableView.dequeueConfiguredReusableCell(using: iconTableViewCellRegistration, for: indexPath, item: itemKind)
 		}
+		self.dataSource.footerText = self.footerText
 	}
 
 	func getConfiguredIconTableViewCell() -> UITableView.CellRegistration<IconTableViewCell, ItemKind> {
@@ -210,7 +250,29 @@ extension SettingsPickerTableViewController {
 		self.dataSource.apply(snapshot, animatingDifferences: false)
 
 		Task {
+			await self.selectionHandler?(itemKind.key)
 			await self.delegate?.settingsPickerTableViewController(self, didSelectKey: itemKind.key)
+		}
+	}
+
+	override func tableView(_ tableView: UITableView, willDisplayFooterView view: UIView, forSection section: Int) {
+		if let footerView = view as? UITableViewHeaderFooterView {
+			footerView.textLabel?.theme_textColor = KThemePicker.subTextColor.rawValue
+		}
+	}
+}
+
+// MARK: - PickerDataSource
+extension SettingsPickerTableViewController {
+	/// The data source that titles the picker's footer.
+	final class PickerDataSource: UITableViewDiffableDataSource<Section, ItemKind> {
+		// MARK: - Properties
+		/// The text shown below the options.
+		var footerText: String?
+
+		// MARK: - Functions
+		override func tableView(_ tableView: UITableView, titleForFooterInSection section: Int) -> String? {
+			return self.footerText
 		}
 	}
 }

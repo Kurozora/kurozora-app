@@ -54,15 +54,54 @@ class LowDataModeSettingsViewController: SubSettingsViewController, TypedSegueHa
 
 		switch identifier {
 		case .autoplaySegue:
-			return AutoplaySettingsViewController()
+			return self.makeAutoplayPicker()
 		case .wifiQualitySegue:
-			return VideoQualitySettingsViewController(isCellular: false)
+			return self.makeVideoQualityPicker(isCellular: false)
 		case .cellularQualitySegue:
-			return VideoQualitySettingsViewController(isCellular: true)
+			return self.makeVideoQualityPicker(isCellular: true)
 		}
 	}
 
 	override func prepare(for identifier: any SegueIdentifier, destination: UIViewController, sender: Any?) { }
+
+	// MARK: - Functions
+	/// Returns the picker for the autoplay policy.
+	///
+	/// - Returns: The picker for the autoplay policy.
+	private func makeAutoplayPicker() -> SettingsPickerTableViewController {
+		let policies: [VideoAutoplayPolicy] = [.wifiAndCellular, .wifiOnly, .never]
+		let picker = SettingsPickerTableViewController(
+			items: SettingsPickerTableViewController.items(for: policies) { $0.titleValue },
+			selectedKey: String(UserSettings.videoAutoplayPolicy.rawValue),
+			footerText: L10n.autoplayFooter
+		)
+		picker.title = L10n.autoplay
+		picker.selectionHandler = { key in
+			guard let rawValue = Int(key) else { return }
+			UserSettings.set(rawValue, forKey: .videoAutoplayPolicy)
+		}
+		return picker
+	}
+
+	/// Returns the picker for the given network's video quality.
+	///
+	/// - Parameter isCellular: Whether the picker sets the cellular quality.
+	///
+	/// - Returns: The picker for the given network's video quality.
+	private func makeVideoQualityPicker(isCellular: Bool) -> SettingsPickerTableViewController {
+		let chosenQuality = isCellular ? UserSettings.cellularVideoQuality : UserSettings.wifiVideoQuality
+		let picker = SettingsPickerTableViewController(
+			items: SettingsPickerTableViewController.items(for: VideoQuality.allCases) { $0.titleValue },
+			selectedKey: String(chosenQuality.rawValue),
+			footerText: L10n.videoQualityFooter
+		)
+		picker.title = isCellular ? L10n.cellularQuality : L10n.wifiQuality
+		picker.selectionHandler = { key in
+			guard let rawValue = Int(key) else { return }
+			UserSettings.set(rawValue, forKey: isCellular ? .cellularVideoQuality : .wifiVideoQuality)
+		}
+		return picker
+	}
 }
 
 // MARK: - KTableViewDataSource
