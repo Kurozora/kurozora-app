@@ -3081,7 +3081,237 @@
       }
     },
     "Always Solid" : {
-      "comment" : "The scroll edge effect option title for the solid background that never hides."
+      "comment" : "The scroll edge effect option title for the solid background that never hides.",
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "معتم دائمًا"
+          }
+        },
+        "bn" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "সবসময় অস্বচ্ছ"
+          }
+        },
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Vždy neprůhledné"
+          }
+        },
+        "da" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Altid uigennemsigtig"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Immer deckend"
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Πάντα αδιαφανές"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Siempre opaco"
+          }
+        },
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Siempre opaco"
+          }
+        },
+        "fa" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "همیشه مات"
+          }
+        },
+        "fi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Aina peittävä"
+          }
+        },
+        "fil" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Laging solid"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Toujours opaque"
+          }
+        },
+        "he" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "אטום תמיד"
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "हमेशा अपारदर्शी"
+          }
+        },
+        "hu" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Mindig átlátszatlan"
+          }
+        },
+        "hy" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Միշտ անթափանց"
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Selalu solid"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sempre opaco"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "常に不透明"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "항상 불투명"
+          }
+        },
+        "ms" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sentiasa legap"
+          }
+        },
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Alltid ugjennomsiktig"
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Altijd ondoorzichtig"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Zawsze nieprzezroczyste"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sempre opaco"
+          }
+        },
+        "pt-PT" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sempre opaco"
+          }
+        },
+        "ro" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Întotdeauna opac"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Всегда непрозрачный"
+          }
+        },
+        "sv" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Alltid ogenomskinlig"
+          }
+        },
+        "ta" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "எப்போதும் ஒளிபுகா"
+          }
+        },
+        "te" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ఎల్లప్పుడూ అపారదర్శక"
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ทึบเสมอ"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Her zaman opak"
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Завжди непрозорий"
+          }
+        },
+        "ur" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ہمیشہ غیر شفاف"
+          }
+        },
+        "vi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Luôn đục"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "始终不透明"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "一律不透明"
+          }
+        }
+      }
     },
     "Animations" : {
       "comment" : "The string for the 'Animations' settings header.",
@@ -5647,7 +5877,237 @@
       }
     },
     "Blur" : {
-      "comment" : "The scroll edge effect option title for the blur that appears behind the bars."
+      "comment" : "The scroll edge effect option title for the blur that appears behind the bars.",
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ضبابي"
+          }
+        },
+        "bn" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ঝাপসা"
+          }
+        },
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Rozostřené"
+          }
+        },
+        "da" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sløret"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Unscharf"
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Θολό"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Difuminado"
+          }
+        },
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Difuminado"
+          }
+        },
+        "fa" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "محو"
+          }
+        },
+        "fi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sumea"
+          }
+        },
+        "fil" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Blur"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Flou"
+          }
+        },
+        "he" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "מטושטש"
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "धुंधला"
+          }
+        },
+        "hu" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Elmosott"
+          }
+        },
+        "hy" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Մշուշոտ"
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Buram"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sfocato"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ぼかし"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "흐림"
+          }
+        },
+        "ms" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Kabur"
+          }
+        },
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Uskarp"
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Vervaagd"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Rozmyte"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Desfocado"
+          }
+        },
+        "pt-PT" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Desfocado"
+          }
+        },
+        "ro" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Estompat"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Размытый"
+          }
+        },
+        "sv" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Suddig"
+          }
+        },
+        "ta" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "மங்கலான"
+          }
+        },
+        "te" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "మసక"
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "เบลอ"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Bulanık"
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Розмитий"
+          }
+        },
+        "ur" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "دھندلا"
+          }
+        },
+        "vi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Mờ"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "模糊"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "模糊"
+          }
+        }
+      }
     },
     "Briefly show the title and artist when a new song starts, then fade them away." : {
       "comment" : "The footer describing the MiniPlayer song change reveal setting.",
@@ -27827,7 +28287,237 @@
       }
     },
     "Pick how content fades out behind the navigation bar, toolbar and tab bar. Soft and dreamy, a clean hard line, or always there. Your eyes, your call." : {
-      "comment" : "The settings footer explaining the scroll edge effect option."
+      "comment" : "The settings footer explaining the scroll edge effect option.",
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "اختر كيف يتلاشى المحتوى خلف شريط التنقل وشريط الأدوات وشريط التبويبات. ناعم وحالم، أو خط حاد وواضح، أو ظاهر دائمًا. عيناك، وقرارك."
+          }
+        },
+        "bn" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "নেভিগেশন বার, টুলবার আর ট্যাব বারের পেছনে কনটেন্ট কীভাবে মিলিয়ে যাবে তা বেছে নিন। নরম আর স্বপ্নালু, ঝকঝকে স্পষ্ট রেখা, নাকি সবসময় দৃশ্যমান। আপনার চোখ, আপনার সিদ্ধান্ত।"
+          }
+        },
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Vyber si, jak obsah mizí za navigační lištou, nástrojovou lištou a lištou karet. Jemně a zasněně, čistou ostrou hranou, nebo pořád viditelně. Tvoje oči, tvoje volba."
+          }
+        },
+        "da" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Vælg, hvordan indhold toner ud bag navigationslinjen, værktøjslinjen og fanelinjen. Blødt og drømmende, en ren skarp kant eller altid synligt. Dine øjne, dit valg."
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Wähle, wie Inhalte hinter Navigationsleiste, Symbolleiste und Tableiste verschwinden. Weich und verträumt, mit klarer Kante oder immer sichtbar. Deine Augen, deine Entscheidung."
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Διάλεξε πώς σβήνει το περιεχόμενο πίσω από τη γραμμή πλοήγησης, τη γραμμή εργαλείων και τη γραμμή καρτελών. Απαλά και ονειρικά, με καθαρή σκληρή γραμμή ή πάντα ορατό. Τα μάτια σου, η επιλογή σου."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Elige cómo se desvanece el contenido tras la barra de navegación, la barra de herramientas y la barra de pestañas. Suave y soñador, con un borde nítido o siempre visible. Tus ojos, tú decides."
+          }
+        },
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Elige cómo se desvanece el contenido tras la barra de navegación, la barra de herramientas y la barra de pestañas. Suave y soñador, con un borde nítido o siempre visible. Tus ojos, tú decides."
+          }
+        },
+        "fa" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "انتخاب کن محتوا پشت نوار پیمایش، نوار ابزار و نوار زبانه‌ها چطور محو شود. نرم و رؤیایی، با لبه‌ای تیز و تمیز، یا همیشه پیدا. چشم‌های توست، انتخاب با خودت."
+          }
+        },
+        "fi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Valitse, miten sisältö häivyttyy navigointipalkin, työkalupalkin ja välilehtipalkin taakse. Pehmeästi ja unenomaisesti, siistin terävänä reunana tai aina näkyvissä. Sinun silmäsi, sinun valintasi."
+          }
+        },
+        "fil" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Piliin kung paano naglalaho ang content sa likod ng navigation bar, toolbar at tab bar. Malambot at parang panaginip, malinis at matalim na linya, o laging nandiyan. Mata mo, desisyon mo."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Choisis comment le contenu s'estompe derrière la barre de navigation, la barre d'outils et la barre d'onglets. Doux et vaporeux, une ligne nette ou toujours visible. Tes yeux, ton choix."
+          }
+        },
+        "he" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "בחר איך התוכן נמוג מאחורי סרגל הניווט, סרגל הכלים וסרגל הלשוניות. רך וחולמני, קו חד ונקי, או תמיד נוכח. העיניים שלך, ההחלטה שלך."
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "चुनें कि नेविगेशन बार, टूलबार और टैब बार के पीछे कॉन्टेंट कैसे फ़ेड हो। नरम और ख़्वाबों जैसा, साफ़ तीखी लकीर, या हमेशा मौजूद। आपकी आँखें, आपकी मर्ज़ी।"
+          }
+        },
+        "hu" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Válaszd ki, hogyan tűnik el a tartalom a navigációs sáv, az eszköztár és a lapsáv mögött. Lágyan és álmodozón, tiszta éles vonallal, vagy mindig láthatóan. A te szemed, a te döntésed."
+          }
+        },
+        "hy" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ընտրիր, թե ինչպես է բովանդակությունը մարում նավիգացիայի վահանակի, գործիքագոտու և ներդիրների վահանակի հետևում։ Փափուկ և երազային, մաքուր սուր գծով կամ միշտ տեսանելի։ Քո աչքերն են, քո ընտրությունը։"
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Pilih bagaimana konten memudar di balik bilah navigasi, bilah alat, dan bilah tab. Lembut dan berkabut, garis tegas yang bersih, atau selalu terlihat. Matamu, keputusanmu."
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Scegli come il contenuto sfuma dietro la barra di navigazione, la barra strumenti e la barra schede. Morbido e sognante, con un bordo netto o sempre visibile. I tuoi occhi, la tua scelta."
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ナビゲーションバー、ツールバー、タブバーの背後でコンテンツがどう消えていくかを選べます。やわらかく夢のように、くっきりした境界線、または常に表示。あなたの目に合わせてどうぞ。"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "내비게이션 바, 도구 막대, 탭 바 뒤에서 콘텐츠가 사라지는 방식을 선택하세요. 부드럽고 몽환적으로, 선명한 경계선으로, 또는 항상 보이게. 눈이 편한 쪽으로 고르세요."
+          }
+        },
+        "ms" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Pilih cara kandungan lenyap di sebalik bar navigasi, bar alat dan bar tab. Lembut dan berkabus, garis tajam yang kemas, atau sentiasa kelihatan. Mata anda, pilihan anda."
+          }
+        },
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Velg hvordan innhold toner ut bak navigasjonslinjen, verktøylinjen og fanelinjen. Mykt og drømmende, en ren skarp kant eller alltid synlig. Dine øyne, ditt valg."
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Kies hoe content vervaagt achter de navigatiebalk, werkbalk en tabbalk. Zacht en dromerig, een strakke harde lijn of altijd zichtbaar. Jouw ogen, jouw keuze."
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Wybierz, jak treść znika za paskiem nawigacji, paskiem narzędzi i paskiem kart. Miękko i sennie, wyraźną ostrą krawędzią albo zawsze widocznie. Twoje oczy, twój wybór."
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Escolha como o conteúdo some atrás da barra de navegação, da barra de ferramentas e da barra de abas. Suave e sonhador, com um corte nítido ou sempre visível. Seus olhos, sua escolha."
+          }
+        },
+        "pt-PT" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Escolhe como o conteúdo se desvanece por trás da barra de navegação, da barra de ferramentas e da barra de separadores. Suave e sonhador, com um corte nítido ou sempre visível. Os teus olhos, a tua escolha."
+          }
+        },
+        "ro" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Alege cum se estompează conținutul în spatele barei de navigare, barei de instrumente și barei de file. Fin și vaporos, cu o margine clară sau mereu vizibil. Ochii tăi, alegerea ta."
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Выбери, как контент растворяется за панелью навигации, панелью инструментов и панелью вкладок. Мягко и мечтательно, чёткой резкой границей или всегда на виду. Твои глаза, тебе и решать."
+          }
+        },
+        "sv" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Välj hur innehållet tonar bort bakom navigeringsfältet, verktygsfältet och flikfältet. Mjukt och drömskt, med en ren skarp kant eller alltid synligt. Dina ögon, ditt val."
+          }
+        },
+        "ta" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "வழிசெலுத்தல் பட்டை, கருவிப்பட்டை மற்றும் தாவல் பட்டைக்குப் பின்னால் உள்ளடக்கம் எப்படி மறையும் என்பதைத் தேர்வுசெய்யுங்கள். மென்மையாகவும் கனவுபோலவும், தெளிவான கூர்மையான கோடாகவும், அல்லது எப்போதும் தெரியும்படியும். உங்கள் கண்கள், உங்கள் விருப்பம்."
+          }
+        },
+        "te" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "నావిగేషన్ బార్, టూల్‌బార్, ట్యాబ్ బార్ వెనుక కంటెంట్ ఎలా మసకబారాలో ఎంచుకోండి. మృదువుగా కలలా, స్పష్టమైన పదునైన గీతలా, లేదా ఎప్పుడూ కనిపించేలా. మీ కళ్ళు, మీ ఇష్టం."
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "เลือกว่าเนื้อหาจะจางหายไปหลังแถบนำทาง แถบเครื่องมือ และแถบแท็บอย่างไร นุ่มนวลเหมือนฝัน เส้นคมชัด หรือเห็นตลอดเวลา ตาคุณ คุณเลือกเอง"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "İçeriğin gezinme çubuğu, araç çubuğu ve sekme çubuğunun arkasında nasıl kaybolacağını seç. Yumuşak ve rüya gibi, net keskin bir çizgi ya da hep görünür. Gözlerin senin, karar da senin."
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Обери, як контент зникає за панеллю навігації, панеллю інструментів і панеллю вкладок. М'яко й мрійливо, чіткою різкою межею або завжди на видноті. Твої очі, тобі й вирішувати."
+          }
+        },
+        "ur" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "منتخب کریں کہ نیویگیشن بار، ٹول بار اور ٹیب بار کے پیچھے مواد کیسے دھندلا ہو۔ نرم اور خوابناک، صاف تیز لکیر، یا ہمیشہ نمایاں۔ آپ کی آنکھیں، آپ کا فیصلہ۔"
+          }
+        },
+        "vi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Chọn cách nội dung mờ dần phía sau thanh điều hướng, thanh công cụ và thanh tab. Mềm mại như mơ, một đường viền sắc nét, hoặc luôn hiện diện. Mắt bạn, bạn quyết."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "选择内容在导航栏、工具栏和标签栏后方淡出的方式。柔和朦胧、干净利落的硬边，或是始终显示。你的眼睛，你说了算。"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "選擇內容在導覽列、工具列和標籤列後方淡出的方式。柔和朦朧、俐落分明的硬邊，或是一律顯示。你的眼睛，你說了算。"
+          }
+        }
+      }
     },
     "Posters and banners are stored for offline use. Turn this on to download them over Wi-Fi only." : {
       "comment" : "The footer message explaining what the library artwork setting does.",
@@ -33189,7 +33879,237 @@
       }
     },
     "Scroll Edge Effect" : {
-      "comment" : "The settings row title for the scroll edge effect option."
+      "comment" : "The settings row title for the scroll edge effect option.",
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "تأثير حافة التمرير"
+          }
+        },
+        "bn" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "স্ক্রল প্রান্ত প্রভাব"
+          }
+        },
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Efekt okraje posouvání"
+          }
+        },
+        "da" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Rullekanteffekt"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Scrollkanten-Effekt"
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Εφέ άκρου κύλισης"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Efecto del borde de desplazamiento"
+          }
+        },
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Efecto del borde de desplazamiento"
+          }
+        },
+        "fa" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "جلوه لبه پیمایش"
+          }
+        },
+        "fi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Vierityksen reunatehoste"
+          }
+        },
+        "fil" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Scroll Edge Effect"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Effet de bord de défilement"
+          }
+        },
+        "he" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "אפקט קצה הגלילה"
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "स्क्रॉल एज इफ़ेक्ट"
+          }
+        },
+        "hu" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Görgetési szegélyeffektus"
+          }
+        },
+        "hy" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ոլորման եզրի էֆեկտ"
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Efek Tepi Gulir"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Effetto bordo di scorrimento"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "スクロールエッジエフェクト"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "스크롤 가장자리 효과"
+          }
+        },
+        "ms" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Kesan Tepi Tatal"
+          }
+        },
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Rullekanteffekt"
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Scrollrandeffect"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Efekt krawędzi przewijania"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Efeito da borda de rolagem"
+          }
+        },
+        "pt-PT" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Efeito da margem de deslocamento"
+          }
+        },
+        "ro" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Efect de margine la derulare"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Эффект края прокрутки"
+          }
+        },
+        "sv" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Rullningskantseffekt"
+          }
+        },
+        "ta" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "உருள் விளிம்பு விளைவு"
+          }
+        },
+        "te" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "స్క్రోల్ అంచు ప్రభావం"
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "เอฟเฟกต์ขอบการเลื่อน"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Kaydırma kenarı efekti"
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ефект краю прокручування"
+          }
+        },
+        "ur" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "اسکرول کنارہ اثر"
+          }
+        },
+        "vi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Hiệu ứng viền cuộn"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "滚动边缘效果"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "捲動邊緣效果"
+          }
+        }
+      }
     },
     "Select and copy text inside an image, and touch and hold a subject to lift it from the background." : {
       "comment" : "The footer explaining the Live Text Analyzer toggle.",
@@ -36920,7 +37840,237 @@
       }
     },
     "Solid" : {
-      "comment" : "The scroll edge effect option title for the solid background that appears behind the bars."
+      "comment" : "The scroll edge effect option title for the solid background that appears behind the bars.",
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "معتم"
+          }
+        },
+        "bn" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "অস্বচ্ছ"
+          }
+        },
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Neprůhledné"
+          }
+        },
+        "da" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Uigennemsigtig"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Deckend"
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Αδιαφανές"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Opaco"
+          }
+        },
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Opaco"
+          }
+        },
+        "fa" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "مات"
+          }
+        },
+        "fi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Peittävä"
+          }
+        },
+        "fil" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Solid"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Opaque"
+          }
+        },
+        "he" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "אטום"
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "अपारदर्शी"
+          }
+        },
+        "hu" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Átlátszatlan"
+          }
+        },
+        "hy" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Անթափանց"
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Solid"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Opaco"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "不透明"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "불투명"
+          }
+        },
+        "ms" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Legap"
+          }
+        },
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ugjennomsiktig"
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ondoorzichtig"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Nieprzezroczyste"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Opaco"
+          }
+        },
+        "pt-PT" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Opaco"
+          }
+        },
+        "ro" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Opac"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Непрозрачный"
+          }
+        },
+        "sv" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ogenomskinlig"
+          }
+        },
+        "ta" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ஒளிபுகா"
+          }
+        },
+        "te" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "అపారదర్శక"
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ทึบ"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Opak"
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Непрозорий"
+          }
+        },
+        "ur" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "غیر شفاف"
+          }
+        },
+        "vi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Đục"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "不透明"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "不透明"
+          }
+        }
+      }
     },
     "Something went wrong while preparing the Kuro-chan stickers for WhatsApp. Please try again later." : {
       "comment" : "The message of the alert shown when adding the WhatsApp sticker pack fails.",
