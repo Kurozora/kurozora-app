@@ -197,11 +197,11 @@ final class MiniPlayerViewController: UIViewController {
 		return control
 	}()
 
-	#if targetEnvironment(macCatalyst)
 	/// The region of the window the player's body occupies, inside the margins the pull tab grows
 	/// into.
 	private let contentGuide = UILayoutGuide()
 
+	#if targetEnvironment(macCatalyst)
 	/// The blur veiling the window as the pointer carries it toward a side edge.
 	private let edgeBlurView: UIVisualEffectView = {
 		let view = UIVisualEffectView(effect: UIBlurEffect(style: .systemUltraThinMaterialDark))
@@ -325,6 +325,7 @@ final class MiniPlayerViewController: UIViewController {
 	private var contentBounds: CGRect {
 		var bounds = self.view.bounds
 
+		#if targetEnvironment(macCatalyst)
 		switch self.tabMarginSide {
 		case .left:
 			bounds.origin.x += Self.dockTabReach
@@ -334,6 +335,7 @@ final class MiniPlayerViewController: UIViewController {
 		case nil:
 			break
 		}
+		#endif
 
 		return bounds
 	}
@@ -419,6 +421,12 @@ final class MiniPlayerViewController: UIViewController {
 	/// Whether the presented lyrics pane extends the compact bar rather than the artwork card.
 	private var lyricsBaseIsBar = false
 
+	/// The constraint holding the body clear of the leading margin.
+	private var contentLeadingConstraint: NSLayoutConstraint?
+
+	/// The constraint holding the body clear of the trailing margin.
+	private var contentTrailingConstraint: NSLayoutConstraint?
+
 	#if targetEnvironment(macCatalyst)
 	/// The transparent margin the window carries on either side of its body, which the pull tab
 	/// grows into.
@@ -464,12 +472,6 @@ final class MiniPlayerViewController: UIViewController {
 
 	/// The side of the body the pull tab's margin lies on.
 	private var tabMarginSide: DockEdge?
-
-	/// The constraint holding the body clear of the leading margin.
-	private var contentLeadingConstraint: NSLayoutConstraint?
-
-	/// The constraint holding the body clear of the trailing margin.
-	private var contentTrailingConstraint: NSLayoutConstraint?
 
 	/// The bridge styling the AppKit window.
 	private let windowBridge = MiniPlayerWindowBridge()
