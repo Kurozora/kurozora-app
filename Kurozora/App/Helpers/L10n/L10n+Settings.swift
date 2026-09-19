@@ -1591,6 +1591,81 @@ extension L10n {
 		}
 	}
 
+	/// The settings row title for the scroll edge effect option.
+	///
+	/// - Tag: L10n-scrollEdgeEffectStyle
+	static var scrollEdgeEffectStyle: String {
+		L10n.resolve {
+			String(
+				localized: "Scroll Edge Effect",
+				table: "Settings",
+				bundle: LanguageManager.shared.bundle,
+				locale: LanguageManager.shared.locale,
+				comment: "The settings row title for the scroll edge effect option."
+			)
+		}
+	}
+
+	/// The settings footer for the scroll edge effect option.
+	///
+	/// - Tag: L10n-scrollEdgeEffectStyleFooter
+	static var scrollEdgeEffectStyleFooter: String {
+		L10n.resolve {
+			String(
+				localized: "Pick how content fades out behind the navigation bar, toolbar and tab bar. Soft and dreamy, a clean hard line, or always there. Your eyes, your call.",
+				table: "Settings",
+				bundle: LanguageManager.shared.bundle,
+				locale: LanguageManager.shared.locale,
+				comment: "The settings footer explaining the scroll edge effect option."
+			)
+		}
+	}
+
+	/// The scroll edge effect option title for the blur.
+	///
+	/// - Tag: L10n-scrollEdgeEffectStyleBlur
+	static var scrollEdgeEffectStyleBlur: String {
+		L10n.resolve {
+			String(
+				localized: "Blur",
+				table: "Settings",
+				bundle: LanguageManager.shared.bundle,
+				locale: LanguageManager.shared.locale,
+				comment: "The scroll edge effect option title for the blur that appears behind the bars."
+			)
+		}
+	}
+
+	/// The scroll edge effect option title for the solid background.
+	///
+	/// - Tag: L10n-scrollEdgeEffectStyleSolid
+	static var scrollEdgeEffectStyleSolid: String {
+		L10n.resolve {
+			String(
+				localized: "Solid",
+				table: "Settings",
+				bundle: LanguageManager.shared.bundle,
+				locale: LanguageManager.shared.locale,
+				comment: "The scroll edge effect option title for the solid background that appears behind the bars."
+			)
+		}
+	}
+
+	/// The scroll edge effect option title for the always visible solid background.
+	///
+	/// - Tag: L10n-scrollEdgeEffectStyleAlwaysSolid
+	static var scrollEdgeEffectStyleAlwaysSolid: String {
+		L10n.resolve {
+			String(
+				localized: "Always Solid",
+				table: "Settings",
+				bundle: LanguageManager.shared.bundle,
+				locale: LanguageManager.shared.locale,
+				comment: "The scroll edge effect option title for the solid background that never hides."
+			)
+		}
+	}
+
 	// MARK: - Theme Store Buttons
 	/// The download button title for an unowned theme.
 	///

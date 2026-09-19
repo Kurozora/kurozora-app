@@ -10,6 +10,9 @@ import UIKit
 
 extension UIScrollView {
 	// MARK: - Properties
+	/// A boolean indicating whether the scroll edge effect styling is installed.
+	private static var isScrollEdgeEffectStylingInstalled = false
+
 	/// A boolean indicating if the scrollview is at the top
 	var isAtTop: Bool {
 		return contentOffset.y <= verticalOffsetForTop
@@ -33,6 +36,101 @@ extension UIScrollView {
 		let bottomInset = contentInset.bottom
 		let scrollViewBottomOffset = scrollContentSizeHeight + bottomInset - scrollViewHeight
 		return scrollViewBottomOffset
+	}
+
+	// MARK: - Functions
+	/// Styles the scroll edge effect of every scroll view in the app.
+	static func installScrollEdgeEffectStyling() {
+		guard #available(iOS 27.0, macCatalyst 27.0, *) else { return }
+		guard !self.isScrollEdgeEffectStylingInstalled else { return }
+
+		self.isScrollEdgeEffectStylingInstalled = true
+
+		self.routeLayout(of: UIScrollView.self, through: #selector(UIScrollView.styledLayoutSubviews))
+		self.routeLayout(of: UITableView.self, through: #selector(UIScrollView.styledTableLayoutSubviews))
+	}
+
+	/// Routes the given class's layout through the app's scroll edge effect styling.
+	///
+	/// - Parameters:
+	///    - scrollViewClass: The class whose layout is routed.
+	///    - styledSelector: The selector standing in for the class's layout.
+	private static func routeLayout(of scrollViewClass: AnyClass, through styledSelector: Selector) {
+		let originalSelector = #selector(UIScrollView.layoutSubviews)
+
+		guard
+			let inheritedStyledMethod = class_getInstanceMethod(UIScrollView.self, styledSelector),
+			let originalMethod = class_getInstanceMethod(scrollViewClass, originalSelector)
+		else { return }
+
+		let styledImplementation = method_getImplementation(inheritedStyledMethod)
+		let styledEncoding = method_getTypeEncoding(inheritedStyledMethod)
+
+		class_addMethod(scrollViewClass, styledSelector, styledImplementation, styledEncoding)
+
+		guard let styledMethod = class_getInstanceMethod(scrollViewClass, styledSelector) else { return }
+
+		if class_addMethod(scrollViewClass, originalSelector, styledImplementation, styledEncoding) {
+			class_replaceMethod(scrollViewClass, styledSelector, method_getImplementation(originalMethod), method_getTypeEncoding(originalMethod))
+		} else {
+			method_exchangeImplementations(originalMethod, styledMethod)
+		}
+	}
+
+	/// Reapplies the selected scroll edge effect style to every scroll view the app has loaded.
+	static func restyleScrollEdgeEffects() {
+		guard #available(iOS 27.0, macCatalyst 27.0, *) else { return }
+
+		var views: [UIView] = UIApplication.shared.connectedScenes
+			.compactMap { $0 as? UIWindowScene }
+			.flatMap { $0.windows }
+
+		var viewControllers = views.compactMap { ($0 as? UIWindow)?.rootViewController }
+
+		while let viewController = viewControllers.popLast() {
+			if let view = viewController.viewIfLoaded {
+				views.append(view)
+			}
+
+			viewControllers.append(contentsOf: viewController.children)
+
+			if let presented = viewController.presentedViewController {
+				viewControllers.append(presented)
+			}
+		}
+
+		while let view = views.popLast() {
+			(view as? UIScrollView)?.applyScrollEdgeEffectStyle()
+			views.append(contentsOf: view.subviews)
+		}
+	}
+
+	/// Applies the selected scroll edge effect style to the top and bottom edge.
+	@available(iOS 27.0, macCatalyst 27.0, *)
+	private func applyScrollEdgeEffectStyle() {
+		let style = ScrollEdgeEffectStyleOption.current.style
+
+		if self.topEdgeEffect.style !== style {
+			self.topEdgeEffect.style = style
+		}
+	}
+
+	/// Styles the scroll edge effect as the scroll view lays out.
+	@objc private dynamic func styledLayoutSubviews() {
+		self.styledLayoutSubviews()
+
+		guard #available(iOS 27.0, macCatalyst 27.0, *) else { return }
+
+		self.applyScrollEdgeEffectStyle()
+	}
+
+	/// Styles the scroll edge effect as the table view lays out.
+	@objc private dynamic func styledTableLayoutSubviews() {
+		self.styledTableLayoutSubviews()
+
+		guard #available(iOS 27.0, macCatalyst 27.0, *) else { return }
+
+		self.applyScrollEdgeEffectStyle()
 	}
 
 	/// Take a screenshot of the view and return it as a `UIImage`.

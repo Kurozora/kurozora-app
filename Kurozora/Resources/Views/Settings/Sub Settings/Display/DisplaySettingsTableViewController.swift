@@ -113,6 +113,23 @@ class DisplaySettingsTableViewController: SubSettingsViewController, TypedSegueH
 		}
 	}
 
+	private func makeScrollEdgeEffectPicker() -> SettingsPickerTableViewController {
+		let picker = SettingsPickerTableViewController(
+			items: SettingsPickerTableViewController.items(for: ScrollEdgeEffectStyleOption.allCases) { $0.titleValue },
+			selectedKey: String(ScrollEdgeEffectStyleOption.current.rawValue),
+			footerText: L10n.scrollEdgeEffectStyleFooter
+		)
+		picker.title = L10n.scrollEdgeEffectStyle
+		picker.selectionHandler = { [weak self] key in
+			guard let rawValue = Int(key) else { return }
+
+			UserSettings.set(rawValue, forKey: .scrollEdgeEffectStyle)
+			UIScrollView.restyleScrollEdgeEffects()
+			self?.tableView.reloadData()
+		}
+		return picker
+	}
+
 	private func reloadAppearanceSection() {
 		guard self.tableView.numberOfSections > Section.appearance.rawValue else { return }
 		self.tableView.reloadSections(IndexSet(integer: Section.appearance.rawValue), with: .none)
@@ -213,6 +230,14 @@ extension DisplaySettingsTableViewController {
 			}
 			self.configureSwitchCell(cell, title: L10n.largeTitles, isOn: UserSettings.largeTitlesEnabled, switchType: .largeTitles)
 			return cell
+		case .scrollEdgeEffect:
+			guard let cell = tableView.dequeueReusableCell(withIdentifier: SettingsCell.self, for: indexPath) else {
+				fatalError("Cannot dequeue reusable cell with identifier \(SettingsCell.reuseID)")
+			}
+			cell.configure(title: L10n.scrollEdgeEffectStyle, detail: ScrollEdgeEffectStyleOption.current.titleValue)
+			cell.detailLabel?.isHidden = false
+			cell.chevronImageView?.isHidden = false
+			return cell
 		}
 	}
 
@@ -224,7 +249,7 @@ extension DisplaySettingsTableViewController {
 			return L10n.appearance
 		case .blindness:
 			return L10n.blindness
-		case .navigationBar:
+		case .navigationBar, .scrollEdgeEffect:
 			return nil
 		}
 	}
@@ -239,6 +264,9 @@ extension DisplaySettingsTableViewController {
 			return L10n.trueBlackFooter
 		case .navigationBar:
 			return L10n.largeTitlesFooter
+		case .scrollEdgeEffect:
+			guard !section.rows(automaticDarkThemeEnabled: UserSettings.automaticDarkTheme).isEmpty else { return nil }
+			return L10n.scrollEdgeEffectStyleFooter
 		}
 	}
 }
@@ -251,6 +279,8 @@ extension DisplaySettingsTableViewController {
 		switch row {
 		case .automaticDarkThemeOptions:
 			self.show(.appearanceOptionsSegue, sender: nil)
+		case .scrollEdgeEffect:
+			self.show(self.makeScrollEdgeEffectPicker(), sender: nil)
 		case .appAppearance, .automaticDarkTheme, .trueBlack, .largeTitles:
 			break
 		}
@@ -275,6 +305,7 @@ private extension DisplaySettingsTableViewController {
 		case appearance = 0
 		case blindness
 		case navigationBar
+		case scrollEdgeEffect
 
 		func rows(automaticDarkThemeEnabled: Bool) -> [Row] {
 			switch self {
@@ -288,6 +319,9 @@ private extension DisplaySettingsTableViewController {
 				return [.trueBlack]
 			case .navigationBar:
 				return [.largeTitles]
+			case .scrollEdgeEffect:
+				guard #available(iOS 27.0, macCatalyst 27.0, *) else { return [] }
+				return [.scrollEdgeEffect]
 			}
 		}
 	}
@@ -298,6 +332,7 @@ private extension DisplaySettingsTableViewController {
 		case automaticDarkThemeOptions
 		case trueBlack
 		case largeTitles
+		case scrollEdgeEffect
 	}
 
 	enum SwitchType: Int {

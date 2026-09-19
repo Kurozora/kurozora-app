@@ -206,6 +206,11 @@ extension UserSettings {
 	static var largeTitlesEnabled: Bool {
 		return self.shared.bool(forKey: #function)
 	}
+
+	/// Returns the scroll edge effect rendered behind the app's bars.
+	static var scrollEdgeEffectStyle: Int {
+		return self.shared.integer(forKey: #function)
+	}
 }
 
 // MARK: - Authentication

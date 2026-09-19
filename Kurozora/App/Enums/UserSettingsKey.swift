@@ -37,6 +37,8 @@ enum UserSettingsKey: String, CaseIterable {
 	case appIcon
 	/// The key to the selected browser.
 	case defaultBrowser
+	/// The key to the scroll edge effect rendered behind the app's bars.
+	case scrollEdgeEffectStyle
 	/// The key indicating the app was launched once.
 	case launchedOnce
 

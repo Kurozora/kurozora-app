@@ -33,6 +33,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 		// Override point for customization after application launch.
 		Store.shared.initialize()
 
+		UIScrollView.installScrollEdgeEffectStyling()
+
 		// Configure keyboard
 		#if !targetEnvironment(macCatalyst)
 		IQKeyboardManager.shared.isEnabled = true
