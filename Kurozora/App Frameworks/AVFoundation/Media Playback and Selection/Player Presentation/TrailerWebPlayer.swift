@@ -48,6 +48,11 @@ protocol TrailerWebPlayerDelegate: AnyObject {
 	/// - Parameter trailerWebPlayer: The web player reporting the change.
 	func trailerWebPlayerDidReachEnd(_ trailerWebPlayer: TrailerWebPlayer)
 
+	/// Tells the delegate the trailer started over.
+	///
+	/// - Parameter trailerWebPlayer: The web player reporting the change.
+	func trailerWebPlayerDidLoop(_ trailerWebPlayer: TrailerWebPlayer)
+
 	/// Tells the delegate the system asked for the trailer after this one.
 	///
 	/// - Parameter trailerWebPlayer: The web player reporting the request.
@@ -71,6 +76,8 @@ extension TrailerWebPlayerDelegate {
 	func trailerWebPlayer(_ trailerWebPlayer: TrailerWebPlayer, didPlayTo currentTime: Double, duration: Double) {}
 
 	func trailerWebPlayerDidReachEnd(_ trailerWebPlayer: TrailerWebPlayer) {}
+
+	func trailerWebPlayerDidLoop(_ trailerWebPlayer: TrailerWebPlayer) {}
 
 	func trailerWebPlayerDidRequestNextTrailer(_ trailerWebPlayer: TrailerWebPlayer) {}
 
@@ -309,6 +316,46 @@ final class TrailerWebPlayer: NSObject {
 		    }, true);
 		  });
 		  // Pinning a playlist on the element holds the chosen quality.
+		  window.kurozoraClockRun = function(rate, anchorTime) {
+		    var previous = window.kurozoraClockRunState;
+		    var hasAnchor = typeof anchorTime === 'number';
+		    if (previous && rate && previous.rate === rate && !hasAnchor) { return; }
+		    if (previous) {
+		      cancelAnimationFrame(previous.frame);
+		      window.kurozoraClockRunState = null;
+		    }
+		    var v = document.querySelector('video');
+		    if (!v || !rate) { return; }
+		    var state = { rate: rate, anchorTime: hasAnchor ? anchorTime : v.currentTime, anchorHost: performance.now(), lastTime: v.currentTime, seekingSince: 0, frame: 0 };
+		    function tick(now) {
+		      if (window.kurozoraClockRunState !== state) { return; }
+		      state.frame = requestAnimationFrame(tick);
+		      var live = document.querySelector('video');
+		      if (!live) { return; }
+		      var time = live.currentTime;
+		      // A jump back to the start from further in is the trailer starting over.
+		      if (state.rate > 0 && time < 3 && state.lastTime > time + 5) {
+		        state.anchorTime = time;
+		        state.anchorHost = now;
+		        try { window.webkit.messageHandlers.trailer.postMessage({ event: 'elementLooped', time: time }); } catch (error) {}
+		      }
+		      state.lastTime = time;
+		      if (live.readyState < 1) { return; }
+		      if (live.seeking && now - state.seekingSince < 1000) { return; }
+		      var duration = isFinite(live.duration) ? live.duration : 0;
+		      var last = duration > 0.5 ? duration - 0.5 : duration;
+		      var desired = state.anchorTime + ((now - state.anchorHost) / 1000) * state.rate;
+		      if (desired < 0) { desired = 0; }
+		      if (duration > 0 && desired > last) { desired = last; }
+		      var gap = desired - time;
+		      var isBehind = state.rate > 0 ? gap >= 1 / 30 : gap <= -1 / 30;
+		      if (!isBehind) { return; }
+		      state.seekingSince = now;
+		      live.currentTime = desired;
+		    }
+		    window.kurozoraClockRunState = state;
+		    state.frame = requestAnimationFrame(tick);
+		  };
 		  window.kurozoraPinStream = function(streamURL) {
 		    var v = document.querySelector('video');
 		    if (!v || !streamURL || v.currentSrc === streamURL) { return; }
@@ -376,6 +423,9 @@ final class TrailerWebPlayer: NSObject {
 
 	/// The poster last encoded for the page and its address.
 	private var encodedArtwork: (source: String, dataURL: String)?
+
+	/// A Boolean value indicating whether the page's video is moving along the host clock.
+	private var isRunningPageClock = false
 
 	/// A Boolean value indicating whether the page waits for the app's audio session.
 	private var isAwaitingAudioSession = false
@@ -600,6 +650,7 @@ final class TrailerWebPlayer: NSObject {
 
 		self.isPaused = true
 		self.updateAudioSession()
+		self.runPageClock(at: 0.0, from: nil)
 
 		if self.isPlayingNatively {
 			self.nativePlayerView?.pause()
@@ -875,6 +926,10 @@ final class TrailerWebPlayer: NSObject {
 		guard self.isPlayerReady else { return }
 		self.evaluate("player && player.seekTo(\(max(0.0, seconds)), true);")
 
+		if self.isRunningPageClock {
+			self.runPageClock(at: self.playbackRate, from: max(0.0, seconds))
+		}
+
 		// The stand-in steps aside for the live seek and comes back once the new frame has painted.
 		guard self.isPaused else { return }
 		self.pausedFrameView?.hideFrame()
@@ -925,8 +980,35 @@ final class TrailerWebPlayer: NSObject {
 		guard self.isPlayerReady else { return }
 
 		// The embed's player rejects rates above 2.
-		self.evaluate("player && player.setPlaybackRate(\(min(rate, 2.0)));")
-		self.setPageVideoRate(rate)
+		let runsByClock = rate < 0.0 || rate > 2.0
+		let pageRate = runsByClock ? 1.0 : rate
+		self.evaluate("player && player.setPlaybackRate(\(pageRate));")
+		self.setPageVideoRate(pageRate)
+		self.runPageClock(at: runsByClock ? rate : 0.0, from: nil)
+	}
+
+	/// Moves the page's video along the host clock at the given rate.
+	///
+	/// - Parameters:
+	///    - rate: The rate, with `0` ending the run.
+	///    - anchorTime: The point the run is measured from.
+	private func runPageClock(at rate: Double, from anchorTime: Double?) {
+		guard let embedFrameInfo = self.embedFrameInfo else { return }
+		guard rate != 0.0 || self.isRunningPageClock else { return }
+
+		let wasRunning = self.isRunningPageClock
+		self.isRunningPageClock = rate != 0.0
+
+		if self.isRunningPageClock != wasRunning {
+			if self.isRunningPageClock {
+				self.evaluate("player && player.setVolume(0);")
+			} else {
+				self.setVolume(self.volume)
+			}
+		}
+
+		let anchor = anchorTime.map { String($0) } ?? "undefined"
+		self.webView.evaluateJavaScript("window.kurozoraClockRun && window.kurozoraClockRun(\(rate), \(anchor));", in: embedFrameInfo, in: .page, completionHandler: nil)
 	}
 
 	/// Sets how loud the trailer plays.
@@ -1016,6 +1098,7 @@ final class TrailerWebPlayer: NSObject {
 	func switchTo(videoID: String) {
 		guard self.canSwitchVideo else { return }
 
+		self.runPageClock(at: 0.0, from: nil)
 		self.endNativeHandoff()
 
 		// The page keeps the picture while the next stream loads, but not the sound. Both playing
@@ -1738,7 +1821,7 @@ final class TrailerWebPlayer: NSObject {
 				self.pinPreferredStream()
 			}
 
-			self.setPlaybackRate(self.playbackRate)
+			self.setPlaybackRate(self.playbackRate, remembers: false)
 			self.delegate?.trailerWebPlayerDidStartPlaying(self)
 		case "paused":
 			self.capturePausedFrame()
@@ -1748,7 +1831,12 @@ final class TrailerWebPlayer: NSObject {
 
 			self.delegate?.trailerWebPlayerDidPause(self)
 		case "ended":
-			guard !self.loopsPlayback else { break }
+			guard !self.loopsPlayback else {
+				self.delegate?.trailerWebPlayerDidLoop(self)
+				break
+			}
+
+			self.runPageClock(at: 0.0, from: nil)
 			self.delegate?.trailerWebPlayerDidReachEnd(self)
 		case "pausedSeekSettled":
 			self.capturePausedFrame()
@@ -2026,6 +2114,7 @@ extension TrailerWebPlayer: TrailerNativePlayerViewDelegate {
 	func trailerNativePlayerViewDidReachEnd(_ trailerNativePlayerView: TrailerNativePlayerView) {
 		guard !self.loopsPlayback else {
 			trailerNativePlayerView.seek(to: 0.0)
+			self.delegate?.trailerWebPlayerDidLoop(self)
 			trailerNativePlayerView.play()
 			return
 		}
@@ -2109,6 +2198,19 @@ extension TrailerWebPlayer: WKScriptMessageHandler {
 
 		if event == "pictureInPictureError" {
 			print("----- [Trailer] Picture in picture refused: \(body["message"] as? String ?? "unknown")")
+			return
+		}
+
+		if event == "elementLooped" {
+			guard !self.isPlayingNatively else { return }
+
+			self.lastReportedTime = 0.0
+			self.pageTimeAnchor = Date()
+
+			if self.loopsPlayback {
+				self.delegate?.trailerWebPlayerDidLoop(self)
+			}
+
 			return
 		}
 

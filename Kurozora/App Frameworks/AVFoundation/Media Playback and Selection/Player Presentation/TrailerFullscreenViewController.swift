@@ -181,9 +181,6 @@ final class TrailerFullscreenViewController: UIViewController {
 	/// The time the player's reported point is trusted again after a seek.
 	private var seekSettleDate: Date?
 
-	/// The task running the trailer while a seek button is held.
-	private var fastSeekTask: Task<Void, Never>?
-
 	/// A Boolean value indicating whether the trailer was playing before a seek button was held.
 	private var wasPlayingBeforeFastSeek = false
 
@@ -976,7 +973,6 @@ final class TrailerFullscreenViewController: UIViewController {
 		self.wasPlayingBeforeFastSeek = self.isPlaying
 		self.isFastSeekingForward = isForward
 		self.isFastSeeking = true
-		self.fastSeekTask?.cancel()
 
 		// Holding starts above whatever speed is already chosen, so 2× playback begins the climb at 5×.
 		self.fastSeekBaseIndex = self.fastSeekRates.firstIndex { $0 > self.playbackRate } ?? 0
@@ -988,6 +984,8 @@ final class TrailerFullscreenViewController: UIViewController {
 	///
 	/// - Parameter progression: The press beyond the opening click, from `0` to `1`.
 	private func setFastSeekProgression(_ progression: Double) {
+		guard self.isFastSeeking else { return }
+
 		let stepCount = self.fastSeekRates.count - 1 - self.fastSeekBaseIndex
 		guard stepCount > 0 else { return }
 
@@ -1016,35 +1014,16 @@ final class TrailerFullscreenViewController: UIViewController {
 		self.controlBar.setFastSeekRate(rate, isForward: self.isFastSeekingForward)
 		#endif
 
-		self.fastSeekTask?.cancel()
-		self.fastSeekTask = nil
-
-		if self.isFastSeekingForward {
-			// A held rate is not the chosen rate.
-			self.player?.setPlaybackRate(rate, remembers: false)
-			self.player?.play()
-		} else {
-			// A player takes no negative rate, so reverse is seeked.
-			self.player?.pause()
-
-			let tickDuration = 0.1
-			self.fastSeekTask = Task { @MainActor [weak self] in
-				while !Task.isCancelled {
-					guard let self = self else { return }
-					self.seek(to: self.elapsedTime - rate * tickDuration)
-					try? await Task.sleep(nanoseconds: UInt64(tickDuration * 1_000_000_000.0))
-				}
-			}
-		}
+		// A held rate is not the chosen rate.
+		self.player?.setPlaybackRate(self.isFastSeekingForward ? rate : -rate, remembers: false)
+		self.player?.play()
 	}
 
 	/// Returns the trailer to the speed and play state it was at before the button was held.
 	private func endFastSeek() {
-		self.fastSeekTask?.cancel()
-		self.fastSeekTask = nil
-		self.isFastSeeking = false
+		guard self.isFastSeeking else { return }
 
-		self.player?.setPlaybackRate(self.playbackRate)
+		self.settleFastSeek()
 
 		if self.wasPlayingBeforeFastSeek {
 			self.player?.play()
@@ -1053,6 +1032,18 @@ final class TrailerFullscreenViewController: UIViewController {
 		}
 
 		self.scheduleControlsAutoHide()
+	}
+
+	/// Ends the fast run and hands the trailer back its chosen speed.
+	private func settleFastSeek() {
+		self.isFastSeeking = false
+		self.isKeyboardFastSeeking = false
+
+		#if targetEnvironment(macCatalyst)
+		self.controlBar.setFastSeekRate(nil, isForward: self.isFastSeekingForward)
+		#endif
+
+		self.player?.setPlaybackRate(self.playbackRate)
 	}
 
 	/// Moves the trailer back through its timeline.
@@ -1646,7 +1637,17 @@ extension TrailerFullscreenViewController: TrailerWebPlayerDelegate {
 			guard self.videoID == endedVideoID, self.view.window != nil else { return }
 			guard let nextPlayer = self.advanceHandler?() else { return }
 			self.switchTo(nextPlayer)
+
+			if self.isFastSeeking {
+				self.runFastSeek()
+			}
 		}
+	}
+
+	func trailerWebPlayerDidLoop(_ trailerWebPlayer: TrailerWebPlayer) {
+		self.elapsedTime = 0.0
+		self.seekSettleDate = nil
+		self.updateProgressControls()
 	}
 
 	func trailerWebPlayer(_ trailerWebPlayer: TrailerWebPlayer, didPlayTo currentTime: Double, duration: Double) {

@@ -114,6 +114,12 @@ final class TrailerNativePlayerView: UIView {
 	/// The least content a clock run seek covers, in seconds.
 	private static let minimumClockRunStep = 1.0 / 30.0
 
+	/// The stretch before the end the clock run leaves to playback, in seconds.
+	private static let clockRunEndMargin = 0.5
+
+	/// The host time the clock run issued its last seek at.
+	private var clockRunSeekIssueTime = 0.0
+
 	/// A Boolean value indicating whether a trailer is playing in Picture in Picture.
 	static var hasFloatingWindow: Bool {
 		return Self.floatingPlayerView?.isFloating ?? false
@@ -298,6 +304,11 @@ final class TrailerNativePlayerView: UIView {
 
 					self.isSeeking = false
 
+					if self.clockRunLink != nil {
+						let landed = player.currentTime().seconds
+						self.clockRunAnchor = (landed.isFinite ? landed : 0.0, CACurrentMediaTime())
+					}
+
 					guard self.pendingSeekTime == nil else {
 						self.runPendingSeek()
 						return
@@ -363,6 +374,10 @@ final class TrailerNativePlayerView: UIView {
 	///
 	/// - Returns: `true` if the player cannot play the rate itself.
 	private func runsByClock(at rate: Double, on player: AVPlayer) -> Bool {
+		if rate < 0.0 {
+			return player.currentItem?.canPlayFastReverse != true
+		}
+
 		guard rate > 2.0 else { return false }
 		return player.currentItem?.canPlayFastForward != true
 	}
@@ -392,24 +407,46 @@ final class TrailerNativePlayerView: UIView {
 			return
 		}
 
-		guard !self.isSeeking else { return }
+		let now = CACurrentMediaTime()
+
+		guard !self.isSeeking else {
+			if now - self.clockRunSeekIssueTime > 1.5 {
+				self.isSeeking = false
+			}
+
+			return
+		}
 
 		let actual = player.currentTime().seconds
 		guard actual.isFinite else { return }
 
-		var desired = anchor.itemTime + (CACurrentMediaTime() - anchor.hostTime) * self.playbackRate
+		let last = self.duration > Self.clockRunEndMargin ? self.duration - Self.clockRunEndMargin : self.duration
+		var desired = max(0.0, anchor.itemTime + (now - anchor.hostTime) * self.playbackRate)
 		if self.duration > 0.0 {
-			desired = min(desired, self.duration)
+			desired = min(desired, last)
 		}
 
 		let gap = desired - actual
-		guard gap >= Self.minimumClockRunStep else { return }
+		let isForward = self.playbackRate > 0.0
+		let reachesEnd = isForward && self.duration > 0.0 && desired >= last
+		let isBehind = isForward ? gap >= Self.minimumClockRunStep : gap <= -Self.minimumClockRunStep
+
+		guard isBehind else {
+			if reachesEnd {
+				self.finishClockRunAtEnd()
+			}
+
+			return
+		}
 
 		self.isSeeking = true
+		self.clockRunSeekIssueTime = now
 
 		let target = CMTime(seconds: desired, preferredTimescale: 600)
-		let window = CMTime(seconds: gap, preferredTimescale: 600)
-		player.seek(to: target, toleranceBefore: window, toleranceAfter: .zero) { [weak self] _ in
+		let window = CMTime(seconds: abs(gap), preferredTimescale: 600)
+		let toleranceBefore = gap > 0.0 ? window : .zero
+		let toleranceAfter = gap > 0.0 ? .zero : window
+		player.seek(to: target, toleranceBefore: toleranceBefore, toleranceAfter: toleranceAfter) { [weak self] _ in
 			DispatchQueue.main.async {
 				MainActor.assumeIsolated {
 					guard let self = self else { return }
@@ -417,10 +454,22 @@ final class TrailerNativePlayerView: UIView {
 
 					if self.pendingSeekTime != nil {
 						self.runPendingSeek()
+						return
+					}
+
+					let landed = player.currentTime().seconds
+					if reachesEnd, self.clockRunLink != nil, abs(landed - actual) < 0.001 {
+						self.finishClockRunAtEnd()
 					}
 				}
 			}
 		}
+	}
+
+	/// Ends the clock run short of the end and lets the video play out.
+	private func finishClockRunAtEnd() {
+		self.endClockRun()
+		self.player?.rate = 1.0
 	}
 
 	/// Stops moving the video along the host clock.
