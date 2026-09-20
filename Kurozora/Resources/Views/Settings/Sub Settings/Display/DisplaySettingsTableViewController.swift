@@ -320,8 +320,12 @@ private extension DisplaySettingsTableViewController {
 			case .navigationBar:
 				return [.largeTitles]
 			case .scrollEdgeEffect:
-				guard #available(iOS 27.0, macCatalyst 27.0, *) else { return [] }
+				#if targetEnvironment(macCatalyst)
+				return []
+				#else
+				guard #available(iOS 27.0, *) else { return [] }
 				return [.scrollEdgeEffect]
+				#endif
 			}
 		}
 	}

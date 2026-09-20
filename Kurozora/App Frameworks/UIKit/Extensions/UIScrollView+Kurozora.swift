@@ -6,6 +6,7 @@
 //  Copyright © 2019 Kurozora. All rights reserved.
 //
 
+import Obfuscation
 import UIKit
 
 extension UIScrollView {
@@ -105,15 +106,40 @@ extension UIScrollView {
 		}
 	}
 
-	/// Applies the selected scroll edge effect style to the top and bottom edge.
+	/// Applies the scroll edge effect style to the top edge.
 	@available(iOS 27.0, macCatalyst 27.0, *)
 	private func applyScrollEdgeEffectStyle() {
+		#if targetEnvironment(macCatalyst)
+		let style = UIScrollEdgeEffect.Style.automatic
+		#else
 		let style = ScrollEdgeEffectStyleOption.current.style
+		#endif
 
 		if self.topEdgeEffect.style !== style {
 			self.topEdgeEffect.style = style
 		}
+
+		#if targetEnvironment(macCatalyst)
+		self.syncScrollEdgeEffectVisibility()
+		#endif
 	}
+
+	#if targetEnvironment(macCatalyst)
+	/// Shows the scroll edge effect while content sits behind the bars.
+	private func syncScrollEdgeEffectVisibility() {
+		guard
+			let interactionClass = NSClassFromString(#obfuscated("_UIScrollEdgeEffectViewInteraction")),
+			let interaction = self.interactions.lazy.compactMap({ $0 as? NSObject }).first(where: { $0.isKind(of: interactionClass) })
+		else { return }
+
+		let hoverKey = #obfuscated("isMouseHovering")
+		let isContentBehindBars = self.contentOffset.y > -self.adjustedContentInset.top
+
+		guard interaction.value(forKey: hoverKey) as? Bool != isContentBehindBars else { return }
+
+		interaction.setValue(isContentBehindBars, forKey: hoverKey)
+	}
+	#endif
 
 	/// Styles the scroll edge effect as the scroll view lays out.
 	@objc private dynamic func styledLayoutSubviews() {
