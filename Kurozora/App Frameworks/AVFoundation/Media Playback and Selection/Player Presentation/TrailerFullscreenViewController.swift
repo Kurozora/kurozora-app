@@ -523,7 +523,6 @@ final class TrailerFullscreenViewController: UIViewController {
 		self.isKeyboardFastSeeking = true
 		self.isFastSeekingForward = forward
 		self.isFastSeeking = true
-		self.player?.setRunningFast(true)
 		self.fastSeekBaseIndex = self.fastSeekRates.firstIndex { $0 > self.playbackRate } ?? 0
 		self.fastSeekRateIndex = self.fastSeekBaseIndex
 		self.runFastSeek()
@@ -977,7 +976,6 @@ final class TrailerFullscreenViewController: UIViewController {
 		self.wasPlayingBeforeFastSeek = self.isPlaying
 		self.isFastSeekingForward = isForward
 		self.isFastSeeking = true
-		self.player?.setRunningFast(true)
 		self.fastSeekTask?.cancel()
 
 		// Holding starts above whatever speed is already chosen, so 2× playback begins the climb at 5×.
@@ -1046,7 +1044,6 @@ final class TrailerFullscreenViewController: UIViewController {
 		self.fastSeekTask = nil
 		self.isFastSeeking = false
 
-		self.player?.setRunningFast(false)
 		self.player?.setPlaybackRate(self.playbackRate)
 
 		if self.wasPlayingBeforeFastSeek {

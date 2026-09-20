@@ -105,8 +105,14 @@ final class TrailerNativePlayerView: UIView {
 	/// A Boolean value indicating whether a seek is in progress.
 	private var isSeeking = false
 
-	/// A Boolean value indicating whether the player runs beyond normal speed.
-	private var isRunningFast = false
+	/// The display link moving the video along the host clock.
+	private var clockRunLink: CADisplayLink?
+
+	/// The item time and host time the clock run is measured from.
+	private var clockRunAnchor: (itemTime: Double, hostTime: Double)?
+
+	/// The least content a clock run seek covers, in seconds.
+	private static let minimumClockRunStep = 1.0 / 30.0
 
 	/// A Boolean value indicating whether a trailer is playing in Picture in Picture.
 	static var hasFloatingWindow: Bool {
@@ -198,6 +204,7 @@ final class TrailerNativePlayerView: UIView {
 	/// Pauses playback.
 	func pause() {
 		self.isPlaying = false
+		self.endClockRun()
 		self.player?.pause()
 	}
 
@@ -331,31 +338,98 @@ final class TrailerNativePlayerView: UIView {
 	/// AVPlayer resets its rate on every play, seek and stall.
 	private func applyPlaybackRate() {
 		guard let player = self.player else { return }
+		let runsByClock = self.runsByClock(at: self.playbackRate, on: player)
 
 		// A stall resets rate but not defaultRate.
 		if #available(iOS 16.0, *) {
-			player.defaultRate = Float(self.playbackRate)
+			player.defaultRate = Float(runsByClock ? 1.0 : self.playbackRate)
 		}
 
 		guard self.isPlaying else { return }
 
-		// AVPlayer holds back a rate it judges the buffer cannot sustain.
-		guard !self.isRunningFast else {
-			player.playImmediately(atRate: Float(self.playbackRate))
+		if runsByClock {
+			self.beginClockRun(on: player)
+		} else {
+			self.endClockRun()
+			player.rate = Float(self.playbackRate)
+		}
+	}
+
+	/// Returns whether the video has to be moved along the host clock at the given rate.
+	///
+	/// - Parameters:
+	///    - rate: The rate, as a multiple of normal speed.
+	///    - player: The player showing the stream.
+	///
+	/// - Returns: `true` if the player cannot play the rate itself.
+	private func runsByClock(at rate: Double, on player: AVPlayer) -> Bool {
+		guard rate > 2.0 else { return false }
+		return player.currentItem?.canPlayFastForward != true
+	}
+
+	/// Starts moving the video along the host clock.
+	///
+	/// - Parameter player: The player to move.
+	private func beginClockRun(on player: AVPlayer) {
+		player.rate = 0.0
+
+		let itemTime = player.currentTime().seconds
+		self.clockRunAnchor = (itemTime.isFinite ? itemTime : 0.0, CACurrentMediaTime())
+
+		guard self.clockRunLink == nil else { return }
+
+		let link = CADisplayLink(target: self, selector: #selector(self.clockRunTick(_:)))
+		link.add(to: .main, forMode: .common)
+		self.clockRunLink = link
+	}
+
+	/// Seeks the video to where the host clock says it should be.
+	///
+	/// - Parameter link: The display link driving the run.
+	@objc private func clockRunTick(_ link: CADisplayLink) {
+		guard let player = self.player, let anchor = self.clockRunAnchor else {
+			self.endClockRun()
 			return
 		}
 
-		player.rate = Float(self.playbackRate)
+		guard !self.isSeeking else { return }
+
+		let actual = player.currentTime().seconds
+		guard actual.isFinite else { return }
+
+		var desired = anchor.itemTime + (CACurrentMediaTime() - anchor.hostTime) * self.playbackRate
+		if self.duration > 0.0 {
+			desired = min(desired, self.duration)
+		}
+
+		let gap = desired - actual
+		guard gap >= Self.minimumClockRunStep else { return }
+
+		self.isSeeking = true
+
+		let target = CMTime(seconds: desired, preferredTimescale: 600)
+		let window = CMTime(seconds: gap, preferredTimescale: 600)
+		player.seek(to: target, toleranceBefore: window, toleranceAfter: .zero) { [weak self] _ in
+			DispatchQueue.main.async {
+				MainActor.assumeIsolated {
+					guard let self = self else { return }
+					self.isSeeking = false
+
+					if self.pendingSeekTime != nil {
+						self.runPendingSeek()
+					}
+				}
+			}
+		}
 	}
 
-	/// Prepares the player to run beyond normal speed.
-	///
-	/// - Parameter isRunningFast: Whether the player runs beyond normal speed.
-	func setRunningFast(_ isRunningFast: Bool) {
-		self.isRunningFast = isRunningFast
-		self.player?.automaticallyWaitsToMinimizeStalling = !isRunningFast
-		self.player?.currentItem?.preferredForwardBufferDuration = isRunningFast ? 120.0 : 0.0
-		self.applyPlaybackRate()
+	/// Stops moving the video along the host clock.
+	private func endClockRun() {
+		guard let link = self.clockRunLink else { return }
+
+		link.invalidate()
+		self.clockRunLink = nil
+		self.clockRunAnchor = nil
 	}
 
 	/// Limits the resolution the stream plays at.
@@ -461,6 +535,7 @@ final class TrailerNativePlayerView: UIView {
 		self.itemEndObserver = nil
 		self.pendingSeekTime = nil
 		self.isSeeking = false
+		self.endClockRun()
 		self.hasReportedReady = false
 		self.isPlaying = false
 		self.currentTime = 0.0
