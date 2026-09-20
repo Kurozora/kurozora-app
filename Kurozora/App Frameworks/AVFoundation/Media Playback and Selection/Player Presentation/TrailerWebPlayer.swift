@@ -929,6 +929,13 @@ final class TrailerWebPlayer: NSObject {
 		self.setPageVideoRate(rate)
 	}
 
+	/// Prepares the trailer to run beyond normal speed.
+	///
+	/// - Parameter isRunningFast: Whether the trailer runs beyond normal speed.
+	func setRunningFast(_ isRunningFast: Bool) {
+		self.nativePlayerView?.setRunningFast(isRunningFast)
+	}
+
 	/// Sets how loud the trailer plays.
 	///
 	/// - Parameter volume: The loudness, from silent at `0` to full at `1`.

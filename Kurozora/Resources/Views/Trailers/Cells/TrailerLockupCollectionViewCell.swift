@@ -138,7 +138,7 @@ class TrailerLockupCollectionViewCell: BaseLockupCollectionViewCell {
 
 			textStackView.topAnchor.constraint(equalTo: self.bannerControl.bottomAnchor, constant: 12.0),
 			textStackView.leadingAnchor.constraint(equalTo: self.contentView.leadingAnchor),
-			textStackView.bottomAnchor.constraint(equalTo: self.contentView.bottomAnchor),
+			textStackView.bottomAnchor.constraint(lessThanOrEqualTo: self.contentView.bottomAnchor),
 
 			self.statusButton.leadingAnchor.constraint(equalTo: textStackView.trailingAnchor, constant: 8.0),
 			self.statusButton.trailingAnchor.constraint(equalTo: self.contentView.trailingAnchor),

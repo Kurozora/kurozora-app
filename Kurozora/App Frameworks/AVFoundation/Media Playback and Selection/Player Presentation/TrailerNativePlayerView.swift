@@ -105,6 +105,9 @@ final class TrailerNativePlayerView: UIView {
 	/// A Boolean value indicating whether a seek is in progress.
 	private var isSeeking = false
 
+	/// A Boolean value indicating whether the player runs beyond normal speed.
+	private var isRunningFast = false
+
 	/// A Boolean value indicating whether a trailer is playing in Picture in Picture.
 	static var hasFloatingWindow: Bool {
 		return Self.floatingPlayerView?.isFloating ?? false
@@ -336,7 +339,23 @@ final class TrailerNativePlayerView: UIView {
 
 		guard self.isPlaying else { return }
 
+		// AVPlayer holds back a rate it judges the buffer cannot sustain.
+		guard !self.isRunningFast else {
+			player.playImmediately(atRate: Float(self.playbackRate))
+			return
+		}
+
 		player.rate = Float(self.playbackRate)
+	}
+
+	/// Prepares the player to run beyond normal speed.
+	///
+	/// - Parameter isRunningFast: Whether the player runs beyond normal speed.
+	func setRunningFast(_ isRunningFast: Bool) {
+		self.isRunningFast = isRunningFast
+		self.player?.automaticallyWaitsToMinimizeStalling = !isRunningFast
+		self.player?.currentItem?.preferredForwardBufferDuration = isRunningFast ? 120.0 : 0.0
+		self.applyPlaybackRate()
 	}
 
 	/// Limits the resolution the stream plays at.
