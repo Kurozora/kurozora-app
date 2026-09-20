@@ -1150,6 +1150,7 @@ final class TrailerFullscreenViewController: UIViewController {
 	///
 	/// - Parameter player: The player rendering the next trailer.
 	private func switchTo(_ player: TrailerWebPlayer) {
+		let previousPlayer = self.player
 		self.videoID = player.videoID
 		self.player = player
 
@@ -1160,7 +1161,10 @@ final class TrailerFullscreenViewController: UIViewController {
 		player.play()
 		self.isPlaying = true
 
-		self.duration = 0.0
+		if player !== previousPlayer {
+			self.duration = 0.0
+		}
+
 		self.elapsedTime = 0.0
 		self.framesPerSecond = nil
 		self.seekSettleDate = nil

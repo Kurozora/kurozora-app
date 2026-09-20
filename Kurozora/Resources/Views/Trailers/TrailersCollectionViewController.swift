@@ -525,7 +525,14 @@ class TrailersCollectionViewController: ListCollectionViewController, SectionFet
 
 		let previousIdentityID = self.featuredIdentityID
 		self.featuredIdentityID = identityID
-		self.featuredPlayerView.loadTrailer(fromURL: trailerURL)
+
+		let previousVideoID = previousIdentityID.flatMap { self.trailerURLs[$0] }.flatMap { TrailerWebPlayer.videoID(fromURL: $0) }
+		if previousVideoID != nil, previousVideoID == TrailerWebPlayer.videoID(fromURL: trailerURL) {
+			self.featuredPlayerView.replayTrailer()
+		} else {
+			self.featuredPlayerView.loadTrailer(fromURL: trailerURL)
+		}
+
 		self.refreshFeaturedHeader()
 		self.refreshGlyph(forID: previousIdentityID)
 		self.refreshGlyph(forID: identityID)

@@ -198,6 +198,14 @@ final class KTrailerPlayerView: UIView {
 	/// The web player rendering the trailer.
 	private var webPlayer: TrailerWebPlayer?
 
+	/// The count of trailers started in the view.
+	private var trailerGeneration = 0
+
+	/// A Boolean value indicating whether the web player shows its picture in this view.
+	private var hostsWebPlayer: Bool {
+		return self.webPlayer?.isHosting(self) == true
+	}
+
 	/// A Boolean value indicating whether the coordinator granted the play slot.
 	private var isPlaybackAllowed = false
 
@@ -380,6 +388,7 @@ final class KTrailerPlayerView: UIView {
 
 			self.trailerURLString = urlString
 			self.videoID = videoID
+			self.trailerGeneration += 1
 			self.isReaderInitiated = false
 			self.isPausedByReader = false
 
@@ -405,6 +414,7 @@ final class KTrailerPlayerView: UIView {
 
 		self.trailerURLString = urlString
 		self.videoID = videoID
+		self.trailerGeneration += 1
 		self.isReaderInitiated = false
 		self.isPausedByReader = false
 
@@ -420,6 +430,22 @@ final class KTrailerPlayerView: UIView {
 		self.updateControls(animated: false)
 
 		TrailerPlaybackCoordinator.shared.register(self)
+	}
+
+	/// Starts the loaded trailer over as the next title in line.
+	func replayTrailer() {
+		guard let webPlayer = self.webPlayer else { return }
+
+		self.trailerGeneration += 1
+		self.isReaderInitiated = false
+		self.isPausedByReader = false
+		self.seekSettleDate = nil
+		self.elapsedTime = 0.0
+		self.updateProgressControls()
+
+		webPlayer.seek(to: 0.0)
+		webPlayer.streamMetadata = self.streamMetadata
+		webPlayer.reportsNowPlaying = self.reportsNowPlaying
 	}
 
 	/// Shows the given snapshot until the next trailer's picture appears.
@@ -487,9 +513,12 @@ final class KTrailerPlayerView: UIView {
 			self.wasPlayingBeforeSuspension = self.isPlaying
 			guard self.isPlaying else { return }
 
-			self.webPlayer?.pause()
-			self.webPlayer?.setWithdrawn(true)
-			self.clearNowPlayingReport()
+			if self.hostsWebPlayer {
+				self.webPlayer?.pause()
+				self.webPlayer?.setWithdrawn(true)
+				self.clearNowPlayingReport()
+			}
+
 			self.isPlaying = false
 			self.updateControls(animated: true)
 		} else if self.wasPlayingBeforeSuspension {
@@ -513,7 +542,10 @@ final class KTrailerPlayerView: UIView {
 		self.controlsHideTask = nil
 		self.clearTransitionSnapshot(animated: false)
 
-		self.webPlayer?.detach()
+		if self.hostsWebPlayer {
+			self.webPlayer?.detach()
+		}
+
 		self.webPlayer = nil
 		self.isPlaying = false
 		self.backgroundColor = .clear
@@ -586,6 +618,9 @@ final class KTrailerPlayerView: UIView {
 
 		if !webPlayer.isHosting(self) {
 			webPlayer.attach(to: self, isMuted: self.isMuted, delegate: self)
+			webPlayer.setLooping(self.loopsPlayback)
+			webPlayer.streamMetadata = self.streamMetadata
+			webPlayer.reportsNowPlaying = self.reportsNowPlaying
 		}
 
 		webPlayer.setWithdrawn(false)
@@ -625,9 +660,12 @@ final class KTrailerPlayerView: UIView {
 
 		// The sound is deliberately left alone: pausing already silences the trailer, and keeping the
 		// reader's choice means scrolling back resumes it exactly as they left it.
-		self.webPlayer?.pause()
-		self.webPlayer?.setWithdrawn(true)
-		self.clearNowPlayingReport()
+		if self.hostsWebPlayer {
+			self.webPlayer?.pause()
+			self.webPlayer?.setWithdrawn(true)
+			self.clearNowPlayingReport()
+		}
+
 		self.isPlaying = false
 		self.areControlsVisible = false
 
@@ -765,9 +803,9 @@ final class KTrailerPlayerView: UIView {
 		if !self.loopsPlayback {
 			fullscreenViewController.advanceHandler = { [weak self] in
 				guard let self = self else { return nil }
-				let previousVideoID = self.videoID
+				let previousGeneration = self.trailerGeneration
 				self.onPlaybackEnded?()
-				guard let videoID = self.videoID, videoID != previousVideoID else { return nil }
+				guard let videoID = self.videoID, self.trailerGeneration != previousGeneration else { return nil }
 
 				// The next trailer's player is adopted here, so closing fullscreen hands it back in place.
 				let webPlayer = TrailerPlayerPool.shared.player(forVideoID: videoID)
