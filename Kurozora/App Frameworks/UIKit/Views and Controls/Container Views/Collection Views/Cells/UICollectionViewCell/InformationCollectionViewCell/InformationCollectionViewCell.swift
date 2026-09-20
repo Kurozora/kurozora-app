@@ -20,6 +20,18 @@ class InformationCollectionViewCell: UICollectionViewCell {
 	@IBOutlet weak var footerLabel: KSecondaryLabel!
 	@IBOutlet weak var primaryImageViewHeightConstraint: NSLayoutConstraint?
 
+	// MARK: - Views
+	/// The week of dates marking today and the next release.
+	private let scheduleWeekView: ScheduleWeekView = {
+		let scheduleWeekView = ScheduleWeekView()
+		scheduleWeekView.translatesAutoresizingMaskIntoConstraints = false
+		scheduleWeekView.isHidden = true
+		return scheduleWeekView
+	}()
+
+	/// The gap the week of dates keeps above the secondary label.
+	private var scheduleWeekBottomConstraint: NSLayoutConstraint?
+
 	// MARK: - Initializers
 	override init(frame: CGRect) {
 		super.init(frame: frame)
@@ -37,10 +49,50 @@ class InformationCollectionViewCell: UICollectionViewCell {
 		MainActor.assumeIsolated {
 			self.typeImageView?.theme_tintColor = KThemePicker.subTextColor.rawValue
 			self.primaryImageView?.theme_tintColor = KThemePicker.textColor.rawValue
+
+			self.configureScheduleWeekView()
 		}
 	}
 
+	// MARK: - View
+	override func prepareForReuse() {
+		super.prepareForReuse()
+
+		self.setScheduleWeekHidden(true)
+	}
+
 	// MARK: - Functions
+	/// Pins the week of dates over the slot the primary image occupies.
+	private func configureScheduleWeekView() {
+		guard let container = self.primaryImageView?.superview else { return }
+		container.addSubview(self.scheduleWeekView)
+
+		let bottomConstraint = self.secondaryLabel.topAnchor.constraint(greaterThanOrEqualTo: self.scheduleWeekView.bottomAnchor, constant: 8.0)
+		self.scheduleWeekBottomConstraint = bottomConstraint
+
+		NSLayoutConstraint.activate([
+			self.scheduleWeekView.topAnchor.constraint(equalTo: self.primaryImageView.topAnchor),
+			self.scheduleWeekView.leadingAnchor.constraint(equalTo: self.primaryImageView.leadingAnchor),
+			self.scheduleWeekView.trailingAnchor.constraint(equalTo: self.primaryImageView.trailingAnchor)
+		])
+	}
+
+	/// Collapses or reveals the week of dates.
+	///
+	/// - Parameter isHidden: Whether the week of dates is collapsed.
+	private func setScheduleWeekHidden(_ isHidden: Bool) {
+		self.scheduleWeekView.isHidden = isHidden
+		self.scheduleWeekBottomConstraint?.isActive = !isHidden
+	}
+
+	/// Lays out the week of dates for the given release.
+	///
+	/// - Parameter releaseDate: The day the next release lands on.
+	private func configureScheduleWeek(for releaseDate: Date?) {
+		self.setScheduleWeekHidden(releaseDate == nil)
+		self.scheduleWeekView.configure(releaseDate: releaseDate)
+	}
+
 	/// The shared settings used to initialize the cell.
 	fileprivate func sharedInit() {
 		self.theme_backgroundColor = KThemePicker.tableViewCellBackgroundColor.rawValue
@@ -95,7 +147,7 @@ class InformationCollectionViewCell: UICollectionViewCell {
 		self.typeImageView.image = showDetailInformation.imageValue
 		self.typeLabel.text = showDetailInformation.stringValue
 		self.headlineLabel.text = showDetailInformation.information(from: show)
-		self.primaryLabel.text = showDetailInformation.primaryInformation(from: show)
+		self.primaryLabel.text = nil
 		self.primaryImageView.image = showDetailInformation.primaryImage(from: show)
 		self.secondaryLabel.text = showDetailInformation.secondaryInformation(from: show)
 		self.footerLabel.text = showDetailInformation.footnote(from: show)
@@ -105,6 +157,12 @@ class InformationCollectionViewCell: UICollectionViewCell {
 			self.primaryImageViewHeightConstraint?.isActive = self.primaryImageView.image != nil
 			self.secondaryLabel.textAlignment = .right
 			self.secondaryLabel.font = .preferredFont(forTextStyle: .headline)
+		case .broadcast:
+			self.primaryImageViewHeightConstraint?.isActive = false
+			self.secondaryLabel.textAlignment = .natural
+			self.secondaryLabel.font = .preferredFont(forTextStyle: .body)
+
+			self.configureScheduleWeek(for: showDetailInformation.releaseDate(from: show))
 		default:
 			self.primaryImageViewHeightConstraint?.isActive = false
 			self.secondaryLabel.textAlignment = .natural
@@ -162,7 +220,7 @@ class InformationCollectionViewCell: UICollectionViewCell {
 		self.typeImageView.image = literatureDetailInformation.imageValue
 		self.typeLabel.text = literatureDetailInformation.stringValue
 		self.headlineLabel.text = literatureDetailInformation.information(from: literature)
-		self.primaryLabel.text = literatureDetailInformation.primaryInformation(from: literature)
+		self.primaryLabel.text = nil
 		self.primaryImageView.image = literatureDetailInformation.primaryImage(from: literature)
 		self.secondaryLabel.text = literatureDetailInformation.secondaryInformation(from: literature)
 		self.footerLabel.text = literatureDetailInformation.footnote(from: literature)
@@ -172,6 +230,12 @@ class InformationCollectionViewCell: UICollectionViewCell {
 			self.primaryImageViewHeightConstraint?.isActive = self.primaryImageView.image != nil
 			self.secondaryLabel.textAlignment = .right
 			self.secondaryLabel.font = .preferredFont(forTextStyle: .headline)
+		case .publication:
+			self.primaryImageViewHeightConstraint?.isActive = false
+			self.secondaryLabel.textAlignment = .natural
+			self.secondaryLabel.font = .preferredFont(forTextStyle: .body)
+
+			self.configureScheduleWeek(for: literatureDetailInformation.releaseDate(from: literature))
 		default:
 			self.primaryImageViewHeightConstraint?.isActive = false
 			self.secondaryLabel.textAlignment = .natural
@@ -184,7 +248,7 @@ class InformationCollectionViewCell: UICollectionViewCell {
 		self.typeImageView.image = gameDetailInformation.imageValue
 		self.typeLabel.text = gameDetailInformation.stringValue
 		self.headlineLabel.text = gameDetailInformation.information(from: game)
-		self.primaryLabel.text = gameDetailInformation.primaryInformation(from: game)
+		self.primaryLabel.text = nil
 		self.primaryImageView.image = gameDetailInformation.primaryImage(from: game)
 		self.secondaryLabel.text = gameDetailInformation.secondaryInformation(from: game)
 		self.footerLabel.text = gameDetailInformation.footnote(from: game)
@@ -194,6 +258,12 @@ class InformationCollectionViewCell: UICollectionViewCell {
 			self.primaryImageViewHeightConstraint?.isActive = self.primaryImageView.image != nil
 			self.secondaryLabel.textAlignment = .right
 			self.secondaryLabel.font = .preferredFont(forTextStyle: .headline)
+		case .publication:
+			self.primaryImageViewHeightConstraint?.isActive = false
+			self.secondaryLabel.textAlignment = .natural
+			self.secondaryLabel.font = .preferredFont(forTextStyle: .body)
+
+			self.configureScheduleWeek(for: gameDetailInformation.releaseDate(from: game))
 		default:
 			self.primaryImageViewHeightConstraint?.isActive = false
 			self.secondaryLabel.textAlignment = .natural

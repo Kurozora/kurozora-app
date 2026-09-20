@@ -15,6 +15,7 @@ extension LiteratureDetailsCollectionViewController {
 			LiteratureDetailHeaderCollectionViewCell.self,
 			BadgeCollectionViewCell.self,
 			RatingBadgeCollectionViewCell.self,
+			CountdownCollectionViewCell.self,
 			TextViewCollectionViewCell.self,
 			RatingCollectionViewCell.self,
 			RatingSentimentCollectionViewCell.self,
@@ -58,6 +59,13 @@ extension LiteratureDetailsCollectionViewController {
 				let badgeCollectionViewCell = collectionView.dequeueReusableCell(withReuseIdentifier: badgeReuseIdentifier, for: indexPath) as? BadgeCollectionViewCell
 				badgeCollectionViewCell?.configureCell(with: self.literature, literatureDetailBadge: literatureDetailBadge)
 				return badgeCollectionViewCell
+			case .countdown:
+				let countdownCollectionViewCell = collectionView.dequeueReusableCell(withReuseIdentifier: CountdownCollectionViewCell.self, for: indexPath)
+
+				if let literature = self.literature, let nextPublicationAt = LiteratureDetail.Information.publication.releaseDate(from: literature) {
+					countdownCollectionViewCell?.configure(caption: L10n.nextChapter, schedule: self.literature?.attributes.publicationString, targetDate: nextPublicationAt)
+				}
+				return countdownCollectionViewCell
 			case .synopsis:
 				let textViewCollectionViewCell = collectionView.dequeueReusableCell(withReuseIdentifier: TextViewCollectionViewCell.self, for: indexPath)
 				textViewCollectionViewCell?.delegate = self
@@ -191,6 +199,11 @@ extension LiteratureDetailsCollectionViewController {
 					.badge(literatureDetailBadge)
 				}
 				newSnapshot.appendItems(badgeItems, toSection: literatureDetailSection)
+			case .countdown:
+				if LiteratureDetail.Information.publication.releaseDate(from: self.literature) != nil {
+					newSnapshot.appendSections([literatureDetailSection])
+					newSnapshot.appendItems([.countdown], toSection: literatureDetailSection)
+				}
 			case .synopsis:
 				if let synopsis = self.literature.attributes.synopsis, !synopsis.isEmpty {
 					newSnapshot.appendSections([literatureDetailSection])

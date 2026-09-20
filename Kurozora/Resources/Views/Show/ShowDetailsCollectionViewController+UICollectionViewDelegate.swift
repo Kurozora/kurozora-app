@@ -47,6 +47,9 @@ extension ShowDetailsCollectionViewController {
 				collectionView.safeScrollToItem(at: IndexPath(row: ShowDetail.Information.languages.rawValue, section: sectionIndex), at: .centeredVertically, animated: true)
 				return
 			}
+		case .countdown:
+			guard let sectionIndex = self.snapshot.indexOfSection(SectionLayoutKind.information) else { return }
+			collectionView.safeScrollToItem(at: IndexPath(row: ShowDetail.Information.broadcast.rawValue, section: sectionIndex), at: .centeredVertically, animated: true)
 		case .seasons:
 			guard let season = self.cachedItem(at: indexPath) as? Season else { return }
 			self.show(.episodesListSegue, sender: season)

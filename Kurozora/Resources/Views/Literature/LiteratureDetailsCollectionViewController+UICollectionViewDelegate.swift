@@ -47,6 +47,9 @@ extension LiteratureDetailsCollectionViewController {
 				collectionView.safeScrollToItem(at: IndexPath(row: LiteratureDetail.Information.languages.rawValue, section: sectionIndex), at: .centeredVertically, animated: true)
 				return
 			}
+		case .countdown:
+			guard let sectionIndex = self.snapshot.indexOfSection(SectionLayoutKind.information) else { return }
+			collectionView.safeScrollToItem(at: IndexPath(row: LiteratureDetail.Information.publication.rawValue, section: sectionIndex), at: .centeredVertically, animated: true)
 		case .cast:
 			guard let cast = self.cachedItem(at: indexPath) as? Cast else { return }
 			guard let character = cast.relationships.characters.data.first else { return }

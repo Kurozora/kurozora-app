@@ -18,6 +18,9 @@ extension ShowDetailsCollectionViewController {
 		/// Indicates badges section layout type.
 		case badges
 
+		/// Indicates a countdown section layout type.
+		case countdown
+
 		/// Indicates a synopsis section layout type.
 		case synopsis
 
@@ -68,6 +71,8 @@ extension ShowDetailsCollectionViewController {
 				return L10n.header
 			case .badges:
 				return L10n.badges
+			case .countdown:
+				return ""
 			case .synopsis:
 				return L10n.synopsis
 			case .rating:
@@ -102,7 +107,7 @@ extension ShowDetailsCollectionViewController {
 		/// The string value of a show section type segue identifier.
 		var segueIdentifier: SegueIdentifiers? {
 			switch self {
-			case .header, .badges, .synopsis, .rateAndReview, .reviews, .information, .sosumi:
+			case .header, .badges, .countdown, .synopsis, .rateAndReview, .reviews, .information, .sosumi:
 				return nil
 			case .rating:
 				return .reviewsListSegue
@@ -137,6 +142,9 @@ extension ShowDetailsCollectionViewController {
 
 		/// Indicates the item kind contains a badge row.
 		case badge(_: ShowDetail.Badge)
+
+		/// Indicates the item kind contains the countdown to the show's next episode.
+		case countdown
 
 		/// Indicates the item kind contains the show's synopsis.
 		case synopsis

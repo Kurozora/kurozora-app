@@ -16,7 +16,7 @@ extension ShowDetailsCollectionViewController {
 		var columnCount = 1
 
 		switch self.snapshot.sectionIdentifiers[section] {
-		case .header, .synopsis, .sosumi:
+		case .header, .countdown, .synopsis, .sosumi:
 			return 1
 		case .badges:
 			return width > 414 ? ShowDetail.Badge.allCases.count : Int((width / 132).rounded())
@@ -66,6 +66,8 @@ extension ShowDetailsCollectionViewController {
 			return .fractionalHeight(1.0)
 		case .badges:
 			return .estimated(50)
+		case .countdown:
+			return .estimated(88)
 		case .synopsis:
 			return .estimated(100)
 		case .rating:
@@ -109,6 +111,9 @@ extension ShowDetailsCollectionViewController {
 			case .badges:
 				let badgeSection = Layouts.badgeSection(section, columns: columns, layoutEnvironment: layoutEnvironment)
 				sectionLayout = badgeSection
+			case .countdown:
+				let fullSection = Layouts.fullSection(section, columns: columns, layoutEnvironment: layoutEnvironment)
+				sectionLayout = fullSection
 			case .synopsis:
 				if let synopsis = self.show?.attributes.synopsis, !synopsis.isEmpty {
 					let fullSection = Layouts.fullSection(section, columns: columns, layoutEnvironment: layoutEnvironment)

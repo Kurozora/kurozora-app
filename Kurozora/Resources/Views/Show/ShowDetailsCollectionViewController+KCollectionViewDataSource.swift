@@ -15,6 +15,7 @@ extension ShowDetailsCollectionViewController {
 			ShowDetailHeaderCollectionViewCell.self,
 			BadgeCollectionViewCell.self,
 			RatingBadgeCollectionViewCell.self,
+			CountdownCollectionViewCell.self,
 			TextViewCollectionViewCell.self,
 			RatingCollectionViewCell.self,
 			RatingSentimentCollectionViewCell.self,
@@ -59,6 +60,13 @@ extension ShowDetailsCollectionViewController {
 				let badgeCollectionViewCell = collectionView.dequeueReusableCell(withReuseIdentifier: showDetailBadge.identifierString, for: indexPath) as? BadgeCollectionViewCell
 				badgeCollectionViewCell?.configureCell(with: self.show, showDetailBadge: showDetailBadge)
 				return badgeCollectionViewCell
+			case .countdown:
+				let countdownCollectionViewCell = collectionView.dequeueReusableCell(withReuseIdentifier: CountdownCollectionViewCell.self, for: indexPath)
+
+				if let show = self.show, let nextBroadcastAt = ShowDetail.Information.broadcast.releaseDate(from: show) {
+					countdownCollectionViewCell?.configure(caption: L10n.nextEpisode, schedule: self.show?.attributes.broadcastString, targetDate: nextBroadcastAt)
+				}
+				return countdownCollectionViewCell
 			case .synopsis:
 				let textViewCollectionViewCell = collectionView.dequeueReusableCell(withReuseIdentifier: TextViewCollectionViewCell.self, for: indexPath)
 				textViewCollectionViewCell?.delegate = self
@@ -196,6 +204,11 @@ extension ShowDetailsCollectionViewController {
 					.badge(showDetailBadge)
 				}
 				newSnapshot.appendItems(badgeItems, toSection: showDetailSection)
+			case .countdown:
+				if ShowDetail.Information.broadcast.releaseDate(from: self.show) != nil {
+					newSnapshot.appendSections([showDetailSection])
+					newSnapshot.appendItems([.countdown], toSection: showDetailSection)
+				}
 			case .synopsis:
 				if let synopsis = self.show.attributes.synopsis, !synopsis.isEmpty {
 					newSnapshot.appendSections([showDetailSection])

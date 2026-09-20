@@ -347,17 +347,16 @@ extension GameDetail {
 			}
 		}
 
-		/// Returns the required primary information from the given object.
+		/// Returns the date the release of the given object lands on.
 		///
-		/// - Parameter game: The object used to extract the information from.
+		/// - Parameter game: The object used to extract the date from.
 		///
-		/// - Returns: the required primary information from the given object.
-		func primaryInformation(from game: Game) -> String? {
+		/// - Returns: the date the release of the given object lands on.
+		func releaseDate(from game: Game) -> Date? {
 			switch self {
 			case .publication:
-				guard game.attributes.endedAt == nil else { return nil }
-				guard let publicationDate = game.attributes.publicationDate else { return nil }
-				return publicationDate.formatted(.relative(presentation: .named, unitsStyle: .abbreviated))
+				guard let startedAt = game.attributes.startedAt, startedAt > Date() else { return nil }
+				return startedAt
 			default: return nil
 			}
 		}
@@ -434,9 +433,12 @@ extension GameDetail {
 			case .duration:
 				return L10n.withTotalOf(game.attributes.durationTotal)
 			case .publication:
-				guard game.attributes.endedAt == nil else { return L10n.publicationEnded }
-				guard game.attributes.publicationDate == nil else { return nil }
-				return L10n.noPublicationData
+				if let endedAt = game.attributes.endedAt, endedAt < Date() {
+					return L10n.publicationEnded
+				}
+				guard let startedAt = game.attributes.startedAt else { return L10n.noPublicationData }
+				guard startedAt > Date() else { return nil }
+				return L10n.localTime(startedAt.appFormatted(date: .omitted, time: .shortened))
 			case .publicationDates:
 				guard self.secondaryInformation(from: game) == nil else { return nil }
 				return game.attributes.status.description

@@ -47,6 +47,9 @@ extension GameDetailsCollectionViewController {
 				collectionView.safeScrollToItem(at: IndexPath(row: GameDetail.Information.languages.rawValue, section: sectionIndex), at: .centeredVertically, animated: true)
 				return
 			}
+		case .countdown:
+			guard let sectionIndex = self.snapshot.indexOfSection(SectionLayoutKind.information) else { return }
+			collectionView.safeScrollToItem(at: IndexPath(row: GameDetail.Information.publication.rawValue, section: sectionIndex), at: .centeredVertically, animated: true)
 		case .cast:
 			guard
 				let cast = self.cachedItem(at: indexPath) as? Cast,
@@ -84,7 +87,7 @@ extension GameDetailsCollectionViewController {
 		let collectionViewCell = collectionView.cellForItem(at: indexPath)
 
 		switch self.snapshot.sectionIdentifiers[indexPath.section] {
-		case .header, .badge, .synopsis, .rateAndReview, .rating, .information, .sosumi:
+		case .header, .badge, .countdown, .synopsis, .rateAndReview, .rating, .information, .sosumi:
 			return nil
 		case .reviews:
 			guard let itemKind = self.dataSource.itemIdentifier(for: indexPath) else { return nil }

@@ -343,17 +343,18 @@ extension LiteratureDetail {
 			}
 		}
 
-		/// Returns the required primary information from the given object.
+		/// Returns the date the next release of the given object lands on.
 		///
-		/// - Parameter literature: The object used to extract the information from.
+		/// - Parameter literature: The object used to extract the date from.
 		///
-		/// - Returns: the required primary information from the given object.
-		func primaryInformation(from literature: Literature) -> String? {
+		/// - Returns: the date the next release of the given object lands on.
+		func releaseDate(from literature: Literature) -> Date? {
 			switch self {
 			case .publication:
-				guard literature.attributes.endedAt == nil else { return nil }
-				guard let publicationDate = literature.attributes.publicationDate else { return nil }
-				return publicationDate.formatted(.relative(presentation: .named, unitsStyle: .abbreviated))
+				if let endedAt = literature.attributes.endedAt, endedAt < Date() {
+					return nil
+				}
+				return literature.attributes.nextPublicationAt
 			default: return nil
 			}
 		}
@@ -446,9 +447,11 @@ extension LiteratureDetail {
 			case .duration:
 				return L10n.withTotalOf(literature.attributes.durationTotal)
 			case .publication:
-				guard literature.attributes.endedAt == nil else { return L10n.publicationEnded }
-				guard literature.attributes.publicationDate == nil else { return nil }
-				return L10n.noPublicationData
+				if let endedAt = literature.attributes.endedAt, endedAt < Date() {
+					return L10n.publicationEnded
+				}
+				guard let nextPublicationAt = literature.attributes.nextPublicationAt else { return L10n.noPublicationData }
+				return L10n.localTime(nextPublicationAt.appFormatted(date: .omitted, time: .shortened))
 			case .publicationDates:
 				guard self.secondaryInformation(from: literature) == nil else { return nil }
 				return literature.attributes.status.description

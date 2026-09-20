@@ -15,6 +15,7 @@ extension GameDetailsCollectionViewController {
 			GameDetailHeaderCollectionViewCell.self,
 			BadgeCollectionViewCell.self,
 			RatingBadgeCollectionViewCell.self,
+			CountdownCollectionViewCell.self,
 			TextViewCollectionViewCell.self,
 			RatingCollectionViewCell.self,
 			RatingSentimentCollectionViewCell.self,
@@ -58,6 +59,13 @@ extension GameDetailsCollectionViewController {
 				let badgeCollectionViewCell = collectionView.dequeueReusableCell(withReuseIdentifier: badgeReuseIdentifier, for: indexPath) as? BadgeCollectionViewCell
 				badgeCollectionViewCell?.configureCell(with: self.game, gameDetailBadge: gameDetailBadge)
 				return badgeCollectionViewCell
+			case .countdown:
+				let countdownCollectionViewCell = collectionView.dequeueReusableCell(withReuseIdentifier: CountdownCollectionViewCell.self, for: indexPath)
+
+				if let game = self.game, let startedAt = GameDetail.Information.publication.releaseDate(from: game) {
+					countdownCollectionViewCell?.configure(caption: L10n.release, schedule: startedAt.appFormatted(date: .abbreviated, time: .shortened), targetDate: startedAt)
+				}
+				return countdownCollectionViewCell
 			case .synopsis:
 				let textViewCollectionViewCell = collectionView.dequeueReusableCell(withReuseIdentifier: TextViewCollectionViewCell.self, for: indexPath)
 				textViewCollectionViewCell?.delegate = self
@@ -191,6 +199,11 @@ extension GameDetailsCollectionViewController {
 					.badge(gameDetailBadge)
 				}
 				newSnapshot.appendItems(badgeItems, toSection: gameDetailSection)
+			case .countdown:
+				if GameDetail.Information.publication.releaseDate(from: self.game) != nil {
+					newSnapshot.appendSections([gameDetailSection])
+					newSnapshot.appendItems([.countdown], toSection: gameDetailSection)
+				}
 			case .synopsis:
 				if let synopsis = self.game.attributes.synopsis, !synopsis.isEmpty {
 					newSnapshot.appendSections([gameDetailSection])

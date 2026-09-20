@@ -5370,6 +5370,102 @@ extension L10n {
             )
 		}
 	}
+	/// The day unit of a countdown.
+	static var countdownUnitDays: String {
+		L10n.resolve {
+			String(
+                localized: "days",
+                table: "Content",
+                bundle: LanguageManager.shared.bundle,
+                locale: LanguageManager.shared.locale,
+                comment: "The day unit of a countdown, shown under the number of days left."
+            )
+		}
+	}
+	/// The hour unit of a countdown.
+	static var countdownUnitHours: String {
+		L10n.resolve {
+			String(
+                localized: "hrs",
+                table: "Content",
+                bundle: LanguageManager.shared.bundle,
+                locale: LanguageManager.shared.locale,
+                comment: "The hour unit of a countdown, shown under the number of hours left."
+            )
+		}
+	}
+	/// The minute unit of a countdown.
+	static var countdownUnitMinutes: String {
+		L10n.resolve {
+			String(
+                localized: "min",
+                table: "Content",
+                bundle: LanguageManager.shared.bundle,
+                locale: LanguageManager.shared.locale,
+                comment: "The minute unit of a countdown, shown under the number of minutes left."
+            )
+		}
+	}
+	/// The second unit of a countdown.
+	static var countdownUnitSeconds: String {
+		L10n.resolve {
+			String(
+                localized: "sec",
+                table: "Content",
+                bundle: LanguageManager.shared.bundle,
+                locale: LanguageManager.shared.locale,
+                comment: "The second unit of a countdown, shown under the number of seconds left."
+            )
+		}
+	}
+	/// The caption of the countdown to a show's next episode.
+	static var nextEpisode: String {
+		L10n.resolve {
+			String(
+                localized: "Next Episode",
+                table: "Content",
+                bundle: LanguageManager.shared.bundle,
+                locale: LanguageManager.shared.locale,
+                comment: "The caption of the countdown to a show's next episode."
+            )
+		}
+	}
+	/// The caption of the countdown to a literature's next chapter.
+	static var nextChapter: String {
+		L10n.resolve {
+			String(
+                localized: "Next Chapter",
+                table: "Content",
+                bundle: LanguageManager.shared.bundle,
+                locale: LanguageManager.shared.locale,
+                comment: "The caption of the countdown to a literature's next chapter."
+            )
+		}
+	}
+	/// The caption of the countdown to a game's release.
+	static var release: String {
+		L10n.resolve {
+			String(
+                localized: "Release",
+                table: "Content",
+                bundle: LanguageManager.shared.bundle,
+                locale: LanguageManager.shared.locale,
+                comment: "The caption of the countdown to a game's release."
+            )
+		}
+	}
+	/// The local time a release lands at.
+	static func localTime(_ time: String) -> String {
+		L10n.resolve {
+			String(
+                localized: "\(time) your time",
+                table: "Content",
+                bundle: LanguageManager.shared.bundle,
+                locale: LanguageManager.shared.locale,
+                comment: "The local time a release lands at, where the placeholder is the time."
+            )
+		}
+	}
 
 	// MARK: - Siri Invocation Phrases
 	/// The suggested Siri phrase for opening a title.

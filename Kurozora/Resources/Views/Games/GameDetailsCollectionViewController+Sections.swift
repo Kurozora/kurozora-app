@@ -15,6 +15,7 @@ extension GameDetailsCollectionViewController {
 		/// Indicates a header section layout type.
 		case header = 0
 		case badge
+		case countdown
 		case synopsis
 		case rating
 		case rateAndReview
@@ -36,6 +37,8 @@ extension GameDetailsCollectionViewController {
 				return L10n.header
 			case .badge:
 				return L10n.badges
+			case .countdown:
+				return ""
 			case .synopsis:
 				return L10n.synopsis
 			case .rating:
@@ -66,7 +69,7 @@ extension GameDetailsCollectionViewController {
 		/// The string value of a game section type segue identifier.
 		var segueIdentifier: SegueIdentifiers? {
 			switch self {
-			case .header, .badge, .synopsis, .rateAndReview, .reviews, .information, .sosumi:
+			case .header, .badge, .countdown, .synopsis, .rateAndReview, .reviews, .information, .sosumi:
 				return nil
 			case .rating:
 				return .reviewsListSegue
@@ -97,6 +100,9 @@ extension GameDetailsCollectionViewController {
 
 		/// Indicates the item kind contains a badge row.
 		case badge(_: GameDetail.Badge)
+
+		/// Indicates the item kind contains the countdown to the game's release.
+		case countdown
 
 		/// Indicates the item kind contains the game's synopsis.
 		case synopsis

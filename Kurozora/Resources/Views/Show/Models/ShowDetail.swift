@@ -352,17 +352,18 @@ extension ShowDetail {
 			}
 		}
 
-		/// Returns the required primary information from the given object.
+		/// Returns the date the next release of the given object lands on.
 		///
-		/// - Parameter show: The object used to extract the information from.
+		/// - Parameter show: The object used to extract the date from.
 		///
-		/// - Returns: the required primary information from the given object.
-		func primaryInformation(from show: Show) -> String? {
+		/// - Returns: the date the next release of the given object lands on.
+		func releaseDate(from show: Show) -> Date? {
 			switch self {
 			case .broadcast:
-				guard show.attributes.endedAt == nil else { return nil }
-				guard let nextBroadcastAt = show.attributes.nextBroadcastAt else { return nil }
-				return nextBroadcastAt.formatted(.relative(presentation: .named, unitsStyle: .abbreviated))
+				if let endedAt = show.attributes.endedAt, endedAt < Date() {
+					return nil
+				}
+				return show.attributes.nextBroadcastAt
 			default: return nil
 			}
 		}
@@ -450,9 +451,11 @@ extension ShowDetail {
 			case .duration:
 				return L10n.withTotalOf(show.attributes.durationTotal)
 			case .broadcast:
-				guard show.attributes.endedAt == nil else { return L10n.broadcastEnded }
-				guard show.attributes.nextBroadcastAt == nil else { return nil }
-				return L10n.noBroadcastData
+				if let endedAt = show.attributes.endedAt, endedAt < Date() {
+					return L10n.broadcastEnded
+				}
+				guard let nextBroadcastAt = show.attributes.nextBroadcastAt else { return L10n.noBroadcastData }
+				return L10n.localTime(nextBroadcastAt.appFormatted(date: .omitted, time: .shortened))
 			case .airDates:
 				guard self.secondaryInformation(from: show) == nil else { return nil }
 				return show.attributes.status.description
