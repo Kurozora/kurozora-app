@@ -113,6 +113,7 @@ final class TrailerVideoDownloader {
 	///    - streamFileURL: The URL of the stream file to rewrap.
 	///    - videoFileURL: The URL the video file is written to.
 	private func export(_ streamFileURL: URL, to videoFileURL: URL) async throws {
+		#if targetEnvironment(macCatalyst)
 		let asset = AVURLAsset(url: streamFileURL)
 
 		guard let exportSession = AVAssetExportSession(asset: asset, presetName: AVAssetExportPresetPassthrough) else {
@@ -126,5 +127,10 @@ final class TrailerVideoDownloader {
 		guard exportSession.status == .completed else {
 			throw exportSession.error ?? DownloadError.exportFailed
 		}
+		#else
+		try await Task.detached(priority: .userInitiated) {
+			try await TrailerStreamRemuxer().remux(streamFileURL, to: videoFileURL)
+		}.value
+		#endif
 	}
 }

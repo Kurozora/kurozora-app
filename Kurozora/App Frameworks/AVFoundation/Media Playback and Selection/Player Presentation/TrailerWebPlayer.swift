@@ -380,12 +380,18 @@ final class TrailerWebPlayer: NSObject {
 		      try { window.webkit.messageHandlers.trailer.postMessage({ event: 'frames', decodedFrames: quality.totalVideoFrames, mediaTime: video.currentTime || 0 }); } catch (error) {}
 		    }, 1000);
 		  }
+		  function markInline() {
+		    var videos = document.querySelectorAll('video');
+		    for (var index = 0; index < videos.length; index++) {
+		      if (!videos[index].hasAttribute('playsinline')) { videos[index].setAttribute('playsinline', ''); }
+		    }
+		  }
 		  ensureStyle();
 		  var scheduled = false;
 		  function schedule() {
 		    if (scheduled) { return; }
 		    scheduled = true;
-		    requestAnimationFrame(function() { scheduled = false; ensureStyle(); skipAds(); window.kurozoraApplyNowPlaying(); });
+		    requestAnimationFrame(function() { scheduled = false; ensureStyle(); markInline(); skipAds(); window.kurozoraApplyNowPlaying(); });
 		  }
 		  new MutationObserver(schedule).observe(document.documentElement, { childList: true, subtree: true, attributes: true, attributeFilter: ['class'] });
 		  setInterval(window.kurozoraApplyNowPlaying, 1000);
@@ -1215,8 +1221,15 @@ final class TrailerWebPlayer: NSObject {
 	private func fetchQualityLevels(from manifestURL: URL) {
 		Task { @MainActor [weak self] in
 			do {
-				let (manifestBody, _) = try await URLSession.shared.data(from: manifestURL)
+				let (manifestBody, response) = try await URLSession.shared.data(from: manifestURL)
 				guard let self = self, let manifest = String(data: manifestBody, encoding: .utf8) else { return }
+
+				guard (response as? HTTPURLResponse)?.statusCode == 200 else {
+					print("----- [Trailer] Stream manifest fetch answered \((response as? HTTPURLResponse)?.statusCode ?? 0)")
+					self.hasCollectedQualityLevels = false
+					return
+				}
+
 				self.adoptQualityLevels(fromManifest: manifest)
 			} catch {
 				print("----- [Trailer] Stream manifest fetch failed: \(error.localizedDescription)")
@@ -1257,6 +1270,11 @@ final class TrailerWebPlayer: NSObject {
 
 		self.availableQualityLevels = orderedLevels
 		self.qualityVariantURLs = variantURLs
+
+		if orderedLevels.isEmpty {
+			print("----- [Trailer] Manifest listed no variants for \(self.videoID)")
+			self.hasCollectedQualityLevels = false
+		}
 
 		if self.preferredQualityLevel != "auto" {
 			self.pinPreferredStream()
@@ -1385,7 +1403,8 @@ final class TrailerWebPlayer: NSObject {
 			} catch MediaSaverManager.SaverError.accessDenied {
 				self.showDownloadNotice(L10n.photoLibraryAccessDenied, systemImageName: "xmark.octagon", feedback: .error)
 			} catch {
-				print("----- [Trailer] Download failed: \(error.localizedDescription)")
+				let failure = error as NSError
+				print("----- [Trailer] Download failed: \(failure.domain) \(failure.code) \(failure.localizedDescription) \(failure.userInfo[NSUnderlyingErrorKey].map { "\($0)" } ?? "")")
 				self.showDownloadNotice(L10n.videoSaveFailed, systemImageName: "xmark.octagon", feedback: .error)
 			}
 
@@ -1883,11 +1902,7 @@ final class TrailerWebPlayer: NSObject {
 		let configuration = WKWebViewConfiguration()
 		configuration.preferences = self.pagePreferences
 		// Without Safari's own tokens, the embed withholds its adaptive streams and caps out at 360p.
-		#if targetEnvironment(macCatalyst)
 		configuration.applicationNameForUserAgent = "Version/26.0 Safari/605.1.15"
-		#else
-		configuration.applicationNameForUserAgent = "Version/26.0 Mobile/15E148 Safari/604.1"
-		#endif
 		configuration.allowsInlineMediaPlayback = true
 		configuration.mediaTypesRequiringUserActionForPlayback = []
 		configuration.allowsPictureInPictureMediaPlayback = true
@@ -1898,6 +1913,7 @@ final class TrailerWebPlayer: NSObject {
 		#else
 		configuration.websiteDataStore = Self.sharedDataStore
 		Self.relate(configuration)
+		Self.disableMediaSource(on: self.pagePreferences)
 		#endif
 
 		#if targetEnvironment(macCatalyst)
@@ -1908,6 +1924,7 @@ final class TrailerWebPlayer: NSObject {
 		let webView = WKWebView(frame: .zero, configuration: configuration)
 		#if !targetEnvironment(macCatalyst)
 		Self.liveWebViews.add(webView)
+		webView.customUserAgent = "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/26.0 Safari/605.1.15"
 		#endif
 		webView.isOpaque = false
 		webView.backgroundColor = .clear
@@ -1935,6 +1952,27 @@ final class TrailerWebPlayer: NSObject {
 		let setAllowed = unsafeBitCast(preferences.method(for: allowSelector), to: AllowSetter.self)
 		setAllowed(preferences, allowSelector, isAllowed)
 	}
+
+	#if !targetEnvironment(macCatalyst)
+	/// Turns the page's Media Source Extensions off.
+	///
+	/// - Parameter preferences: The preferences the page runs with.
+	private static func disableMediaSource(on preferences: WKPreferences) {
+		typealias FlagSetter = @convention(c) (NSObject, Selector, Bool) -> Void
+
+		for selectorName in [#obfuscated("_setMediaSourceEnabled:"), #obfuscated("_setManagedMediaSourceEnabled:")] {
+			let selector = NSSelectorFromString(selectorName)
+
+			guard preferences.responds(to: selector) else {
+				print("----- [Trailer] WebKit keeps Media Source on, the page may stay on its own streams")
+				continue
+			}
+
+			let setFlag = unsafeBitCast(preferences.method(for: selector), to: FlagSetter.self)
+			setFlag(preferences, selector, false)
+		}
+	}
+	#endif
 
 	#if targetEnvironment(macCatalyst)
 	/// Keeps the page rendering while its window is out of sight.
