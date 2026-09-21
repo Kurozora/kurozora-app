@@ -825,9 +825,11 @@ final class KTrailerPlayerView: UIView {
 			owningViewController.present(fullscreenViewController, animated: false)
 			return
 		}
-		#endif
 
 		owningViewController.present(fullscreenViewController, animated: true)
+		#else
+		(UIApplication.topViewController ?? owningViewController).present(fullscreenViewController, animated: true)
+		#endif
 	}
 
 	/// Reveals the controls while the pointer rests on the trailer.

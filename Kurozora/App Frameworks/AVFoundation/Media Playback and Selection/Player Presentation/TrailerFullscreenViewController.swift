@@ -7,12 +7,9 @@
 //
 
 import AVFoundation
+import AVKit
 import SwiftTheme
 import UIKit
-
-#if targetEnvironment(macCatalyst)
-import Obfuscation
-#endif
 
 /// A modal that plays a trailer fullscreen, reusing the trailer's warm player.
 final class TrailerFullscreenViewController: UIViewController {
@@ -59,48 +56,93 @@ final class TrailerFullscreenViewController: UIViewController {
 	private let airPlayNoticeView = TrailerAirPlayNoticeView()
 
 	/// The button that dismisses the fullscreen player.
-	private let closeButton = TrailerFullscreenViewController.makeControlButton(pointSize: 14.0, diameter: 40.0)
+	private let closeButton = TrailerFullscreenViewController.makeEdgeButton()
+
+	#if targetEnvironment(macCatalyst)
+	/// The floating bar the Mac drives playback from.
+	private let controlBar = TrailerPlayerControlBar()
+	#else
+	/// The capsule grouping the floating window and AirPlay controls.
+	private let outputGroupView = TrailerFullscreenViewController.makeGlassCapsule()
+
+	/// The button that opens the trailer in a floating window.
+	private let pictureInPictureButton = TrailerFullscreenViewController.makeGlyphButton(systemName: "pip.enter")
+
+	/// The control that picks the AirPlay device the trailer plays on.
+	private let airPlayRoutePickerView: AVRoutePickerView = {
+		let routePickerView = AVRoutePickerView()
+		routePickerView.translatesAutoresizingMaskIntoConstraints = false
+		routePickerView.tintColor = .white
+		routePickerView.activeTintColor = .white
+		routePickerView.prioritizesVideoDevices = true
+		return routePickerView
+	}()
+
+	/// The control that sets the volume.
+	private let volumeControl = TrailerVolumeControl(diameter: 44.0)
+
+	/// The veil dimming the picture while the controls are out.
+	private let dimmingView: UIView = {
+		let view = UIView()
+		view.translatesAutoresizingMaskIntoConstraints = false
+		view.backgroundColor = UIColor.black.withAlphaComponent(0.15)
+		view.isUserInteractionEnabled = false
+		return view
+	}()
 
 	/// The button that plays or pauses the trailer.
-	private let playPauseButton = TrailerFullscreenViewController.makeControlButton(pointSize: 24.0, diameter: 64.0)
-
-	/// The button that toggles the trailer's sound.
-	private let muteButton = TrailerFullscreenViewController.makeControlButton(pointSize: 14.0, diameter: 40.0)
+	private let playPauseButton = TrailerFullscreenViewController.makeControlButton(pointSize: 34.0, diameter: 96.0)
 
 	/// The button that jumps back through the trailer.
-	private let skipBackwardButton = TrailerFullscreenViewController.makeControlButton(pointSize: 16.0, diameter: 44.0)
+	private let skipBackwardButton = TrailerFullscreenViewController.makeControlButton(pointSize: 26.0, diameter: 60.0)
 
 	/// The button that jumps forward through the trailer.
-	private let skipForwardButton = TrailerFullscreenViewController.makeControlButton(pointSize: 16.0, diameter: 44.0)
+	private let skipForwardButton = TrailerFullscreenViewController.makeControlButton(pointSize: 26.0, diameter: 60.0)
 
-	/// The button that chooses how fast the trailer plays.
-	private let speedButton = TrailerFullscreenViewController.makeControlButton(pointSize: 13.0, diameter: 40.0)
+	/// The button showing the remaining options.
+	private let optionsButton = TrailerFullscreenViewController.makeEdgeButton()
+
+	/// The capsule carrying the timeline.
+	private let timelineBarView: UIVisualEffectView = {
+		let effectView = UIVisualEffectView()
+		effectView.translatesAutoresizingMaskIntoConstraints = false
+		effectView.overrideUserInterfaceStyle = .dark
+		effectView.clipsToBounds = true
+		effectView.layer.cornerCurve = .continuous
+
+		if #available(iOS 26.0, *) {
+			effectView.effect = UIGlassEffect()
+			effectView.cornerConfiguration = .capsule()
+		} else {
+			effectView.effect = UIBlurEffect(style: .systemThickMaterialDark)
+		}
+
+		return effectView
+	}()
 
 	/// The slider that scrubs through the trailer.
 	private let scrubber: UISlider = {
 		let slider = UISlider()
 		slider.translatesAutoresizingMaskIntoConstraints = false
 		slider.overrideUserInterfaceStyle = .dark
-		#if !targetEnvironment(macCatalyst)
 		slider.minimumTrackTintColor = .white
 		slider.maximumTrackTintColor = UIColor.white.withAlphaComponent(0.3)
-		#endif
 		slider.minimumValue = 0.0
 		slider.maximumValue = 1.0
-		// Takes the slack in the row, so the time labels and buttons keep their intrinsic width.
 		slider.setContentHuggingPriority(.init(1.0), for: .horizontal)
+
+		if #available(iOS 26.0, *) {
+			slider.sliderStyle = .thumbless
+		}
+
 		return slider
 	}()
 
 	/// The label showing how far the trailer has played.
 	private let elapsedTimeLabel = TrailerFullscreenViewController.makeTimeLabel()
 
-	/// The label showing the trailer's length.
-	private let durationLabel = TrailerFullscreenViewController.makeTimeLabel()
-
-	#if targetEnvironment(macCatalyst)
-	/// The floating bar the Mac drives playback from, matching the system's own video controls.
-	private let controlBar = TrailerPlayerControlBar()
+	/// The label showing how much of the trailer is left.
+	private let remainingTimeLabel = TrailerFullscreenViewController.makeTimeLabel()
 	#endif
 
 	// MARK: - Properties
@@ -121,9 +163,21 @@ final class TrailerFullscreenViewController: UIViewController {
 		#if targetEnvironment(macCatalyst)
 		return [self.closeButton, self.controlBar]
 		#else
-		return [self.closeButton, self.playPauseButton, self.muteButton, self.skipBackwardButton, self.skipForwardButton, self.speedButton, self.scrubber, self.elapsedTimeLabel, self.durationLabel]
+		return [self.dimmingView, self.closeButton, self.outputGroupView, self.volumeControl, self.skipBackwardButton, self.playPauseButton, self.skipForwardButton, self.optionsButton, self.timelineBarView]
 		#endif
 	}
+
+	#if !targetEnvironment(macCatalyst)
+	/// The controls along the top edge.
+	private var topChromeViews: [UIView] {
+		return [self.closeButton, self.outputGroupView, self.volumeControl]
+	}
+
+	/// The controls along the bottom edge.
+	private var bottomChromeViews: [UIView] {
+		return [self.optionsButton, self.timelineBarView]
+	}
+	#endif
 
 	/// The seconds a skip button moves through the trailer.
 	private let skipInterval = 10.0
@@ -148,6 +202,20 @@ final class TrailerFullscreenViewController: UIViewController {
 
 	/// A Boolean value indicating whether the transient controls are on screen.
 	private var areControlsVisible = true
+
+	#if !targetEnvironment(macCatalyst)
+	/// The drag that carries the trailer off the screen.
+	private lazy var dismissGesture = UIPanGestureRecognizer(target: self, action: #selector(self.handleDismissDrag(_:)))
+
+	/// A Boolean value indicating whether a drag is carrying the trailer towards dismissal.
+	private var isDraggingToDismiss = false
+
+	/// The distance a drag travels before the backdrop is fully transparent.
+	private var dismissDragDistance: CGFloat = 1.0
+	#endif
+
+	/// The length of the dismissal animation.
+	private var dismissDuration = 0.4
 
 	#if targetEnvironment(macCatalyst)
 	/// A Boolean value indicating whether the pointer last rested over the control bar.
@@ -205,11 +273,6 @@ final class TrailerFullscreenViewController: UIViewController {
 	/// The frames the trailer shows each second, once it can be worked out.
 	private var framesPerSecond: Double?
 
-	#if targetEnvironment(macCatalyst)
-	/// A Boolean value indicating whether the scrubber's filled track has been colored.
-	private var didApplyTrackFill = false
-	#endif
-
 	/// A Boolean value indicating whether the player has been dismissed.
 	private var hasLeftScreen = false
 
@@ -237,7 +300,15 @@ final class TrailerFullscreenViewController: UIViewController {
 	private var controlsHideTask: Task<Void, Never>?
 
 	override var prefersStatusBarHidden: Bool {
+		#if targetEnvironment(macCatalyst)
 		return true
+		#else
+		return !self.areControlsVisible
+		#endif
+	}
+
+	override var preferredStatusBarUpdateAnimation: UIStatusBarAnimation {
+		return .fade
 	}
 
 	override var supportedInterfaceOrientations: UIInterfaceOrientationMask {
@@ -286,6 +357,10 @@ final class TrailerFullscreenViewController: UIViewController {
 		self.isMuted = isMuted
 		self.resumesPlayback = resumesPlayback
 		super.init(nibName: nil, bundle: nil)
+
+		#if !targetEnvironment(macCatalyst)
+		self.modalPresentationCapturesStatusBarAppearance = true
+		#endif
 	}
 
 	@available(*, unavailable)
@@ -302,8 +377,13 @@ final class TrailerFullscreenViewController: UIViewController {
 	override func viewDidLayoutSubviews() {
 		super.viewDidLayoutSubviews()
 
-		#if targetEnvironment(macCatalyst)
-		self.applyTrackFill()
+		#if !targetEnvironment(macCatalyst)
+		if #unavailable(iOS 26.0) {
+			self.timelineBarView.layer.cornerRadius = self.timelineBarView.bounds.height / 2.0
+			self.outputGroupView.layer.cornerRadius = self.outputGroupView.bounds.height / 2.0
+		}
+
+		self.zoomScrollView.maximumZoomScale = max(4.0, self.fillZoomScale() * 2.0)
 		#endif
 	}
 
@@ -606,6 +686,99 @@ final class TrailerFullscreenViewController: UIViewController {
 		self.zoomScrollView.setZoomScale(clampedScale, animated: true)
 	}
 
+	#if !targetEnvironment(macCatalyst)
+	/// Zooms the picture in around a double tap, or back out.
+	///
+	/// - Parameter gesture: The tap being followed.
+	@objc private func handleZoomTap(_ gesture: UITapGestureRecognizer) {
+		guard self.zoomScrollView.zoomScale <= 1.01 else {
+			self.zoomScrollView.setZoomScale(1.0, animated: true)
+			return
+		}
+
+		let scale = self.fillZoomScale()
+		let location = gesture.location(in: self.contentView)
+		let size = CGSize(width: self.zoomScrollView.bounds.width / scale, height: self.zoomScrollView.bounds.height / scale)
+		self.zoomScrollView.zoom(to: CGRect(x: location.x - size.width / 2.0, y: location.y - size.height / 2.0, width: size.width, height: size.height), animated: true)
+	}
+
+	/// Returns the area the picture occupies at its natural fit.
+	///
+	/// - Returns: The fitted rect, in the zoom view's coordinates.
+	private func fittedPictureRect() -> CGRect {
+		let bounds = self.zoomScrollView.bounds
+		let referenceSize = TrailerWebPlayer.referenceSize
+		guard bounds.width > 0.0, bounds.height > 0.0 else { return bounds }
+
+		let fitScale = min(bounds.width / referenceSize.width, bounds.height / referenceSize.height)
+		let size = CGSize(width: referenceSize.width * fitScale, height: referenceSize.height * fitScale)
+		return CGRect(x: (bounds.width - size.width) / 2.0, y: (bounds.height - size.height) / 2.0, width: size.width, height: size.height)
+	}
+
+	/// Returns the scale at which the picture fills the screen.
+	///
+	/// - Returns: The fill scale.
+	private func fillZoomScale() -> CGFloat {
+		let bounds = self.zoomScrollView.bounds
+		let pictureRect = self.fittedPictureRect()
+		guard pictureRect.width > 0.0, pictureRect.height > 0.0 else { return 2.0 }
+
+		let fillScale = max(bounds.width / pictureRect.width, bounds.height / pictureRect.height)
+		return fillScale > 1.1 ? fillScale : 2.0
+	}
+
+	/// Carries the trailer off the screen with the reader's drag.
+	///
+	/// - Parameter gesture: The drag being followed.
+	@objc private func handleDismissDrag(_ gesture: UIPanGestureRecognizer) {
+		let translation = gesture.translation(in: self.view)
+		let progress = min(1.0, abs(translation.y) / self.dismissDragDistance)
+
+		switch gesture.state {
+		case .began:
+			self.isDraggingToDismiss = true
+			self.dismissDragDistance = max(1.0, self.fittedPictureRect().maxY * 0.9)
+			self.controlsHideTask?.cancel()
+			self.scrubGlideTask?.cancel()
+		case .changed:
+			let scale = (3.0 - progress) / 3.0
+			self.zoomWindowView.transform = CGAffineTransform(translationX: translation.x, y: translation.y).scaledBy(x: scale, y: scale)
+			self.backdropView.alpha = 1.0 - progress
+			self.chromeViews.forEach { $0.alpha = max(0.0, 1.0 - progress * 4.0) }
+		case .ended:
+			let velocity = gesture.velocity(in: self.view)
+			let isFlick = abs(velocity.y) > 250.0 && abs(velocity.x) < abs(velocity.y)
+
+			guard isFlick || progress >= 0.35 else {
+				self.restoreFromDismissDrag()
+				return
+			}
+
+			self.isDraggingToDismiss = false
+			self.dismissDuration = isFlick ? 0.25 : 0.4
+			self.close()
+		default:
+			self.restoreFromDismissDrag()
+		}
+	}
+
+	/// Returns the trailer, backdrop and controls to rest after a drag lets go short of dismissal.
+	private func restoreFromDismissDrag() {
+		guard self.isDraggingToDismiss else { return }
+
+		self.isDraggingToDismiss = false
+		let controlsAlpha: CGFloat = self.areControlsVisible ? 1.0 : 0.0
+
+		UIView.animate(withDuration: 0.175, delay: 0.0, options: [.curveEaseOut, .beginFromCurrentState]) {
+			self.zoomWindowView.transform = .identity
+			self.backdropView.alpha = 1.0
+			self.chromeViews.forEach { $0.alpha = controlsAlpha }
+		}
+
+		self.scheduleControlsAutoHide()
+	}
+	#endif
+
 	/// Leaves fullscreen in response to the fullscreen command.
 	@objc func toggleTrailerFullscreen() {
 		self.close()
@@ -723,16 +896,31 @@ final class TrailerFullscreenViewController: UIViewController {
 		self.sendPagePress {
 			self.player?.requestPictureInPicture()
 		}
+		#else
+		self.player?.requestPictureInPicture()
+		self.scheduleControlsAutoHide()
 		#endif
 	}
 
-	/// Toggles the trailer's sound in response to the mute button.
-	@objc private func toggleMute() {
+	#if !targetEnvironment(macCatalyst)
+	/// Toggles the trailer's sound in response to the speaker glyph.
+	private func toggleMute() {
 		self.isMuted.toggle()
 		self.player?.setMuted(self.isMuted)
 		self.updateControls(animated: false)
 		self.scheduleControlsAutoHide()
 	}
+
+	/// Shows or hides the controls the volume slider covers.
+	private func updateVolumeNeighbors() {
+		let isVisible = self.areControlsVisible && !self.volumeControl.isExpanded
+
+		for view in [self.closeButton, self.outputGroupView] {
+			view.alpha = isVisible ? 1.0 : 0.0
+			view.isUserInteractionEnabled = isVisible
+		}
+	}
+	#endif
 
 	/// Brings the controls back as the pointer moves over the trailer.
 	///
@@ -803,6 +991,8 @@ final class TrailerFullscreenViewController: UIViewController {
 
 			#if targetEnvironment(macCatalyst)
 			guard !self.isPointerOverControls, !self.controlBar.isEngaged else { return }
+			#else
+			guard !self.isDraggingToDismiss, !self.volumeControl.isExpanded else { return }
 			#endif
 
 			self.setControls(visible: false, animated: true)
@@ -820,14 +1010,13 @@ final class TrailerFullscreenViewController: UIViewController {
 			self.airPlayNoticeView.refresh()
 		}
 
-		self.playPauseButton.setImage(UIImage(systemName: self.isPlaying ? "pause.fill" : "play.fill"), for: .normal)
-		self.playPauseButton.accessibilityLabel = self.isPlaying ? L10n.pause : L10n.play
-		self.muteButton.setImage(UIImage(systemName: self.isMuted ? "speaker.slash.fill" : "speaker.wave.2.fill"), for: .normal)
-		self.muteButton.accessibilityLabel = self.isMuted ? L10n.unmute : L10n.mute
-
 		#if targetEnvironment(macCatalyst)
 		self.controlBar.setPlaying(self.isPlaying)
 		self.controlBar.setVolume(self.isMuted ? 0.0 : (self.player?.volume ?? 1.0))
+		#else
+		self.playPauseButton.setImage(UIImage(systemName: self.isPlaying ? "pause.fill" : "play.fill"), for: .normal)
+		self.playPauseButton.accessibilityLabel = self.isPlaying ? L10n.pause : L10n.play
+		self.volumeControl.isMuted = self.isMuted
 		#endif
 
 		self.setControls(visible: true, animated: animated)
@@ -839,19 +1028,34 @@ final class TrailerFullscreenViewController: UIViewController {
 	///    - visible: Whether the controls are shown.
 	///    - animated: Whether the change is animated.
 	private func setControls(visible: Bool, animated: Bool) {
-		var transientViews = [self.playPauseButton, self.muteButton, self.skipBackwardButton, self.skipForwardButton, self.speedButton, self.scrubber, self.elapsedTimeLabel, self.durationLabel] as [UIView]
-
 		#if targetEnvironment(macCatalyst)
-		transientViews = [self.controlBar]
+		let transientViews: [UIView] = [self.controlBar]
+		let interactiveViews = transientViews
+		#else
+		guard !self.isDraggingToDismiss else { return }
+
+		let transientViews = self.chromeViews
+		let interactiveViews = transientViews.filter { $0 !== self.dimmingView }
+		let topViews = self.topChromeViews
+		let bottomViews = self.bottomChromeViews
+
+		if !visible {
+			self.volumeControl.setExpanded(false)
+		}
 		#endif
 
 		self.areControlsVisible = visible
-
-		// A hidden control still takes presses, which would swallow the tap asking for it back.
-		transientViews.forEach { $0.isUserInteractionEnabled = visible }
+		interactiveViews.forEach { $0.isUserInteractionEnabled = visible }
 
 		let apply = {
 			transientViews.forEach { $0.alpha = visible ? 1.0 : 0.0 }
+
+			#if !targetEnvironment(macCatalyst)
+			topViews.forEach { $0.transform = visible ? .identity : CGAffineTransform(translationX: 0.0, y: -12.0) }
+			bottomViews.forEach { $0.transform = visible ? .identity : CGAffineTransform(translationX: 0.0, y: 12.0) }
+			self.updateVolumeNeighbors()
+			self.setNeedsStatusBarAppearanceUpdate()
+			#endif
 		}
 
 		if animated {
@@ -859,7 +1063,6 @@ final class TrailerFullscreenViewController: UIViewController {
 		} else {
 			apply()
 		}
-
 	}
 
 	/// Scrubs the trailer as the reader swipes across the picture.
@@ -1046,6 +1249,7 @@ final class TrailerFullscreenViewController: UIViewController {
 		self.player?.setPlaybackRate(self.playbackRate)
 	}
 
+	#if !targetEnvironment(macCatalyst)
 	/// Moves the trailer back through its timeline.
 	@objc private func skipBackward() {
 		self.seek(to: self.elapsedTime - self.skipInterval)
@@ -1065,7 +1269,7 @@ final class TrailerFullscreenViewController: UIViewController {
 	/// Previews the point the reader is dragging to.
 	@objc private func scrubbingDidChange() {
 		guard self.duration > 0.0 else { return }
-		self.elapsedTimeLabel.text = Self.timeText(forSeconds: Double(self.scrubber.value) * self.duration)
+		self.showTimeline(at: Double(self.scrubber.value) * self.duration)
 	}
 
 	/// Plays from the point the reader dragged to.
@@ -1078,6 +1282,15 @@ final class TrailerFullscreenViewController: UIViewController {
 
 		self.scheduleControlsAutoHide()
 	}
+
+	/// Writes the timeline's readings for the given point.
+	///
+	/// - Parameter seconds: The point in the trailer.
+	private func showTimeline(at seconds: Double) {
+		self.elapsedTimeLabel.text = Self.timeText(forSeconds: seconds)
+		self.remainingTimeLabel.text = "−" + Self.timeText(forSeconds: max(0.0, self.duration - seconds))
+	}
+	#endif
 
 	/// Moves playback to the given point, keeping it inside the trailer.
 	///
@@ -1092,30 +1305,68 @@ final class TrailerFullscreenViewController: UIViewController {
 		self.scheduleControlsAutoHide()
 	}
 
-	/// Builds the menu that chooses how fast the trailer plays.
-	private func configureSpeedButton() {
-		self.speedButton.showsMenuAsPrimaryAction = true
-		self.speedButton.accessibilityLabel = L10n.playbackSpeed
-		self.updateSpeedButton()
-	}
-
-	/// Applies the current speed to the button's title and menu.
-	private func updateSpeedButton() {
-		let title = Self.speedText(forRate: self.playbackRate)
-
-		if #available(iOS 26.0, macOS 26.0, tvOS 26.0, visionOS 26.0, watchOS 26.0, *) {
-			self.speedButton.configuration?.attributedTitle = AttributedString(title, attributes: AttributeContainer([.font: UIFont.systemFont(ofSize: 13.0, weight: .semibold), .foregroundColor: UIColor.white]))
-		} else {
-			self.speedButton.setTitle(title, for: .normal)
-			self.speedButton.setTitleColor(.white, for: .normal)
-			self.speedButton.titleLabel?.font = .systemFont(ofSize: 13.0, weight: .semibold)
-		}
-
-		self.speedButton.menu = UIMenu(children: self.playbackRates.map { rate in
+	/// Builds the menu of extra actions for the given control.
+	///
+	/// - Parameter sourceView: The control the menu opens from.
+	///
+	/// - Returns: The menu to show.
+	private func makeOptionsMenu(from sourceView: UIView) -> UIMenu {
+		let speedActions = self.playbackRates.map { rate in
 			UIAction(title: Self.speedText(forRate: rate), state: rate == self.playbackRate ? .on : .off) { [weak self] _ in
 				self?.setPlaybackRate(rate)
 			}
-		})
+		}
+
+		var children: [UIMenuElement] = []
+
+		if let shareHandler = self.shareHandler {
+			children.append(UIAction(title: L10n.share, image: UIImage(systemName: "square.and.arrow.up")) { [weak sourceView] _ in
+				guard let sourceView = sourceView else { return }
+				shareHandler(sourceView)
+			})
+		}
+
+		if let downloadMenu = self.player?.downloadMenu() {
+			children.append(downloadMenu)
+		}
+
+		children.append(UIMenu(title: L10n.playbackSpeed, image: UIImage(systemName: "speedometer"), children: speedActions))
+		children.append(UIMenu(title: L10n.videoQuality, image: UIImage(systemName: "sparkles.tv"), children: self.qualityMenuActions()))
+
+		return UIMenu(children: children)
+	}
+
+	/// Builds the actions that choose the trailer's quality.
+	///
+	/// - Returns: An action per quality level.
+	private func qualityMenuActions() -> [UIMenuElement] {
+		var preferredLevel = self.player?.preferredQualityLevel ?? "auto"
+
+		if preferredLevel != "auto" {
+			preferredLevel = self.player?.resolvedQualityLevel() ?? preferredLevel
+		}
+
+		var actions: [UIMenuElement] = [
+			UIAction(title: L10n.automatic, state: preferredLevel == "auto" ? .on : .off) { [weak self] _ in
+				self?.setPreferredQuality("auto")
+			}
+		]
+
+		for level in self.player?.availableQualityLevels ?? [] {
+			actions.append(UIAction(title: level, state: level == preferredLevel ? .on : .off) { [weak self] _ in
+				self?.setPreferredQuality(level)
+			})
+		}
+
+		return actions
+	}
+
+	/// Holds playback at the given quality level.
+	///
+	/// - Parameter level: The quality level to hold.
+	private func setPreferredQuality(_ level: String) {
+		self.player?.setPreferredQualityLevel(level)
+		self.scheduleControlsAutoHide()
 	}
 
 	/// Sets how fast the trailer plays.
@@ -1124,7 +1375,6 @@ final class TrailerFullscreenViewController: UIViewController {
 	private func setPlaybackRate(_ rate: Double) {
 		self.playbackRate = rate
 		self.player?.setPlaybackRate(rate)
-		self.updateSpeedButton()
 
 		#if targetEnvironment(macCatalyst)
 		self.controlBar.setPlaybackRate(rate)
@@ -1135,15 +1385,14 @@ final class TrailerFullscreenViewController: UIViewController {
 
 	/// Moves the scrubber and time labels to the current point.
 	private func updateProgressControls() {
-		self.elapsedTimeLabel.text = Self.timeText(forSeconds: self.elapsedTime)
-		self.durationLabel.text = Self.timeText(forSeconds: self.duration)
-
 		#if targetEnvironment(macCatalyst)
 		self.controlBar.setProgress(elapsedTime: self.elapsedTime, duration: self.duration)
-		#endif
+		#else
+		self.showTimeline(at: self.elapsedTime)
 
 		guard !self.isScrubbing, self.duration > 0.0 else { return }
 		self.scrubber.value = Float(self.elapsedTime / self.duration)
+		#endif
 	}
 
 	/// Moves the presentation onto the given trailer, continuing the queue.
@@ -1188,73 +1437,22 @@ final class TrailerFullscreenViewController: UIViewController {
 		self.zoomScrollView.delegate = self
 		self.view.addSubview(self.closeButton)
 
-		let transportStackView = UIStackView(arrangedSubviews: [self.skipBackwardButton, self.playPauseButton, self.skipForwardButton])
-		transportStackView.translatesAutoresizingMaskIntoConstraints = false
-		transportStackView.alignment = .center
-		transportStackView.spacing = 28.0
-		self.view.addSubview(transportStackView)
-
-		let scrubberStackView = UIStackView(arrangedSubviews: [self.elapsedTimeLabel, self.scrubber, self.durationLabel, self.speedButton, self.muteButton])
-		scrubberStackView.translatesAutoresizingMaskIntoConstraints = false
-		scrubberStackView.alignment = .center
-		scrubberStackView.spacing = 12.0
-		self.view.addSubview(scrubberStackView)
-
-		// The gestures live on the view itself, leaving the picture's presses to the embed.
 		let revealGesture = UITapGestureRecognizer(target: self, action: #selector(self.toggleControlsVisibility))
 		revealGesture.cancelsTouchesInView = false
 		revealGesture.delegate = self
 		self.view.addGestureRecognizer(revealGesture)
 
-		// A double press leaves fullscreen, so a single press waits out the chance of a second.
-		let exitGesture = UITapGestureRecognizer(target: self, action: #selector(self.close))
-		exitGesture.numberOfTapsRequired = 2
-		exitGesture.cancelsTouchesInView = false
-		exitGesture.delegate = self
-		self.view.addGestureRecognizer(exitGesture)
-		revealGesture.require(toFail: exitGesture)
-
 		let pointerGesture = UIHoverGestureRecognizer(target: self, action: #selector(self.handlePointerMovement(_:)))
 		self.view.addGestureRecognizer(pointerGesture)
-		self.closeButton.addTarget(self, action: #selector(self.close), for: .primaryActionTriggered)
-		self.playPauseButton.addTarget(self, action: #selector(self.togglePlayPause), for: .primaryActionTriggered)
-		self.muteButton.addTarget(self, action: #selector(self.toggleMute), for: .primaryActionTriggered)
-		self.skipBackwardButton.addTarget(self, action: #selector(self.skipBackward), for: .primaryActionTriggered)
-		self.skipForwardButton.addTarget(self, action: #selector(self.skipForward), for: .primaryActionTriggered)
-
-		self.scrubber.addTarget(self, action: #selector(self.scrubbingDidBegin), for: [.touchDown])
-		self.scrubber.addTarget(self, action: #selector(self.scrubbingDidChange), for: [.valueChanged])
-		self.scrubber.addTarget(self, action: #selector(self.scrubbingDidEnd), for: [.touchUpInside, .touchUpOutside, .touchCancel])
-
-		self.closeButton.setImage(UIImage(systemName: "xmark"), for: .normal)
-		self.closeButton.accessibilityLabel = L10n.dismiss
-		self.closeButton.alpha = 1.0
-
-		self.skipBackwardButton.setImage(UIImage(systemName: "gobackward.10"), for: .normal)
-		self.skipBackwardButton.accessibilityLabel = L10n.skipBackward
-		self.skipForwardButton.setImage(UIImage(systemName: "goforward.10"), for: .normal)
-		self.skipForwardButton.accessibilityLabel = L10n.skipForward
-
-		self.configureSpeedButton()
 
 		let scrubGesture = UIPanGestureRecognizer(target: self, action: #selector(self.handleScrubGesture(_:)))
-		#if targetEnvironment(macCatalyst)
-		// The Mac scrubs from a two-finger swipe, which arrives as a scroll rather than a drag.
-		scrubGesture.allowedScrollTypesMask = .all
-		#endif
 		scrubGesture.cancelsTouchesInView = false
 		scrubGesture.delegate = self
 		self.view.addGestureRecognizer(scrubGesture)
 
-		#if targetEnvironment(macCatalyst)
-		// The Mac drives playback from the floating bar.
-		[self.playPauseButton, self.muteButton, self.skipBackwardButton, self.skipForwardButton, self.speedButton, self.scrubber, self.elapsedTimeLabel, self.durationLabel].forEach { $0.isHidden = true }
-
-		self.controlBar.translatesAutoresizingMaskIntoConstraints = false
-		self.controlBar.delegate = self
-		self.view.addSubview(self.controlBar)
-		self.controlBar.reloadOptionsMenu()
-		#endif
+		self.closeButton.addTarget(self, action: #selector(self.close), for: .primaryActionTriggered)
+		self.closeButton.setImage(UIImage(systemName: "xmark"), for: .normal)
+		self.closeButton.accessibilityLabel = L10n.dismiss
 
 		let layoutMarginsGuide = self.view.layoutMarginsGuide
 
@@ -1286,72 +1484,167 @@ final class TrailerFullscreenViewController: UIViewController {
 			self.airPlayNoticeView.trailingAnchor.constraint(equalTo: self.contentView.trailingAnchor),
 			self.airPlayNoticeView.bottomAnchor.constraint(equalTo: self.contentView.bottomAnchor),
 
-			self.closeButton.topAnchor.constraint(equalTo: layoutMarginsGuide.topAnchor),
+			self.closeButton.topAnchor.constraint(equalTo: layoutMarginsGuide.topAnchor)
+		])
+
+		#if targetEnvironment(macCatalyst)
+		let exitGesture = UITapGestureRecognizer(target: self, action: #selector(self.close))
+		exitGesture.numberOfTapsRequired = 2
+		exitGesture.cancelsTouchesInView = false
+		exitGesture.delegate = self
+		self.view.addGestureRecognizer(exitGesture)
+		revealGesture.require(toFail: exitGesture)
+		scrubGesture.allowedScrollTypesMask = .all
+
+		self.controlBar.translatesAutoresizingMaskIntoConstraints = false
+		self.controlBar.delegate = self
+		self.view.addSubview(self.controlBar)
+		self.controlBar.reloadOptionsMenu()
+
+		NSLayoutConstraint.activate([
 			self.closeButton.leadingAnchor.constraint(equalTo: layoutMarginsGuide.leadingAnchor),
-			self.closeButton.widthAnchor.constraint(equalToConstant: 40.0),
-			self.closeButton.heightAnchor.constraint(equalToConstant: 40.0),
+			self.controlBar.centerXAnchor.constraint(equalTo: self.view.centerXAnchor),
+			self.controlBar.bottomAnchor.constraint(equalTo: layoutMarginsGuide.bottomAnchor, constant: -24.0)
+		])
+		#else
+		self.configureTouchChrome(revealGesture: revealGesture, scrubGesture: scrubGesture)
+		#endif
+	}
+
+	#if !targetEnvironment(macCatalyst)
+	/// Lays out the touch controls and gestures.
+	///
+	/// - Parameters:
+	///    - revealGesture: The tap that toggles the controls.
+	///    - scrubGesture: The swipe that scrubs the trailer.
+	private func configureTouchChrome(revealGesture: UITapGestureRecognizer, scrubGesture: UIPanGestureRecognizer) {
+		let zoomGesture = UITapGestureRecognizer(target: self, action: #selector(self.handleZoomTap(_:)))
+		zoomGesture.numberOfTapsRequired = 2
+		zoomGesture.delegate = self
+		self.view.addGestureRecognizer(zoomGesture)
+		revealGesture.require(toFail: zoomGesture)
+
+		scrubGesture.maximumNumberOfTouches = 1
+		self.dismissGesture.maximumNumberOfTouches = 1
+		self.dismissGesture.delegate = self
+		self.view.addGestureRecognizer(self.dismissGesture)
+
+		self.airPlayRoutePickerView.delegate = self
+		self.airPlayRoutePickerView.accessibilityLabel = L10n.airPlay
+		self.pictureInPictureButton.accessibilityLabel = L10n.pictureInPicture
+		self.pictureInPictureButton.isHidden = !AVPictureInPictureController.isPictureInPictureSupported()
+		self.pictureInPictureButton.addTarget(self, action: #selector(self.togglePictureInPicture), for: .primaryActionTriggered)
+
+		let outputStackView = UIStackView(arrangedSubviews: [self.pictureInPictureButton, self.airPlayRoutePickerView])
+		outputStackView.translatesAutoresizingMaskIntoConstraints = false
+		self.outputGroupView.contentView.addSubview(outputStackView)
+
+		self.volumeControl.onInteraction = { [weak self] in
+			self?.scheduleControlsAutoHide()
+		}
+		self.volumeControl.onToggleMute = { [weak self] in
+			self?.toggleMute()
+		}
+		self.volumeControl.onVolumeAdjust = { [weak self] in
+			guard let self = self, self.isMuted else { return }
+			self.toggleMute()
+		}
+		self.volumeControl.onSystemVolumeChange = { [weak self] in
+			guard let self = self, !self.areControlsVisible else { return }
+
+			self.volumeControl.alpha = 1.0
+			self.volumeControl.transform = .identity
+			self.volumeControl.isUserInteractionEnabled = true
+		}
+		self.volumeControl.onExpansionChange = { [weak self] isExpanded in
+			guard let self = self else { return }
+
+			self.updateVolumeNeighbors()
+
+			if !isExpanded, !self.areControlsVisible {
+				self.volumeControl.alpha = 0.0
+				self.volumeControl.isUserInteractionEnabled = false
+			}
+		}
+
+		self.playPauseButton.addTarget(self, action: #selector(self.togglePlayPause), for: .primaryActionTriggered)
+		self.skipBackwardButton.addTarget(self, action: #selector(self.skipBackward), for: .primaryActionTriggered)
+		self.skipForwardButton.addTarget(self, action: #selector(self.skipForward), for: .primaryActionTriggered)
+		self.skipBackwardButton.setImage(UIImage(systemName: "gobackward.10"), for: .normal)
+		self.skipBackwardButton.accessibilityLabel = L10n.skipBackward
+		self.skipForwardButton.setImage(UIImage(systemName: "goforward.10"), for: .normal)
+		self.skipForwardButton.accessibilityLabel = L10n.skipForward
+
+		self.optionsButton.setImage(UIImage(systemName: "ellipsis"), for: .normal)
+		self.optionsButton.accessibilityLabel = L10n.more
+		self.optionsButton.showsMenuAsPrimaryAction = true
+		self.optionsButton.menu = UIMenu(children: [
+			UIDeferredMenuElement.uncached { [weak self] completion in
+				guard let self = self else {
+					completion([])
+					return
+				}
+
+				completion(self.makeOptionsMenu(from: self.optionsButton).children)
+			}
+		])
+
+		self.scrubber.addTarget(self, action: #selector(self.scrubbingDidBegin), for: [.touchDown])
+		self.scrubber.addTarget(self, action: #selector(self.scrubbingDidChange), for: [.valueChanged])
+		self.scrubber.addTarget(self, action: #selector(self.scrubbingDidEnd), for: [.touchUpInside, .touchUpOutside, .touchCancel])
+
+		let transportStackView = UIStackView(arrangedSubviews: [self.skipBackwardButton, self.playPauseButton, self.skipForwardButton])
+		transportStackView.translatesAutoresizingMaskIntoConstraints = false
+		transportStackView.alignment = .center
+		transportStackView.spacing = 26.0
+
+		let timelineStackView = UIStackView(arrangedSubviews: [self.elapsedTimeLabel, self.scrubber, self.remainingTimeLabel])
+		timelineStackView.translatesAutoresizingMaskIntoConstraints = false
+		timelineStackView.alignment = .center
+		timelineStackView.spacing = 12.0
+		self.timelineBarView.contentView.addSubview(timelineStackView)
+
+		self.view.insertSubview(self.dimmingView, aboveSubview: self.zoomWindowView)
+		[self.outputGroupView, self.volumeControl, transportStackView, self.optionsButton, self.timelineBarView].forEach { self.view.addSubview($0) }
+
+		let safeAreaGuide = self.view.safeAreaLayoutGuide
+
+		NSLayoutConstraint.activate([
+			self.dimmingView.topAnchor.constraint(equalTo: self.view.topAnchor),
+			self.dimmingView.leadingAnchor.constraint(equalTo: self.view.leadingAnchor),
+			self.dimmingView.trailingAnchor.constraint(equalTo: self.view.trailingAnchor),
+			self.dimmingView.bottomAnchor.constraint(equalTo: self.view.bottomAnchor),
+
+			self.closeButton.leadingAnchor.constraint(equalTo: safeAreaGuide.leadingAnchor, constant: 20.0),
+
+			self.outputGroupView.leadingAnchor.constraint(equalTo: self.closeButton.trailingAnchor, constant: 12.0),
+			self.outputGroupView.centerYAnchor.constraint(equalTo: self.closeButton.centerYAnchor),
+			outputStackView.topAnchor.constraint(equalTo: self.outputGroupView.topAnchor),
+			outputStackView.leadingAnchor.constraint(equalTo: self.outputGroupView.leadingAnchor),
+			outputStackView.trailingAnchor.constraint(equalTo: self.outputGroupView.trailingAnchor),
+			outputStackView.bottomAnchor.constraint(equalTo: self.outputGroupView.bottomAnchor),
+			self.airPlayRoutePickerView.widthAnchor.constraint(equalToConstant: 56.0),
+			self.airPlayRoutePickerView.heightAnchor.constraint(equalToConstant: 44.0),
+
+			self.volumeControl.trailingAnchor.constraint(equalTo: safeAreaGuide.trailingAnchor, constant: -20.0),
+			self.volumeControl.centerYAnchor.constraint(equalTo: self.closeButton.centerYAnchor),
 
 			transportStackView.centerXAnchor.constraint(equalTo: self.view.centerXAnchor),
 			transportStackView.centerYAnchor.constraint(equalTo: self.view.centerYAnchor),
 
-			self.playPauseButton.widthAnchor.constraint(equalToConstant: 64.0),
-			self.playPauseButton.heightAnchor.constraint(equalToConstant: 64.0),
-			self.skipBackwardButton.widthAnchor.constraint(equalToConstant: 44.0),
-			self.skipBackwardButton.heightAnchor.constraint(equalToConstant: 44.0),
-			self.skipForwardButton.widthAnchor.constraint(equalToConstant: 44.0),
-			self.skipForwardButton.heightAnchor.constraint(equalToConstant: 44.0),
+			self.timelineBarView.leadingAnchor.constraint(equalTo: safeAreaGuide.leadingAnchor, constant: 20.0),
+			self.timelineBarView.trailingAnchor.constraint(equalTo: safeAreaGuide.trailingAnchor, constant: -20.0),
+			self.timelineBarView.bottomAnchor.constraint(equalTo: safeAreaGuide.bottomAnchor),
+			self.timelineBarView.heightAnchor.constraint(equalToConstant: 44.0),
 
-			scrubberStackView.leadingAnchor.constraint(equalTo: layoutMarginsGuide.leadingAnchor),
-			scrubberStackView.trailingAnchor.constraint(equalTo: layoutMarginsGuide.trailingAnchor),
-			scrubberStackView.bottomAnchor.constraint(equalTo: layoutMarginsGuide.bottomAnchor),
+			timelineStackView.leadingAnchor.constraint(equalTo: self.timelineBarView.leadingAnchor, constant: 18.0),
+			timelineStackView.trailingAnchor.constraint(equalTo: self.timelineBarView.trailingAnchor, constant: -18.0),
+			timelineStackView.centerYAnchor.constraint(equalTo: self.timelineBarView.centerYAnchor),
 
-			self.speedButton.widthAnchor.constraint(equalToConstant: 44.0),
-			self.speedButton.heightAnchor.constraint(equalToConstant: 40.0),
-			self.muteButton.widthAnchor.constraint(equalToConstant: 40.0),
-			self.muteButton.heightAnchor.constraint(equalToConstant: 40.0)
+			self.optionsButton.trailingAnchor.constraint(equalTo: self.timelineBarView.trailingAnchor),
+			self.optionsButton.bottomAnchor.constraint(equalTo: self.timelineBarView.topAnchor, constant: -12.0)
 		])
-
-		#if targetEnvironment(macCatalyst)
-		NSLayoutConstraint.activate([
-			self.controlBar.centerXAnchor.constraint(equalTo: self.view.centerXAnchor),
-			self.controlBar.bottomAnchor.constraint(equalTo: layoutMarginsGuide.bottomAnchor, constant: -24.0)
-		])
-		#endif
 	}
-
-	#if targetEnvironment(macCatalyst)
-	/// Colors the hosted AppKit slider's filled track.
-	private func applyTrackFill() {
-		guard !self.didApplyTrackFill, let appKitSlider = self.hostedAppKitSlider() else { return }
-
-		let selector = NSSelectorFromString(#obfuscated("setTrackFillColor:"))
-		guard
-			appKitSlider.responds(to: selector),
-			let colorClass = NSClassFromString("NSColor") as? NSObject.Type,
-			let whiteColor = colorClass.perform(NSSelectorFromString("whiteColor"))?.takeUnretainedValue()
-		else { return }
-
-		appKitSlider.perform(selector, with: whiteColor)
-		self.didApplyTrackFill = true
-	}
-
-	/// Returns the AppKit control the scrubber hosts.
-	///
-	/// - Returns: The hosted control.
-	private func hostedAppKitSlider() -> NSObject? {
-		let contentKey = #obfuscated("contentNSView")
-		var candidates: [UIView] = [self.scrubber]
-
-		while let view = candidates.popLast() {
-			if view.responds(to: NSSelectorFromString(contentKey)), let hosted = view.value(forKey: contentKey) as? NSObject {
-				return hosted
-			}
-			candidates.append(contentsOf: view.subviews)
-		}
-
-		return nil
-	}
-	#endif
 
 	/// Builds a label for a point in the trailer's timeline.
 	///
@@ -1359,11 +1652,53 @@ final class TrailerFullscreenViewController: UIViewController {
 	private static func makeTimeLabel() -> UILabel {
 		let label = UILabel()
 		label.translatesAutoresizingMaskIntoConstraints = false
-		label.font = .monospacedDigitSystemFont(ofSize: 12.0, weight: .medium)
-		label.textColor = .white
+		label.font = .monospacedDigitSystemFont(ofSize: 15.0, weight: .regular)
+		label.textColor = UIColor(white: 0.7, alpha: 1.0)
 		label.text = Self.timeText(forSeconds: 0.0)
 		return label
 	}
+
+	/// Builds a glass capsule for a row of controls.
+	///
+	/// - Returns: A configured effect view.
+	private static func makeGlassCapsule() -> UIVisualEffectView {
+		let effectView = UIVisualEffectView()
+		effectView.translatesAutoresizingMaskIntoConstraints = false
+		effectView.overrideUserInterfaceStyle = .dark
+		effectView.clipsToBounds = true
+		effectView.layer.cornerCurve = .continuous
+
+		if #available(iOS 26.0, *) {
+			let glassEffect = UIGlassEffect(style: .clear)
+			glassEffect.isInteractive = true
+			effectView.effect = glassEffect
+			effectView.cornerConfiguration = .capsule()
+		} else {
+			effectView.effect = UIBlurEffect(style: .dark)
+		}
+
+		return effectView
+	}
+
+	/// Builds a bare glyph button for a glass capsule.
+	///
+	/// - Parameter systemName: The name of the symbol to show.
+	///
+	/// - Returns: A configured button.
+	private static func makeGlyphButton(systemName: String) -> UIButton {
+		let button = UIButton(type: .system)
+		button.translatesAutoresizingMaskIntoConstraints = false
+		button.tintColor = .white
+		button.setImage(UIImage(systemName: systemName, withConfiguration: UIImage.SymbolConfiguration(pointSize: 17.0, weight: .semibold)), for: .normal)
+
+		NSLayoutConstraint.activate([
+			button.widthAnchor.constraint(equalToConstant: 56.0),
+			button.heightAnchor.constraint(equalToConstant: 44.0)
+		])
+
+		return button
+	}
+	#endif
 
 	/// Returns the given point in the timeline written for display.
 	///
@@ -1405,9 +1740,6 @@ final class TrailerFullscreenViewController: UIViewController {
 	private static func makeControlButton(pointSize: CGFloat, diameter: CGFloat) -> AdaptiveCornerButton {
 		let button = AdaptiveCornerButton()
 		button.translatesAutoresizingMaskIntoConstraints = false
-
-		// Media controls stay put instead of following the picture: the glass is left untinted, and a
-		// fixed dark appearance stops it from flipping light and dark as the video plays under it.
 		button.overrideUserInterfaceStyle = .dark
 
 		let symbolConfiguration = UIImage.SymbolConfiguration(pointSize: pointSize, weight: .semibold)
@@ -1423,7 +1755,24 @@ final class TrailerFullscreenViewController: UIViewController {
 		}
 
 		button.cornerStyle = .capsule
+
+		NSLayoutConstraint.activate([
+			button.widthAnchor.constraint(equalToConstant: diameter),
+			button.heightAnchor.constraint(equalToConstant: diameter)
+		])
+
 		return button
+	}
+
+	/// Builds a round button for the screen's edges.
+	///
+	/// - Returns: A configured button.
+	private static func makeEdgeButton() -> AdaptiveCornerButton {
+		#if targetEnvironment(macCatalyst)
+		return Self.makeControlButton(pointSize: 14.0, diameter: 40.0)
+		#else
+		return Self.makeControlButton(pointSize: 17.0, diameter: 44.0)
+		#endif
 	}
 }
 
@@ -1503,63 +1852,8 @@ extension TrailerFullscreenViewController: TrailerPlayerControlBarDelegate {
 	}
 
 	func trailerPlayerControlBarOptionsMenu(_ controlBar: TrailerPlayerControlBar) -> UIMenu {
-		let speedActions = self.playbackRates.map { rate in
-			UIAction(title: Self.speedText(forRate: rate), state: rate == self.playbackRate ? .on : .off) { [weak self] _ in
-				self?.setPlaybackRate(rate)
-			}
-		}
-
-		var children: [UIMenuElement] = []
-
-		if let shareHandler = self.shareHandler {
-			children.append(UIAction(title: L10n.share, image: UIImage(systemName: "square.and.arrow.up")) { [weak self] _ in
-				guard let self = self else { return }
-				shareHandler(self.controlBar)
-			})
-		}
-
-		if let downloadMenu = self.player?.downloadMenu() {
-			children.append(downloadMenu)
-		}
-
-		children.append(UIMenu(title: L10n.playbackSpeed, image: UIImage(systemName: "speedometer"), children: speedActions))
-		children.append(UIMenu(title: L10n.videoQuality, image: UIImage(systemName: "sparkles.tv"), children: self.qualityMenuActions()))
-
-		return UIMenu(children: children)
+		return self.makeOptionsMenu(from: controlBar)
 	}
-
-	/// Builds the actions that choose the trailer's quality.
-	///
-	/// - Returns: An action per quality level the video offers, led by automatic.
-	private func qualityMenuActions() -> [UIMenuElement] {
-		var preferredLevel = self.player?.preferredQualityLevel ?? "auto"
-
-		if preferredLevel != "auto" {
-			preferredLevel = self.player?.resolvedQualityLevel() ?? preferredLevel
-		}
-		var actions: [UIMenuElement] = [
-			UIAction(title: L10n.automatic, state: preferredLevel == "auto" ? .on : .off) { [weak self] _ in
-				self?.setPreferredQuality("auto")
-			}
-		]
-
-		for level in self.player?.availableQualityLevels ?? [] {
-			actions.append(UIAction(title: level, state: level == preferredLevel ? .on : .off) { [weak self] _ in
-				self?.setPreferredQuality(level)
-			})
-		}
-
-		return actions
-	}
-
-	/// Holds playback at the given quality level.
-	///
-	/// - Parameter level: The quality level to hold, with `auto` letting the video adapt.
-	private func setPreferredQuality(_ level: String) {
-		self.player?.setPreferredQualityLevel(level)
-		self.scheduleControlsAutoHide()
-	}
-
 }
 #endif
 
@@ -1576,16 +1870,39 @@ extension TrailerFullscreenViewController: UIGestureRecognizerDelegate {
 		return true
 	}
 
+	func gestureRecognizerShouldBegin(_ gestureRecognizer: UIGestureRecognizer) -> Bool {
+		#if targetEnvironment(macCatalyst)
+		return true
+		#else
+		guard let panGesture = gestureRecognizer as? UIPanGestureRecognizer else { return true }
+		guard self.zoomScrollView.zoomScale <= 1.01, self.player?.hasActiveTextSelection != true else { return false }
+
+		let velocity = panGesture.velocity(in: self.view)
+		let isVertical = abs(velocity.y) > abs(velocity.x)
+		return panGesture === self.dismissGesture ? isVertical : !isVertical
+		#endif
+	}
+
 	func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldReceive touch: UITouch) -> Bool {
-		// A press on the bar belongs to its buttons, its drag, or the two spots it leaves open for
-		// the page. Only presses on the picture itself toggle the controls.
 		#if targetEnvironment(macCatalyst)
 		if self.areControlsVisible, self.controlBar.frame.contains(touch.location(in: self.view)) {
 			return false
 		}
-		#endif
 
 		return true
+		#else
+		var view = touch.view
+
+		while let candidate = view, candidate !== self.view {
+			if candidate is UIControl || candidate === self.timelineBarView || candidate === self.outputGroupView || candidate === self.volumeControl {
+				return false
+			}
+
+			view = candidate.superview
+		}
+
+		return true
+		#endif
 	}
 }
 
@@ -1596,9 +1913,22 @@ extension TrailerFullscreenViewController: UIViewControllerTransitioningDelegate
 	}
 
 	func animationController(forDismissed dismissed: UIViewController) -> UIViewControllerAnimatedTransitioning? {
-		return TrailerFullscreenTransitionAnimator(isPresenting: false, sourceFrame: self.sourceFrame)
+		return TrailerFullscreenTransitionAnimator(isPresenting: false, sourceFrame: self.sourceFrame, duration: self.dismissDuration)
 	}
 }
+
+#if !targetEnvironment(macCatalyst)
+// MARK: - AVRoutePickerViewDelegate
+extension TrailerFullscreenViewController: AVRoutePickerViewDelegate {
+	func routePickerViewWillBeginPresentingRoutes(_ routePickerView: AVRoutePickerView) {
+		TrailerAirPlayStreamer.shared.arm(with: self.player, for: routePickerView)
+	}
+
+	func routePickerViewDidEndPresentingRoutes(_ routePickerView: AVRoutePickerView) {
+		TrailerAirPlayStreamer.shared.probe()
+	}
+}
+#endif
 
 // MARK: - TrailerWebPlayerDelegate
 extension TrailerFullscreenViewController: TrailerWebPlayerDelegate {

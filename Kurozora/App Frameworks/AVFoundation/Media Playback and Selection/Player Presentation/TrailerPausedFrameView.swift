@@ -25,6 +25,13 @@ final class TrailerPausedFrameView: UIImageView {
 	/// Builds the menu element that offers the trailer as a download.
 	var downloadMenuProvider: (() -> UIMenuElement?)?
 
+	/// A Boolean value indicating whether text on the frame is selected.
+	var hasActiveTextSelection: Bool {
+		guard #available(iOS 17.0, macCatalyst 17.0, *), let analysisInteraction = self.analysisInteraction as? ImageAnalysisInteraction else { return false }
+
+		return !self.isHidden && analysisInteraction.hasActiveTextSelection
+	}
+
 	override var next: UIResponder? {
 		// A menu shown within a web view picks up the Continuity Camera items.
 		guard let superview = self.superview, superview is WKWebView else { return super.next }

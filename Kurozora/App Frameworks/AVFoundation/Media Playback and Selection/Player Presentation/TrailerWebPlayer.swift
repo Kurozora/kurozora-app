@@ -520,7 +520,7 @@ final class TrailerWebPlayer: NSObject {
 	private lazy var webView: WKWebView = self.makeWebView()
 
 	/// The fixed size the page lays out at.
-	private static let referenceSize = CGSize(width: 1280.0, height: 720.0)
+	static let referenceSize = CGSize(width: 1280.0, height: 720.0)
 
 	/// The view rendering the video at its aspect ratio.
 	private var videoView: TrailerVideoScalingView?
@@ -537,6 +537,11 @@ final class TrailerWebPlayer: NSObject {
 	/// A Boolean value indicating whether the picture is visible in a host.
 	var isShowingPicture: Bool {
 		return self.host != nil && self.hasRevealed
+	}
+
+	/// A Boolean value indicating whether text on the paused frame is selected.
+	var hasActiveTextSelection: Bool {
+		return self.pausedFrameView?.hasActiveTextSelection == true
 	}
 
 	// MARK: - Initializers
@@ -1423,7 +1428,6 @@ final class TrailerWebPlayer: NSObject {
 		notice.present(feedback: feedback)
 	}
 
-	#if targetEnvironment(macCatalyst)
 	/// Opens the trailer in a floating window.
 	func requestPictureInPicture() {
 		if self.isPlayingNatively {
@@ -1431,9 +1435,24 @@ final class TrailerWebPlayer: NSObject {
 			return
 		}
 
+		#if targetEnvironment(macCatalyst)
 		self.pressThroughTarget(named: "pip")
+		#else
+		guard let embedFrameInfo = self.embedFrameInfo else { return }
+
+		let script = "(function(){ var v = document.querySelector('video'); if (!v || !v.webkitSupportsPresentationMode || !v.webkitSupportsPresentationMode('picture-in-picture')) { return 'unsupported'; } var mode = v.webkitPresentationMode === 'picture-in-picture' ? 'inline' : 'picture-in-picture'; v.webkitSetPresentationMode(mode); return mode; })();"
+		self.webView.evaluateJavaScript(script, in: embedFrameInfo, in: .page) { result in
+			switch result {
+			case .success(let value):
+				print("----- [Trailer] Picture in Picture: \(value)")
+			case .failure(let error):
+				print("----- [Trailer] Picture in Picture failed: \(error.localizedDescription)")
+			}
+		}
+		#endif
 	}
 
+	#if targetEnvironment(macCatalyst)
 	/// Presses the named in-page target over an open stretch of the picture.
 	///
 	/// - Parameter name: The control the target stands in for.
@@ -1655,7 +1674,12 @@ final class TrailerWebPlayer: NSObject {
 
 			guard let self = self, let image = image, self.isPaused else { return }
 
+			#if targetEnvironment(macCatalyst)
 			self.showPausedFrame(image, in: self.webView, contentMode: .scaleToFill)
+			#else
+			let parent = self.pageView
+			self.showPausedFrame(image, in: parent, contentMode: parent === self.webView ? .scaleToFill : .scaleAspectFit)
+			#endif
 		}
 	}
 

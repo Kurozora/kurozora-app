@@ -17,21 +17,26 @@ final class TrailerFullscreenTransitionAnimator: NSObject, UIViewControllerAnima
 	/// The frame the trailer occupies on the page, in window coordinates.
 	private let sourceFrame: CGRect?
 
+	/// The length of the transition.
+	private let duration: TimeInterval
+
 	// MARK: - Initializers
 	/// Creates an animator for one direction of the fullscreen transition.
 	///
 	/// - Parameters:
 	///    - isPresenting: Whether the fullscreen player is appearing.
 	///    - sourceFrame: The frame the trailer occupies on the page, in window coordinates.
-	init(isPresenting: Bool, sourceFrame: CGRect?) {
+	///    - duration: The length of the transition.
+	init(isPresenting: Bool, sourceFrame: CGRect?, duration: TimeInterval = 0.4) {
 		self.isPresenting = isPresenting
 		self.sourceFrame = sourceFrame
+		self.duration = duration
 		super.init()
 	}
 
 	// MARK: - Functions
 	func transitionDuration(using transitionContext: UIViewControllerContextTransitioning?) -> TimeInterval {
-		return 0.4
+		return self.duration
 	}
 
 	func animateTransition(using transitionContext: UIViewControllerContextTransitioning) {
