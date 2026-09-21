@@ -483,6 +483,9 @@ final class TrailerWebPlayer: NSObject {
 	/// The stream address the trailer adapts freely on.
 	private var masterManifestURL: String?
 
+	/// The URL of the manifest copy that lists only the original audio's variants.
+	private var originalAudioMasterURL: URL?
+
 	/// The time at which the page last reported its playback position.
 	private var pageTimeAnchor: Date?
 
@@ -1084,8 +1087,11 @@ final class TrailerWebPlayer: NSObject {
 
 					self.masterManifestURL = source
 					self.reportStreamKind(UserSettings.playsVideoNatively ? "manifest, playing in the app's own player" : "manifest, playing on the page")
-					self.fetchQualityLevels(from: manifestURL)
-					self.beginNativeHandoff()
+
+					Task { @MainActor [weak self] in
+						await self?.fetchQualityLevels(from: manifestURL)
+						self?.beginNativeHandoff()
+					}
 				case .failure:
 					self.hasCollectedQualityLevels = false
 				}
@@ -1120,6 +1126,7 @@ final class TrailerWebPlayer: NSObject {
 
 		self.videoID = videoID
 		self.masterManifestURL = nil
+		self.discardOriginalAudioMaster()
 		self.qualityVariantURLs = [:]
 		self.availableQualityLevels = []
 		self.hasCollectedQualityLevels = false
@@ -1218,23 +1225,21 @@ final class TrailerWebPlayer: NSObject {
 	/// Reads the quality levels out of the stream's manifest.
 	///
 	/// - Parameter manifestURL: The address of the manifest to read.
-	private func fetchQualityLevels(from manifestURL: URL) {
-		Task { @MainActor [weak self] in
-			do {
-				let (manifestBody, response) = try await URLSession.shared.data(from: manifestURL)
-				guard let self = self, let manifest = String(data: manifestBody, encoding: .utf8) else { return }
+	private func fetchQualityLevels(from manifestURL: URL) async {
+		do {
+			let (manifestBody, response) = try await URLSession.shared.data(from: manifestURL)
+			guard let manifest = String(data: manifestBody, encoding: .utf8) else { return }
 
-				guard (response as? HTTPURLResponse)?.statusCode == 200 else {
-					print("----- [Trailer] Stream manifest fetch answered \((response as? HTTPURLResponse)?.statusCode ?? 0)")
-					self.hasCollectedQualityLevels = false
-					return
-				}
-
-				self.adoptQualityLevels(fromManifest: manifest)
-			} catch {
-				print("----- [Trailer] Stream manifest fetch failed: \(error.localizedDescription)")
-				self?.hasCollectedQualityLevels = false
+			guard (response as? HTTPURLResponse)?.statusCode == 200 else {
+				print("----- [Trailer] Stream manifest fetch answered \((response as? HTTPURLResponse)?.statusCode ?? 0)")
+				self.hasCollectedQualityLevels = false
+				return
 			}
+
+			self.adoptQualityLevels(fromManifest: manifest)
+		} catch {
+			print("----- [Trailer] Stream manifest fetch failed: \(error.localizedDescription)")
+			self.hasCollectedQualityLevels = false
 		}
 	}
 
@@ -1243,7 +1248,7 @@ final class TrailerWebPlayer: NSObject {
 	/// - Parameter manifest: The manifest listing the stream's variants.
 	private func adoptQualityLevels(fromManifest manifest: String) {
 		let lines = manifest.components(separatedBy: "\n")
-		var variants: [(height: Int, url: String)] = []
+		var variants: [(height: Int, url: String, audioMarker: String?)] = []
 
 		for (index, line) in lines.enumerated() where line.hasPrefix("#EXT-X-STREAM-INF") {
 			guard index + 1 < lines.count else { continue }
@@ -1255,7 +1260,19 @@ final class TrailerWebPlayer: NSObject {
 				let height = resolution.components(separatedBy: ",").first?.components(separatedBy: "x").last.flatMap({ Int($0) })
 			else { continue }
 
-			variants.append((height, variantURL))
+			variants.append((height, variantURL, Self.audioMarker(of: line)))
+		}
+
+		let carriesOriginalAudio = variants.contains { $0.audioMarker == "original" }
+
+		if carriesOriginalAudio {
+			variants.removeAll { $0.audioMarker != "original" }
+		}
+
+		self.discardOriginalAudioMaster()
+
+		if carriesOriginalAudio {
+			self.originalAudioMasterURL = self.writeOriginalAudioMaster(from: lines)
 		}
 
 		variants.sort { $0.height > $1.height }
@@ -1276,9 +1293,67 @@ final class TrailerWebPlayer: NSObject {
 			self.hasCollectedQualityLevels = false
 		}
 
-		if self.preferredQualityLevel != "auto" {
+		if self.preferredQualityLevel != "auto" || self.originalAudioMasterURL != nil {
 			self.pinPreferredStream()
 		}
+	}
+
+	/// Reads the audio content marker out of a variant's tags.
+	///
+	/// - Parameter line: The variant's stream information line.
+	///
+	/// - Returns: The marker the tags carry.
+	private static func audioMarker(of line: String) -> String? {
+		guard let tags = line.components(separatedBy: "YT-EXT-XTAGS=\"").dropFirst().first?.components(separatedBy: "\"").first else { return nil }
+
+		var base64 = tags.replacingOccurrences(of: "-", with: "+").replacingOccurrences(of: "_", with: "/")
+		base64 += String(repeating: "=", count: (4 - base64.count % 4) % 4)
+		guard let decoded = Data(base64Encoded: base64).flatMap({ String(bytes: $0, encoding: .utf8) }) else { return nil }
+
+		return ["original", "dubbed-auto"].first { decoded.contains($0) }
+	}
+
+	/// Writes a copy of the manifest that lists only the original audio's variants.
+	///
+	/// - Parameter lines: The manifest's lines.
+	///
+	/// - Returns: The URL of the written copy.
+	private func writeOriginalAudioMaster(from lines: [String]) -> URL? {
+		var keptLines: [String] = []
+		var skipsVariantAddress = false
+
+		for line in lines {
+			if skipsVariantAddress {
+				skipsVariantAddress = false
+				continue
+			}
+
+			if line.hasPrefix("#EXT-X-STREAM-INF"), Self.audioMarker(of: line) != "original" {
+				skipsVariantAddress = true
+				continue
+			}
+
+			keptLines.append(line)
+		}
+
+		let fileURL = FileManager.default.temporaryDirectory.appendingPathComponent("\(self.videoID)-original-audio.m3u8")
+
+		do {
+			try keptLines.joined(separator: "\n").write(to: fileURL, atomically: true, encoding: .utf8)
+			return fileURL
+		} catch {
+			print("----- [Trailer] Failed to keep the original audio manifest: \(error.localizedDescription)")
+			return nil
+		}
+	}
+
+	/// Removes the original audio manifest copy.
+	private func discardOriginalAudioMaster() {
+		if let fileURL = self.originalAudioMasterURL {
+			try? FileManager.default.removeItem(at: fileURL)
+		}
+
+		self.originalAudioMasterURL = nil
 	}
 
 	/// Returns the offered level closest to the held one, preferring the first below it.
@@ -1341,6 +1416,21 @@ final class TrailerWebPlayer: NSObject {
 			return URL(string: variantURL)
 		}
 
+		return self.originalAudioMasterURL ?? self.masterManifestURL.flatMap(URL.init(string:))
+	}
+
+	/// Returns the address an AirPlay device can stream the trailer from.
+	///
+	/// - Returns: A stream address reachable over the network.
+	func externalStreamURL() -> URL? {
+		if self.preferredQualityLevel != "auto", let resolvedLevel = self.resolvedQualityLevel(), let variantURL = self.qualityVariantURLs[resolvedLevel] {
+			return URL(string: variantURL)
+		}
+
+		if self.originalAudioMasterURL != nil, let bestLevel = self.availableQualityLevels.first, let variantURL = self.qualityVariantURLs[bestLevel] {
+			return URL(string: variantURL)
+		}
+
 		return self.masterManifestURL.flatMap(URL.init(string:))
 	}
 
@@ -1350,6 +1440,8 @@ final class TrailerWebPlayer: NSObject {
 
 		if self.preferredQualityLevel != "auto", let resolvedLevel = self.resolvedQualityLevel() {
 			streamURL = self.qualityVariantURLs[resolvedLevel]
+		} else if self.originalAudioMasterURL != nil, let bestLevel = self.availableQualityLevels.first {
+			streamURL = self.qualityVariantURLs[bestLevel]
 		}
 
 		guard let streamURL, let embedFrameInfo = self.embedFrameInfo else { return }
@@ -1732,6 +1824,8 @@ final class TrailerWebPlayer: NSObject {
 
 	/// Stops playback and releases the page.
 	func teardown() {
+		self.discardOriginalAudioMaster()
+
 		for visibilityObserver in self.visibilityObservers {
 			NotificationCenter.default.removeObserver(visibilityObserver)
 		}
