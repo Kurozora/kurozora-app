@@ -115,7 +115,7 @@
                         </subviews>
                         <constraints>
                             <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="vOb-NI-LGX" secondAttribute="trailing" constant="8" id="SXw-ET-HcZ"/>
-                            <constraint firstItem="vOb-NI-LGX" firstAttribute="top" secondItem="VQL-pi-NXa" secondAttribute="top" id="Ze0-gl-jVC"/>
+                            <constraint firstItem="vOb-NI-LGX" firstAttribute="top" secondItem="VQL-pi-NXa" secondAttribute="top" constant="8" id="Ze0-gl-jVC"/>
                             <constraint firstAttribute="bottom" secondItem="vOb-NI-LGX" secondAttribute="bottom" constant="8" id="azV-Af-HZm"/>
                             <constraint firstItem="vOb-NI-LGX" firstAttribute="leading" secondItem="VQL-pi-NXa" secondAttribute="leading" constant="8" id="sXW-Ze-HtC"/>
                         </constraints>
