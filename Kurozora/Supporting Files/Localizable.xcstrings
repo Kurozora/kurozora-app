@@ -83887,6 +83887,9 @@
         }
       }
     },
+    "Subtitles" : {
+      "comment" : "The title of the menu that chooses a video's subtitles."
+    },
     "Suggestions" : {
       "comment" : "The string for the word 'suggestions'.",
       "localizations" : {

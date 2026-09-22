@@ -127,7 +127,7 @@ final class TrailerAirPlayStreamer {
 	func arm(with webPlayer: TrailerWebPlayer?, for routePickerView: AVRoutePickerView) {
 		guard let webPlayer = webPlayer else { return }
 
-		if let streamURL = webPlayer.externalStreamURL() {
+		if let streamURL = webPlayer.nativeStreamURL() {
 			self.bind(webPlayer, streamURL: streamURL, to: routePickerView)
 			return
 		}
@@ -139,7 +139,7 @@ final class TrailerAirPlayStreamer {
 				try? await Task.sleep(nanoseconds: 500_000_000)
 				guard let self = self, let routePickerView = routePickerView else { return }
 
-				if let streamURL = webPlayer.externalStreamURL() {
+				if let streamURL = webPlayer.nativeStreamURL() {
 					self.bind(webPlayer, streamURL: streamURL, to: routePickerView)
 					return
 				}
@@ -181,7 +181,7 @@ final class TrailerAirPlayStreamer {
 			for _ in 0 ..< 20 {
 				guard let self = self, self.isStreaming, self.sourcePlayer === webPlayer else { return }
 
-				if let streamURL = webPlayer.externalStreamURL() {
+				if let streamURL = webPlayer.nativeStreamURL() {
 					let item = AVPlayerItem(url: streamURL)
 					player.replaceCurrentItem(with: item)
 					self.observeItemEnd(of: item)

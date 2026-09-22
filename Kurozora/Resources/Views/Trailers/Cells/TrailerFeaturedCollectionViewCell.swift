@@ -32,6 +32,15 @@ class TrailerFeaturedCollectionViewCell: KCollectionViewCell {
 		return view
 	}()
 
+	/// The banner standing in for the trailer until its picture shows.
+	private let bannerImageView: UIImageView = {
+		let imageView = UIImageView()
+		imageView.translatesAutoresizingMaskIntoConstraints = false
+		imageView.contentMode = .scaleAspectFill
+		imageView.clipsToBounds = true
+		return imageView
+	}()
+
 	/// The featured title.
 	private let titleLabel: KLabel = {
 		let label = KLabel()
@@ -138,6 +147,9 @@ class TrailerFeaturedCollectionViewCell: KCollectionViewCell {
 	/// The kind of library the featured title belongs to.
 	private(set) var libraryKind: LibraryKind = .shows
 
+	/// A Boolean value indicating whether a banner stands in for the trailer.
+	private var hasBanner = false
+
 	/// The width the player takes beside the details on wide layouts.
 	private var playerWidthConstraint: NSLayoutConstraint?
 
@@ -196,6 +208,7 @@ class TrailerFeaturedCollectionViewCell: KCollectionViewCell {
 		detailsStackView.spacing = 8.0
 		detailsStackView.alignment = .fill
 
+		self.playerContainer.addSubview(self.bannerImageView)
 		self.contentStackView.addArrangedSubview(self.playerContainer)
 		self.contentStackView.addArrangedSubview(detailsStackView)
 		self.contentView.addSubview(self.contentStackView)
@@ -204,6 +217,11 @@ class TrailerFeaturedCollectionViewCell: KCollectionViewCell {
 		self.playerWidthConstraint = playerWidthConstraint
 
 		NSLayoutConstraint.activate([
+			self.bannerImageView.topAnchor.constraint(equalTo: self.playerContainer.topAnchor),
+			self.bannerImageView.leadingAnchor.constraint(equalTo: self.playerContainer.leadingAnchor),
+			self.bannerImageView.trailingAnchor.constraint(equalTo: self.playerContainer.trailingAnchor),
+			self.bannerImageView.bottomAnchor.constraint(equalTo: self.playerContainer.bottomAnchor),
+
 			self.contentStackView.topAnchor.constraint(equalTo: self.contentView.topAnchor),
 			self.contentStackView.leadingAnchor.constraint(equalTo: self.contentView.leadingAnchor),
 			self.contentStackView.trailingAnchor.constraint(equalTo: self.contentView.trailingAnchor),
@@ -296,10 +314,11 @@ class TrailerFeaturedCollectionViewCell: KCollectionViewCell {
 	///
 	/// - Parameter isVisible: Whether the placeholder is shown.
 	func setPlayerSkeletonVisible(_ isVisible: Bool) {
-		guard (self.playerSkeletonView.alpha == 0.0) == isVisible else { return }
+		let showsSkeleton = isVisible && !self.hasBanner
+		guard (self.playerSkeletonView.alpha == 0.0) == showsSkeleton else { return }
 
 		UIView.animate(withDuration: 0.25) {
-			self.playerSkeletonView.alpha = isVisible ? 1.0 : 0.0
+			self.playerSkeletonView.alpha = showsSkeleton ? 1.0 : 0.0
 		}
 	}
 
@@ -332,6 +351,8 @@ class TrailerFeaturedCollectionViewCell: KCollectionViewCell {
 		self.genreLabel.text = show.attributes.genres?.localizedJoined()
 		self.synopsisLabel.text = show.attributes.synopsis
 		show.attributes.posterImage(imageView: self.posterImageView)
+		show.attributes.bannerImage(imageView: self.bannerImageView)
+		self.hasBanner = true
 		self.updateScore(withAverage: show.attributes.stats?.ratingAverage)
 		self.updateLibraryButton(status: show.libraryAttributes?.status)
 	}
@@ -348,6 +369,8 @@ class TrailerFeaturedCollectionViewCell: KCollectionViewCell {
 		self.genreLabel.text = game.attributes.genres?.localizedJoined()
 		self.synopsisLabel.text = game.attributes.synopsis
 		game.attributes.posterImage(imageView: self.posterImageView)
+		game.attributes.bannerImage(imageView: self.bannerImageView)
+		self.hasBanner = true
 		self.updateScore(withAverage: game.attributes.stats?.ratingAverage)
 		self.updateLibraryButton(status: game.libraryAttributes?.status)
 	}

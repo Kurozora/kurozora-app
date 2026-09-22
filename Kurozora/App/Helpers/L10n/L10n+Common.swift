@@ -3989,6 +3989,19 @@ extension L10n {
 			)
 		}
 	}
+
+	/// The string for the word 'Subtitles'.
+	static var subtitles: String {
+		L10n.resolve {
+			String(
+				localized: "Subtitles",
+				bundle: LanguageManager.shared.bundle,
+				locale: LanguageManager.shared.locale,
+				comment: "The title of the menu that chooses a video's subtitles."
+			)
+		}
+	}
+
 	/// The string for the words 'Playback Speed'.
 	static var playbackSpeed: String {
 		L10n.resolve {

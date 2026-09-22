@@ -1331,9 +1331,30 @@ final class TrailerFullscreenViewController: UIViewController {
 		}
 
 		children.append(UIMenu(title: L10n.playbackSpeed, image: UIImage(systemName: "speedometer"), children: speedActions))
+		children.append(UIMenu(title: L10n.subtitles, image: UIImage(systemName: "captions.bubble"), children: self.captionMenuActions()))
 		children.append(UIMenu(title: L10n.videoQuality, image: UIImage(systemName: "sparkles.tv"), children: self.qualityMenuActions()))
 
 		return UIMenu(children: children)
+	}
+
+	/// Builds the actions that choose the trailer's subtitles.
+	///
+	/// - Returns: An action for none and one per track.
+	private func captionMenuActions() -> [UIMenuElement] {
+		let selectedTrack = self.player?.selectedCaptionTrack
+		var actions: [UIMenuElement] = [
+			UIAction(title: L10n.off, state: selectedTrack == nil ? .on : .off) { [weak self] _ in
+				self?.player?.selectCaptionTrack(nil)
+			}
+		]
+
+		for track in self.player?.captionTracks ?? [] {
+			actions.append(UIAction(title: track.name, state: track == selectedTrack ? .on : .off) { [weak self] _ in
+				self?.player?.selectCaptionTrack(track)
+			})
+		}
+
+		return actions
 	}
 
 	/// Builds the actions that choose the trailer's quality.

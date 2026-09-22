@@ -636,7 +636,7 @@ final class KTrailerPlayerView: UIView {
 		let webPlayer = TrailerPlayerPool.shared.player(forVideoID: videoID)
 		self.webPlayer = webPlayer
 
-		self.backgroundColor = .black
+		self.backgroundColor = .clear
 
 		webPlayer.attach(to: self, isMuted: self.isMuted, delegate: self)
 		webPlayer.setLooping(self.loopsPlayback)
@@ -1381,6 +1381,7 @@ extension KTrailerPlayerView: TrailerWebPlayerDelegate {
 	}
 
 	func trailerWebPlayerDidRevealPicture(_ trailerWebPlayer: TrailerWebPlayer) {
+		self.backgroundColor = .black
 		self.clearTransitionSnapshot(animated: true)
 		self.updateControls(animated: true)
 		self.onPictureVisibilityChanged?()
