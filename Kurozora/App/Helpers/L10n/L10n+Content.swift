@@ -4719,6 +4719,309 @@ extension L10n {
             )
 		}
 	}
+	/// The ReCap section title for the top anime of a period.
+	static func recapTopAnime(of year: String?) -> String {
+		L10n.resolve {
+			guard let year else {
+				return String(localized: "Your Top Anime", table: "Content", bundle: LanguageManager.shared.bundle, locale: LanguageManager.shared.locale, comment: "The ReCap section title for the top anime of a month.")
+			}
+			return String(localized: "Your Top Anime of \(year)", table: "Content", bundle: LanguageManager.shared.bundle, locale: LanguageManager.shared.locale, comment: "The ReCap section title for the top anime of a year.")
+		}
+	}
+	/// The ReCap section title for the top manga of a period.
+	static func recapTopManga(of year: String?) -> String {
+		L10n.resolve {
+			guard let year else {
+				return String(localized: "Your Top Manga", table: "Content", bundle: LanguageManager.shared.bundle, locale: LanguageManager.shared.locale, comment: "The ReCap section title for the top manga of a month.")
+			}
+			return String(localized: "Your Top Manga of \(year)", table: "Content", bundle: LanguageManager.shared.bundle, locale: LanguageManager.shared.locale, comment: "The ReCap section title for the top manga of a year.")
+		}
+	}
+	/// The ReCap section title for the top games of a period.
+	static func recapTopGames(of year: String?) -> String {
+		L10n.resolve {
+			guard let year else {
+				return String(localized: "Your Top Games", table: "Content", bundle: LanguageManager.shared.bundle, locale: LanguageManager.shared.locale, comment: "The ReCap section title for the top games of a month.")
+			}
+			return String(localized: "Your Top Games of \(year)", table: "Content", bundle: LanguageManager.shared.bundle, locale: LanguageManager.shared.locale, comment: "The ReCap section title for the top games of a year.")
+		}
+	}
+	/// The ReCap section title for the top genres of a period.
+	static func recapTopGenres(of year: String?) -> String {
+		L10n.resolve {
+			guard let year else {
+				return String(localized: "Your Top Genres", table: "Content", bundle: LanguageManager.shared.bundle, locale: LanguageManager.shared.locale, comment: "The ReCap section title for the top genres of a month.")
+			}
+			return String(localized: "Your Top Genres of \(year)", table: "Content", bundle: LanguageManager.shared.bundle, locale: LanguageManager.shared.locale, comment: "The ReCap section title for the top genres of a year.")
+		}
+	}
+	/// The ReCap section title for the top themes of a period.
+	static func recapTopThemes(of year: String?) -> String {
+		L10n.resolve {
+			guard let year else {
+				return String(localized: "Your Top Themes", table: "Content", bundle: LanguageManager.shared.bundle, locale: LanguageManager.shared.locale, comment: "The ReCap section title for the top themes of a month.")
+			}
+			return String(localized: "Your Top Themes of \(year)", table: "Content", bundle: LanguageManager.shared.bundle, locale: LanguageManager.shared.locale, comment: "The ReCap section title for the top themes of a year.")
+		}
+	}
+	/// The ReCap section title for the top studios of a period.
+	static func recapTopStudios(of year: String?) -> String {
+		L10n.resolve {
+			guard let year else {
+				return String(localized: "Your Top Studios", table: "Content", bundle: LanguageManager.shared.bundle, locale: LanguageManager.shared.locale, comment: "The ReCap section title for the top studios of a month.")
+			}
+			return String(localized: "Your Top Studios of \(year)", table: "Content", bundle: LanguageManager.shared.bundle, locale: LanguageManager.shared.locale, comment: "The ReCap section title for the top studios of a year.")
+		}
+	}
+	/// The ReCap section title for the top characters of a period.
+	static func recapTopCharacters(of year: String?) -> String {
+		L10n.resolve {
+			guard let year else {
+				return String(localized: "Your Top Characters", table: "Content", bundle: LanguageManager.shared.bundle, locale: LanguageManager.shared.locale, comment: "The ReCap section title for the top characters of a month.")
+			}
+			return String(localized: "Your Top Characters of \(year)", table: "Content", bundle: LanguageManager.shared.bundle, locale: LanguageManager.shared.locale, comment: "The ReCap section title for the top characters of a year.")
+		}
+	}
+	/// The ReCap section title for the top voices of a period.
+	static func recapTopVoices(of year: String?) -> String {
+		L10n.resolve {
+			guard let year else {
+				return String(localized: "Your Top Voices", table: "Content", bundle: LanguageManager.shared.bundle, locale: LanguageManager.shared.locale, comment: "The ReCap section title for the top voice actors of a month.")
+			}
+			return String(localized: "Your Top Voices of \(year)", table: "Content", bundle: LanguageManager.shared.bundle, locale: LanguageManager.shared.locale, comment: "The ReCap section title for the top voice actors of a year.")
+		}
+	}
+	/// The ReCap section title for the top creators of a period.
+	static func recapTopCreators(of year: String?) -> String {
+		L10n.resolve {
+			guard let year else {
+				return String(localized: "Your Top Creators", table: "Content", bundle: LanguageManager.shared.bundle, locale: LanguageManager.shared.locale, comment: "The ReCap section title for the top creators of a month.")
+			}
+			return String(localized: "Your Top Creators of \(year)", table: "Content", bundle: LanguageManager.shared.bundle, locale: LanguageManager.shared.locale, comment: "The ReCap section title for the top creators of a year.")
+		}
+	}
+	/// The ReCap measure of the minutes spent on an entry.
+	static func recapMinutes(_ count: Int) -> String {
+		L10n.resolve {
+			String(localized: "\(count) minutes", table: "Content", bundle: LanguageManager.shared.bundle, locale: LanguageManager.shared.locale, comment: "The ReCap measure of the minutes spent on an entry.")
+		}
+	}
+	/// The ReCap measure of the characters a voice actor voiced.
+	static func recapCharacters(_ count: Int) -> String {
+		L10n.resolve {
+			String(localized: "\(count) characters", table: "Content", bundle: LanguageManager.shared.bundle, locale: LanguageManager.shared.locale, comment: "The ReCap measure of the characters a voice actor voiced.")
+		}
+	}
+	/// The ReCap measure of the titles a creator worked on.
+	static func recapTitles(_ count: Int) -> String {
+		L10n.resolve {
+			String(localized: "\(count) titles", table: "Content", bundle: LanguageManager.shared.bundle, locale: LanguageManager.shared.locale, comment: "The ReCap measure of the titles a creator worked on.")
+		}
+	}
+	/// The ReCap measure of the episodes watched.
+	static func recapEpisodes(_ count: Int) -> String {
+		L10n.resolve {
+			String(localized: "\(count) episodes", table: "Content", bundle: LanguageManager.shared.bundle, locale: LanguageManager.shared.locale, comment: "The ReCap measure of the episodes watched.")
+		}
+	}
+	/// The ReCap measure of the chapters read.
+	static func recapChapters(_ count: Int) -> String {
+		L10n.resolve {
+			String(localized: "\(count) chapters", table: "Content", bundle: LanguageManager.shared.bundle, locale: LanguageManager.shared.locale, comment: "The ReCap measure of the chapters read.")
+		}
+	}
+	/// The ReCap measure of a run of days.
+	static func recapDays(_ count: Int) -> String {
+		L10n.resolve {
+			String(localized: "\(count) days", table: "Content", bundle: LanguageManager.shared.bundle, locale: LanguageManager.shared.locale, comment: "The ReCap measure of a run of days.")
+		}
+	}
+	/// The ReCap caption of the day a streak ended.
+	static func recapEnded(_ date: String) -> String {
+		L10n.resolve {
+			String(localized: "Ended \(date)", table: "Content", bundle: LanguageManager.shared.bundle, locale: LanguageManager.shared.locale, comment: "The ReCap caption of the day a streak ended.")
+		}
+	}
+	/// The ReCap caption of the average rating given.
+	static func recapAverageOf(_ rating: String) -> String {
+		L10n.resolve {
+			String(localized: "Average of \(rating)", table: "Content", bundle: LanguageManager.shared.bundle, locale: LanguageManager.shared.locale, comment: "The ReCap caption of the average rating given.")
+		}
+	}
+	/// The ReCap label of a favorited title.
+	static var recapFavorited: String {
+		L10n.resolve {
+			String(localized: "Favorited", table: "Content", bundle: LanguageManager.shared.bundle, locale: LanguageManager.shared.locale, comment: "The ReCap label of a favorited title.")
+		}
+	}
+	/// The ReCap hint of the year menu.
+	static var recapSelectYear: String {
+		L10n.resolve {
+			String(localized: "Select a year to see your recap", table: "Content", bundle: LanguageManager.shared.bundle, locale: LanguageManager.shared.locale, comment: "The ReCap hint of the year menu.")
+		}
+	}
+	/// The ReCap text shown while the page loads.
+	static var recapThisIsYourRecap: String {
+		L10n.resolve {
+			String(localized: "This is your Re:CAP.", table: "Content", bundle: LanguageManager.shared.bundle, locale: LanguageManager.shared.locale, comment: "The ReCap text shown while the page loads.")
+		}
+	}
+	/// The ReCap section title for habit stats.
+	static var recapYourHabits: String {
+		L10n.resolve {
+			String(localized: "Your Habits", table: "Content", bundle: LanguageManager.shared.bundle, locale: LanguageManager.shared.locale, comment: "The ReCap section title for habit stats.")
+		}
+	}
+	/// The ReCap section title for activity stats.
+	static var recapYourActivity: String {
+		L10n.resolve {
+			String(localized: "Your Activity", table: "Content", bundle: LanguageManager.shared.bundle, locale: LanguageManager.shared.locale, comment: "The ReCap section title for activity stats.")
+		}
+	}
+	/// The ReCap stat title for the busiest weekday.
+	static var recapBusiestDay: String {
+		L10n.resolve {
+			String(localized: "Busiest Day", table: "Content", bundle: LanguageManager.shared.bundle, locale: LanguageManager.shared.locale, comment: "The ReCap stat title for the busiest weekday.")
+		}
+	}
+	/// The ReCap stat title for the busiest hour.
+	static var recapFavoriteTime: String {
+		L10n.resolve {
+			String(localized: "Favorite Time", table: "Content", bundle: LanguageManager.shared.bundle, locale: LanguageManager.shared.locale, comment: "The ReCap stat title for the busiest hour.")
+		}
+	}
+	/// The ReCap stat title for the longest streak.
+	static var recapLongestStreak: String {
+		L10n.resolve {
+			String(localized: "Longest Streak", table: "Content", bundle: LanguageManager.shared.bundle, locale: LanguageManager.shared.locale, comment: "The ReCap stat title for the longest streak.")
+		}
+	}
+	/// The ReCap stat title for the biggest binge.
+	static var recapBiggestBinge: String {
+		L10n.resolve {
+			String(localized: "Biggest Binge", table: "Content", bundle: LanguageManager.shared.bundle, locale: LanguageManager.shared.locale, comment: "The ReCap stat title for the biggest binge.")
+		}
+	}
+	/// The ReCap stat title for the first title watched.
+	static var recapFirstWatch: String {
+		L10n.resolve {
+			String(localized: "First Watch", table: "Content", bundle: LanguageManager.shared.bundle, locale: LanguageManager.shared.locale, comment: "The ReCap stat title for the first title watched.")
+		}
+	}
+	/// The ReCap stat title for the last title watched.
+	static var recapLastWatch: String {
+		L10n.resolve {
+			String(localized: "Last Watch", table: "Content", bundle: LanguageManager.shared.bundle, locale: LanguageManager.shared.locale, comment: "The ReCap stat title for the last title watched.")
+		}
+	}
+	/// The ReCap stat title for the top provider.
+	static var recapWhereYouWatched: String {
+		L10n.resolve {
+			String(localized: "Where You Watched", table: "Content", bundle: LanguageManager.shared.bundle, locale: LanguageManager.shared.locale, comment: "The ReCap stat title for the top provider.")
+		}
+	}
+	/// The ReCap stat title for the ratings given.
+	static var recapRatingsGiven: String {
+		L10n.resolve {
+			String(localized: "Ratings Given", table: "Content", bundle: LanguageManager.shared.bundle, locale: LanguageManager.shared.locale, comment: "The ReCap stat title for the ratings given.")
+		}
+	}
+	/// The ReCap stat title for the reviews written.
+	static var recapReviewsWritten: String {
+		L10n.resolve {
+			String(localized: "Reviews Written", table: "Content", bundle: LanguageManager.shared.bundle, locale: LanguageManager.shared.locale, comment: "The ReCap stat title for the reviews written.")
+		}
+	}
+	/// The ReCap stat title for the titles completed.
+	static var recapTitlesCompleted: String {
+		L10n.resolve {
+			String(localized: "Titles Completed", table: "Content", bundle: LanguageManager.shared.bundle, locale: LanguageManager.shared.locale, comment: "The ReCap stat title for the titles completed.")
+		}
+	}
+	/// The ReCap stat title for the titles added.
+	static var recapTitlesAdded: String {
+		L10n.resolve {
+			String(localized: "Titles Added", table: "Content", bundle: LanguageManager.shared.bundle, locale: LanguageManager.shared.locale, comment: "The ReCap stat title for the titles added.")
+		}
+	}
+	/// The ReCap stat title for the titles dropped.
+	static var recapTitlesDropped: String {
+		L10n.resolve {
+			String(localized: "Titles Dropped", table: "Content", bundle: LanguageManager.shared.bundle, locale: LanguageManager.shared.locale, comment: "The ReCap stat title for the titles dropped.")
+		}
+	}
+	/// The ReCap stat title for the favorites added.
+	static var recapFavoritesAdded: String {
+		L10n.resolve {
+			String(localized: "Favorites Added", table: "Content", bundle: LanguageManager.shared.bundle, locale: LanguageManager.shared.locale, comment: "The ReCap stat title for the favorites added.")
+		}
+	}
+	/// The ReCap stat title for the achievements earned.
+	static var recapAchievementsEarned: String {
+		L10n.resolve {
+			String(localized: "Achievements Earned", table: "Content", bundle: LanguageManager.shared.bundle, locale: LanguageManager.shared.locale, comment: "The ReCap stat title for the achievements earned.")
+		}
+	}
+	/// The ReCap section title for the comparison with the year before.
+	static var recapRememberLastYear: String {
+		L10n.resolve {
+			String(localized: "Remember Last Year?", table: "Content", bundle: LanguageManager.shared.bundle, locale: LanguageManager.shared.locale, comment: "The ReCap section title for the comparison with the year before.")
+		}
+	}
+	/// The ReCap comparison title for anime.
+	static var recapTopAnimeComparison: String {
+		L10n.resolve {
+			String(localized: "Top Anime", table: "Content", bundle: LanguageManager.shared.bundle, locale: LanguageManager.shared.locale, comment: "The ReCap comparison title for anime.")
+		}
+	}
+	/// The ReCap comparison title for manga.
+	static var recapTopMangaComparison: String {
+		L10n.resolve {
+			String(localized: "Top Manga", table: "Content", bundle: LanguageManager.shared.bundle, locale: LanguageManager.shared.locale, comment: "The ReCap comparison title for manga.")
+		}
+	}
+	/// The ReCap comparison title for games.
+	static var recapTopGameComparison: String {
+		L10n.resolve {
+			String(localized: "Top Game", table: "Content", bundle: LanguageManager.shared.bundle, locale: LanguageManager.shared.locale, comment: "The ReCap comparison title for games.")
+		}
+	}
+	/// The ReCap comparison subtitle.
+	static var recapComparison: String {
+		L10n.resolve {
+			String(localized: "Comparison", table: "Content", bundle: LanguageManager.shared.bundle, locale: LanguageManager.shared.locale, comment: "The ReCap comparison subtitle.")
+		}
+	}
+	/// The ReCap section title for the top anime of each month.
+	static var recapTopAnimeByMonth: String {
+		L10n.resolve {
+			String(localized: "Your Top Anime by Month", table: "Content", bundle: LanguageManager.shared.bundle, locale: LanguageManager.shared.locale, comment: "The ReCap section title for the top anime of each month.")
+		}
+	}
+	/// The ReCap section title for the top manga of each month.
+	static var recapTopMangaByMonth: String {
+		L10n.resolve {
+			String(localized: "Your Top Manga by Month", table: "Content", bundle: LanguageManager.shared.bundle, locale: LanguageManager.shared.locale, comment: "The ReCap section title for the top manga of each month.")
+		}
+	}
+	/// The ReCap section title for the top games of each month.
+	static var recapTopGamesByMonth: String {
+		L10n.resolve {
+			String(localized: "Your Top Games by Month", table: "Content", bundle: LanguageManager.shared.bundle, locale: LanguageManager.shared.locale, comment: "The ReCap section title for the top games of each month.")
+		}
+	}
+	/// The ReCap button that leads back to tracking.
+	static var recapKeepTracking: String {
+		L10n.resolve {
+			String(localized: "Keep Tracking on Kurozora", table: "Content", bundle: LanguageManager.shared.bundle, locale: LanguageManager.shared.locale, comment: "The ReCap button that leads back to tracking.")
+		}
+	}
+	/// The ReCap milestone card title.
+	static var recapMilestone: String {
+		L10n.resolve {
+			String(localized: "Milestone", table: "Content", bundle: LanguageManager.shared.bundle, locale: LanguageManager.shared.locale, comment: "The ReCap milestone card title.")
+		}
+	}
 	/// The ReCap milestone noun phrase for shows.
 	static var animeWatchers: String {
 		L10n.resolve {

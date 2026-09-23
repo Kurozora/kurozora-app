@@ -39,18 +39,19 @@ class StudioLockupCollectionViewCell: KCollectionViewCell {
 	/// - Parameters:
 	///    - studio: The `Studio` object used to configure the cell.
 	///    - rank: The rank of the cell within the collection view.
-	func configure(using studio: Studio?, rank: Int? = nil) {
+	///    - detail: The text shown in place of the founding date.
+	func configure(using studio: Studio?, rank: Int? = nil, detail: String? = nil) {
 		guard let studio = studio else {
 			self.showSkeleton()
 			return
 		}
 		self.hideSkeleton()
 
-		// Configure primary label
 		self.primaryLabel.text = studio.attributes.name
 
-		// Configure secondary label
-		if let foundedDate = studio.attributes.foundedAt?.formatted(date: .abbreviated, time: .omitted) {
+		if let detail {
+			self.secondaryLabel.text = detail
+		} else if let foundedDate = studio.attributes.foundedAt?.formatted(date: .abbreviated, time: .omitted) {
 			self.secondaryLabel.text = "\(L10n.founded) \(foundedDate)"
 		} else {
 			self.secondaryLabel.text = nil
@@ -88,11 +89,12 @@ extension StudioLockupCollectionViewCell {
 	/// - Parameters:
 	///    - studio: The studio the item measures.
 	///    - rank: The rank of the studio in a ranked list.
+	///    - detail: The text shown in place of the founding date.
 	///
 	/// - Returns: The item that measures the studio.
-	static func measurableItem(for studio: Studio, rank: Int? = nil) -> CellHeightMeasurer.Item {
+	static func measurableItem(for studio: Studio, rank: Int? = nil, detail: String? = nil) -> CellHeightMeasurer.Item {
 		return CellHeightMeasurer.Item(cellType: StudioLockupCollectionViewCell.self) { cell in
-			cell.configure(using: studio, rank: rank)
+			cell.configure(using: studio, rank: rank, detail: detail)
 		}
 	}
 }

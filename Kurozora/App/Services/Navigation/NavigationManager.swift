@@ -107,6 +107,8 @@ final class NavigationManager: NSObject {
 			self.handleSeasonalBrowseDeeplink(url: url, context: context)
 		case .museum:
 			self.handleMuseumDeeplink(url: url, context: context)
+		case .recap:
+			self.handleRecapDeeplink(parameters: parameters, context: context)
 		case .library, .myLibrary, .list:
 			context.selectTab(.library)
 		case .feed, .timeline:
@@ -179,6 +181,18 @@ final class NavigationManager: NSObject {
 		}
 
 		context.show(museumCollectionViewController)
+	}
+
+	/// Handles deeplinking to the Re:CAP view.
+	///
+	/// - Parameters:
+	///    - parameters: The parameters parsed from the URL.
+	///    - context: The navigation context to present on.
+	private func handleRecapDeeplink(parameters: [String: String], context: NavigationContext) {
+		let reCapCollectionViewController = ReCapCollectionViewController()
+		reCapCollectionViewController.year = parameters["year"].flatMap { Int($0) } ?? Date.now.components.year ?? 0
+		reCapCollectionViewController.month = parameters["month"].flatMap { Int($0) }
+		context.show(reCapCollectionViewController)
 	}
 
 	/// Handles deeplinking to the parental guide view.

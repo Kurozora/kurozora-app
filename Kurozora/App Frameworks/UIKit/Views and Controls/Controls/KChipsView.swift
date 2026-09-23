@@ -49,6 +49,14 @@ final class KChipsView: UIScrollView {
 	/// The index of the selected chip.
 	private(set) var selectedIndex = 0
 
+	/// Whether no chip is shown as selected.
+	var isSelectionHidden = false {
+		didSet {
+			self.selectionView.isHidden = self.isSelectionHidden
+			self.tintedChipStackView.isHidden = self.isSelectionHidden
+		}
+	}
+
 	/// Called with the index of the chip the user picks.
 	var chipSelectedHandler: ((Int) -> Void)?
 
@@ -257,7 +265,7 @@ final class KChipsView: UIScrollView {
 			self.pillFrame(at: index)?.contains(location) ?? false
 		}
 
-		guard let index = tappedIndex, index != self.selectedIndex else { return }
+		guard let index = tappedIndex, index != self.selectedIndex || self.isSelectionHidden else { return }
 
 		self.selectChip(at: index, animated: true)
 		self.chipSelectedHandler?(index)

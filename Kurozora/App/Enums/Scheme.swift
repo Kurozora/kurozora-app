@@ -41,6 +41,7 @@ enum Scheme: String, CaseIterable {
 	case schedule
 	case season
 	case museum
+	case recap
 	case search
 	case parentalGuide = "parentalguide"
 	case stickers

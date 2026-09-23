@@ -68,11 +68,12 @@ class ProfileLockupCollectionViewCell: KCollectionViewCell {
 	/// - Parameters:
 	///    - person: The person object used to configure the cell.
 	///    - role: The role of the person in the series.
+	///    - detail: The text shown in place of the role.
 	///    - rank: The rank of the person in a ranked list.
 	///    - showsTitle: Whether to show the primary label.
 	///    - showsSubtitle: Whether to show the secondary label.
 	///    - showsRank: Whether to show the rank label.
-	func configure(using person: Person?, role: StaffRole? = nil, rank: Int? = nil, showsTitle: Bool = true, showsSubtitle: Bool = true, showsRank: Bool = true) {
+	func configure(using person: Person?, role: StaffRole? = nil, detail: String? = nil, rank: Int? = nil, showsTitle: Bool = true, showsSubtitle: Bool = true, showsRank: Bool = true) {
 		guard let person = person else {
 			self.showSkeleton()
 			return
@@ -83,8 +84,8 @@ class ProfileLockupCollectionViewCell: KCollectionViewCell {
 		self.primaryLabel.text = person.attributes.fullName
 		self.primaryLabel.isHidden = !showsTitle
 
-		self.secondaryLabel.text = role?.name
-		self.secondaryLabel.isHidden = !showsSubtitle || role == nil
+		self.secondaryLabel.text = detail ?? role?.name
+		self.secondaryLabel.isHidden = !showsSubtitle || self.secondaryLabel.text == nil
 
 		self.applyRank(rank, showsRank: showsRank)
 		self.updateLabelsStackVisibility()
@@ -167,12 +168,13 @@ extension ProfileLockupCollectionViewCell {
 	///
 	/// - Parameters:
 	///    - person: The person the item measures.
+	///    - detail: The text shown in place of the role.
 	///    - rank: The rank of the person in a ranked list.
 	///
 	/// - Returns: The item that measures the person.
-	static func measurableItem(for person: Person, rank: Int? = nil) -> CellHeightMeasurer.Item {
+	static func measurableItem(for person: Person, detail: String? = nil, rank: Int? = nil) -> CellHeightMeasurer.Item {
 		return CellHeightMeasurer.Item(cellType: ProfileLockupCollectionViewCell.self) { cell in
-			cell.configure(using: person, rank: rank)
+			cell.configure(using: person, detail: detail, rank: rank)
 		}
 	}
 }
