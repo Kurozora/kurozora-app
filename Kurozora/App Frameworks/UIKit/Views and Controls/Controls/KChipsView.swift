@@ -144,8 +144,9 @@ final class KChipsView: UIScrollView {
 			chipLabel.textColor = KThemePicker.textColor.colorValue
 		}
 
+		let tintedTitleColor = KTintedButton.titleColor
 		for case let chipLabel as UILabel in self.tintedChipStackView.arrangedSubviews {
-			chipLabel.textColor = KThemePicker.tintedButtonTextColor.colorValue
+			chipLabel.textColor = tintedTitleColor
 		}
 	}
 
@@ -198,9 +199,10 @@ final class KChipsView: UIScrollView {
 			arrangedSubview.removeFromSuperview()
 		}
 
+		let tintedTitleColor = KTintedButton.titleColor
 		for title in self.titles {
 			self.chipStackView.addArrangedSubview(self.chipLabel(title: title, textColor: KThemePicker.textColor.colorValue))
-			self.tintedChipStackView.addArrangedSubview(self.chipLabel(title: title, textColor: KThemePicker.tintedButtonTextColor.colorValue))
+			self.tintedChipStackView.addArrangedSubview(self.chipLabel(title: title, textColor: tintedTitleColor))
 		}
 
 		if !self.titles.indices.contains(self.selectedIndex) {

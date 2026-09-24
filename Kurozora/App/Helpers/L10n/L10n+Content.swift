@@ -5022,6 +5022,48 @@ extension L10n {
 			String(localized: "Milestone", table: "Content", bundle: LanguageManager.shared.bundle, locale: LanguageManager.shared.locale, comment: "The ReCap milestone card title.")
 		}
 	}
+	/// The ReCap share card title for the top genres.
+	static var recapShareTopGenres: String {
+		L10n.resolve {
+			String(localized: "Top Genres", table: "Content", bundle: LanguageManager.shared.bundle, locale: LanguageManager.shared.locale, comment: "The ReCap share card title for the top genres.")
+		}
+	}
+	/// The ReCap share card title for the top themes.
+	static var recapShareTopThemes: String {
+		L10n.resolve {
+			String(localized: "Top Themes", table: "Content", bundle: LanguageManager.shared.bundle, locale: LanguageManager.shared.locale, comment: "The ReCap share card title for the top themes.")
+		}
+	}
+	/// The ReCap share card section title for the top games.
+	static var recapShareTopGames: String {
+		L10n.resolve {
+			String(localized: "Top Games", table: "Content", bundle: LanguageManager.shared.bundle, locale: LanguageManager.shared.locale, comment: "The ReCap share card section title for the top games.")
+		}
+	}
+	/// The ReCap share card section title for the top characters.
+	static var recapShareTopCharacters: String {
+		L10n.resolve {
+			String(localized: "Top Characters", table: "Content", bundle: LanguageManager.shared.bundle, locale: LanguageManager.shared.locale, comment: "The ReCap share card section title for the top characters.")
+		}
+	}
+	/// The ReCap share card section title for the top voices.
+	static var recapShareTopVoices: String {
+		L10n.resolve {
+			String(localized: "Top Voices", table: "Content", bundle: LanguageManager.shared.bundle, locale: LanguageManager.shared.locale, comment: "The ReCap share card section title for the top voices.")
+		}
+	}
+	/// The ReCap share card section title for the top creators.
+	static var recapShareTopCreators: String {
+		L10n.resolve {
+			String(localized: "Top Creators", table: "Content", bundle: LanguageManager.shared.bundle, locale: LanguageManager.shared.locale, comment: "The ReCap share card section title for the top creators.")
+		}
+	}
+	/// The ReCap share card title for the comparison with the year before.
+	static var recapShareCompare: String {
+		L10n.resolve {
+			String(localized: "Compare Your Re:CAP", table: "Content", bundle: LanguageManager.shared.bundle, locale: LanguageManager.shared.locale, comment: "The ReCap share card title for the comparison with the year before.")
+		}
+	}
 	/// The ReCap milestone noun phrase for shows.
 	static var animeWatchers: String {
 		L10n.resolve {

@@ -241,6 +241,9 @@ private final class ReCapMilestoneRingView: UIView {
 	/// The blur of the cap's shadow relative to the ring's thickness.
 	private static let capShadowRadiusRatio: CGFloat = 14.5 / 60.5
 
+	/// The brightness of the cap's shadow relative to the tint color.
+	private static let capShadowBrightness: CGFloat = 0.573
+
 	/// The location along the sweep where its fade begins.
 	private var fadeStartLocation: CGFloat = 0.0
 
@@ -293,14 +296,18 @@ private final class ReCapMilestoneRingView: UIView {
 		self.capLayer.shadowOffset = CGSize(width: tangent.x * lineWidth * Self.capShadowOffsetRatio, height: tangent.y * lineWidth * Self.capShadowOffsetRatio)
 		self.capLayer.shadowRadius = lineWidth * Self.capShadowRadiusRatio
 
-		self.updateSweepColors()
+		self.applyThemeColors()
 	}
 
-	/// Paints the sweep with the tint color fading in from its start.
-	private func updateSweepColors() {
+	/// Paints the sweep and the cap's shadow in the tint color.
+	@objc private func applyThemeColors() {
 		let tintColor = KThemePicker.tintColor.colorValue
 		self.sweepGradientLayer.colors = [tintColor.withAlphaComponent(0.0).cgColor, tintColor.withAlphaComponent(0.0).cgColor, tintColor.cgColor, tintColor.cgColor]
 		self.sweepGradientLayer.locations = [0.0, NSNumber(value: self.fadeStartLocation), NSNumber(value: self.fadeStartLocation + 0.12), 1.0]
+
+		var red: CGFloat = 0.0, green: CGFloat = 0.0, blue: CGFloat = 0.0, alpha: CGFloat = 0.0
+		tintColor.getRed(&red, green: &green, blue: &blue, alpha: &alpha)
+		self.capLayer.shadowColor = UIColor(red: red * Self.capShadowBrightness, green: green * Self.capShadowBrightness, blue: blue * Self.capShadowBrightness, alpha: 1.0).cgColor
 	}
 
 	// MARK: - Functions
@@ -322,7 +329,6 @@ private final class ReCapMilestoneRingView: UIView {
 		self.capMaskLayer.fillColor = UIColor.clear.cgColor
 		self.capMaskLayer.strokeColor = UIColor.black.cgColor
 		self.capLayer.theme_fillColor = KThemePicker.tintColor.cgColorPicker
-		self.capLayer.shadowColor = UIColor(red: 0.573, green: 0.373, blue: 0.373, alpha: 1.0).cgColor
 		self.capLayer.shadowOpacity = 1.0
 		self.capContainerLayer.mask = self.capMaskLayer
 		self.capContainerLayer.addSublayer(self.capLayer)
@@ -330,5 +336,8 @@ private final class ReCapMilestoneRingView: UIView {
 		self.layer.addSublayer(self.baseLayer)
 		self.layer.addSublayer(self.sweepLayer)
 		self.layer.addSublayer(self.capContainerLayer)
+
+		self.applyThemeColors()
+		NotificationCenter.default.addObserver(self, selector: #selector(self.applyThemeColors), name: .ThemeUpdateNotification, object: nil)
 	}
 }

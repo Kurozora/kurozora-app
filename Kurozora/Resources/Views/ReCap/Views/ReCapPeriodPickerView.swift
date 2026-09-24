@@ -29,6 +29,12 @@ final class ReCapPeriodPickerView: UIView {
 	/// The months listed by the chips.
 	private var months: [Int] = []
 
+	/// The year of the periods.
+	private var year = 0
+
+	/// The month of the selected period.
+	private var selectedMonth = 0
+
 	// MARK: - Views
 	private let yearButton = UIButton(type: .system)
 
@@ -135,9 +141,10 @@ final class ReCapPeriodPickerView: UIView {
 	///    - month: The month of the period.
 	///    - animated: Whether the change is animated.
 	func select(year: Int, month: Int, animated: Bool) {
-		let isYearSelected = month == 0
-		self.configureYearButton(title: String(year), isSelected: isYearSelected)
-		self.chipsView.isSelectionHidden = isYearSelected
+		self.year = year
+		self.selectedMonth = month
+		self.configureYearButton()
+		self.chipsView.isSelectionHidden = month == 0
 
 		if let index = self.months.firstIndex(of: month) {
 			self.chipsView.selectChip(at: index, animated: animated)
@@ -146,18 +153,21 @@ final class ReCapPeriodPickerView: UIView {
 		self.setNeedsLayout()
 	}
 
+	/// Re-applies the theme's colors to the year pill and the month chips.
+	func restyle() {
+		self.configureYearButton()
+		self.chipsView.restyle()
+	}
+
 	/// Styles the year pill.
-	///
-	/// - Parameters:
-	///    - title: The title of the pill.
-	///    - isSelected: Whether the yearly period is selected.
-	private func configureYearButton(title: String, isSelected: Bool) {
+	private func configureYearButton() {
+		let isSelected = self.selectedMonth == 0
 		var configuration: UIButton.Configuration
 
 		if isSelected {
 			configuration = .filled()
 			configuration.baseBackgroundColor = KThemePicker.tintColor.colorValue
-			configuration.baseForegroundColor = KThemePicker.tintedButtonTextColor.colorValue
+			configuration.baseForegroundColor = KTintedButton.titleColor
 		} else {
 			configuration = .plain()
 			configuration.baseForegroundColor = KThemePicker.textColor.colorValue
@@ -165,7 +175,7 @@ final class ReCapPeriodPickerView: UIView {
 
 		configuration.cornerStyle = .capsule
 		configuration.contentInsets = NSDirectionalEdgeInsets(top: 0.0, leading: 12.0, bottom: 0.0, trailing: 12.0)
-		configuration.attributedTitle = AttributedString(title, attributes: AttributeContainer([.font: UIFont.systemFont(ofSize: 13.0, weight: .semibold)]))
+		configuration.attributedTitle = AttributedString(String(self.year), attributes: AttributeContainer([.font: UIFont.systemFont(ofSize: 13.0, weight: .semibold)]))
 		self.yearButton.configuration = configuration
 		self.yearButton.accessibilityTraits = isSelected ? [.button, .selected] : .button
 	}

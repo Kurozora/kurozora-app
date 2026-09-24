@@ -95,6 +95,21 @@ class ReCapHeaderCollectionViewCell: UICollectionViewCell {
 			self.textView.trailingAnchor.constraint(equalTo: self.contentView.trailingAnchor, constant: -10.0),
 			self.textView.bottomAnchor.constraint(equalTo: self.contentView.bottomAnchor, constant: -40.0),
 		])
+
+		NotificationCenter.default.addObserver(self, selector: #selector(self.applyThemeColors), name: .ThemeUpdateNotification, object: nil)
+	}
+
+	/// Re-applies the theme's colors to the title.
+	@objc private func applyThemeColors() {
+		if self.hasRolled {
+			self.removeLetters()
+		}
+
+		self.textView.attributedText = self.attributedTitle(isRollingTextHidden: !self.hasRolled)
+
+		for case let letterLabel as UILabel in self.letterViews.compactMap(\.subviews.first) {
+			letterLabel.textColor = KThemePicker.textColor.colorValue
+		}
 	}
 
 	/// Configures the cell with the given title.

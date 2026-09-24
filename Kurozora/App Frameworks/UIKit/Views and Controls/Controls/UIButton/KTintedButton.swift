@@ -12,6 +12,22 @@ import UIKit
 ///
 /// `KTintedButton` provides themed buttons that match with the currently enabled theme.
 class KTintedButton: KButton {
+	// MARK: - Properties
+	/// The color of a tinted button's title in the current theme.
+	static var titleColor: UIColor {
+		guard #available(iOS 26.0, macOS 26.0, tvOS 26.0, visionOS 26.0, watchOS 26.0, *) else {
+			return KThemePicker.tintedButtonTextColor.colorValue
+		}
+
+		// Prominent glass chooses its title color from the tint.
+		let tintedButton = KTintedButton(frame: .zero)
+		tintedButton.setTitle(L10n.add, for: .normal)
+		tintedButton.sizeToFit()
+		tintedButton.layoutIfNeeded()
+		return tintedButton.titleLabel?.textColor ?? KThemePicker.tintedButtonTextColor.colorValue
+	}
+
+	// MARK: - Functions
 	override func sharedInit() {
 		super.sharedInit()
 

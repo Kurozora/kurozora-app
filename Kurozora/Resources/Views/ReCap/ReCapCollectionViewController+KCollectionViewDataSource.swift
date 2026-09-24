@@ -152,7 +152,7 @@ extension ReCapCollectionViewController {
 			return minutes > 0 ? L10n.recapMinutes(minutes) : L10n.recapEpisodes(count)
 		case .literatures:
 			return count > 0 ? L10n.recapChapters(count) : nil
-		case .games, .studios:
+		case .games, .studios, .genres, .themes:
 			return minutes > 0 ? L10n.recapMinutes(minutes) : nil
 		case .voices:
 			return count > 0 ? L10n.recapCharacters(count) : nil
@@ -160,7 +160,7 @@ extension ReCapCollectionViewController {
 			let titles: String? = count > 0 ? L10n.recapTitles(count) : nil
 			let detail = [recapEntry.attributes.role, titles].compactMap { $0 }.joined(separator: " · ")
 			return detail.isEmpty ? nil : detail
-		case .genres, .themes, .characters:
+		case .characters:
 			return nil
 		}
 	}
@@ -505,6 +505,10 @@ extension ReCapCollectionViewController {
 					guard let model = models[safe: index] else { return }
 					self?.showDetails(of: model)
 				}
+				genreLockupCollectionViewCell.shareButton.shareHandler = { [weak self] shareButton in
+					guard let self = self else { return }
+					self.share(self.genreShareCard(for: recapItem), button: shareButton)
+				}
 				self.configure(genreLockupCollectionViewCell.contextMenuHandler, for: models)
 			default: break
 			}
@@ -561,6 +565,10 @@ extension ReCapCollectionViewController {
 				comparisonLockupCollectionViewCell.entrySelectedHandler = { [weak self] index in
 					guard let entry = comparison.entries[safe: index] else { return }
 					self?.showDetails(of: entry.model)
+				}
+				comparisonLockupCollectionViewCell.shareButton.shareHandler = { [weak self] shareButton in
+					guard let self = self else { return }
+					self.share(self.comparisonShareCard(for: recapItemType), button: shareButton)
 				}
 				self.configure(comparisonLockupCollectionViewCell.contextMenuHandler, for: comparison.entries.map(\.model))
 			default: break

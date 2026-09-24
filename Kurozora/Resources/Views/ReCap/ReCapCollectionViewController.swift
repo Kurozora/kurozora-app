@@ -79,6 +79,9 @@ class ReCapCollectionViewController: KCollectionViewController, SectionFetchable
 	/// The fetch of the selected period.
 	private var fetchTask: Task<Void, Never>?
 
+	/// Whether a share card is being rendered.
+	var isRenderingShareCard = false
+
 	var dataSource: UICollectionViewDiffableDataSource<SectionLayoutKind, ItemKind>!
 	var snapshot: NSDiffableDataSourceSnapshot<SectionLayoutKind, ItemKind>!
 
@@ -97,6 +100,12 @@ class ReCapCollectionViewController: KCollectionViewController, SectionFetchable
 	}
 
 	// MARK: - View
+	override func themeWillReload() {
+		super.themeWillReload()
+
+		self.periodPickerView.restyle()
+	}
+
 	override func viewDidLoad() {
 		super.viewDidLoad()
 
@@ -481,17 +490,9 @@ class ReCapCollectionViewController: KCollectionViewController, SectionFetchable
 		NavigationManager.shared.selectedDestination = Scheme.home.urlValue
 	}
 
+	/// Shares the summary card of the selected period.
 	func shareBarButtonItemPressed() {
-		self.toggleScreenshotState(isScreenshotting: true)
-		guard let image = self.collectionView.screenshot(fullScreen: true) else {
-			self.toggleScreenshotState(isScreenshotting: false)
-			return
-		}
-		self.toggleScreenshotState(isScreenshotting: false)
-
-		let activityViewController = UIActivityViewController(activityItems: [image], applicationActivities: nil)
-		activityViewController.popoverPresentationController?.barButtonItem = self.shareBarButtonItem
-		self.present(activityViewController, animated: true)
+		self.share(self.summaryShareCard, barButtonItem: self.shareBarButtonItem)
 	}
 
 	// MARK: - SectionFetchable

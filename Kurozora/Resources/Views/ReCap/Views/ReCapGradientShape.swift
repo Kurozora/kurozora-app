@@ -53,6 +53,17 @@ enum ReCapGradientShape {
 	///
 	/// - Returns: The outline of the shape.
 	func path(in rect: CGRect) -> CGPath {
+		return Self.path(from: self.pathData, in: rect)
+	}
+
+	/// Returns the outline described by SVG path data stretched over the given rectangle.
+	///
+	/// - Parameters:
+	///    - pathData: The path data made of `M`, `L`, `C` and `Z` commands.
+	///    - rect: The rectangle one path unit maps to.
+	///
+	/// - Returns: The outline of the path.
+	static func path(from pathData: String, in rect: CGRect) -> CGPath {
 		let path = CGMutablePath()
 		let point: (CGFloat, CGFloat) -> CGPoint = { x, y in
 			CGPoint(x: rect.minX + x * rect.width, y: rect.minY + y * rect.height)
@@ -97,7 +108,7 @@ enum ReCapGradientShape {
 			token = ""
 		}
 
-		for character in self.pathData {
+		for character in pathData {
 			switch character {
 			case "M", "L", "C", "Z":
 				appendToken()

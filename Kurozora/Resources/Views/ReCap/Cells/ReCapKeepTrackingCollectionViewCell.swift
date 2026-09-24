@@ -32,11 +32,10 @@ final class ReCapKeepTrackingCollectionViewCell: UICollectionViewCell {
 	private func sharedInit() {
 		var configuration = UIButton.Configuration.filled()
 		configuration.cornerStyle = .capsule
-		configuration.baseBackgroundColor = KThemePicker.tintColor.colorValue
-		configuration.baseForegroundColor = KThemePicker.tintedButtonTextColor.colorValue
 		configuration.contentInsets = NSDirectionalEdgeInsets(top: 8.0, leading: 16.0, bottom: 8.0, trailing: 16.0)
 		configuration.attributedTitle = AttributedString(L10n.recapKeepTracking, attributes: AttributeContainer([.font: UIFont.preferredFont(forTextStyle: .headline)]))
 		self.button.configuration = configuration
+		self.applyThemeColors()
 		self.button.translatesAutoresizingMaskIntoConstraints = false
 		self.button.addAction(UIAction { [weak self] _ in
 			self?.buttonPressedHandler?()
@@ -50,5 +49,13 @@ final class ReCapKeepTrackingCollectionViewCell: UICollectionViewCell {
 			self.button.trailingAnchor.constraint(lessThanOrEqualTo: self.contentView.trailingAnchor),
 			self.button.bottomAnchor.constraint(equalTo: self.contentView.bottomAnchor, constant: -8.0),
 		])
+
+		NotificationCenter.default.addObserver(self, selector: #selector(self.applyThemeColors), name: .ThemeUpdateNotification, object: nil)
+	}
+
+	/// Re-applies the theme's colors to the button.
+	@objc private func applyThemeColors() {
+		self.button.configuration?.baseBackgroundColor = KThemePicker.tintColor.colorValue
+		self.button.configuration?.baseForegroundColor = KTintedButton.titleColor
 	}
 }

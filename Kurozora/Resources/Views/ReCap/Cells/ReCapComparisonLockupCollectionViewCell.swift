@@ -22,6 +22,9 @@ final class ReCapComparisonLockupCollectionViewCell: ReCapCardCollectionViewCell
 	/// The context menus of the compared titles.
 	let contextMenuHandler = ReCapContextMenuHandler()
 
+	/// The button that shares the card.
+	let shareButton = ReCapShareButton()
+
 	// MARK: - Views
 	private let currentGradientView = ReCapGradientView()
 
@@ -96,6 +99,7 @@ final class ReCapComparisonLockupCollectionViewCell: ReCapCardCollectionViewCell
 		stackView.translatesAutoresizingMaskIntoConstraints = false
 		self.cardView.addSubview(stackView)
 		self.cardView.insertSubview(self.previousClipView, belowSubview: stackView)
+		self.cardView.addSubview(self.shareButton)
 
 		self.contextMenuHandler.previewCornerRadius = 0.0
 
@@ -105,6 +109,9 @@ final class ReCapComparisonLockupCollectionViewCell: ReCapCardCollectionViewCell
 		}
 
 		NSLayoutConstraint.activate([
+			self.shareButton.bottomAnchor.constraint(equalTo: self.cardView.bottomAnchor, constant: -ReCapShareButton.inset),
+			self.shareButton.trailingAnchor.constraint(equalTo: self.cardView.trailingAnchor, constant: -ReCapShareButton.inset),
+
 			stackView.topAnchor.constraint(equalTo: self.cardView.topAnchor),
 			stackView.leadingAnchor.constraint(equalTo: self.cardView.leadingAnchor),
 			stackView.trailingAnchor.constraint(equalTo: self.cardView.trailingAnchor),

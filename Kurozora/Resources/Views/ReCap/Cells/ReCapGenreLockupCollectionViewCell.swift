@@ -33,6 +33,9 @@ final class ReCapGenreLockupCollectionViewCell: KCollectionViewCell {
 	/// The context menus of the listed names.
 	let contextMenuHandler = ReCapContextMenuHandler()
 
+	/// The button that shares the card.
+	let shareButton = ReCapShareButton()
+
 	/// The page width the blobs were configured for.
 	private var configuredPageWidth: CGFloat = 0.0
 
@@ -99,8 +102,12 @@ final class ReCapGenreLockupCollectionViewCell: KCollectionViewCell {
 		self.namesStackView.alignment = .leading
 		self.namesStackView.translatesAutoresizingMaskIntoConstraints = false
 		self.cardView.addSubview(self.namesStackView)
+		self.cardView.addSubview(self.shareButton)
 
 		NSLayoutConstraint.activate([
+			self.shareButton.bottomAnchor.constraint(equalTo: self.cardView.bottomAnchor, constant: -ReCapShareButton.inset),
+			self.shareButton.trailingAnchor.constraint(equalTo: self.cardView.trailingAnchor, constant: -ReCapShareButton.inset),
+
 			self.cardView.topAnchor.constraint(equalTo: self.contentView.topAnchor),
 			self.cardView.leadingAnchor.constraint(equalTo: self.contentView.leadingAnchor),
 			self.cardView.trailingAnchor.constraint(equalTo: self.contentView.trailingAnchor),
