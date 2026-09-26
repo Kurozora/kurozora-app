@@ -16,6 +16,7 @@ class SettingsTableViewController: KTableViewController, TypedSegueHandling {
 		case switchAccountSegue
 		case keysSegue
 		case syncScenariosSegue
+		case themeLabSegue
 		case browserSegue
 		case displaySegue
 		case gesturesSegue
@@ -188,6 +189,12 @@ class SettingsTableViewController: KTableViewController, TypedSegueHandling {
 			#else
 			return nil
 			#endif
+		case .themeLabSegue:
+			#if DEBUG
+			return ThemeLabViewController()
+			#else
+			return nil
+			#endif
 		case .cacheSegue: return CacheSettingsTableViewController()
 		case .browserSegue: return BrowserSettingsTableViewController()
 		case .displaySegue: return DisplaySettingsTableViewController()
@@ -214,7 +221,7 @@ class SettingsTableViewController: KTableViewController, TypedSegueHandling {
 		guard let identifier = identifier as? SegueIdentifiers else { return }
 
 		switch identifier {
-		case .accountSegue, .switchAccountSegue, .keysSegue, .syncScenariosSegue,
+		case .accountSegue, .switchAccountSegue, .keysSegue, .syncScenariosSegue, .themeLabSegue,
 		     .browserSegue, .displaySegue, .gesturesSegue, .iconSegue,
 		     .librarySegue, .mediaSegue, .musicSegue, .lowDataModeSegue, .motionSegue, .themeSegue,
 		     .notificationSegue, .remindersSegue, .soundSegue,
@@ -370,7 +377,7 @@ extension SettingsTableViewController {
 
 		switch sectionRow {
 		case .switchAccount,
-		     .keychain, .syncScenarios,
+		     .keychain, .syncScenarios, .themeLab,
 		     .browser, .cache, .displayBlindness, .gestures, .icon, .library, .media, .music, .lowDataMode, .motion, .theme,
 		     .soundsAndHaptics, .reminder,
 		     .biometrics, .privacy,

@@ -14,7 +14,7 @@ class OfflineSettingsTableViewController: SettingsTableViewController {
 	/// The rows that work without a connection.
 	private static let offlineRows: [Row] = [
 		.account, .switchAccount,
-		.keychain, .syncScenarios,
+		.keychain, .syncScenarios, .themeLab,
 		.browser, .cache, .displayBlindness, .gestures, .icon, .library, .media, .music, .lowDataMode, .motion, .theme,
 		.notifications, .soundsAndHaptics,
 		.biometrics, .privacy

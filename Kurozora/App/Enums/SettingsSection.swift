@@ -128,6 +128,9 @@ extension SettingsTableViewController {
 		/// The row representing the library sync scenarios cell.
 		case syncScenarios
 
+		/// The row representing the theme lab cell.
+		case themeLab
+
 		/// The row representing the browser cell.
 		case browser
 
@@ -219,7 +222,7 @@ extension SettingsTableViewController {
 		/// An array containing all settings rows.
 		static let all: [Row] = [
 			.account, .switchAccount,
-			.keychain, .syncScenarios,
+			.keychain, .syncScenarios, .themeLab,
 			.browser, .cache, .displayBlindness, .gestures, .icon, .library, .lowDataMode, .media, .motion, .music, .theme,
 			.notifications, .soundsAndHaptics, .reminder,
 			.biometrics, .privacy,
@@ -250,7 +253,7 @@ extension SettingsTableViewController {
 		}
 
 		/// An array containing all debug section settings rows.
-		static let allDebug: [Row] = [.keychain, .syncScenarios]
+		static let allDebug: [Row] = [.keychain, .syncScenarios, .themeLab]
 
 		/// An array containing all alerts section settings rows.
 		static var allAlerts: [Row] = [.notifications, .soundsAndHaptics, .reminder]
@@ -306,6 +309,8 @@ extension SettingsTableViewController {
 				return .keysSegue
 			case .syncScenarios:
 				return .syncScenariosSegue
+			case .themeLab:
+				return .themeLabSegue
 			case .browser:
 				return .browserSegue
 			case .cache:
@@ -357,6 +362,8 @@ extension SettingsTableViewController {
 			case .keychain:
 				return .chevron
 			case .syncScenarios:
+				return .chevron
+			case .themeLab:
 				return .chevron
 			case .browser:
 				return .labelAndChevron
@@ -430,6 +437,8 @@ extension SettingsTableViewController {
 				return L10n.keysManager
 			case .syncScenarios:
 				return "Sync Scenarios"
+			case .themeLab:
+				return "Theme Lab"
 			case .browser:
 				return L10n.browser
 			case .cache:
@@ -524,6 +533,8 @@ extension SettingsTableViewController {
                 return .Icons.key
 			case .syncScenarios:
 				return .Icons.wrenchAndScrewdriverFill
+			case .themeLab:
+				return .Icons.swatchplateFill
 			case .browser:
                 return .Icons.compassCircle
 			case .cache:

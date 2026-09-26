@@ -18,6 +18,12 @@ class KNavigationController: UINavigationController {
 		var keyCommands = super.keyCommands ?? []
 		keyCommands.append(UIKeyCommand(title: L10n.back, action: #selector(self.navigateBack), input: "[", modifierFlags: .command))
 		keyCommands.append(UIKeyCommand(title: L10n.forward, action: #selector(self.navigateForward), input: "]", modifierFlags: .command))
+
+		#if DEBUG
+		keyCommands.append(UIKeyCommand(title: "Next Lab Theme", action: #selector(self.applyNextLabTheme), input: "]", modifierFlags: [.command, .control, .alternate]))
+		keyCommands.append(UIKeyCommand(title: "Previous Lab Theme", action: #selector(self.applyPreviousLabTheme), input: "[", modifierFlags: [.command, .control, .alternate]))
+		#endif
+
 		return keyCommands
 	}
 
@@ -83,6 +89,18 @@ class KNavigationController: UINavigationController {
 	@objc func navigateForward() {
 		self.forwardNavigationCoordinator.navigateForward()
 	}
+
+	#if DEBUG
+	/// Previews the next theme in the theme lab.
+	@objc func applyNextLabTheme() {
+		ThemeLab.shared.applyTheme(offsetBy: 1)
+	}
+
+	/// Previews the previous theme in the theme lab.
+	@objc func applyPreviousLabTheme() {
+		ThemeLab.shared.applyTheme(offsetBy: -1)
+	}
+	#endif
 
 	/// Configures the root navigation item style based on the current horizontal size class and user preferences.
 	private func configureRootNavigationItemStyle() {
