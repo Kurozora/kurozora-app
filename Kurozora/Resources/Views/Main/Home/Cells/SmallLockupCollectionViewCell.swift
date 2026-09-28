@@ -118,10 +118,10 @@ class SmallLockupCollectionViewCell: BaseLockupCollectionViewCell {
 		// Configure broadcast
 		self.timeLabel.text = ""
 		self.broadcastLabel.text = ""
-		if scheduleIsShown, let publicationDate = literature?.attributes.publicationDate {
-			self.timeLabel.text = DateFormatter.broadcastTime.string(from: publicationDate)
+		if scheduleIsShown, let nextPublicationAt = literature?.attributes.nextPublicationAt {
+			self.timeLabel.text = DateFormatter.broadcastTime.string(from: nextPublicationAt)
 
-			self.broadcastLabel.startCountdown(to: publicationDate, duration: literature?.attributes.durationCount ?? 0)
+			self.broadcastLabel.startCountdown(to: nextPublicationAt, duration: literature?.attributes.durationCount ?? 0)
 		}
 	}
 

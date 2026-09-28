@@ -56,25 +56,9 @@ import UIKit
 		return informationString
 	}
 
-	/// Returns the date the literature will be published on.
-	var publicationDate: Date? {
-		guard let publicationDay = self.publicationDay, let publicationTime = self.publicationTime else { return nil }
-		return Date(from: "\(publicationDay) at \(publicationTime)")
-	}
-
 	/// A string describing when the literature is next published.
 	var publicationString: String? {
-		let date: Date?
-
-		if let nextPublicationAt = self.nextPublicationAt {
-			date = nextPublicationAt
-		} else if let publicationTime = self.publicationTime {
-			date = self.startedAt?.settingTime(from: publicationTime)
-		} else {
-			date = self.startedAt
-		}
-
-		guard let publicationAt = date else { return nil }
+		guard let publicationAt = self.nextPublicationAt else { return nil }
 		let dateFormatter = DateFormatter.app
 		dateFormatter.setLocalizedDateFormatFromTemplate("EEEE")
 

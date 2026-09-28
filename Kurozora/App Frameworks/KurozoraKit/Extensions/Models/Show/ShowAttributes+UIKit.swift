@@ -58,17 +58,7 @@ import UIKit
 
 	/// A string describing when the show is next broadcasted.
 	var broadcastString: String? {
-		let date: Date?
-
-		if let nextBroadcastAt = self.nextBroadcastAt {
-			date = nextBroadcastAt
-		} else if let airTime = self.airTime {
-			date = self.startedAt?.settingTime(from: airTime)
-		} else {
-			date = self.startedAt
-		}
-
-		guard let broadcastAt = date else { return nil }
+		guard let broadcastAt = self.nextBroadcastAt else { return nil }
 		let dateFormatter = DateFormatter.app
 		dateFormatter.setLocalizedDateFormatFromTemplate("EEEE")
 
