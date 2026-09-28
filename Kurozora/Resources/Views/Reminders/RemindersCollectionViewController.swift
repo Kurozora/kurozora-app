@@ -66,7 +66,7 @@ class RemindersCollectionViewController: KCollectionViewController, TypedSegueHa
 		self.title = L10n.myReminders
 
 		// Observe NotificationCenter for an update.
-		NotificationCenter.default.addObserver(self, selector: #selector(self.fetchRemindersList), name: .KReminderModelsListDidChange, object: nil)
+		NotificationCenter.default.addObserver(self, selector: #selector(self.handleReminderModelsListDidChange), name: .KReminderModelsListDidChange, object: nil)
 
 		self.collectionView.contentInset.top = 20
 		self.collectionView.scrollIndicatorInsets = self.collectionView.contentInset
@@ -86,6 +86,14 @@ class RemindersCollectionViewController: KCollectionViewController, TypedSegueHa
 
 	// MARK: - Functions
 	override func handleRefreshControl() {
+		Task { [weak self] in
+			guard let self = self else { return }
+			await self.fetchRemindersList()
+		}
+	}
+
+	/// Refetches the reminders when the reminded models change.
+	@objc private func handleReminderModelsListDidChange() {
 		Task { [weak self] in
 			guard let self = self else { return }
 			await self.fetchRemindersList()
@@ -121,9 +129,10 @@ class RemindersCollectionViewController: KCollectionViewController, TypedSegueHa
 		}
 	}
 
-	/// Fetches the user's reminder list.
 	var fetchInProgress: Bool = false
-	@objc func fetchRemindersList() async {
+
+	/// Fetches the user's reminder list.
+	func fetchRemindersList() async {
 		if self.fetchInProgress {
 			return
 		}

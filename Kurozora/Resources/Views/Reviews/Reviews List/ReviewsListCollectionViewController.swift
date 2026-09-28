@@ -215,7 +215,7 @@ class ReviewsListCollectionViewController: KCollectionViewController, RatingAler
 		}
 	}
 
-	@objc func fetchReviews() async {
+	func fetchReviews() async {
 		guard let listType = self.listType else { return }
 
 		if self.fetchInProgress {

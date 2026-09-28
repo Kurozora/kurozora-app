@@ -87,7 +87,7 @@ class FavoritesCollectionViewController: KCollectionViewController, TypedSegueHa
 
 		// Observe NotificationCenter for an update.
 		if self.viewedUser?.id == User.current?.id {
-			NotificationCenter.default.addObserver(self, selector: #selector(self.fetchFavoritesList), name: .KFavoriteModelsListDidChange, object: nil)
+			NotificationCenter.default.addObserver(self, selector: #selector(self.handleFavoriteModelsListDidChange), name: .KFavoriteModelsListDidChange, object: nil)
 		}
 
 		self.configureView()
@@ -170,6 +170,14 @@ class FavoritesCollectionViewController: KCollectionViewController, TypedSegueHa
 		}
 	}
 
+	/// Refetches the favorites when the favorited models change.
+	@objc private func handleFavoriteModelsListDidChange() {
+		Task { [weak self] in
+			guard let self = self else { return }
+			await self.fetchFavoritesList()
+		}
+	}
+
 	override func configureEmptyDataView() {
 		var detailString: String
 
@@ -211,7 +219,7 @@ class FavoritesCollectionViewController: KCollectionViewController, TypedSegueHa
 	}
 
 	/// Fetches the user's favorite list.
-	@objc func fetchFavoritesList() async {
+	func fetchFavoritesList() async {
 		if self.fetchInProgress {
 			return
 		}
