@@ -751,7 +751,12 @@ class HomeCollectionViewController: KCollectionViewController, SectionFetchable,
 			guard let seasonalCollectionViewController = destination as? SeasonalCollectionViewController else { return }
 			guard let indexPath = sender as? IndexPath else { return }
 			let exploreCategory = self.exploreCategories[indexPath.section]
-			let (year, season) = SeasonOfYear.yearAndSeason(from: Date())
+			var serverCalendar = Calendar(identifier: .gregorian)
+			serverCalendar.timeZone = TimeZone(identifier: "UTC") ?? .current
+
+			let upcomingDate = serverCalendar.date(byAdding: .day, value: 3, to: Date()) ?? Date()
+			let upcomingDay = serverCalendar.dateComponents([.year, .month, .day], from: upcomingDate)
+			let (year, season) = SeasonOfYear.yearAndSeason(from: Calendar.current.date(from: upcomingDay) ?? upcomingDate)
 
 			seasonalCollectionViewController.year = year
 			seasonalCollectionViewController.season = season
