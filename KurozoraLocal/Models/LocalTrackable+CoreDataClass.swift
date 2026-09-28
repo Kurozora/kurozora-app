@@ -23,6 +23,46 @@ class LocalTrackable: NSManagedObject {
 		return [self.posterURL, self.bannerURL].compactMap(\.self)
 	}
 
+	/// The next airing inferred from the last known airing and the episode count.
+	var inferredAiringDate: Date? {
+		guard let anchorDate = self.airingDate ?? self.premiereDate else { return nil }
+
+		let secondsInWeek: TimeInterval = 7 * 24 * 60 * 60
+		let elapsed = Date().timeIntervalSince(anchorDate) - TimeInterval(self.durationCount?.intValue ?? 0)
+		let weeksPassed = elapsed > 0 ? (elapsed / secondsInWeek).rounded(.up) : 0
+		let nextDate = anchorDate.addingTimeInterval(weeksPassed * secondsInWeek)
+
+		if let premiereDate = self.premiereDate, let episodeCount = self.episodeCount?.intValue, episodeCount > 0 {
+			let episodeNumber = Int((nextDate.timeIntervalSince(premiereDate) / secondsInWeek).rounded()) + 1
+
+			if episodeNumber > episodeCount {
+				return nil
+			}
+		}
+
+		return nextDate
+	}
+
+	/// The moment the trackable first aired.
+	private var premiereDate: Date? {
+		guard let firstAired = self.firstAired, let airTime = self.airTime else { return nil }
+
+		let timeComponents = airTime.split(separator: ":").compactMap { Int($0) }
+		guard timeComponents.count >= 2 else { return nil }
+
+		var utcCalendar = Calendar(identifier: .gregorian)
+		utcCalendar.timeZone = TimeZone(identifier: "UTC") ?? .current
+
+		var japanCalendar = Calendar(identifier: .gregorian)
+		japanCalendar.timeZone = TimeZone(identifier: "Asia/Tokyo") ?? .current
+
+		var premiereComponents = utcCalendar.dateComponents([.year, .month, .day], from: firstAired)
+		premiereComponents.hour = timeComponents[0]
+		premiereComponents.minute = timeComponents[1]
+
+		return japanCalendar.date(from: premiereComponents)
+	}
+
 	// MARK: - Functions
 	/// Upserts the trackable a sync delta row describes.
 	///
@@ -52,6 +92,7 @@ class LocalTrackable: NSManagedObject {
 		trackable.statusID = row.statusID.map { NSNumber(value: $0) }
 		trackable.statusName = row.statusName
 		trackable.airingDate = row.airingDate.map { Date(timeIntervalSince1970: TimeInterval($0)) }
+		trackable.airTime = row.airTime
 		trackable.durationCount = row.durationCount.map { NSNumber(value: $0) }
 		trackable.popularityRank = row.popularityRank.map { NSNumber(value: $0) }
 		trackable.publicRating = row.publicRating.map { NSNumber(value: $0) }

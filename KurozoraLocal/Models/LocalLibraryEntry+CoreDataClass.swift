@@ -34,11 +34,17 @@ class LocalLibraryEntry: NSManagedObject {
 
 	/// The moment the entry next airs or publishes.
 	var nextAiringDate: Date? {
-		guard self.kind == .shows, let context = self.managedObjectContext else { return self.trackable?.airingDate }
+		if self.kind == .shows,
+		   let context = self.managedObjectContext,
+		   let nextEpisodeDate = LocalEpisodeSnapshot.upcoming(forTrackableIDs: [self.trackableID], userSlug: self.userSlug, in: context).first?.startedAt {
+			return nextEpisodeDate
+		}
 
-		let nextEpisode = LocalEpisodeSnapshot.upcoming(forTrackableIDs: [self.trackableID], userSlug: self.userSlug, in: context).first
+		if let airingDate = self.trackable?.airingDate, airingDate > Date() {
+			return airingDate
+		}
 
-		return nextEpisode?.startedAt ?? self.trackable?.airingDate
+		return self.trackable?.inferredAiringDate
 	}
 
 	// MARK: - Functions

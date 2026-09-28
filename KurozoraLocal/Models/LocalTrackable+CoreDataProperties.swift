@@ -61,6 +61,9 @@ nonisolated extension LocalTrackable {
 	/// The trackable's next broadcast.
 	@NSManaged var airingDate: Date?
 
+	/// The time of day the trackable airs or publishes in Japan.
+	@NSManaged var airTime: String?
+
 	/// The trackable's duration in seconds.
 	@NSManaged var durationCount: NSNumber?
 
