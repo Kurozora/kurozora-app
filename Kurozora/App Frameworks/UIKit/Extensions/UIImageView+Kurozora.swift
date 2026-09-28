@@ -31,7 +31,7 @@ extension UIImageView {
 			.onProgress { _, _ in }
 			.onSuccess { completion?($0.image) }
 			.onFailure { [weak self] error in
-				guard let self, !error.isTaskCancelled else { return }
+				guard let self, !error.isTaskCancelled, !error.isNotCurrentTask else { return }
 				let placeholderImage = placeholder().withRenderingMode(.alwaysOriginal)
 				self.image = placeholderImage
 				completion?(placeholderImage)
@@ -61,7 +61,7 @@ extension UIImageView {
 			.cacheMemoryOnly()
 			.transition(.fade(0.2))
 			.onFailure { [weak self] error in
-				guard let self, !error.isTaskCancelled else { return }
+				guard let self, !error.isTaskCancelled, !error.isNotCurrentTask else { return }
 				self.setImage(with: urlString, placeholder: placeholder())
 			}
 			.set(to: self)
@@ -93,7 +93,7 @@ extension UIImageView {
 				#endif
 			}
 			.onFailure { [weak self] error in
-				guard let self, !error.isTaskCancelled else { return }
+				guard let self, !error.isTaskCancelled, !error.isNotCurrentTask else { return }
 				self.image = placeholder().withRenderingMode(.alwaysOriginal)
 			}
 			.set(to: self)
