@@ -40,7 +40,7 @@ class LibraryListCollectionViewCell: LibraryBaseCollectionViewCell {
 		case .literatures, .games: isAiring = trackable?.statusName == "Currently Publishing"
 		}
 
-		if isAiring, let airingDate = trackable?.airingDate, let durationCount = trackable?.durationCount {
+		if isAiring, let airingDate = entry.nextAiringDate, let durationCount = trackable?.durationCount {
 			self.estimatedAiringLabel.startCountdown(to: airingDate, duration: durationCount.intValue)
 		}
 	}

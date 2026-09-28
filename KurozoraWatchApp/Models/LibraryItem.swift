@@ -59,7 +59,7 @@ struct LibraryItem: Hashable, Identifiable, Sendable {
 		self.posterBackgroundColor = trackable?.posterBackgroundColor
 		self.mediaTypeName = trackable?.mediaTypeName
 		self.statusName = trackable?.statusName
-		self.airingDate = trackable?.airingDate
+		self.airingDate = entry.nextAiringDate
 		self.durationCount = trackable?.durationCount?.intValue ?? 0
 		self.userScore = entry.review?.score?.doubleValue
 		self.libraryStatus = entry.libraryStatus

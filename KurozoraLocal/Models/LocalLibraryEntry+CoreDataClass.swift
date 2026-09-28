@@ -32,6 +32,15 @@ class LocalLibraryEntry: NSManagedObject {
 		return self.trackable?.artURLStrings ?? []
 	}
 
+	/// The moment the entry next airs or publishes.
+	var nextAiringDate: Date? {
+		guard self.kind == .shows, let context = self.managedObjectContext else { return self.trackable?.airingDate }
+
+		let nextEpisode = LocalEpisodeSnapshot.upcoming(forTrackableIDs: [self.trackableID], userSlug: self.userSlug, in: context).first
+
+		return nextEpisode?.startedAt ?? self.trackable?.airingDate
+	}
+
 	// MARK: - Functions
 	/// Upserts an entry from a sync delta row into the given context.
 	///

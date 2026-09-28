@@ -32,14 +32,14 @@ extension LocalLibraryEntry {
 
 	/// The weekday and time the entry airs or publishes.
 	var broadcastString: String {
-		guard let airingDate = self.trackable?.airingDate else { return "-" }
+		guard let airingDate = self.nextAiringDate else { return "-" }
 
 		return airingDate.formatted(.dateTime.weekday(.wide).hour().minute())
 	}
 
 	/// The time until the entry next airs or publishes.
 	var relativeBroadcastString: String? {
-		guard let airingDate = self.trackable?.airingDate else { return nil }
+		guard let airingDate = self.nextAiringDate else { return nil }
 
 		return airingDate.formatted(.relative(presentation: .named, unitsStyle: .abbreviated))
 	}
