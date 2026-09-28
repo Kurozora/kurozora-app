@@ -121,19 +121,22 @@ class BroadcastLabel: KSecondaryLabel {
 	///
 	/// - Returns: The time until or ago in a human-readable format.
 	private func getTimeUntilOrAgo(broadcastTimestamp: TimeInterval, broadcastDuration: Int) -> String {
+		let secondsInWeek = 7 * 24 * 60 * 60
 		let currentTimestamp = Date().timeIntervalSince1970
-		let diffInSeconds = Int(broadcastTimestamp - currentTimestamp)
+		var diffInSeconds = Int(broadcastTimestamp - currentTimestamp)
+
+		if diffInSeconds < -broadcastDuration {
+			// After the broadcast duration, switch to the next weekly broadcast
+			let weeksPassed = (-diffInSeconds - broadcastDuration + secondsInWeek - 1) / secondsInWeek
+			diffInSeconds += weeksPassed * secondsInWeek
+		}
 
 		if diffInSeconds > 0 {
 			// Future broadcast
 			return L10n.timeFromNow(formatTimeDifference(seconds: diffInSeconds))
-		} else if diffInSeconds <= 0 && abs(diffInSeconds) <= broadcastDuration {
-			// Broadcast happening (within the duration)
-			return L10n.timeAgo(formatTimeDifference(seconds: abs(diffInSeconds)))
-		} else {
-			// After the broadcast duration, switch back to counting until next broadcast
-			let nextBroadcastInSeconds = broadcastDuration + diffInSeconds
-			return L10n.timeFromNow(formatTimeDifference(seconds: nextBroadcastInSeconds))
 		}
+
+		// Broadcast happening (within the duration)
+		return L10n.timeAgo(formatTimeDifference(seconds: abs(diffInSeconds)))
 	}
 }
