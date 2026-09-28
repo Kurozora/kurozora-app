@@ -34,13 +34,13 @@ class LibraryListCollectionViewCell: LibraryBaseCollectionViewCell {
 		let tagline = trackable?.tagline ?? ""
 		self.secondaryLabel.text = tagline.isEmpty ? trackable?.genresLocalized : tagline
 
-		let isAiring: Bool
+		let countdownStatusNames: [String]
 		switch entry.kind {
-		case .shows: isAiring = trackable?.statusName == "Currently Airing"
-		case .literatures, .games: isAiring = trackable?.statusName == "Currently Publishing"
+		case .shows: countdownStatusNames = ["Not Airing Yet", "Currently Airing"]
+		case .literatures, .games: countdownStatusNames = ["Not Published Yet", "Currently Publishing"]
 		}
 
-		if isAiring, let airingDate = entry.nextAiringDate, let durationCount = trackable?.durationCount {
+		if countdownStatusNames.contains(trackable?.statusName ?? ""), let airingDate = entry.nextAiringDate, let durationCount = trackable?.durationCount {
 			self.estimatedAiringLabel.startCountdown(to: airingDate, duration: durationCount.intValue)
 		}
 	}

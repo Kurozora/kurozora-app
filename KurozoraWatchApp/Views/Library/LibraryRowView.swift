@@ -105,7 +105,7 @@ struct LibraryRowView: View {
 
 	/// The next broadcast or publication date, shown on the same terms as the iOS list cell.
 	private var countdownDate: Date? {
-		guard self.item.statusName == self.item.kind.airingStatusName, self.item.durationCount > 0 else { return nil }
+		guard self.item.kind.countdownStatusNames.contains(self.item.statusName ?? ""), self.item.durationCount > 0 else { return nil }
 
 		return self.item.airingDate
 	}

@@ -44,13 +44,13 @@ extension LibraryKind {
 		}
 	}
 
-	/// The status name under which the iOS list cell shows a countdown.
-	var airingStatusName: String {
+	/// The status names under which the iOS list cell shows a countdown.
+	var countdownStatusNames: [String] {
 		switch self {
 		case .shows:
-			return "Currently Airing"
+			return ["Not Airing Yet", "Currently Airing"]
 		case .literatures, .games:
-			return "Currently Publishing"
+			return ["Not Published Yet", "Currently Publishing"]
 		}
 	}
 
