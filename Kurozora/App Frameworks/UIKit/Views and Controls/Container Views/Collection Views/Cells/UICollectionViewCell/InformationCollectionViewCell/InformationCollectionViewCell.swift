@@ -93,6 +93,15 @@ class InformationCollectionViewCell: UICollectionViewCell {
 		self.scheduleWeekView.configure(releaseDate: releaseDate)
 	}
 
+	/// Sizes the label under the headline.
+	///
+	/// - Parameter isSubtitle: Whether the label reads as a subtitle.
+	private func configureSubtitleFont(for isSubtitle: Bool) {
+		self.primaryLabel.font = isSubtitle
+			? .preferredFont(forTextStyle: .subheadline)
+			: .preferredFont(forTextStyle: .title3)
+	}
+
 	/// The shared settings used to initialize the cell.
 	fileprivate func sharedInit() {
 		self.theme_backgroundColor = KThemePicker.tableViewCellBackgroundColor.rawValue
@@ -147,10 +156,11 @@ class InformationCollectionViewCell: UICollectionViewCell {
 		self.typeImageView.image = showDetailInformation.imageValue
 		self.typeLabel.text = showDetailInformation.stringValue
 		self.headlineLabel.text = showDetailInformation.information(from: show)
-		self.primaryLabel.text = nil
+		self.primaryLabel.text = showDetailInformation.primaryInformation(from: show)
 		self.primaryImageView.image = showDetailInformation.primaryImage(from: show)
 		self.secondaryLabel.text = showDetailInformation.secondaryInformation(from: show)
 		self.footerLabel.text = showDetailInformation.footnote(from: show)
+		self.configureSubtitleFont(for: showDetailInformation == .languages)
 
 		switch showDetailInformation {
 		case .airDates:
@@ -220,10 +230,11 @@ class InformationCollectionViewCell: UICollectionViewCell {
 		self.typeImageView.image = literatureDetailInformation.imageValue
 		self.typeLabel.text = literatureDetailInformation.stringValue
 		self.headlineLabel.text = literatureDetailInformation.information(from: literature)
-		self.primaryLabel.text = nil
+		self.primaryLabel.text = literatureDetailInformation.primaryInformation(from: literature)
 		self.primaryImageView.image = literatureDetailInformation.primaryImage(from: literature)
 		self.secondaryLabel.text = literatureDetailInformation.secondaryInformation(from: literature)
 		self.footerLabel.text = literatureDetailInformation.footnote(from: literature)
+		self.configureSubtitleFont(for: literatureDetailInformation == .languages)
 
 		switch literatureDetailInformation {
 		case .publicationDates:
@@ -248,10 +259,11 @@ class InformationCollectionViewCell: UICollectionViewCell {
 		self.typeImageView.image = gameDetailInformation.imageValue
 		self.typeLabel.text = gameDetailInformation.stringValue
 		self.headlineLabel.text = gameDetailInformation.information(from: game)
-		self.primaryLabel.text = nil
+		self.primaryLabel.text = gameDetailInformation.primaryInformation(from: game)
 		self.primaryImageView.image = gameDetailInformation.primaryImage(from: game)
 		self.secondaryLabel.text = gameDetailInformation.secondaryInformation(from: game)
 		self.footerLabel.text = gameDetailInformation.footnote(from: game)
+		self.configureSubtitleFont(for: gameDetailInformation == .languages)
 
 		switch gameDetailInformation {
 		case .publicationDates:

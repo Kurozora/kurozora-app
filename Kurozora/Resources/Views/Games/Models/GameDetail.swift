@@ -76,7 +76,7 @@ extension GameDetail {
 			case .country:
 				return game.attributes.countryOfOrigin?.code.uppercased() ?? "-"
 			case .language:
-				return game.attributes.languages.first?.code.uppercased() ?? "-"
+				return game.attributes.languageSupport?.code?.uppercased() ?? "-"
 			}
 		}
 
@@ -104,14 +104,14 @@ extension GameDetail {
 			case .country:
 				return L10n.country
 			case .language:
-				let languages = game?.attributes.languages ?? []
-				switch languages.count - 1 {
-				case 0:
+				let otherCount = (game?.attributes.languageSupport?.count ?? 0) - 1
+				switch otherCount {
+				case ..<1:
 					return L10n.language
 				case 1:
 					return L10n.oneMoreLanguage
 				default:
-					return L10n.moreLanguages(languages.count - 1)
+					return L10n.moreLanguages(otherCount)
 				}
 			}
 		}
@@ -323,10 +323,7 @@ extension GameDetail {
 			case .countryOfOrigin:
 				return game.attributes.countryOfOrigin?.name ?? L10n.unknown
 			case .languages:
-				let languages = game.attributes.languages.compactMap {
-					$0.name
-				}
-				return languages.localizedJoined()
+				return game.attributes.languageSupport?.name ?? "-"
 //			case .studio:
 //				if let studios = game.relationships?.studios?.data, studios.count != 0 {
 //					var studioNames = ""
@@ -401,6 +398,19 @@ extension GameDetail {
 			}
 		}
 
+		/// Returns the required primary information from the given object.
+		///
+		/// - Parameter game: The object used to extract the information from.
+		///
+		/// - Returns: the required primary information from the given object.
+		func primaryInformation(from game: Game) -> String? {
+			switch self {
+			case .languages:
+				return game.attributes.languageSupport?.supportSummary
+			default: return nil
+			}
+		}
+
 		/// Returns the required primary image from the given object.
 		///
 		/// - Parameter game: The object used to extract the information from.
@@ -444,8 +454,18 @@ extension GameDetail {
 				return game.attributes.status.description
 			case .rating:
 				return game.attributes.tvRating.description
-			case .countryOfOrigin, .languages:
+			case .countryOfOrigin:
 				return nil
+			case .languages:
+				let otherCount = (game.attributes.languageSupport?.count ?? 0) - 1
+				switch otherCount {
+				case ..<1:
+					return nil
+				case 1:
+					return L10n.oneOtherLanguage
+				default:
+					return L10n.otherLanguages(otherCount)
+				}
 //			case .studio:
 //				if let studios = game.relationships?.studios?.data, studios.count != 0 {
 //					var studioNames = ""

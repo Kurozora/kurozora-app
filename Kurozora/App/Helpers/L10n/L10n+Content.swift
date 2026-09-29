@@ -1713,6 +1713,132 @@ extension L10n {
             )
 		}
 	}
+	/// The plural label for a title's languages.
+	///
+	/// - Tag: L10n-languages
+	static var languages: String {
+		L10n.resolve {
+			String(
+                localized: "Languages",
+                table: "Content",
+                bundle: LanguageManager.shared.bundle,
+                locale: LanguageManager.shared.locale,
+                comment: "The plural label for a title's languages."
+            )
+		}
+	}
+	/// The subtitle shown when a title has one language.
+	///
+	/// - Tag: L10n-oneLanguageTotal
+	static var oneLanguageTotal: String {
+		L10n.resolve {
+			String(
+                localized: "1 language",
+                table: "Content",
+                bundle: LanguageManager.shared.bundle,
+                locale: LanguageManager.shared.locale,
+                comment: "The subtitle shown when a title has one language."
+            )
+		}
+	}
+	/// The subtitle counting how many languages a title has.
+	///
+	/// - Tag: L10n-languagesTotal
+	static func languagesTotal(_ count: Int) -> String {
+		L10n.resolve {
+			String(
+                localized: "\(count) languages",
+                table: "Content",
+                bundle: LanguageManager.shared.bundle,
+                locale: LanguageManager.shared.locale,
+                comment: "The subtitle counting how many languages a title has."
+            )
+		}
+	}
+	/// The label for a title's translated interface.
+	///
+	/// - Tag: L10n-interface
+	static var interface: String {
+		L10n.resolve {
+			String(
+                localized: "Interface",
+                table: "Content",
+                bundle: LanguageManager.shared.bundle,
+                locale: LanguageManager.shared.locale,
+                comment: "The label for a title's translated interface."
+            )
+		}
+	}
+	/// The label for the language a title's text is published in.
+	///
+	/// - Tag: L10n-publishedText
+	static var publishedText: String {
+		L10n.resolve {
+			String(
+                localized: "Text",
+                table: "Content",
+                bundle: LanguageManager.shared.bundle,
+                locale: LanguageManager.shared.locale,
+                comment: "The label for the language a title's text is published in."
+            )
+		}
+	}
+	/// The footnote shown when one further language is available.
+	///
+	/// - Tag: L10n-oneOtherLanguage
+	static var oneOtherLanguage: String {
+		L10n.resolve {
+			String(
+                localized: "1 other language",
+                table: "Content",
+                bundle: LanguageManager.shared.bundle,
+                locale: LanguageManager.shared.locale,
+                comment: "The footnote shown when one further language is available."
+            )
+		}
+	}
+	/// The footnote summarizing how many further languages a title has.
+	///
+	/// - Tag: L10n-otherLanguages
+	static func otherLanguages(_ count: Int) -> String {
+		L10n.resolve {
+			String(
+                localized: "\(count) other languages",
+                table: "Content",
+                bundle: LanguageManager.shared.bundle,
+                locale: LanguageManager.shared.locale,
+                comment: "The footnote summarizing how many further languages a title has."
+            )
+		}
+	}
+	/// The label marking the viewer's own language.
+	///
+	/// - Tag: L10n-yourLanguage
+	static var yourLanguage: String {
+		L10n.resolve {
+			String(
+                localized: "Your language",
+                table: "Content",
+                bundle: LanguageManager.shared.bundle,
+                locale: LanguageManager.shared.locale,
+                comment: "The label marking the viewer's own language."
+            )
+		}
+	}
+	/// The label shown when a title is unavailable in the viewer's language.
+	///
+	/// - Tag: L10n-notAvailableInYourLanguage
+	static var notAvailableInYourLanguage: String {
+		L10n.resolve {
+			String(
+                localized: "Not available in your language.",
+                table: "Content",
+                bundle: LanguageManager.shared.bundle,
+                locale: LanguageManager.shared.locale,
+                comment: "The label shown when a title is unavailable in the viewer's language."
+            )
+		}
+	}
 	/// The footnote summarizing how many seasons the episodes are spread across.
 	///
 	/// - Tag: L10n-acrossSeasons

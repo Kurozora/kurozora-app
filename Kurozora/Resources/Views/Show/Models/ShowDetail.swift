@@ -76,7 +76,7 @@ extension ShowDetail {
 			case .country:
 				return show.attributes.countryOfOrigin?.code.uppercased() ?? "-"
 			case .language:
-				return show.attributes.languages.first?.code.uppercased() ?? "-"
+				return show.attributes.languageSupport?.code?.uppercased() ?? "-"
 			}
 		}
 
@@ -104,14 +104,14 @@ extension ShowDetail {
 			case .country:
 				return L10n.country
 			case .language:
-				let languages = show?.attributes.languages ?? []
-				switch languages.count - 1 {
-				case 0:
+				let otherCount = (show?.attributes.languageSupport?.count ?? 0) - 1
+				switch otherCount {
+				case ..<1:
 					return L10n.languageSingular
 				case 1:
 					return L10n.oneMoreLanguage
 				default:
-					return L10n.moreLanguages(languages.count - 1)
+					return L10n.moreLanguages(otherCount)
 				}
 			}
 		}
@@ -328,10 +328,7 @@ extension ShowDetail {
 			case .countryOfOrigin:
 				return show.attributes.countryOfOrigin?.name ?? L10n.unknown
 			case .languages:
-				let languages = show.attributes.languages.compactMap {
-					$0.name
-				}
-				return languages.localizedJoined()
+				return show.attributes.languageSupport?.name ?? "-"
 //			case .studio:
 //				if let studios = show.relationships?.studios?.data, studios.count != 0 {
 //					var studioNames = ""
@@ -419,6 +416,19 @@ extension ShowDetail {
 			}
 		}
 
+		/// Returns the required primary information from the given object.
+		///
+		/// - Parameter show: The object used to extract the information from.
+		///
+		/// - Returns: the required primary information from the given object.
+		func primaryInformation(from show: Show) -> String? {
+			switch self {
+			case .languages:
+				return show.attributes.languageSupport?.supportSummary
+			default: return nil
+			}
+		}
+
 		/// Returns the required primary image from the given object.
 		///
 		/// - Parameter show: The object used to extract the information from.
@@ -461,8 +471,18 @@ extension ShowDetail {
 				return show.attributes.status.description
 			case .rating:
 				return show.attributes.tvRating.description
-			case .countryOfOrigin, .languages:
+			case .countryOfOrigin:
 				return nil
+			case .languages:
+				let otherCount = (show.attributes.languageSupport?.count ?? 0) - 1
+				switch otherCount {
+				case ..<1:
+					return nil
+				case 1:
+					return L10n.oneOtherLanguage
+				default:
+					return L10n.otherLanguages(otherCount)
+				}
 //			case .studio:
 //				if let studios = show.relationships?.studios?.data, studios.count != 0 {
 //					var studioNames = ""

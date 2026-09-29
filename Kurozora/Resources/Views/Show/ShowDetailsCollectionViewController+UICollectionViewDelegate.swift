@@ -47,6 +47,10 @@ extension ShowDetailsCollectionViewController {
 				collectionView.safeScrollToItem(at: IndexPath(row: ShowDetail.Information.languages.rawValue, section: sectionIndex), at: .centeredVertically, animated: true)
 				return
 			}
+		case .information:
+			guard ShowDetail.Information(rawValue: indexPath.item) == .languages else { return }
+			guard let showIdentity = self.showIdentity else { return }
+			self.presentLanguages(for: .show(showIdentity))
 		case .countdown:
 			guard let sectionIndex = self.snapshot.indexOfSection(SectionLayoutKind.information) else { return }
 			collectionView.safeScrollToItem(at: IndexPath(row: ShowDetail.Information.broadcast.rawValue, section: sectionIndex), at: .centeredVertically, animated: true)

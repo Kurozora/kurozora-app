@@ -47,6 +47,10 @@ extension GameDetailsCollectionViewController {
 				collectionView.safeScrollToItem(at: IndexPath(row: GameDetail.Information.languages.rawValue, section: sectionIndex), at: .centeredVertically, animated: true)
 				return
 			}
+		case .information:
+			guard GameDetail.Information(rawValue: indexPath.item) == .languages else { return }
+			guard let gameIdentity = self.gameIdentity else { return }
+			self.presentLanguages(for: .game(gameIdentity))
 		case .countdown:
 			guard let sectionIndex = self.snapshot.indexOfSection(SectionLayoutKind.information) else { return }
 			collectionView.safeScrollToItem(at: IndexPath(row: GameDetail.Information.publication.rawValue, section: sectionIndex), at: .centeredVertically, animated: true)

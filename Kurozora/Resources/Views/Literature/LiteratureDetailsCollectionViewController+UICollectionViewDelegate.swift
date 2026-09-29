@@ -47,6 +47,10 @@ extension LiteratureDetailsCollectionViewController {
 				collectionView.safeScrollToItem(at: IndexPath(row: LiteratureDetail.Information.languages.rawValue, section: sectionIndex), at: .centeredVertically, animated: true)
 				return
 			}
+		case .information:
+			guard LiteratureDetail.Information(rawValue: indexPath.item) == .languages else { return }
+			guard let literatureIdentity = self.literatureIdentity else { return }
+			self.presentLanguages(for: .literature(literatureIdentity))
 		case .countdown:
 			guard let sectionIndex = self.snapshot.indexOfSection(SectionLayoutKind.information) else { return }
 			collectionView.safeScrollToItem(at: IndexPath(row: LiteratureDetail.Information.publication.rawValue, section: sectionIndex), at: .centeredVertically, animated: true)

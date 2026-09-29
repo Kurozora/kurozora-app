@@ -76,7 +76,7 @@ extension LiteratureDetail {
 			case .country:
 				return literature.attributes.countryOfOrigin?.code.uppercased() ?? "-"
 			case .language:
-				return literature.attributes.languages.first?.code.uppercased() ?? "-"
+				return literature.attributes.languageSupport?.code?.uppercased() ?? "-"
 			}
 		}
 
@@ -104,14 +104,14 @@ extension LiteratureDetail {
 			case .country:
 				return L10n.country
 			case .language:
-				let languages = literature?.attributes.languages ?? []
-				switch languages.count - 1 {
-				case 0:
+				let otherCount = (literature?.attributes.languageSupport?.count ?? 0) - 1
+				switch otherCount {
+				case ..<1:
 					return L10n.language
 				case 1:
 					return L10n.oneMoreLanguage
 				default:
-					return L10n.moreLanguages(languages.count - 1)
+					return L10n.moreLanguages(otherCount)
 				}
 			}
 		}
@@ -319,10 +319,7 @@ extension LiteratureDetail {
 			case .countryOfOrigin:
 				return literature.attributes.countryOfOrigin?.name ?? L10n.unknown
 			case .languages:
-				let languages = literature.attributes.languages.compactMap {
-					$0.name
-				}
-				return languages.localizedJoined()
+				return literature.attributes.languageSupport?.name ?? "-"
 //			case .studio:
 //				if let studios = literature.relationships?.studios?.data, studios.count != 0 {
 //					var studioNames = ""
@@ -415,6 +412,19 @@ extension LiteratureDetail {
 			}
 		}
 
+		/// Returns the required primary information from the given object.
+		///
+		/// - Parameter literature: The object used to extract the information from.
+		///
+		/// - Returns: the required primary information from the given object.
+		func primaryInformation(from literature: Literature) -> String? {
+			switch self {
+			case .languages:
+				return literature.attributes.languageSupport?.supportSummary
+			default: return nil
+			}
+		}
+
 		/// Returns the required primary image from the given object.
 		///
 		/// - Parameter literature: The object used to extract the information from.
@@ -457,8 +467,18 @@ extension LiteratureDetail {
 				return literature.attributes.status.description
 			case .rating:
 				return literature.attributes.tvRating.description
-			case .countryOfOrigin, .languages:
+			case .countryOfOrigin:
 				return nil
+			case .languages:
+				let otherCount = (literature.attributes.languageSupport?.count ?? 0) - 1
+				switch otherCount {
+				case ..<1:
+					return nil
+				case 1:
+					return L10n.oneOtherLanguage
+				default:
+					return L10n.otherLanguages(otherCount)
+				}
 //			case .studio:
 //				if let studios = literature.relationships?.studios?.data, studios.count != 0 {
 //					var studioNames = ""
