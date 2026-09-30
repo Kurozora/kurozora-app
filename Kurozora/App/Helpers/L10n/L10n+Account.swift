@@ -1450,7 +1450,11 @@ extension L10n {
 				comment: "Footer linking to the privacy policy. The placeholder is the linked Privacy Policy text."
 			)
 			let fullText = String(format: format, linkText)
-			let attributedString = NSMutableAttributedString(string: fullText, attributes: [.foregroundColor: KThemePicker.subTextColor.colorValue, .paragraphStyle: paragraphStyle])
+			let attributedString = NSMutableAttributedString(string: fullText, attributes: [
+				.font: UIFont.preferredFont(forTextStyle: .caption1),
+				.foregroundColor: KThemePicker.subTextColor.colorValue,
+				.paragraphStyle: paragraphStyle
+			])
 
 			if let linkRange = fullText.range(of: linkText) {
 				attributedString.addAttribute(.foregroundColor, value: KThemePicker.tintColor.colorValue, range: NSRange(linkRange, in: fullText))
