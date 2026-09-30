@@ -11,16 +11,12 @@
 	<key>CFBundleDocumentTypes</key>
 	<array>
 		<dict>
-			<key>CFBundleTypeExtensions</key>
-			<array>
-				<string></string>
-			</array>
 			<key>CFBundleTypeIconFiles</key>
 			<array>
 				<string>App-Icon-iPad-Day.png</string>
 			</array>
 			<key>CFBundleTypeName</key>
-			<string>XML File</string>
+			<string>Library Export</string>
 			<key>CFBundleTypeRole</key>
 			<string>Viewer</string>
 			<key>LSHandlerRank</key>
@@ -28,6 +24,8 @@
 			<key>LSItemContentTypes</key>
 			<array>
 				<string>public.xml</string>
+				<string>org.gnu.gnu-zip-archive</string>
+				<string>public.zip-archive</string>
 			</array>
 		</dict>
 	</array>

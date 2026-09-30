@@ -14,6 +14,9 @@ class LibraryImportTableViewController: ServiceTableViewController {
 	// MARK: - Views
 	private var rightNavigationBarButton: UIBarButtonItem!
 
+	/// The bar button item shown in place of the import button while an upload is in flight.
+	private var activityIndicatorBarButtonItem: UIBarButtonItem!
+
 	// MARK: - Initializers
 	init() {
 		super.init(style: .grouped)
@@ -24,6 +27,9 @@ class LibraryImportTableViewController: ServiceTableViewController {
 	}
 
 	// MARK: - Properties
+	/// The content types of the files a library can be imported from.
+	static let supportedContentTypes: [UTType] = [.xml, .gzip, .zip]
+
 	var textFieldArray: [UITextField?] = []
 	var selectedImportService: LibraryImport.Service? {
 		didSet {
@@ -49,6 +55,7 @@ class LibraryImportTableViewController: ServiceTableViewController {
 	/// Whether an upload is in flight.
 	private var isImporting = false {
 		didSet {
+			self.navigationItem.rightBarButtonItem = self.isImporting ? self.activityIndicatorBarButtonItem : self.rightNavigationBarButton
 			self.updateImportButtonState()
 		}
 	}
@@ -79,6 +86,10 @@ class LibraryImportTableViewController: ServiceTableViewController {
 		)
 		self.rightNavigationBarButton = rightNavigationBarButton
 		self.navigationItem.rightBarButtonItem = rightNavigationBarButton
+
+		let activityIndicatorView = UIActivityIndicatorView(style: .medium)
+		activityIndicatorView.startAnimating()
+		self.activityIndicatorBarButtonItem = UIBarButtonItem(customView: activityIndicatorView)
 	}
 
 	/// Dismiss the view. Used by the dismiss button when presented modally.
@@ -99,15 +110,17 @@ class LibraryImportTableViewController: ServiceTableViewController {
 		self.isImporting = true
 
 		Task { [weak self] in
-			// Make sure you release the security-scoped resource when you finish.
+			let isAccessing = filePath.startAccessingSecurityScopedResource()
 			defer {
-				filePath.stopAccessingSecurityScopedResource()
+				if isAccessing {
+					filePath.stopAccessingSecurityScopedResource()
+				}
 			}
 
 			guard let self = self else { return }
 
 			do {
-				let success = try await KService.importLibrary(.shows, service: service, behavior: behavior, filePath: filePath).response()
+				let success = try await KService.importLibrary(service: service, behavior: behavior, filePath: filePath).response()
 				self.isImporting = false
 				self.presentAlertController(title: L10n.submitted, message: success.message) { [weak self] _ in
 					self?.navigationController?.popViewController(animated: true)
@@ -173,12 +186,7 @@ extension LibraryImportTableViewController {
 				actionButtonTableViewCell.actionTextField.delegate = self
 				actionButtonTableViewCell.actionTextField.addTarget(self, action: #selector(editingChanged), for: .editingChanged)
 				actionButtonTableViewCell.actionTextField.isEnabled = false
-
-				if let selectedImportService = self.selectedImportService {
-					actionButtonTableViewCell.actionTextField.placeholder = "\(selectedImportService.stringValue).xml"
-				} else {
-					actionButtonTableViewCell.actionTextField.placeholder = L10n.libraryXML
-				}
+				actionButtonTableViewCell.actionTextField.placeholder = L10n.libraryImportFilePlaceholder
 
 				if let lastPathComponent = self.selectedFileURL?.lastPathComponent {
 					actionButtonTableViewCell.actionTextField.text = "…/" + lastPathComponent
@@ -196,9 +204,7 @@ extension LibraryImportTableViewController {
 // MARK: - ActionButtonTableViewCellDelegate
 extension LibraryImportTableViewController: ActionButtonTableViewCellDelegate {
 	func actionButtonTableViewCell(_ cell: ActionButtonTableViewCell, didPressButton actionButton: UIButton) {
-		let documentPicker: UIDocumentPickerViewController
-		let types: [UTType] = [.xml]
-		documentPicker = UIDocumentPickerViewController(forOpeningContentTypes: types)
+		let documentPicker = UIDocumentPickerViewController(forOpeningContentTypes: Self.supportedContentTypes)
 		documentPicker.delegate = self
 		documentPicker.modalPresentationStyle = .formSheet
 		self.present(documentPicker, animated: true, completion: nil)
@@ -274,13 +280,6 @@ extension LibraryImportTableViewController: SelectTableViewCellDelegate {
 extension LibraryImportTableViewController: UIDocumentPickerDelegate {
 	func documentPicker(_ controller: UIDocumentPickerViewController, didPickDocumentsAt urls: [URL]) {
 		guard let url = urls.first else { return }
-
-		// Start accessing a security-scoped resource.
-		guard url.startAccessingSecurityScopedResource() else {
-			// Handle the failure here.
-			return
-		}
-
 		self.selectedFileURL = url
 	}
 }

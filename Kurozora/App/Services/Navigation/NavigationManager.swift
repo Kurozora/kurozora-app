@@ -9,6 +9,7 @@
 import Combine
 import KurozoraKit
 import UIKit
+import UniformTypeIdentifiers
 
 /// Manage in-app navigation based on URL schemes.
 @MainActor
@@ -61,8 +62,11 @@ final class NavigationManager: NSObject {
 	///    - url: The URL resource to open. This resource can be a network resource or a file. For information about the Apple-registered URL schemes, see Apple URL Scheme Reference.
 	///    - scene: The scene to present the resource on. If `nil`, the active scene will be used.
 	private func routeScheme(with url: URL, on scene: UIScene?) async {
-		if url.pathExtension == "xml" {
+		if url.isFileURL,
+		   let contentType = UTType(filenameExtension: url.pathExtension),
+		   LibraryImportTableViewController.supportedContentTypes.contains(where: contentType.conforms(to:)) {
 			await self.handleFileImport(from: url, on: scene)
+			return
 		}
 
 		guard

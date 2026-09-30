@@ -96,17 +96,17 @@ extension L10n {
 			)
 		}
 	}
-	/// The placeholder string for the library xml file name.
+	/// The placeholder string for the library import file.
 	///
-	/// - Tag: L10n-libraryXML
-	static var libraryXML: String {
+	/// - Tag: L10n-libraryImportFilePlaceholder
+	static var libraryImportFilePlaceholder: String {
 		L10n.resolve {
 			String(
-				localized: "Library.xml",
+				localized: "An .xml, .gz or .zip file",
 				table: "Content",
 				bundle: LanguageManager.shared.bundle,
 				locale: LanguageManager.shared.locale,
-				comment: "The placeholder string for the library xml file name."
+				comment: "The placeholder string for the library import file, listing the accepted file extensions."
 			)
 		}
 	}

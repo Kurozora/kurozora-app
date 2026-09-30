@@ -23764,6 +23764,239 @@
         }
       }
     },
+    "An .xml, .gz or .zip file" : {
+      "comment" : "The placeholder string for the library import file, listing the accepted file extensions.",
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ملف بصيغة .xml أو .gz أو .zip"
+          }
+        },
+        "bn" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : ".xml, .gz বা .zip ফাইল"
+          }
+        },
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Soubor .xml, .gz nebo .zip"
+          }
+        },
+        "da" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "En .xml-, .gz- eller .zip-fil"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Eine .xml-, .gz- oder .zip-Datei"
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ένα αρχείο .xml, .gz ή .zip"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Un archivo .xml, .gz o .zip"
+          }
+        },
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Un archivo .xml, .gz o .zip"
+          }
+        },
+        "fa" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "یک فایل .xml، .gz یا .zip"
+          }
+        },
+        "fi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : ".xml-, .gz- tai .zip-tiedosto"
+          }
+        },
+        "fil" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Isang .xml, .gz o .zip na file"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Un fichier .xml, .gz ou .zip"
+          }
+        },
+        "he" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "קובץ מסוג .xml, .gz או .zip"
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : ".xml, .gz या .zip फ़ाइल"
+          }
+        },
+        "hu" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Egy .xml, .gz vagy .zip fájl"
+          }
+        },
+        "hy" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : ".xml, .gz կամ .zip ֆայլ"
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "File .xml, .gz, atau .zip"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Un file .xml, .gz o .zip"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : ".xml、.gz、または .zip ファイル"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : ".xml, .gz 또는 .zip 파일"
+          }
+        },
+        "ms" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Fail .xml, .gz atau .zip"
+          }
+        },
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "En .xml-, .gz- eller .zip-fil"
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Een .xml-, .gz- of .zip-bestand"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Plik .xml, .gz lub .zip"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Um arquivo .xml, .gz ou .zip"
+          }
+        },
+        "pt-PT" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Um ficheiro .xml, .gz ou .zip"
+          }
+        },
+        "ro" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Un fișier .xml, .gz sau .zip"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Файл .xml, .gz или .zip"
+          }
+        },
+        "sv" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "En .xml-, .gz- eller .zip-fil"
+          }
+        },
+        "ta" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : ".xml, .gz அல்லது .zip கோப்பு"
+          }
+        },
+        "te" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : ".xml, .gz లేదా .zip ఫైల్"
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ไฟล์ .xml, .gz หรือ .zip"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : ".xml, .gz veya .zip dosyası"
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Файл .xml, .gz або .zip"
+          }
+        },
+        "ur" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ایک .xml، .gz یا .zip فائل"
+          }
+        },
+        "vi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tệp .xml, .gz hoặc .zip"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : ".xml、.gz 或 .zip 文件"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : ".xml、.gz 或 .zip 檔案"
+          }
+        }
+      }
+    },
     "Anvil" : {
       "comment" : "The display value 'Anvil'.",
       "localizations" : {
@@ -70849,10 +71082,6 @@
           }
         }
       }
-    },
-    "Library.xml" : {
-      "comment" : "The placeholder string for the library xml file name.",
-      "shouldTranslate" : false
     },
     "Light Novel" : {
       "comment" : "The display value 'Light Novel'.",
