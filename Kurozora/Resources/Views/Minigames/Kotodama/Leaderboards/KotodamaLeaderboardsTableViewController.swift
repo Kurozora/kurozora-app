@@ -87,8 +87,6 @@ class KotodamaLeaderboardsTableViewController: KTableViewController {
 		)
 		self.tableView.rowHeight = UITableView.automaticDimension
 
-		// Configured once, since `configureEmptyDataView()` runs on every reload and
-		// `configureButton(title:handler:)` adds a target each time it is called.
 		self.emptyBackgroundView.configureButton(title: L10n.kotodamaPlayToday) { [weak self] in
 			self?.openDaily()
 		}

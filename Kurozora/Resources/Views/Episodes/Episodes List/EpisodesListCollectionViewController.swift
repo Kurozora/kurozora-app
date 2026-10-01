@@ -7,6 +7,7 @@
 //
 
 import KurozoraKit
+import Obfuscation
 import UIKit
 
 /// A source of episodes for ``EpisodesListCollectionViewController``.
@@ -83,7 +84,6 @@ class EpisodesListCollectionViewController: ListCollectionViewController, Sectio
 
 	// MARK: - Views
 	private var moreBarButtonItem: UIBarButtonItem!
-	private var fillerBarButtonItem: UIBarButtonItem!
 	private var goToBarButtonItem: UIBarButtonItem!
 
 	// MARK: - Properties
@@ -104,8 +104,24 @@ class EpisodesListCollectionViewController: ListCollectionViewController, Sectio
 	/// Observes local library mutations so the Up Next queue reflects additions and removals.
 	private var libraryObserver: LocalLibraryEntryObserver?
 
-	/// A Boolean value that indicates whether filler episodes are hidden.
-	var shouldHideFillers: Bool = false
+	/// The filler kinds the list is limited to.
+	var selectedFillerKinds: Set<EpisodeFillerKind> = []
+
+	/// The number of episodes the list currently shows.
+	private var visibleEpisodeCount = 0
+
+	/// The identifier of the section holding the filler-kind menu.
+	private static let fillerKindSectionIdentifier = UIMenu.Identifier("app.kurozora.episodes.fillerKindSection")
+
+	/// The identifier of the filler-kind menu.
+	private static let fillerKindMenuIdentifier = UIMenu.Identifier("app.kurozora.episodes.fillerKind")
+
+	/// The interaction presenting the more menu.
+	private var moreMenuInteraction: UIContextMenuInteraction? {
+		let control = self.moreBarButtonItem.value(forKey: #obfuscated("view")) as? UIControl
+
+		return control?.contextMenuInteraction
+	}
 
 	/// The edge currently reflected by ``goToBarButtonItem``'s image.
 	private var displayedGoToEdge: GoToEdge?
@@ -215,12 +231,6 @@ class EpisodesListCollectionViewController: ListCollectionViewController, Sectio
 		self.navigationItem.rightBarButtonItem = self.moreBarButtonItem
 	}
 
-	/// Creates the filler bar-button item.
-	private func configureFillerBarButtonItem() {
-		self.fillerBarButtonItem = UIBarButtonItem(title: L10n.filters, image: UIImage(systemName: "line.3.horizontal.decrease.circle"))
-		self.navigationItem.rightBarButtonItems?.append(self.fillerBarButtonItem)
-	}
-
 	/// Creates the go-to bar-button item.
 	private func configureGoToBarButtonItem() {
 		self.displayedGoToEdge = .last
@@ -230,12 +240,10 @@ class EpisodesListCollectionViewController: ListCollectionViewController, Sectio
 
 	fileprivate func configureNavigationItems() {
 		self.configureMoreBarButtonItem()
-		self.configureFillerBarButtonItem()
 		self.configureGoToBarButtonItem()
 
 		if #available(iOS 16.0, *) {
 			self.moreBarButtonItem.isHidden = self.episodesListFetchType != .season
-			self.fillerBarButtonItem.isHidden = self.episodesListFetchType != .season
 			self.goToBarButtonItem.isHidden = self.episodesListFetchType != .season
 		} else if self.episodesListFetchType != .season {
 			self.navigationItem.rightBarButtonItems = []
@@ -243,9 +251,8 @@ class EpisodesListCollectionViewController: ListCollectionViewController, Sectio
 	}
 
 	func configureNavBarButtons() {
-		self.moreBarButtonItem.menu = self.season?.makeContextMenu(in: self, userInfo: [:], sourceView: nil, barButtonItem: self.moreBarButtonItem)
+		self.moreBarButtonItem.menu = self.createMoreMenu()
 		self.goToBarButtonItem.menu = self.createGoToEpisodeMenu()
-		self.fillerBarButtonItem.menu = self.createShowFillersMenu()
 
 		self.updateGoToBarButtonItemImage()
 	}
@@ -549,19 +556,161 @@ class EpisodesListCollectionViewController: ListCollectionViewController, Sectio
 		return UIMenu(title: "", children: [goToEdgeEpisode, goToLastWatchedEpisode])
 	}
 
-	fileprivate func createShowFillersMenu() -> UIMenu {
-		var menuElements: [UIMenuElement] = []
+	/// Creates the more menu.
+	fileprivate func createMoreMenu() -> UIMenu? {
+		guard let children = self.makeMoreMenuChildren(deferred: true) else { return nil }
 
-		let title = self.shouldHideFillers ? L10n.showFillers : L10n.hideFillers
-		let toggleFillers = UIAction(title: title, image: nil) { [weak self] _ in
-			guard let self = self else { return }
-			self.shouldHideFillers = !self.shouldHideFillers
-			self.updateDataSource()
-			self.configureNavBarButtons()
+		return UIMenu(title: "", children: children)
+	}
+
+	/// Creates the more menu's elements.
+	///
+	/// - Parameter deferred: Whether the filler kinds are resolved at presentation.
+	///
+	/// - Returns: The more menu's elements.
+	private func makeMoreMenuChildren(deferred: Bool = true) -> [UIMenuElement]? {
+		guard let season = self.season else { return nil }
+
+		let seasonMenu = season.makeContextMenu(in: self, userInfo: [:], sourceView: nil, barButtonItem: self.moreBarButtonItem)
+		var children = seasonMenu.children
+
+		let filterSection = UIMenu(title: "", identifier: Self.fillerKindSectionIdentifier, options: .displayInline, children: [self.createFillerKindMenu(deferred: deferred)])
+
+		// The season's share section trails its menu.
+		children.insert(filterSection, at: Swift.max(children.count - 1, 0))
+
+		return children
+	}
+
+	/// Remarks the presented menu so the marks match the current choice.
+	private func refreshFillerKindMenu() {
+		DispatchQueue.main.async { [weak self] in
+			guard let self = self, let interaction = self.moreMenuInteraction else { return }
+
+			interaction.updateVisibleMenu { [weak self] menu in
+				guard let self = self else { return menu }
+
+				return self.remarkingFillerKinds(in: menu)
+			}
 		}
-		menuElements.append(toggleFillers)
+	}
 
-		return UIMenu(title: "", children: menuElements)
+	/// Rebuilds the filler-kind sections wherever they sit in the given menu.
+	///
+	/// - Parameter menu: The menu on screen.
+	///
+	/// - Returns: The menu carrying the current marks.
+	private func remarkingFillerKinds(in menu: UIMenu) -> UIMenu {
+		if menu.identifier == Self.fillerKindMenuIdentifier {
+			return menu.replacingChildren(self.makeFillerKindSections())
+		}
+
+		let children = menu.children.map { element -> UIMenuElement in
+			guard let submenu = element as? UIMenu else { return element }
+
+			return self.remarkingFillerKinds(in: submenu)
+		}
+
+		return menu.replacingChildren(children)
+	}
+
+	override func configureEmptyDataView() {
+		// The list says nothing until its own identities arrive.
+		guard !self.episodeIdentities.isEmpty, self.visibleEpisodeCount == 0 else {
+			self.collectionView.backgroundView = nil
+
+			return
+		}
+
+		if let image = UIImage(systemName: "line.3.horizontal.decrease.circle") {
+			self.emptyBackgroundView.configureImageView(image: image)
+		}
+
+		self.emptyBackgroundView.configureLabels(title: L10n.noEpisodesMatchFilterTitle, detail: L10n.noEpisodesMatchFilterDetail)
+		self.emptyBackgroundView.configureButton(title: L10n.removeFilters(self.selectedFillerKinds.count)) { [weak self] in
+			guard let self = self else { return }
+
+			self.selectedFillerKinds.removeAll()
+			self.applyFillerKindSelection()
+		}
+
+		self.collectionView.backgroundView = self.emptyBackgroundView
+	}
+
+	/// Creates the menu limiting the list to the chosen filler kinds.
+	///
+	/// - Parameter deferred: Whether the sections are resolved at presentation.
+	///
+	/// - Returns: The filler-kind menu.
+	fileprivate func createFillerKindMenu(deferred: Bool = true) -> UIMenu {
+		let children: [UIMenuElement] = deferred
+			? [UIDeferredMenuElement.uncached { [weak self] completion in
+				completion(self?.makeFillerKindSections() ?? [])
+			}]
+			: self.makeFillerKindSections()
+
+		return UIMenu(
+			title: L10n.filter,
+			image: UIImage(systemName: "line.3.horizontal.decrease.circle"),
+			identifier: Self.fillerKindMenuIdentifier,
+			children: children
+		)
+	}
+
+	/// Creates the sections marking the chosen filler kinds.
+	private func makeFillerKindSections() -> [UIMenuElement] {
+		let allAction = UIAction(
+			title: L10n.allEpisodes,
+			image: UIImage(systemName: "square.grid.2x2"),
+			state: self.selectedFillerKinds.isEmpty ? .on : .off
+		) { [weak self] _ in
+			guard let self = self else { return }
+
+			self.selectedFillerKinds.removeAll()
+			self.applyFillerKindSelection()
+		}
+		self.keepPresented(allAction)
+
+		let kindActions: [UIMenuElement] = EpisodeFillerKind.allCases.map { kind in
+			let action = UIAction(
+				title: kind.stringValue,
+				image: kind.image,
+				state: self.selectedFillerKinds.contains(kind) ? .on : .off
+			) { [weak self] _ in
+				guard let self = self else { return }
+
+				if self.selectedFillerKinds.contains(kind) {
+					self.selectedFillerKinds.remove(kind)
+				} else {
+					self.selectedFillerKinds.insert(kind)
+				}
+
+				self.applyFillerKindSelection()
+			}
+			self.keepPresented(action)
+
+			return action
+		}
+
+		return [
+			UIMenu(title: "", options: .displayInline, children: [allAction]),
+			UIMenu(title: "", options: .displayInline, children: kindActions)
+		]
+	}
+
+	/// Keeps the menu open after the action runs.
+	///
+	/// - Parameter action: The action to mark.
+	private func keepPresented(_ action: UIAction) {
+		if #available(iOS 16.0, *) {
+			action.attributes.insert(.keepsMenuPresented)
+		}
+	}
+
+	/// Applies the chosen filler kinds to the list and the menu.
+	private func applyFillerKindSelection() {
+		self.updateDataSource()
+		self.refreshFillerKindMenu()
 	}
 
 	// MARK: - SectionFetchable
@@ -618,17 +767,20 @@ extension EpisodesListCollectionViewController {
 	}
 
 	override func updateDataSource() {
-		let episodes = (self.cache as? [IndexPath: Episode]) ?? [:]
+		let episodes = self.cache.values.compactMap { $0 as? Episode }
 		let visibleEpisodeIdentities: [EpisodeIdentity] = {
-			guard self.shouldHideFillers else {
+			guard !self.selectedFillerKinds.isEmpty else {
 				return self.episodeIdentities
 			}
 
-			let fillerIDs = episodes.values
-				.filter { $0.attributes.isFiller }
-				.map { $0.id }
+			// Episodes still being fetched carry no kind.
+			let hiddenIDs = Set(
+				episodes
+					.filter { !self.selectedFillerKinds.contains($0.attributes.fillerKind) }
+					.map { $0.id }
+			)
 
-			return self.episodeIdentities.filter { !fillerIDs.contains($0.id) }
+			return self.episodeIdentities.filter { !hiddenIDs.contains($0.id) }
 		}()
 
 		self.snapshot = NSDiffableDataSourceSnapshot<SectionLayoutKind, ItemKind>()
@@ -638,6 +790,9 @@ extension EpisodesListCollectionViewController {
 		self.snapshot.appendItems(items, toSection: .main)
 
 		self.dataSource.apply(self.snapshot)
+
+		self.visibleEpisodeCount = visibleEpisodeIdentities.count
+		self.configureEmptyDataView()
 	}
 
 	private func getConfiguredEpisodeCell() -> UICollectionView.CellRegistration<EpisodeLockupCollectionViewCell, ItemKind> {

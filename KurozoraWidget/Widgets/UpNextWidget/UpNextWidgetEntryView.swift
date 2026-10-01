@@ -86,8 +86,6 @@ struct UpNextWidgetEntryView: View {
 						)
 					}
 					.frame(width: cardWidth)
-					.disabled(episode.isFiller)
-					.redacted(reason: episode.isFiller ? .placeholder : [])
 				}
 			}
 			.padding(16)
@@ -115,8 +113,6 @@ struct UpNextWidgetEntryView: View {
 				}
 				.frame(height: heroHeight)
 				.clipped()
-				.disabled(hero.isFiller)
-				.redacted(reason: hero.isFiller ? .placeholder : [])
 
 				VStack(spacing: rowSpacing) {
 					ForEach(Array(rows.enumerated()), id: \.element.id) { index, episode in
@@ -131,8 +127,6 @@ struct UpNextWidgetEntryView: View {
 									.offset(y: rowSpacing / 2)
 							}
 						}
-						.disabled(episode.isFiller)
-						.redacted(reason: episode.isFiller ? .placeholder : [])
 					}
 				}
 				.padding(inset)
@@ -165,8 +159,6 @@ struct UpNextWidgetEntryView: View {
 					}
 					.frame(height: heroHeight)
 					.clipped()
-					.disabled(hero.isFiller)
-					.redacted(reason: hero.isFiller ? .placeholder : [])
 
 					ForEach(leftRows) { episode in
 						self.rowCard(episode: episode, width: halfWidth, height: cardHeight)
@@ -193,8 +185,6 @@ struct UpNextWidgetEntryView: View {
 			UpNextBannerRowView(episode: episode, containerWidth: width, bannerWidth: bannerWidth)
 		}
 		.frame(width: width, height: height, alignment: .leading)
-		.disabled(episode.isFiller)
-		.redacted(reason: episode.isFiller ? .placeholder : [])
 	}
 
 	// MARK: - Shared Row List
@@ -209,8 +199,6 @@ struct UpNextWidgetEntryView: View {
 				Link(destination: episode.deeplinkURL) {
 					UpNextBannerRowView(episode: episode, containerWidth: containerWidth)
 				}
-				.disabled(episode.isFiller)
-				.redacted(reason: episode.isFiller ? .placeholder : [])
 			}
 		}
 	}

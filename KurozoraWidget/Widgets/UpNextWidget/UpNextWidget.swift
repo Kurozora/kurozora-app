@@ -36,7 +36,7 @@ struct UpNextEpisodeItem: Identifiable {
 	let imageURL: URL?
 	let backgroundColor: String?
 	let deeplinkURL: URL
-	var isFiller: Bool = false
+	var fillerKind: EpisodeFillerKind = .animeCanon
 
 	var seasonEpisodeLabel: String {
 		var label = "S\(self.seasonNumber) · E\(self.episodeNumber)"
@@ -62,8 +62,7 @@ struct UpNextEpisodeItem: Identifiable {
 			bannerImage: scaledImage,
 			imageURL: nil,
 			backgroundColor: nil,
-			deeplinkURL: .home,
-			isFiller: true
+			deeplinkURL: .home
 		)
 	}
 
@@ -84,8 +83,7 @@ struct UpNextEpisodeItem: Identifiable {
 			bannerImage: nil,
 			imageURL: nil,
 			backgroundColor: nil,
-			deeplinkURL: .home,
-			isFiller: true
+			deeplinkURL: .home
 		)
 	}
 }
@@ -106,7 +104,9 @@ private struct UpNextFetchResult {
 }
 
 // MARK: - Timeline Provider
-struct UpNextProvider: TimelineProvider {
+struct UpNextProvider: IntentTimelineProvider {
+	typealias Intent = UpNextFilterIntent
+
 	// MARK: - Properties
 	/// Overall deadline for the fan-out batch of episode detail + image calls.
 	private let fetchEpisodeDetailsDeadline: TimeInterval = 10
@@ -133,22 +133,22 @@ struct UpNextProvider: TimelineProvider {
 		)
 	}
 
-	func getSnapshot(in context: Context, completion: @escaping (UpNextEntry) -> Void) {
+	func getSnapshot(for configuration: UpNextFilterIntent, in context: Context, completion: @escaping (UpNextEntry) -> Void) {
 		if context.isPreview {
 			completion(self.placeholder(in: context))
 			return
 		}
 		Task {
 			let result = await self.fetchEntry(for: context)
-			completion(result.entry)
+			completion(result.entry.filtered(by: configuration.selectedFillerKinds))
 		}
 	}
 
-	func getTimeline(in context: Context, completion: @escaping (Timeline<UpNextEntry>) -> Void) {
+	func getTimeline(for configuration: UpNextFilterIntent, in context: Context, completion: @escaping (Timeline<UpNextEntry>) -> Void) {
 		Task {
 			let result = await self.fetchEntry(for: context)
 			let nextUpdate = Date().addingTimeInterval(result.nextReloadAfter)
-			completion(Timeline(entries: [result.entry], policy: .after(nextUpdate)))
+			completion(Timeline(entries: [result.entry.filtered(by: configuration.selectedFillerKinds)], policy: .after(nextUpdate)))
 		}
 	}
 
@@ -294,7 +294,8 @@ struct UpNextProvider: TimelineProvider {
 			bannerImage: downsampledImage,
 			imageURL: imageURL,
 			backgroundColor: attributes.banner?.backgroundColor ?? attributes.poster?.backgroundColor,
-			deeplinkURL: .episode(episodeIdentity)
+			deeplinkURL: .episode(episodeIdentity),
+			fillerKind: attributes.fillerKind
 		)
 		return (index, item)
 	}
@@ -418,7 +419,7 @@ private extension UpNextEpisodeItem {
 			imageURL: self.imageURL,
 			backgroundColor: self.backgroundColor,
 			deeplinkURLString: self.deeplinkURL.absoluteString,
-			isFiller: self.isFiller
+			fillerKind: self.fillerKind
 		)
 	}
 }
@@ -448,8 +449,56 @@ private extension UpNextEpisodeSnapshot {
 			imageURL: self.imageURL,
 			backgroundColor: self.backgroundColor,
 			deeplinkURL: deeplinkURL,
-			isFiller: self.isFiller
+			fillerKind: self.fillerKind ?? .animeCanon
 		)
+	}
+}
+
+// MARK: - Configured Timeline
+extension UpNextEntry {
+	/// The entry limited to the given filler kinds.
+	///
+	/// - Parameter fillerKinds: The kinds to keep.
+	///
+	/// - Returns: The entry carrying the kept episodes.
+	func filtered(by fillerKinds: Set<EpisodeFillerKind>) -> UpNextEntry {
+		guard !fillerKinds.isEmpty else { return self }
+
+		return UpNextEntry(
+			date: self.date,
+			episodes: self.episodes.filter { fillerKinds.contains($0.fillerKind) },
+			state: self.state,
+			isPlaceholder: self.isPlaceholder
+		)
+	}
+}
+
+extension IntentFillerKind {
+	/// The `EpisodeFillerKind` value of a filler kind.
+	var fillerKindValue: EpisodeFillerKind? {
+		switch self {
+		case .mangaCanon:
+			return .mangaCanon
+		case .animeCanon:
+			return .animeCanon
+		case .mixedCanonFiller:
+			return .mixedCanonFiller
+		case .filler:
+			return .filler
+		case .unknown:
+			return nil
+		@unknown default:
+			return nil
+		}
+	}
+}
+
+extension UpNextFilterIntent {
+	/// The filler kinds the widget is limited to.
+	var selectedFillerKinds: Set<EpisodeFillerKind> {
+		let kinds = self.fillerKinds ?? []
+
+		return Set(kinds.compactMap { IntentFillerKind(rawValue: $0)?.fillerKindValue })
 	}
 }
 
@@ -458,8 +507,9 @@ struct UpNextWidget: Widget {
 	static let kind: String = "app.kurozora.tracker.upNextWidget"
 
 	var body: some WidgetConfiguration {
-		StaticConfiguration(
+		IntentConfiguration(
 			kind: Self.kind,
+			intent: UpNextFilterIntent.self,
 			provider: UpNextProvider()
 		) { entry in
 			if #available(iOS 17.0, tvOS 17.0, macOS 14.0, watchOS 10.0, *) {

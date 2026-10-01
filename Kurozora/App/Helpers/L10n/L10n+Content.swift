@@ -2303,6 +2303,124 @@ extension L10n {
             )
 		}
 	}
+	/// The 'All Episodes' filter option.
+	///
+	/// - Tag: L10n-allEpisodes
+	static var allEpisodes: String {
+		L10n.resolve {
+			String(
+                localized: "All Episodes",
+                table: "Content",
+                bundle: LanguageManager.shared.bundle,
+                locale: LanguageManager.shared.locale,
+                comment: "The 'All Episodes' filter option."
+            )
+		}
+	}
+	/// The 'Anime Canon' filler kind label.
+	///
+	/// - Tag: L10n-animeCanon
+	static var animeCanon: String {
+		L10n.resolve {
+			String(
+                localized: "Anime Canon",
+                table: "Content",
+                bundle: LanguageManager.shared.bundle,
+                locale: LanguageManager.shared.locale,
+                comment: "The 'Anime Canon' filler kind label."
+            )
+		}
+	}
+	/// The 'Manga Canon' filler kind label.
+	///
+	/// - Tag: L10n-mangaCanon
+	static var mangaCanon: String {
+		L10n.resolve {
+			String(
+                localized: "Manga Canon",
+                table: "Content",
+                bundle: LanguageManager.shared.bundle,
+                locale: LanguageManager.shared.locale,
+                comment: "The 'Manga Canon' filler kind label."
+            )
+		}
+	}
+	/// The 'Mixed Canon/Filler' filler kind label.
+	///
+	/// - Tag: L10n-mixedCanonFiller
+	static var mixedCanonFiller: String {
+		L10n.resolve {
+			String(
+                localized: "Mixed Canon/Filler",
+                table: "Content",
+                bundle: LanguageManager.shared.bundle,
+                locale: LanguageManager.shared.locale,
+                comment: "The 'Mixed Canon/Filler' filler kind label."
+            )
+		}
+	}
+	/// The 'Filler' filler kind label.
+	///
+	/// - Tag: L10n-filler
+	static var filler: String {
+		L10n.resolve {
+			String(
+                localized: "Filler",
+                table: "Content",
+                bundle: LanguageManager.shared.bundle,
+                locale: LanguageManager.shared.locale,
+                comment: "The 'Filler' filler kind label."
+            )
+		}
+	}
+	/// The title shown when no episode matches the filler-kind filter.
+	///
+	/// - Tag: L10n-noEpisodesMatchFilterTitle
+	static var noEpisodesMatchFilterTitle: String {
+		L10n.resolve {
+			String(
+                localized: "No Episodes Match",
+                table: "Content",
+                bundle: LanguageManager.shared.bundle,
+                locale: LanguageManager.shared.locale,
+                comment: "The title shown when no episode matches the filler-kind filter."
+            )
+		}
+	}
+	/// The detail shown when no episode matches the filler-kind filter.
+	///
+	/// - Tag: L10n-noEpisodesMatchFilterDetail
+	static var noEpisodesMatchFilterDetail: String {
+		L10n.resolve {
+			String(
+                localized: "No episodes in this season match the selected filler kinds.",
+                table: "Content",
+                bundle: LanguageManager.shared.bundle,
+                locale: LanguageManager.shared.locale,
+                comment: "The detail shown when no episode matches the filler-kind filter."
+            )
+		}
+	}
+	/// The button clearing the filler-kind filter.
+	///
+	/// - Parameter count: The number of selected filler kinds.
+	///
+	/// - Returns: The localized button title.
+	static func removeFilters(_ count: Int) -> String {
+		var morphology = Morphology()
+		morphology.number = count == 1 ? .singular : .plural
+
+		var title = AttributedString(
+			localized: "^[Remove Filter](inflect: true)",
+			table: "Content",
+			bundle: LanguageManager.shared.bundle,
+			locale: LanguageManager.shared.locale,
+			comment: "The button clearing the filler-kind filter on the empty episodes list."
+		)
+		title.inflect = InflectionRule.explicit(morphology)
+
+		return String(title.inflected().characters)
+	}
 	/// The 'Deceased Date' search filter label.
 	///
 	/// - Tag: L10n-deceasedDate

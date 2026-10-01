@@ -52,10 +52,17 @@ struct EpisodeDetailView: View {
 				}
 				.font(.caption2)
 
-				if self.episode.attributes.isFiller {
+				switch self.episode.attributes.fillerKind {
+				case .filler:
 					Text(L10n.filler)
 						.font(.caption2)
 						.foregroundStyle(.orange)
+				case .mixedCanonFiller:
+					Text(L10n.mixedCanonFiller)
+						.font(.caption2)
+						.foregroundStyle(.yellow)
+				case .animeCanon, .mangaCanon:
+					EmptyView()
 				}
 
 				Button {

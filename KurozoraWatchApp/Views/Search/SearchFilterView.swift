@@ -142,7 +142,7 @@ struct SearchFilterView: View {
 		case .episodes:
 			return [
 				WatchFilterAttribute(id: "tvRating", name: L10n.tvRating, options: tvRatingOptions),
-				WatchFilterAttribute(id: "isFiller", name: L10n.fillers, options: shownHiddenOptions),
+				WatchFilterAttribute(id: "fillerKind", name: L10n.fillers, options: fillerKindOptions),
 				WatchFilterAttribute(id: "isPremiere", name: L10n.premieres, options: shownHiddenOptions),
 				WatchFilterAttribute(id: "isFinale", name: L10n.finales, options: shownHiddenOptions),
 				WatchFilterAttribute(id: "isSpecial", name: L10n.specials, options: shownHiddenOptions),
@@ -185,7 +185,7 @@ struct SearchFilterView: View {
 	}
 
 	/// The attributes carrying a yes or no choice.
-	static let booleanKeys: Set<FilterKey> = [.isFiller, .isSpecial, .isPremiere, .isFinale, .isNSFW]
+	static let booleanKeys: Set<FilterKey> = [.isSpecial, .isPremiere, .isFinale, .isNSFW]
 }
 
 // MARK: - Filter Option Constants
@@ -283,6 +283,28 @@ private extension SearchFilterView {
 		WatchFilterOption(id: 11, label: L10n.aquarius, value: 11),
 		WatchFilterOption(id: 12, label: L10n.pisces, value: 12),
 	]
+
+	static let fillerKindOptions: [WatchFilterOption] = EpisodeFillerKind.allCases.map { kind in
+		WatchFilterOption(id: kind.rawValue, label: Self.label(for: kind), value: kind.rawValue)
+	}
+
+	/// The localized name of a filler kind.
+	///
+	/// - Parameter kind: The kind to name.
+	///
+	/// - Returns: The name shown for the kind.
+	static func label(for kind: EpisodeFillerKind) -> String {
+		switch kind {
+		case .mangaCanon:
+			return L10n.mangaCanon
+		case .animeCanon:
+			return L10n.animeCanon
+		case .mixedCanonFiller:
+			return L10n.mixedCanonFiller
+		case .filler:
+			return L10n.filler
+		}
+	}
 
 	static let shownHiddenOptions: [WatchFilterOption] = [
 		WatchFilterOption(id: 1, label: L10n.shown, value: 1),

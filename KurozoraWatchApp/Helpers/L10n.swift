@@ -611,6 +611,21 @@ struct L10n {
 		String(localized: "Filler", comment: "The marker on an episode that is filler rather than canon.")
 	}
 
+	/// The marker on an episode that mixes canon and filler.
+	static var mixedCanonFiller: String {
+		String(localized: "Mixed Canon/Filler", comment: "The marker on an episode that mixes canon and filler.")
+	}
+
+	/// The marker on an episode original to the anime.
+	static var animeCanon: String {
+		String(localized: "Anime Canon", comment: "The marker on an episode original to the anime.")
+	}
+
+	/// The marker on an episode adapted from the manga.
+	static var mangaCanon: String {
+		String(localized: "Manga Canon", comment: "The marker on an episode adapted from the manga.")
+	}
+
 	/// The button that marks an episode as watched.
 	static var markAsWatched: String {
 		String(localized: "Mark as Watched", comment: "The button that marks an episode as watched.")

@@ -30,7 +30,7 @@ extension SearchType {
 			var descriptors: [FilterDescriptor] = [
 				FilterDescriptor(key: .duration, title: L10n.duration, control: .duration(Self.screenDurations)),
 				FilterDescriptor(key: .tvRating, title: L10n.tvRating, control: .numberPills(Self.options(TVRating.allCases.map { ($0.name, $0.rawValue) }))),
-				FilterDescriptor(key: .isFiller, title: L10n.fillers, control: .booleanPills(trueTitle: L10n.shown, falseTitle: L10n.hidden)),
+				FilterDescriptor(key: .fillerKind, title: L10n.fillers, control: .numberPills(Self.options(EpisodeFillerKind.allCases.map { ($0.stringValue, $0.rawValue) }))),
 				FilterDescriptor(key: .isPremiere, title: L10n.premieres, control: .booleanPills(trueTitle: L10n.shown, falseTitle: L10n.hidden)),
 				FilterDescriptor(key: .isFinale, title: L10n.finales, control: .booleanPills(trueTitle: L10n.shown, falseTitle: L10n.hidden)),
 				FilterDescriptor(key: .isSpecial, title: L10n.specials, control: .booleanPills(trueTitle: L10n.shown, falseTitle: L10n.hidden))

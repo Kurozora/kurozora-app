@@ -220,6 +220,7 @@ class EmptyBackgroundView: UIView {
 	func configureButton(title: String, handler: (() -> Void)?) {
 		self.button.setAttributedTitle(.init(string: title), for: .normal)
 		self.didTapButtonHandle = handler
+		self.button.removeTarget(self, action: #selector(self.didTapButton(_:)), for: .touchUpInside)
 		self.button.addTarget(self, action: #selector(self.didTapButton(_:)), for: .touchUpInside)
 
 		if self.canShowButton {
