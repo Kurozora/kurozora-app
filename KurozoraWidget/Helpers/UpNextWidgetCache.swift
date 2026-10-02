@@ -7,7 +7,6 @@
 //
 
 import Foundation
-import KurozoraKit
 
 /// A serializable snapshot of an episode displayed by the Up Next widget.
 struct UpNextEpisodeSnapshot: Codable {
@@ -20,7 +19,6 @@ struct UpNextEpisodeSnapshot: Codable {
 	let imageURL: URL?
 	let backgroundColor: String?
 	let deeplinkURLString: String
-	let fillerKind: EpisodeFillerKind?
 }
 
 /// The cache holding the Up Next widget's last timeline and its failure counters.
