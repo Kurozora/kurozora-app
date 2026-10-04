@@ -48,6 +48,11 @@
                                         <color key="textColor" systemColor="secondaryLabelColor"/>
                                         <nil key="highlightedColor"/>
                                     </label>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" hidden="YES" text="_test" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="cQA-Lc-ter" customClass="KSecondaryLabel" customModule="Kurozora" customModuleProvider="target">
+                                        <fontDescription key="fontDescription" style="UICTFontTextStyleCaption1"/>
+                                        <color key="textColor" systemColor="secondaryLabelColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
                                 </subviews>
                             </stackView>
                         </subviews>
@@ -57,7 +62,7 @@
                     </view>
                 </subviews>
                 <constraints>
-                    <constraint firstAttribute="bottom" secondItem="cQA-Lc-oSV" secondAttribute="bottom" id="cQA-Lc-bo"/>
+                    <constraint firstAttribute="bottom" secondItem="cQA-Lc-oSV" secondAttribute="bottom" priority="999" id="cQA-Lc-bo"/>
                     <constraint firstItem="cQA-Lc-oSV" firstAttribute="leading" secondItem="cQA-Lc-cVw" secondAttribute="leading" id="cQA-Lc-le"/>
                     <constraint firstItem="cQA-Lc-oSV" firstAttribute="top" secondItem="cQA-Lc-cVw" secondAttribute="top" id="cQA-Lc-tp"/>
                     <constraint firstAttribute="trailing" secondItem="cQA-Lc-oSV" secondAttribute="trailing" id="cQA-Lc-tr"/>
@@ -71,11 +76,13 @@
             <size key="customSize" width="128" height="213"/>
             <connections>
                 <outlet property="borderView" destination="Brd-vw-plk" id="Brd-vw-plkO"/>
+                <outlet property="contentStackView" destination="cQA-Lc-oSV" id="cQA-Lc-oCS"/>
                 <outlet property="imageView" destination="cQA-Lc-img" id="cQA-Lc-oI"/>
                 <outlet property="labelsStackView" destination="cQA-Lc-iSV" id="cQA-Lc-oL"/>
                 <outlet property="primaryLabel" destination="cQA-Lc-pri" id="cQA-Lc-oP"/>
                 <outlet property="rankLabel" destination="cQA-Lc-rnk" id="cQA-Lc-oR"/>
                 <outlet property="secondaryLabel" destination="cQA-Lc-sec" id="cQA-Lc-oS"/>
+                <outlet property="tertiaryLabel" destination="cQA-Lc-ter" id="cQA-Lc-oT"/>
             </connections>
             <point key="canvasLocation" x="173.91304347826087" y="174.10714285714286"/>
         </collectionViewCell>

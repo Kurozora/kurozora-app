@@ -23,6 +23,7 @@ extension PersonDetailsCollectionViewController {
 		case shows
 		case literatures
 		case games
+		case relationships
 
 		// MARK: - Properties
 		/// The string value of a character section type.
@@ -48,13 +49,15 @@ extension PersonDetailsCollectionViewController {
 				return L10n.literatures
 			case .games:
 				return L10n.games
+			case .relationships:
+				return L10n.relationships
 			}
 		}
 
 		/// The string value of a character section type segue identifier.
 		var segueIdentifier: SegueIdentifiers? {
 			switch self {
-			case .header, .about, .rateAndReview, .reviews, .information:
+			case .header, .about, .rateAndReview, .reviews, .information, .relationships:
 				return nil
 			case .rating:
 				return .reviewsListSegue
@@ -102,6 +105,9 @@ extension PersonDetailsCollectionViewController {
 
 		/// Indicates the item kind contains a `GameIdentity` object.
 		case gameIdentity(_: GameIdentity)
+
+		/// Indicates the item kind contains a `PersonRelationship` object.
+		case personRelationship(_: PersonRelationship)
 	}
 
 	// MARK: - SectionFetchable

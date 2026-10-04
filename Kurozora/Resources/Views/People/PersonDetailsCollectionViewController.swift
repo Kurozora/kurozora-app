@@ -63,6 +63,12 @@ class PersonDetailsCollectionViewController: DetailsCollectionViewController, Se
 	var showIdentities: [ShowIdentity] = []
 	var literatureIdentities: [LiteratureIdentity] = []
 	var gameIdentities: [GameIdentity] = []
+	var relationships: [PersonRelationship] = []
+
+	/// The measurable items of the relationships section.
+	var relationshipMeasurableItems: [CellHeightMeasurer.Item] {
+		self.relationships.map { ProfileLockupCollectionViewCell.measurableItem(for: $0) }
+	}
 
 	var cache: [ItemKind: KurozoraItem] = [:]
 	var isFetchingSection: Set<SectionLayoutKind> = []
@@ -166,12 +172,14 @@ class PersonDetailsCollectionViewController: DetailsCollectionViewController, Se
 		let showIdentityRequest = KService.shows(for: personIdentity).limit(10)
 		let literatureIdentityRequest = KService.literatures(for: personIdentity).limit(10)
 		let gameIdentityRequest = KService.games(for: personIdentity).limit(10)
+		let relationshipRequest = KService.relationships(for: personIdentity).limit(10)
 
 		async let reviewIdentityResponse = reviewIdentityRequest.response()
 		async let characterIdentityResponse = characterIdentityRequest.response()
 		async let showIdentityResponse = showIdentityRequest.response()
 		async let literatureIdentityResponse = literatureIdentityRequest.response()
 		async let gameIdentityResponse = gameIdentityRequest.response()
+		async let relationshipResponse = relationshipRequest.response()
 
 		if self.person == nil {
 			do {
@@ -216,6 +224,13 @@ class PersonDetailsCollectionViewController: DetailsCollectionViewController, Se
 
 		do {
 			self.gameIdentities = try await gameIdentityResponse.data
+			self.updateDataSource()
+		} catch {
+			print(error.localizedDescription)
+		}
+
+		do {
+			self.relationships = try await relationshipResponse.data
 			self.updateDataSource()
 		} catch {
 			print(error.localizedDescription)
@@ -492,6 +507,16 @@ extension PersonDetailsCollectionViewController {
 				}
 
 				characterLockupCollectionViewCell.configure(using: character)
+			default: break
+			}
+		}
+	}
+
+	func getConfiguredRelationshipCell() -> UICollectionView.CellRegistration<ProfileLockupCollectionViewCell, ItemKind> {
+		return UICollectionView.CellRegistration<ProfileLockupCollectionViewCell, ItemKind>(cellNib: ProfileLockupCollectionViewCell.nib) { profileLockupCollectionViewCell, _, itemKind in
+			switch itemKind {
+			case .personRelationship(let relationship):
+				profileLockupCollectionViewCell.configure(using: relationship)
 			default: break
 			}
 		}

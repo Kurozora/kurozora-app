@@ -29,8 +29,8 @@ extension EpisodeDetailsCollectionViewController {
 		case .reviews:
 			columnCount = Int(width >= 414 ? (width / 384).rounded() : (width / 284).rounded())
 		case .information:
-			columnCount = Int(width >= 414 ? (width / 200).rounded() : (width / 160).rounded())
-			return columnCount > 0 ? columnCount : 2
+			columnCount = Int(width >= 414 ? (width / 200).rounded(.down) : (width / 160).rounded(.down))
+			return columnCount > 0 ? columnCount : 1
 		case .cast:
 			columnCount = Int(width >= 414 ? (width / 384).rounded() : (width / 284).rounded())
 			if columnCount > 5 {

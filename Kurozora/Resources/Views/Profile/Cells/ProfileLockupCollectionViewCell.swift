@@ -13,10 +13,16 @@ class ProfileLockupCollectionViewCell: KCollectionViewCell {
 	// MARK: - IBOutlets
 	@IBOutlet weak var imageView: CircularImageView!
 	@IBOutlet weak var borderView: BorderView!
+	@IBOutlet weak var contentStackView: UIStackView!
 	@IBOutlet weak var labelsStackView: UIStackView!
 	@IBOutlet weak var primaryLabel: KLabel!
 	@IBOutlet weak var secondaryLabel: KSecondaryLabel!
+	@IBOutlet weak var tertiaryLabel: KSecondaryLabel!
 	@IBOutlet weak var rankLabel: KLabel!
+
+	// MARK: - Properties
+	/// The constraint that fixes the avatar size in the horizontal style.
+	private var avatarWidthConstraint: NSLayoutConstraint?
 
 	// MARK: - View Lifecycle
 	nonisolated override func awakeFromNib() {
@@ -25,12 +31,20 @@ class ProfileLockupCollectionViewCell: KCollectionViewCell {
 		MainActor.assumeIsolated {
 			self.imageView.layer.borderWidth = 0
 			self.borderView.cornerRadius = self.imageView.bounds.height / 2.0
+			self.avatarWidthConstraint = self.imageView.widthAnchor.constraint(equalToConstant: 80)
 		}
 	}
 
 	override func layoutSubviews() {
 		super.layoutSubviews()
 		self.borderView.cornerRadius = self.imageView.bounds.height / 2.0
+	}
+
+	override func prepareForReuse() {
+		super.prepareForReuse()
+		self.setHorizontalStyle(false)
+		self.tertiaryLabel.text = nil
+		self.tertiaryLabel.isHidden = true
 	}
 
 	// MARK: - Functions
@@ -125,6 +139,29 @@ class ProfileLockupCollectionViewCell: KCollectionViewCell {
 		user.attributes.profileImage(imageView: self.imageView)
 	}
 
+	/// Configures the cell to display a person relationship.
+	///
+	/// - Parameter relationship: The person relationship used to configure the cell.
+	func configure(using relationship: PersonRelationship) {
+		self.hideSkeleton()
+
+		let relatedPerson = relationship.person
+		self.primaryLabel.text = relatedPerson.attributes.fullName
+		self.primaryLabel.isHidden = false
+
+		self.secondaryLabel.text = relationship.attributes.relation.description
+		self.secondaryLabel.isHidden = false
+
+		self.tertiaryLabel.text = self.durationText(for: relationship)
+		self.tertiaryLabel.isHidden = self.tertiaryLabel.text == nil
+
+		self.applyRank(nil, showsRank: false)
+		self.setHorizontalStyle(true)
+		self.updateLabelsStackVisibility()
+
+		relatedPerson.attributes.profileImage(imageView: self.imageView)
+	}
+
 	// MARK: - Private
 	/// Sets the rank label's text and visibility for the current configuration.
 	///
@@ -145,7 +182,52 @@ class ProfileLockupCollectionViewCell: KCollectionViewCell {
 	private func updateLabelsStackVisibility() {
 		self.labelsStackView.isHidden = self.primaryLabel.isHidden
 			&& self.secondaryLabel.isHidden
+			&& self.tertiaryLabel.isHidden
 			&& self.rankLabel.isHidden
+	}
+
+	/// Returns the year span of the given relationship.
+	///
+	/// - Parameter relationship: The relationship whose span is formatted.
+	///
+	/// - Returns: The formatted year span.
+	private func durationText(for relationship: PersonRelationship) -> String? {
+		guard let startedAt = relationship.attributes.startedAt else { return nil }
+
+		let calendar = Calendar.current
+		let startYear = calendar.component(.year, from: startedAt)
+
+		if let endedAt = relationship.attributes.endedAt {
+			let endYear = calendar.component(.year, from: endedAt)
+			return L10n.yearRange(String(startYear), String(endYear))
+		}
+
+		return L10n.yearRange(String(startYear), L10n.present)
+	}
+
+	/// Arranges the avatar and labels vertically or horizontally.
+	///
+	/// - Parameter isHorizontal: Whether the avatar sits beside the labels.
+	private func setHorizontalStyle(_ isHorizontal: Bool) {
+		self.contentStackView.axis = isHorizontal ? .horizontal : .vertical
+		self.contentStackView.alignment = isHorizontal ? .top : .fill
+		self.labelsStackView.alignment = isHorizontal ? .leading : .center
+
+		if isHorizontal {
+			self.labelsStackView.insertArrangedSubview(self.secondaryLabel, at: 0)
+		} else {
+			self.labelsStackView.insertArrangedSubview(self.rankLabel, at: 0)
+			self.labelsStackView.insertArrangedSubview(self.primaryLabel, at: 1)
+			self.labelsStackView.insertArrangedSubview(self.secondaryLabel, at: 2)
+			self.labelsStackView.insertArrangedSubview(self.tertiaryLabel, at: 3)
+		}
+
+		let textAlignment: NSTextAlignment = isHorizontal ? .natural : .center
+		self.primaryLabel.textAlignment = textAlignment
+		self.secondaryLabel.textAlignment = textAlignment
+		self.tertiaryLabel.textAlignment = textAlignment
+
+		self.avatarWidthConstraint?.isActive = isHorizontal
 	}
 }
 
@@ -175,6 +257,17 @@ extension ProfileLockupCollectionViewCell {
 	static func measurableItem(for person: Person, detail: String? = nil, rank: Int? = nil) -> CellHeightMeasurer.Item {
 		return CellHeightMeasurer.Item(cellType: ProfileLockupCollectionViewCell.self) { cell in
 			cell.configure(using: person, detail: detail, rank: rank)
+		}
+	}
+
+	/// Returns the item that measures the given person relationship.
+	///
+	/// - Parameter relationship: The relationship the item measures.
+	///
+	/// - Returns: The item that measures the relationship.
+	static func measurableItem(for relationship: PersonRelationship) -> CellHeightMeasurer.Item {
+		return CellHeightMeasurer.Item(cellType: ProfileLockupCollectionViewCell.self) { cell in
+			cell.configure(using: relationship)
 		}
 	}
 }

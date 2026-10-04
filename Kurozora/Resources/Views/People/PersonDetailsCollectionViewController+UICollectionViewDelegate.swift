@@ -24,6 +24,9 @@ extension PersonDetailsCollectionViewController {
 		case .characters:
 			guard let character = self.cachedItem(at: indexPath) as? Character else { return }
 			self.show(.characterDetailsSegue, sender: character)
+		case .relationships:
+			guard case .personRelationship(let relationship)? = self.dataSource.itemIdentifier(for: indexPath) else { return }
+			self.show(PersonDetailsCollectionViewController()(with: relationship.person.id), sender: nil)
 		case .reviews:
 			guard let review = self.review(at: indexPath) else { return }
 			self.present(.reviewDetailsSegue, sender: review)
@@ -51,6 +54,9 @@ extension PersonDetailsCollectionViewController {
 		case .characters:
 			guard let character = self.cachedItem(at: indexPath) as? Character else { return nil }
 			return character.contextMenuConfiguration(in: self, userInfo: ["indexPath": indexPath], sourceView: collectionViewCell?.contentView, barButtonItem: nil)
+		case .relationships:
+			guard case .personRelationship(let relationship)? = self.dataSource.itemIdentifier(for: indexPath) else { return nil }
+			return relationship.person.contextMenuConfiguration(in: self, userInfo: ["indexPath": indexPath], sourceView: collectionViewCell?.contentView, barButtonItem: nil)
 		default: break
 		}
 

@@ -32,6 +32,7 @@ extension PersonDetailsCollectionViewController {
 		let smallCellRegistration = self.getConfiguredSmallCell()
 		let gameCellRegistration = self.getConfiguredGameCell()
 		let characterCellRegistration = self.getConfiguredCharacterCell()
+		let relationshipCellRegistration = self.getConfiguredRelationshipCell()
 
 		self.dataSource = UICollectionViewDiffableDataSource<SectionLayoutKind, ItemKind>(collectionView: collectionView) { [weak self] (collectionView: UICollectionView, indexPath: IndexPath, itemKind: ItemKind) -> UICollectionViewCell? in
 			guard let self = self else { return nil }
@@ -91,6 +92,8 @@ extension PersonDetailsCollectionViewController {
 				return collectionView.dequeueConfiguredReusableCell(using: smallCellRegistration, for: indexPath, item: itemKind)
 			case .gameIdentity:
 				return collectionView.dequeueConfiguredReusableCell(using: gameCellRegistration, for: indexPath, item: itemKind)
+			case .personRelationship:
+				return collectionView.dequeueConfiguredReusableCell(using: relationshipCellRegistration, for: indexPath, item: itemKind)
 			}
 		}
 
@@ -174,6 +177,14 @@ extension PersonDetailsCollectionViewController {
 						.gameIdentity(gameIdentity)
 					}
 					self.snapshot.appendItems(gameIdentityItems, toSection: personDetailSection)
+				}
+			case .relationships:
+				if !self.relationships.isEmpty {
+					self.snapshot.appendSections([personDetailSection])
+					let relationshipItems: [ItemKind] = self.relationships.map { relationship in
+						.personRelationship(relationship)
+					}
+					self.snapshot.appendItems(relationshipItems, toSection: personDetailSection)
 				}
 			}
 		}

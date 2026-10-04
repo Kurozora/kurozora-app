@@ -34,6 +34,9 @@ extension StudioDetailsCollectionViewController {
 			if columnCount > 5 {
 				return 5
 			}
+		case .information:
+			columnCount = Int(width >= 414 ? (width / 200).rounded(.down) : (width / 160).rounded(.down))
+			return columnCount > 0 ? columnCount : 1
 		default:
 			columnCount = Int((width / 374).rounded())
 		}

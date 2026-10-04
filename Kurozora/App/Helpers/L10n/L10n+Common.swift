@@ -826,6 +826,40 @@ extension L10n {
 			)
 		}
 	}
+	/// The string for the word 'relationships'.
+	static var relationships: String {
+		L10n.resolve {
+			String(
+				localized: "Relationships",
+				bundle: LanguageManager.shared.bundle,
+				locale: LanguageManager.shared.locale,
+				comment: "The string for the word 'relationships'."
+			)
+		}
+	}
+	/// The string for the word 'present'.
+	static var present: String {
+		L10n.resolve {
+			String(
+				localized: "present",
+				bundle: LanguageManager.shared.bundle,
+				locale: LanguageManager.shared.locale,
+				comment: "The string for the word 'present' as a point in time."
+			)
+		}
+	}
+	/// The span between a start and end year.
+	static func yearRange(_ startYear: String, _ endYear: String) -> String {
+		L10n.resolve {
+			String(
+				localized: "yearRange",
+				defaultValue: "\(startYear) - \(endYear)",
+				bundle: LanguageManager.shared.bundle,
+				locale: LanguageManager.shared.locale,
+				comment: "The span between a start and end year."
+			)
+		}
+	}
 	/// The string for the word 'episodes'.
 	///
 	/// - Tag: L10n-episodes

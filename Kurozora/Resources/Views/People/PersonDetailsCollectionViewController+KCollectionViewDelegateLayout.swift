@@ -28,9 +28,9 @@ extension PersonDetailsCollectionViewController {
 		case .reviews:
 			columnCount = Int(width >= 414 ? (width / 384).rounded() : (width / 284).rounded())
 		case .information:
-			columnCount = Int(width >= 414 ? (width / 200).rounded() : (width / 160).rounded())
-			return columnCount > 0 ? columnCount : 2
-		case .shows, .literatures, .games:
+			columnCount = Int(width >= 414 ? (width / 200).rounded(.down) : (width / 160).rounded(.down))
+			return columnCount > 0 ? columnCount : 1
+		case .shows, .literatures, .games, .relationships:
 			columnCount = Int(width >= 414 ? (width / 384).rounded() : (width / 284).rounded())
 			if columnCount > 5 {
 				return 5
@@ -51,7 +51,7 @@ extension PersonDetailsCollectionViewController {
 		case .rating:
 			return .absolute(88)
 		case .information:
-			return .estimated(55)
+			return .fractionalHeight(1.0)
 		default:
 			return .fractionalWidth(.zero)
 		}
@@ -69,13 +69,14 @@ extension PersonDetailsCollectionViewController {
 	}
 
 	override func createLayout() -> UICollectionViewLayout? {
-		return UICollectionViewCompositionalLayout { [weak self] (section: Int, layoutEnvironment: NSCollectionLayoutEnvironment) -> NSCollectionLayoutSection? in
+		let layout = UICollectionViewCompositionalLayout { [weak self] (section: Int, layoutEnvironment: NSCollectionLayoutEnvironment) -> NSCollectionLayoutSection? in
 			guard let self = self else { return nil }
 			guard self.person != nil else { return nil }
 			let personDetailSection = self.snapshot.sectionIdentifiers[section]
 			let columns = self.columnCount(forSection: section, layout: layoutEnvironment)
 			var sectionLayout: NSCollectionLayoutSection?
 			var hasSectionHeader = false
+			var hasBackgroundDecoration = false
 
 			switch personDetailSection {
 			case .header:
@@ -141,6 +142,14 @@ extension PersonDetailsCollectionViewController {
 					}
 					hasSectionHeader = true
 				}
+			case .relationships:
+				if !self.relationships.isEmpty {
+					sectionLayout = Layouts.smallSection(section, columns: columns, layoutEnvironment: layoutEnvironment) { width in
+						self.maximumCellHeight(for: self.relationshipMeasurableItems, inSection: section, width: width, layoutEnvironment: layoutEnvironment)
+					}
+					hasSectionHeader = true
+					hasBackgroundDecoration = true
+				}
 			}
 
 			if hasSectionHeader {
@@ -152,7 +161,14 @@ extension PersonDetailsCollectionViewController {
 				sectionLayout?.boundarySupplementaryItems = [sectionHeader]
 			}
 
+			if hasBackgroundDecoration {
+				let isLastSection = section == self.snapshot.sectionIdentifiers.count - 1
+				sectionLayout?.decorationItems = [Layouts.backgroundDecoration(extendsToBottom: isLastSection, layoutEnvironment: layoutEnvironment)]
+			}
+
 			return sectionLayout
 		}
+		layout.register(SectionBackgroundDecorationView.self, forDecorationViewOfKind: SectionBackgroundDecorationView.elementKindSectionBackground)
+		return layout
 	}
 }
