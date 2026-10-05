@@ -34,18 +34,32 @@ enum Scheme: String, CaseIterable {
 	case game, games
 	case manga, literature, literatures
 	case profile, user
+	case people, person
+	case character, characters
+	case studio, studios
+	case song, songs
 	case explore, home
 	case library, myLibrary, list
 	case feed, timeline
 	case notification, notifications
 	case schedule
 	case season
+	case seasons
 	case museum
 	case recap
 	case search
 	case parentalGuide = "parentalguide"
 	case stickers
 	case kotodama
+	case genres
+	case themes
+	case charts
+	case kurozoraPlus = "kurozora-plus"
+	case tipJar = "tip-jar"
+	case digest
+	case leaderboards
+	case themeStore = "theme-store"
+	case upNext = "up-next"
 
 	// MARK: - Properties
 	var urlValue: URL {

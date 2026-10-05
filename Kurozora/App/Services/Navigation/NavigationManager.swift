@@ -103,12 +103,37 @@ final class NavigationManager: NSObject {
 			guard let userID = lastPathComponent.isEmpty ? User.current?.id : KurozoraItemID(lastPathComponent) else { return }
 			let profileTableViewController = ProfileTableViewController()(with: userID)
 			context.show(profileTableViewController)
+		case .people, .person:
+			guard !lastPathComponent.isEmpty else { return }
+			let personID = KurozoraItemID(lastPathComponent)
+			let personDetailsCollectionViewController = PersonDetailsCollectionViewController()(with: personID)
+			context.show(personDetailsCollectionViewController)
+		case .character, .characters:
+			guard !lastPathComponent.isEmpty else { return }
+			let characterID = KurozoraItemID(lastPathComponent)
+			let characterDetailsCollectionViewController = CharacterDetailsCollectionViewController()(with: characterID)
+			context.show(characterDetailsCollectionViewController)
+		case .studio, .studios:
+			guard !lastPathComponent.isEmpty else { return }
+			let studioID = KurozoraItemID(lastPathComponent)
+			let studioDetailsCollectionViewController = StudioDetailsCollectionViewController()(with: studioID)
+			context.show(studioDetailsCollectionViewController)
+		case .song, .songs:
+			guard !lastPathComponent.isEmpty else { return }
+			let songID = KurozoraItemID(lastPathComponent)
+			let songDetailsCollectionViewController = SongDetailsCollectionViewController()(with: songID)
+			context.show(songDetailsCollectionViewController)
 		case .home, .explore:
 			context.selectTab(.home)
 		case .schedule:
 			context.selectTab(.schedule)
 		case .season:
 			self.handleSeasonalBrowseDeeplink(url: url, context: context)
+		case .seasons:
+			guard !lastPathComponent.isEmpty else { return }
+			let seasonID = KurozoraItemID(lastPathComponent)
+			let episodesListCollectionViewController = EpisodesListCollectionViewController()(with: seasonID)
+			context.show(episodesListCollectionViewController)
 		case .museum:
 			self.handleMuseumDeeplink(url: url, context: context)
 		case .recap:
@@ -135,6 +160,29 @@ final class NavigationManager: NSObject {
 		case .kotodama:
 			// Pushed rather than selected, since the tab is absent from the compact tab bar.
 			context.show(KotodamaHubCollectionViewController())
+		case .genres:
+			context.show(GenresCollectionViewController())
+		case .themes:
+			context.show(ThemesCollectionViewController())
+		case .charts:
+			context.show(TopChartsCollectionViewController())
+		case .kurozoraPlus:
+			context.show(SubscriptionCollectionViewController())
+		case .tipJar:
+			context.show(TipJarCollectionViewController())
+		case .digest:
+			context.show(DigestCollectionViewController())
+		case .leaderboards:
+			let usersListCollectionViewController = UsersListCollectionViewController()
+			usersListCollectionViewController.usersListFetchType = .reputation
+			context.show(usersListCollectionViewController)
+		case .themeStore:
+			context.show(ManageThemesCollectionViewController())
+		case .upNext:
+			guard let upNextCategory = try? await KService.explore().response().data.first(where: { $0.attributes.exploreCategoryType == .upNextEpisodes }) else { return }
+			let episodesListCollectionViewController = EpisodesListCollectionViewController()
+			episodesListCollectionViewController.episodesListFetchType = .upNext(exploreCategory: upNextCategory)
+			context.show(episodesListCollectionViewController)
 		}
 	}
 
