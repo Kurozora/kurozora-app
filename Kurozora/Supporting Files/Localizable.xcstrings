@@ -62459,6 +62459,9 @@
         }
       }
     },
+    "Relationships" : {
+      "comment" : "The string for the word 'relationships'."
+    },
     "Remind Me" : {
       "comment" : "The string for the word 'Remind Me'",
       "localizations" : {
@@ -97642,6 +97645,9 @@
         }
       }
     },
+    "present" : {
+      "comment" : "The string for the word 'present' as a point in time."
+    },
     "reveal" : {
       "comment" : "Verb. Reveals a hidden library title. The opposite of Hide.",
       "extractionState" : "extracted_with_value",
@@ -98358,6 +98364,18 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "電視分級採分級制。視所選的電視分級而定，部分作品可能會被隱藏。\n\n例如，選擇 R15+ 將顯示所有電視分級在 R15+ 以下的 anime。"
+          }
+        }
+      }
+    },
+    "yearRange" : {
+      "comment" : "The span between a start and end year.",
+      "extractionState" : "extracted_with_value",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "%1$@ - %2$@"
           }
         }
       }

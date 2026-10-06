@@ -23531,6 +23531,9 @@
         }
       }
     },
+    "All Episodes" : {
+      "comment" : "The 'All Episodes' filter option."
+    },
     "Amplify posts you like" : {
       "comment" : "The empty-state headline for the Re-shares tab on the post activity screen.",
       "localizations" : {
@@ -23996,6 +23999,9 @@
           }
         }
       }
+    },
+    "Anime Canon" : {
+      "comment" : "The 'Anime Canon' filler kind label."
     },
     "Anvil" : {
       "comment" : "The display value 'Anvil'.",
@@ -52656,6 +52662,9 @@
         }
       }
     },
+    "Filler" : {
+      "comment" : "The 'Filler' filler kind label."
+    },
     "Fillers" : {
       "comment" : "The 'Fillers' search filter label.",
       "localizations" : {
@@ -74351,6 +74360,9 @@
         }
       }
     },
+    "Manga Canon" : {
+      "comment" : "The 'Manga Canon' filler kind label."
+    },
     "Manhua" : {
       "comment" : "The literature type 'Manhua'.",
       "localizations" : {
@@ -78078,6 +78090,9 @@
           }
         }
       }
+    },
+    "Mixed Canon/Filler" : {
+      "comment" : "The 'Mixed Canon/Filler' filler kind label."
     },
     "Mixed Feelings" : {
       "comment" : "Segment title for a review with mixed feelings about the item.",
@@ -82273,6 +82288,9 @@
         }
       }
     },
+    "No Episodes Match" : {
+      "comment" : "The title shown when no episode matches the filler-kind filter."
+    },
     "No Followers" : {
       "comment" : "The empty-state title for the followers list.",
       "localizations" : {
@@ -83670,6 +83688,9 @@
           }
         }
       }
+    },
+    "No episodes in this season match the selected filler kinds." : {
+      "comment" : "The detail shown when no episode matches the filler-kind filter."
     },
     "No games yet" : {
       "comment" : "The title shown when the player has no Kotodama record.",
@@ -159406,6 +159427,9 @@
           }
         }
       }
+    },
+    "^[Remove Filter](inflect: true)" : {
+      "comment" : "The button clearing the filler-kind filter on the empty episodes list."
     },
     "anime watchers" : {
       "comment" : "The ReCap milestone noun phrase for shows.",

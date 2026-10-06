@@ -233,7 +233,11 @@ final class KTrailerPlayerView: UIView {
 	}
 
 	/// A Boolean value indicating whether the user revealed the controls.
-	private var areControlsVisible = false
+	private var areControlsVisible = false {
+		didSet {
+			self.webPlayer?.setSubtitlesRaised(self.areControlsVisible)
+		}
+	}
 
 	/// The task that hides the controls after a period of inactivity.
 	private var controlsHideTask: Task<Void, Never>?
