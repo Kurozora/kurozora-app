@@ -55,6 +55,7 @@ class VideoLockupCollectionViewCell: BaseLockupCollectionViewCell {
 
 			self.trailerPlayerView.layerCornerRadius = 22
 			self.trailerPlayerView.layer.masksToBounds = true
+			self.trailerPlayerView.offersPlayWhenIdle = true
 		}
 	}
 

@@ -58,6 +58,15 @@ final class TrailerPlayerPool {
 			return player
 		}
 
+		return self.makePlayer(forVideoID: videoID)
+	}
+
+	/// Creates a player for the given video alongside any warm one.
+	///
+	/// - Parameter videoID: The identifier of the video to play.
+	///
+	/// - Returns: The new player.
+	func makePlayer(forVideoID videoID: String) -> TrailerWebPlayer {
 		let player = TrailerWebPlayer(videoID: videoID)
 		self.players.append(player)
 		self.evictExcessPlayers()

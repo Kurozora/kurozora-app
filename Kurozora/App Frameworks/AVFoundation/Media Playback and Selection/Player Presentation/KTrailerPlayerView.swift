@@ -94,11 +94,13 @@ final class KTrailerPlayerView: UIView {
 	/// A Boolean value indicating whether the sound toggle stays visible while the trailer plays.
 	var showsMuteToggle = false
 
+	/// A Boolean value indicating whether the play button shows while the trailer waits its turn.
+	var offersPlayWhenIdle = false
+
 	/// A Boolean value indicating whether the player shows the compact control set with the timeline and output controls.
 	var showsCompactControls = false {
 		didSet {
 			guard oldValue != self.showsCompactControls else { return }
-			self.applyControlGlyphs()
 			self.remountControls()
 			self.updateControls(animated: false)
 		}
@@ -178,6 +180,12 @@ final class KTrailerPlayerView: UIView {
 		return self.webPlayer?.isShowingPicture ?? false
 	}
 
+	/// The player this view holds.
+	var hostedWebPlayer: TrailerWebPlayer? {
+		guard let webPlayer = self.webPlayer, webPlayer.isHosting(self) else { return nil }
+		return webPlayer
+	}
+
 	/// The constraints pinning the buttons to the player.
 	private var controlConstraints: [NSLayoutConstraint] = []
 
@@ -228,7 +236,7 @@ final class KTrailerPlayerView: UIView {
 	private var wasPlayingBeforeSuspension = false
 
 	/// A Boolean value indicating whether the trailer is playing.
-	private var isPlaying = false {
+	private(set) var isPlaying = false {
 		didSet {
 			guard self.isPlaying != oldValue else { return }
 			self.onPlaybackStateChange?(self.isPlaying)
@@ -288,6 +296,8 @@ final class KTrailerPlayerView: UIView {
 
 	/// A Boolean value indicating whether the current autoplay policy and network permit playing a trailer.
 	private var autoplayAllowed: Bool {
+		guard !ProcessInfo.processInfo.isLowPowerModeEnabled else { return false }
+
 		switch UserSettings.videoAutoplayPolicy {
 		case .never:
 			return false
@@ -367,8 +377,12 @@ final class KTrailerPlayerView: UIView {
 	override func hitTest(_ point: CGPoint, with event: UIEvent?) -> UIView? {
 		let hitView = super.hitTest(point, with: event)
 
-		guard self.hasTrailer, self.isShowingPicture else {
-			return hitView === self || hitView === self.tapControl ? nil : hitView
+		guard self.hasTrailer else {
+			return hitView === self ? nil : hitView
+		}
+
+		guard self.isShowingPicture else {
+			return hitView?.isDescendant(of: self.playPauseButton) == true ? hitView : nil
 		}
 
 		return hitView
@@ -412,7 +426,7 @@ final class KTrailerPlayerView: UIView {
 			webPlayer.reportsNowPlaying = self.reportsNowPlaying
 
 			self.updateControls(animated: false)
-			self.onPictureVisibilityChanged?()
+			self.pictureVisibilityDidChange()
 			TrailerPlaybackCoordinator.shared.register(self)
 			return
 		}
@@ -434,7 +448,7 @@ final class KTrailerPlayerView: UIView {
 			warmPlayer.setLooping(self.loopsPlayback)
 			warmPlayer.streamMetadata = self.streamMetadata
 			warmPlayer.reportsNowPlaying = self.reportsNowPlaying
-			self.onPictureVisibilityChanged?()
+			self.pictureVisibilityDidChange()
 		}
 
 		self.updateControls(animated: false)
@@ -474,25 +488,48 @@ final class KTrailerPlayerView: UIView {
 	/// Starts or suspends the trailer for the given play permission.
 	///
 	/// - Parameter isAllowed: Whether this trailer holds the play slot.
+	/// Stops the trailer and shows the banner in its place.
+	func rest() {
+		self.isPlaybackAllowed = false
+		self.controlsHideTask?.cancel()
+		self.controlsHideTask = nil
+
+		if self.hostsWebPlayer {
+			self.webPlayer?.pause()
+			self.webPlayer?.detach()
+			self.clearNowPlayingReport()
+		}
+
+		self.isPlaying = false
+		self.areControlsVisible = false
+		self.updateControls(animated: true)
+		self.pictureVisibilityDidChange()
+	}
+
 	func setPlaybackAllowed(_ isAllowed: Bool) {
-		guard self.isPlaybackAllowed != isAllowed else { return }
+		let changed = self.isPlaybackAllowed != isAllowed
 		self.isPlaybackAllowed = isAllowed
 
 		if isAllowed {
-			self.beginPlayback()
-		} else {
+			if changed {
+				self.beginPlayback()
+			}
+		} else if changed || self.isPlaying {
 			self.pausePlayback()
 		}
 	}
 
-	/// Plays the loaded trailer at the user's request, ignoring the autoplay policy.
+	/// Plays the loaded trailer at the user's request.
 	func playByReader() {
 		guard self.hasTrailer else { return }
 		self.isPausedByReader = false
 		self.isReaderInitiated = true
 
-		if !self.resumeWarmPlayer() {
-			TrailerPlaybackCoordinator.shared.pin(self)
+		let heldPlaySlot = self.isPlaybackAllowed
+		TrailerPlaybackCoordinator.shared.pin(self)
+
+		if heldPlaySlot, self.isPlaybackAllowed, !self.isPlaying {
+			self.beginPlayback()
 		}
 
 		self.updateControls(animated: true)
@@ -559,8 +596,7 @@ final class KTrailerPlayerView: UIView {
 		self.webPlayer = nil
 		self.isPlaying = false
 		self.isMuted = true
-		self.backgroundColor = .clear
-		self.onPictureVisibilityChanged?()
+		self.pictureVisibilityDidChange()
 
 		self.trailerURLString = nil
 		self.videoID = nil
@@ -582,10 +618,7 @@ final class KTrailerPlayerView: UIView {
 	/// Begins playing the trailer through the pooled web player.
 	private func beginPlayback() {
 		guard let videoID = self.videoID, self.window != nil, !self.isPausedByReader, !self.isSuspended else { return }
-
-		if self.resumeWarmPlayer() {
-			return
-		}
+		guard !self.resumeWarmPlayer() else { return }
 
 		self.startWebPlayback(forVideoID: videoID)
 	}
@@ -602,7 +635,6 @@ final class KTrailerPlayerView: UIView {
 		self.webPlayer = webPlayer
 		self.clearTransitionSnapshot(animated: false)
 
-		self.backgroundColor = .black
 		self.isMuted = webPlayer.isMuted
 
 		if self.isMuted {
@@ -627,17 +659,18 @@ final class KTrailerPlayerView: UIView {
 			self.isPausedByReader = false
 			self.isPlaying = true
 			webPlayer.play()
+			TrailerPlaybackCoordinator.shared.pin(self)
 		}
 
 		self.updateControls(animated: false)
-		self.onPictureVisibilityChanged?()
+		self.pictureVisibilityDidChange()
 	}
 
-	/// Resumes the warm player, taking its picture back when another host borrowed it.
+	/// Resumes the warm player.
 	///
 	/// - Returns: `true` if a warm player was resumed.
 	private func resumeWarmPlayer() -> Bool {
-		guard let webPlayer = self.webPlayer, self.canHost(webPlayer) else { return false }
+		guard let webPlayer = self.webPlayer, webPlayer.videoID == self.videoID, self.canHost(webPlayer) else { return false }
 
 		if !webPlayer.isHosting(self) {
 			webPlayer.attach(to: self, isMuted: self.isMuted, delegate: self)
@@ -649,17 +682,16 @@ final class KTrailerPlayerView: UIView {
 		webPlayer.setWithdrawn(false)
 		webPlayer.setMuted(self.isMuted)
 		webPlayer.play()
+		self.pictureVisibilityDidChange()
 		return true
 	}
 
-	/// Returns whether this view may take the given player from its current host.
+	/// Returns whether this view may attach the given player.
 	///
-	/// - Parameter webPlayer: The player to take.
+	/// - Parameter webPlayer: The player to attach.
 	///
-	/// - Returns: `false` while fullscreen holds a player this view does not host.
+	/// - Returns: `false` while another host holds the player.
 	private func canHost(_ webPlayer: TrailerWebPlayer) -> Bool {
-		guard TrailerPlaybackCoordinator.shared.isFullscreenActive else { return true }
-
 		return !webPlayer.isAttached || webPlayer.isHosting(self)
 	}
 
@@ -667,12 +699,10 @@ final class KTrailerPlayerView: UIView {
 	///
 	/// - Parameter videoID: The identifier of the trailer to play.
 	private func startWebPlayback(forVideoID videoID: String) {
-		let webPlayer = TrailerPlayerPool.shared.player(forVideoID: videoID)
-		guard self.canHost(webPlayer) else { return }
+		let pooledPlayer = TrailerPlayerPool.shared.player(forVideoID: videoID)
+		let webPlayer = self.canHost(pooledPlayer) ? pooledPlayer : TrailerPlayerPool.shared.makePlayer(forVideoID: videoID)
 
 		self.webPlayer = webPlayer
-
-		self.backgroundColor = .clear
 
 		webPlayer.attach(to: self, isMuted: self.isMuted, delegate: self)
 		webPlayer.setLooping(self.loopsPlayback)
@@ -686,6 +716,12 @@ final class KTrailerPlayerView: UIView {
 		webPlayer.play()
 
 		self.updateControls(animated: false)
+		self.pictureVisibilityDidChange()
+	}
+
+	/// Paints black behind the picture and tells the owner the picture came or went.
+	private func pictureVisibilityDidChange() {
+		self.backgroundColor = self.hostsWebPlayer && self.isShowingPicture ? .black : .clear
 		self.onPictureVisibilityChanged?()
 	}
 
@@ -708,7 +744,7 @@ final class KTrailerPlayerView: UIView {
 		self.updateControls(animated: false)
 	}
 
-	/// Takes the trailer off the system's display, which only stands for a trailer the reader is on.
+	/// Takes the trailer off the system's display.
 	private func clearNowPlayingReport() {
 		guard let webPlayer = self.webPlayer else { return }
 		TrailerNowPlayingReporter.shared.clear(for: webPlayer)
@@ -716,22 +752,11 @@ final class KTrailerPlayerView: UIView {
 
 	/// Toggles playback in response to the play or pause button.
 	@objc private func togglePlayPause() {
-		guard self.hasTrailer else { return }
-
 		if self.isPlaying {
-			self.isPausedByReader = true
-			self.webPlayer?.pause()
+			self.pauseByReader()
 		} else {
-			self.isPausedByReader = false
-			self.isReaderInitiated = true
-
-			if !self.resumeWarmPlayer() {
-				TrailerPlaybackCoordinator.shared.pin(self)
-			}
+			self.playByReader()
 		}
-
-		self.updateControls(animated: true)
-		self.scheduleControlsAutoHide()
 	}
 
 	/// Toggles the trailer's sound in response to the mute button.
@@ -915,18 +940,6 @@ final class KTrailerPlayerView: UIView {
 		self.scheduleControlsAutoHide()
 	}
 
-	/// Applies the glyph sizes for the current control style.
-	private func applyControlGlyphs() {
-		let pointSize: CGFloat = self.showsCompactControls ? 24.0 : 17.0
-		let symbolConfiguration = UIImage.SymbolConfiguration(pointSize: pointSize, weight: .semibold)
-
-		if #available(iOS 26.0, macOS 26.0, tvOS 26.0, visionOS 26.0, watchOS 26.0, *) {
-			self.playPauseButton.configuration?.preferredSymbolConfigurationForImage = symbolConfiguration
-		} else {
-			self.playPauseButton.setPreferredSymbolConfiguration(symbolConfiguration, forImageIn: .normal)
-		}
-	}
-
 	/// Lets go of the held picture.
 	///
 	/// - Parameter animated: Whether the picture fades out.
@@ -994,7 +1007,7 @@ final class KTrailerPlayerView: UIView {
 			overlayIsVisible = self.areControlsVisible
 		} else {
 			let willStartAutomatically = self.isPlaybackAllowed || self.isEligibleForAutoplay
-			overlayIsVisible = self.isShowingPicture && (self.areControlsVisible || self.isPausedByReader || !willStartAutomatically)
+			overlayIsVisible = self.offersPlayWhenIdle || !willStartAutomatically || (self.isShowingPicture && (self.areControlsVisible || self.isPausedByReader))
 		}
 
 		overlayIsVisible = overlayIsVisible && self.showsControls
@@ -1203,14 +1216,6 @@ final class KTrailerPlayerView: UIView {
 
 			self.playPauseButton.centerXAnchor.constraint(equalTo: self.centerXAnchor),
 			self.playPauseButton.centerYAnchor.constraint(equalTo: self.centerYAnchor),
-			self.playPauseButton.widthAnchor.constraint(equalToConstant: 44.0),
-			self.playPauseButton.heightAnchor.constraint(equalToConstant: 44.0),
-
-			self.muteButton.widthAnchor.constraint(equalToConstant: 30.0),
-			self.muteButton.heightAnchor.constraint(equalToConstant: 30.0),
-
-			self.fullscreenButton.widthAnchor.constraint(equalToConstant: 30.0),
-			self.fullscreenButton.heightAnchor.constraint(equalToConstant: 30.0),
 
 			self.outputGroupView.leadingAnchor.constraint(equalTo: self.fullscreenButton.trailingAnchor, constant: 8.0),
 			self.outputGroupView.centerYAnchor.constraint(equalTo: self.fullscreenButton.centerYAnchor),
@@ -1250,28 +1255,9 @@ final class KTrailerPlayerView: UIView {
 	///    - diameter: The button's diameter.
 	///
 	/// - Returns: A configured button.
-	private static func makeControlButton(pointSize: CGFloat, diameter: CGFloat) -> AdaptiveCornerButton {
-		let button = AdaptiveCornerButton()
-		button.translatesAutoresizingMaskIntoConstraints = false
+	private static func makeControlButton(pointSize: CGFloat, diameter: CGFloat) -> KMediaControlButton {
+		let button = KMediaControlButton(pointSize: pointSize, diameter: diameter)
 		button.alpha = 0.0
-
-		// Media controls stay put instead of following the picture: the glass is left untinted, and a
-		// fixed dark appearance stops it from flipping light and dark as the video plays under it.
-		button.overrideUserInterfaceStyle = .dark
-
-		let symbolConfiguration = UIImage.SymbolConfiguration(pointSize: pointSize, weight: .semibold)
-
-		if #available(iOS 26.0, macOS 26.0, tvOS 26.0, visionOS 26.0, watchOS 26.0, *) {
-			button.configuration = .clearGlass()
-			button.configuration?.preferredSymbolConfigurationForImage = symbolConfiguration
-			button.configuration?.baseForegroundColor = .white
-		} else {
-			button.tintColor = .white
-			button.setPreferredSymbolConfiguration(symbolConfiguration, forImageIn: .normal)
-			button.addBlurEffect(style: .dark, cornerRadius: diameter / 2.0)
-		}
-
-		button.cornerStyle = .capsule
 		return button
 	}
 
@@ -1421,14 +1407,17 @@ extension KTrailerPlayerView: TrailerWebPlayerDelegate {
 		self.webPlayer = nil
 		self.isPlaying = false
 		self.updateControls(animated: false)
-		self.onPictureVisibilityChanged?()
+		self.pictureVisibilityDidChange()
 	}
 
 	func trailerWebPlayerDidRevealPicture(_ trailerWebPlayer: TrailerWebPlayer) {
-		self.backgroundColor = .black
 		self.clearTransitionSnapshot(animated: true)
 		self.updateControls(animated: true)
-		self.onPictureVisibilityChanged?()
+		self.pictureVisibilityDidChange()
+	}
+
+	func trailerWebPlayerDidLoop(_ trailerWebPlayer: TrailerWebPlayer) {
+		TrailerPlaybackCoordinator.shared.advance(after: self)
 	}
 
 	func trailerWebPlayerDidReachEnd(_ trailerWebPlayer: TrailerWebPlayer) {

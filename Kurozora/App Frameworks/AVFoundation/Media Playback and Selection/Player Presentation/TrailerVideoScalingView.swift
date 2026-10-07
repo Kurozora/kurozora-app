@@ -42,11 +42,19 @@ final class TrailerVideoScalingView: UIView {
 	}
 
 	// MARK: - View
+	override var alpha: CGFloat {
+		didSet {
+			if self.alpha > 0.01, oldValue <= 0.01 {
+				self.setNeedsLayout()
+			}
+		}
+	}
+
 	override func layoutSubviews() {
 		super.layoutSubviews()
 
 		let size = self.bounds.size
-		guard size.width > 0, size.height > 0 else { return }
+		guard size.width > 0, size.height > 0, self.alpha > 0.01 else { return }
 
 		let scale = min(
 			(size.width + Self.edgeOverscan * 2.0) / self.referenceSize.width,

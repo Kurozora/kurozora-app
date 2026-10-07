@@ -50,7 +50,7 @@ class MusicLockupCollectionViewCell: KCollectionViewCell {
 	@IBOutlet weak var albumImageView: UIImageView!
 
 	/// A button representing the playback state of the song.
-	@IBOutlet weak var playButton: KButton!
+	@IBOutlet weak var playButton: KMediaControlButton!
 
 	/// A button representing the show a song belongs to.
 	@IBOutlet weak var showButton: KButton!
@@ -74,11 +74,6 @@ class MusicLockupCollectionViewCell: KCollectionViewCell {
 			(self.albumImageView as? RoundedRectangleImageView)?.applyCornerRadius(22)
 			self.albumImageView?.layer.borderWidth = 0
 			self.albumBorderView.cornerRadius = 22
-
-			self.playButton.highlightBackgroundColorEnabled = false
-			self.playButton.springEnabled = true
-			self.playButton.addBlurEffect()
-			self.playButton.theme_tintColor = KThemePicker.textColor.rawValue
 		}
 	}
 
@@ -237,7 +232,6 @@ class MusicLockupCollectionViewCell: KCollectionViewCell {
 		self.playButton.isHidden = song.attributes.amID == nil
 		guard !self.playButton.isHidden else { return }
 
-		self.playButton.layerCornerRadius = self.playButton.frame.size.height / 2
 		self.updatePlayButton(for: song)
 	}
 

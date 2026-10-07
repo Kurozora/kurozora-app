@@ -616,6 +616,10 @@ final class TrailerWebPlayer: NSObject {
 	///    - delegate: The object notified of playback state changes.
 	func attach(to host: UIView, isMuted: Bool, delegate: TrailerWebPlayerDelegate) {
 		self.host = host
+
+		if let pausedFrameView = self.pausedFrameView, !pausedFrameView.isHidden {
+			pausedFrameView.setReadsFrame(!(host is KTrailerPlayerView))
+		}
 		self.delegate = delegate
 		self.isMuted = isMuted
 		self.setWithdrawn(false)
@@ -1364,7 +1368,7 @@ final class TrailerWebPlayer: NSObject {
 		self.isPaused = false
 		self.pausedFrameView?.hideFrame()
 
-		self.evaluate("player && player.loadPlaylist('\(videoID)');")
+		self.evaluate("player && player.loadPlaylist(['\(videoID)']);")
 		self.scheduleRevealFallback()
 	}
 
@@ -1997,7 +2001,7 @@ final class TrailerWebPlayer: NSObject {
 		pausedFrameView.frame = parent.bounds
 		pausedFrameView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
 		parent.addSubview(pausedFrameView)
-		pausedFrameView.showFrame(pausedFrame)
+		pausedFrameView.showFrame(pausedFrame, readsFrame: !(self.host is KTrailerPlayerView))
 	}
 
 	/// Asks the paused video behind the stand-in for its current frame again.
@@ -2131,9 +2135,13 @@ final class TrailerWebPlayer: NSObject {
 				self.evaluate("player && player.pauseVideo();")
 			}
 		case "playing":
+			guard !self.isPaused else {
+				self.evaluate("player && player.pauseVideo();")
+				break
+			}
+
 			self.reveal()
 			self.pausedFrameView?.hideFrame()
-			self.isPaused = false
 			self.pageTimeAnchor = Date()
 			self.collectQualityLevelsIfNeeded()
 
@@ -2455,7 +2463,10 @@ extension TrailerWebPlayer: TrailerNativePlayerViewDelegate {
 		guard !self.loopsPlayback else {
 			trailerNativePlayerView.seek(to: 0.0)
 			self.delegate?.trailerWebPlayerDidLoop(self)
-			trailerNativePlayerView.play()
+
+			if !self.isPaused {
+				trailerNativePlayerView.play()
+			}
 			return
 		}
 

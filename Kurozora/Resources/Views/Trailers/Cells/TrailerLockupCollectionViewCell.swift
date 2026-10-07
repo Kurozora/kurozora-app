@@ -39,16 +39,9 @@ class TrailerLockupCollectionViewCell: BaseLockupCollectionViewCell {
 	}()
 
 	/// The glyph indicating the banner plays the trailer.
-	private let playGlyphButton: KButton = {
-		let button = KButton()
-		button.translatesAutoresizingMaskIntoConstraints = false
+	private let playGlyphButton: KMediaControlButton = {
+		let button = KMediaControlButton()
 		button.isUserInteractionEnabled = false
-		button.highlightBackgroundColorEnabled = false
-		button.springEnabled = true
-		button.addBlurEffect()
-		button.theme_tintColor = KThemePicker.textColor.rawValue
-		button.layerCornerRadius = 24.0
-		button.setPreferredSymbolConfiguration(UIImage.SymbolConfiguration(pointSize: 20.0, weight: .semibold), forImageIn: .normal)
 		button.setImage(UIImage(systemName: "play.fill"), for: .normal)
 		return button
 	}()
@@ -133,8 +126,6 @@ class TrailerLockupCollectionViewCell: BaseLockupCollectionViewCell {
 
 			self.playGlyphButton.centerXAnchor.constraint(equalTo: self.bannerControl.centerXAnchor),
 			self.playGlyphButton.centerYAnchor.constraint(equalTo: self.bannerControl.centerYAnchor),
-			self.playGlyphButton.widthAnchor.constraint(equalToConstant: 48.0),
-			self.playGlyphButton.heightAnchor.constraint(equalToConstant: 48.0),
 
 			textStackView.topAnchor.constraint(equalTo: self.bannerControl.bottomAnchor, constant: 12.0),
 			textStackView.leadingAnchor.constraint(equalTo: self.contentView.leadingAnchor),

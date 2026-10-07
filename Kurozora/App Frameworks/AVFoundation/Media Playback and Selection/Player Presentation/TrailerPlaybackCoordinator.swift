@@ -19,7 +19,13 @@ final class TrailerPlaybackCoordinator {
 	private let maximumConcurrentPlayers = 1
 
 	/// The share of a view that must be on screen before it may play.
-	private let minimumVisibleFraction = 0.6
+	private let minimumVisibleFraction = 0.99
+
+	/// The share of a view the reader started that must stay on screen for it to keep playing.
+	private let minimumPinnedVisibleFraction = 0.5
+
+	/// The view holding the play slot in the reading order.
+	private weak var currentView: KTrailerPlayerView?
 
 	/// The delay, in nanoseconds, before the play slot is granted.
 	private let settleDelay: UInt64 = 200_000_000
@@ -40,7 +46,13 @@ final class TrailerPlaybackCoordinator {
 	private(set) var isFullscreenActive = false
 
 	// MARK: - Initializers
-	private init() {}
+	private init() {
+		NotificationCenter.default.addObserver(forName: .NSProcessInfoPowerStateDidChange, object: nil, queue: .main) { [weak self] _ in
+			MainActor.assumeIsolated {
+				self?.setNeedsReevaluation()
+			}
+		}
+	}
 
 	// MARK: - Functions
 	/// Adds the given view to the views competing for the play slot.
@@ -106,33 +118,104 @@ final class TrailerPlaybackCoordinator {
 		self.registrations.removeAll { $0.view == nil }
 		self.pruneScrollObservations()
 
-		if let pinnedView = self.pinnedView, self.visibleFraction(of: pinnedView) < self.minimumVisibleFraction {
+		if let pinnedView = self.pinnedView, self.visibleFraction(of: pinnedView) < self.minimumPinnedVisibleFraction {
 			self.pinnedView = nil
 		}
 
-		let candidates = self.registrations
-			.compactMap(\.view)
-			.map { view in Candidate(view: view, visibleFraction: self.visibleFraction(of: view)) }
-
+		let candidates = self.candidates()
+		let ordered = self.orderedCandidates(among: candidates)
+		let previousView = self.currentView
 		var granted: [KTrailerPlayerView] = []
 
 		if let pinnedView = self.pinnedView {
 			granted.append(pinnedView)
 		}
 
-		let eligible = candidates
+		if granted.count < self.maximumConcurrentPlayers {
+			if let currentView = self.currentView, ordered.contains(where: { $0.view === currentView }) {
+				granted.append(currentView)
+			} else if let first = ordered.first?.view {
+				self.currentView = first
+				granted.append(first)
+			}
+		}
+
+		if let previousView = previousView, !granted.isEmpty, !granted.contains(where: { $0 === previousView }) {
+			previousView.rest()
+		}
+
+		self.apply(granted: granted, among: candidates)
+	}
+
+	/// Moves the play slot to the trailer after the given one in the reading order.
+	///
+	/// - Parameter view: The view whose trailer started over.
+	func advance(after view: KTrailerPlayerView) {
+		guard !self.isFullscreenActive, self.currentView === view || self.pinnedView === view else { return }
+
+		if self.pinnedView === view {
+			self.pinnedView = nil
+		}
+
+		let candidates = self.candidates()
+		let ordered = self.orderedCandidates(among: candidates)
+		guard ordered.count > 1, let index = ordered.firstIndex(where: { $0.view === view }) else {
+			self.currentView = view
+			return
+		}
+
+		let next = ordered[(index + 1) % ordered.count].view
+		self.currentView = next
+		view.rest()
+		self.apply(granted: [next], among: candidates)
+	}
+
+	/// Lets only the given views play.
+	///
+	/// - Parameters:
+	///    - granted: The views holding the play slot.
+	///    - candidates: Every registered view.
+	private func apply(granted: [KTrailerPlayerView], among candidates: [Candidate]) {
+		for candidate in candidates {
+			let view = candidate.view
+
+			if granted.contains(where: { $0 === view }) {
+				view.setPlaybackAllowed(true)
+			} else if view.isPlaying || view.hostedWebPlayer?.isPaused == false {
+				view.rest()
+			} else {
+				view.setPlaybackAllowed(false)
+			}
+		}
+	}
+
+	/// Returns every registered view with its place on screen.
+	///
+	/// - Returns: The candidates for the play slot.
+	private func candidates() -> [Candidate] {
+		return self.registrations
+			.compactMap(\.view)
+			.map { view in Candidate(view: view, visibleFraction: self.visibleFraction(of: view), frame: self.windowFrame(of: view)) }
+	}
+
+	/// Returns the candidates that may autoplay, in reading order.
+	///
+	/// - Parameter candidates: The candidates to order.
+	///
+	/// - Returns: The fully visible eligible candidates from top to bottom and leading to trailing.
+	private func orderedCandidates(among candidates: [Candidate]) -> [Candidate] {
+		return candidates
 			.filter { $0.view !== self.pinnedView }
 			.filter { $0.visibleFraction >= self.minimumVisibleFraction }
 			.filter { $0.view.isEligibleForAutoplay && self.isUncovered($0.view) }
-			.sorted { $0.visibleFraction > $1.visibleFraction }
+			.sorted { first, second in
+				if abs(first.frame.minY - second.frame.minY) >= 1.0 {
+					return first.frame.minY < second.frame.minY
+				}
 
-		for candidate in eligible where granted.count < self.maximumConcurrentPlayers {
-			granted.append(candidate.view)
-		}
-
-		for candidate in candidates {
-			candidate.view.setPlaybackAllowed(granted.contains { $0 === candidate.view })
-		}
+				let isRightToLeft = first.view.effectiveUserInterfaceLayoutDirection == .rightToLeft
+				return isRightToLeft ? first.frame.maxX > second.frame.maxX : first.frame.minX < second.frame.minX
+			}
 	}
 
 	/// Returns whether the given view's screen is the one showing in its navigation stack.
@@ -175,7 +258,7 @@ final class TrailerPlaybackCoordinator {
 
 		var clip = window.bounds
 
-		if let scrollView = self.enclosingScrollView(of: view) {
+		for scrollView in self.enclosingScrollViews(of: view) {
 			clip = clip.intersection(scrollView.convert(scrollView.bounds, to: window))
 		}
 
@@ -185,13 +268,15 @@ final class TrailerPlaybackCoordinator {
 		return (visible.width * visible.height) / area
 	}
 
-	/// Returns the closest scroll view the given view sits in.
+	/// Returns the given view's frame in its window.
 	///
-	/// - Parameter view: The view to walk up from.
+	/// - Parameter view: The view to measure.
 	///
-	/// - Returns: The enclosing scroll view.
-	private func enclosingScrollView(of view: UIView) -> UIScrollView? {
-		return self.enclosingScrollViews(of: view).first
+	/// - Returns: The frame in window coordinates.
+	private func windowFrame(of view: UIView) -> CGRect {
+		guard let window = view.window else { return .null }
+
+		return view.convert(view.bounds, to: window)
 	}
 
 	/// Returns every scroll view the given view sits in, nearest first.
@@ -256,5 +341,8 @@ extension TrailerPlaybackCoordinator {
 
 		/// The share of the view that is on screen.
 		let visibleFraction: Double
+
+		/// The view's frame in its window.
+		let frame: CGRect
 	}
 }

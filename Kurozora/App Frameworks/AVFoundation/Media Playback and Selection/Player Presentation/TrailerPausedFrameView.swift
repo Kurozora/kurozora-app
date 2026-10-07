@@ -73,11 +73,23 @@ final class TrailerPausedFrameView: UIImageView {
 	func showFrame(_ frame: UIImage, readsFrame: Bool = true) {
 		self.image = frame
 		self.isHidden = false
+		self.setReadsFrame(readsFrame)
+	}
 
-		if readsFrame {
+	/// Starts or stops reading the shown frame for selection and lifting.
+	///
+	/// - Parameter readsFrame: Whether the frame is analyzed.
+	func setReadsFrame(_ readsFrame: Bool) {
+		if readsFrame, let frame = self.image {
 			self.analyzeFrame(frame)
-		} else {
-			self.analysisTask?.cancel()
+			return
+		}
+
+		self.analysisTask?.cancel()
+		self.hasSubjects = false
+
+		if #available(iOS 17.0, macCatalyst 17.0, *), let analysisInteraction = self.analysisInteraction as? ImageAnalysisInteraction {
+			analysisInteraction.analysis = nil
 		}
 	}
 

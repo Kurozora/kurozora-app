@@ -411,7 +411,7 @@ final class TrailerFullscreenViewController: UIViewController {
 		TrailerPlaybackCoordinator.shared.beginFullscreen()
 
 		// Attached before the zoom runs, so the trailer is on screen as it grows.
-		let player = TrailerPlayerPool.shared.player(forVideoID: self.videoID)
+		let player = self.sourceTrailerView?.hostedWebPlayer ?? TrailerPlayerPool.shared.player(forVideoID: self.videoID)
 		self.player = player
 		player.attach(to: self.contentView, isMuted: self.isMuted, delegate: self)
 
