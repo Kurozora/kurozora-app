@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import WebKit
 
 /// Keeps a small set of trailer players warm so returning to a trailer resumes without reloading.
 @MainActor
@@ -29,10 +30,22 @@ final class TrailerPlayerPool {
 	/// The warm players, ordered from least to most recently used.
 	private var players: [TrailerWebPlayer] = []
 
+	/// The web view that starts WebKit's processes ahead of the first trailer.
+	private var warmUpWebView: WKWebView?
+
 	// MARK: - Initializers
 	private init() {}
 
 	// MARK: - Functions
+	/// Starts WebKit's processes ahead of the first trailer.
+	func warmUpWebKit() {
+		guard self.warmUpWebView == nil else { return }
+
+		let webView = WKWebView(frame: .zero, configuration: WKWebViewConfiguration())
+		webView.loadHTMLString("<html></html>", baseURL: nil)
+		self.warmUpWebView = webView
+	}
+
 	/// Returns the warm player for the given video, creating one if needed.
 	///
 	/// - Parameter videoID: The identifier of the video to play.

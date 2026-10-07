@@ -61,6 +61,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 		NotificationCenter.default.addObserver(self, selector: #selector(updateMenuBuilder(_:)), name: .KUserIsSignedInDidChange, object: nil)
 		NotificationCenter.default.addObserver(self, selector: #selector(handleSignInDidChangeForLibrarySync), name: .KUserIsSignedInDidChange, object: nil)
 
+		DispatchQueue.main.asyncAfter(deadline: .now() + 2.0) {
+			TrailerPlayerPool.shared.warmUpWebKit()
+		}
+
 		return true
 	}
 

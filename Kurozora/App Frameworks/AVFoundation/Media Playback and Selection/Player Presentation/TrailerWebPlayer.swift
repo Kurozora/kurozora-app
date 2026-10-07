@@ -1364,7 +1364,7 @@ final class TrailerWebPlayer: NSObject {
 		self.isPaused = false
 		self.pausedFrameView?.hideFrame()
 
-		self.evaluate("player && player.loadVideoById('\(videoID)');")
+		self.evaluate("player && player.loadPlaylist('\(videoID)');")
 		self.scheduleRevealFallback()
 	}
 

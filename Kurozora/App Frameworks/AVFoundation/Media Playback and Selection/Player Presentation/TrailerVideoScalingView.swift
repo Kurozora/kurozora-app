@@ -52,10 +52,20 @@ final class TrailerVideoScalingView: UIView {
 			(size.width + Self.edgeOverscan * 2.0) / self.referenceSize.width,
 			(size.height + Self.edgeOverscan * 2.0) / self.referenceSize.height
 		)
+		let bounds = CGRect(origin: .zero, size: self.referenceSize)
+		let transform = CGAffineTransform(scaleX: scale, y: scale)
+		let center = CGPoint(x: size.width / 2.0, y: size.height / 2.0)
 
-		self.webView.transform = .identity
-		self.webView.bounds = CGRect(origin: .zero, size: self.referenceSize)
-		self.webView.transform = CGAffineTransform(scaleX: scale, y: scale)
-		self.webView.center = CGPoint(x: size.width / 2.0, y: size.height / 2.0)
+		if self.webView.bounds != bounds {
+			self.webView.bounds = bounds
+		}
+
+		if self.webView.transform != transform {
+			self.webView.transform = transform
+		}
+
+		if self.webView.center != center {
+			self.webView.center = center
+		}
 	}
 }

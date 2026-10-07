@@ -123,7 +123,7 @@ final class TrailerPlaybackCoordinator {
 		let eligible = candidates
 			.filter { $0.view !== self.pinnedView }
 			.filter { $0.visibleFraction >= self.minimumVisibleFraction }
-			.filter { $0.view.isEligibleForAutoplay }
+			.filter { $0.view.isEligibleForAutoplay && self.isUncovered($0.view) }
 			.sorted { $0.visibleFraction > $1.visibleFraction }
 
 		for candidate in eligible where granted.count < self.maximumConcurrentPlayers {
@@ -133,6 +133,27 @@ final class TrailerPlaybackCoordinator {
 		for candidate in candidates {
 			candidate.view.setPlaybackAllowed(granted.contains { $0 === candidate.view })
 		}
+	}
+
+	/// Returns whether the given view's screen is the one showing in its navigation stack.
+	///
+	/// - Parameter view: The view to check.
+	///
+	/// - Returns: `false` when another screen was pushed over the view's screen.
+	private func isUncovered(_ view: KTrailerPlayerView) -> Bool {
+		guard let viewController = view.owningViewController, let topViewController = viewController.navigationController?.topViewController else { return true }
+
+		var candidate: UIViewController? = viewController
+
+		while let current = candidate {
+			if current === topViewController {
+				return true
+			}
+
+			candidate = current.parent
+		}
+
+		return false
 	}
 
 	/// Returns the share of the given view that is currently on screen.
@@ -170,31 +191,41 @@ final class TrailerPlaybackCoordinator {
 	///
 	/// - Returns: The enclosing scroll view.
 	private func enclosingScrollView(of view: UIView) -> UIScrollView? {
+		return self.enclosingScrollViews(of: view).first
+	}
+
+	/// Returns every scroll view the given view sits in, nearest first.
+	///
+	/// - Parameter view: The view to walk up from.
+	///
+	/// - Returns: The enclosing scroll views.
+	private func enclosingScrollViews(of view: UIView) -> [UIScrollView] {
+		var scrollViews: [UIScrollView] = []
 		var superview = view.superview
 
 		while let candidate = superview {
 			if let scrollView = candidate as? UIScrollView {
-				return scrollView
+				scrollViews.append(scrollView)
 			}
 
 			superview = candidate.superview
 		}
 
-		return nil
+		return scrollViews
 	}
 
-	/// Starts watching the scroll view the given view sits in.
+	/// Starts watching every scroll view the given view sits in.
 	///
-	/// - Parameter view: The view whose scroll view to watch.
+	/// - Parameter view: The view whose scroll views to watch.
 	private func observeScrollView(enclosing view: KTrailerPlayerView) {
-		guard let scrollView = self.enclosingScrollView(of: view) else { return }
+		for scrollView in self.enclosingScrollViews(of: view) {
+			let identifier = ObjectIdentifier(scrollView)
+			guard self.scrollObservations[identifier] == nil else { continue }
 
-		let identifier = ObjectIdentifier(scrollView)
-		guard self.scrollObservations[identifier] == nil else { return }
-
-		self.scrollObservations[identifier] = scrollView.observe(\.contentOffset, options: [.new]) { [weak self] _, _ in
-			Task { @MainActor in
-				self?.setNeedsReevaluation()
+			self.scrollObservations[identifier] = scrollView.observe(\.contentOffset, options: [.new]) { [weak self] _, _ in
+				Task { @MainActor in
+					self?.setNeedsReevaluation()
+				}
 			}
 		}
 	}
@@ -203,7 +234,7 @@ final class TrailerPlaybackCoordinator {
 	private func pruneScrollObservations() {
 		let live = Set(self.registrations
 			.compactMap(\.view)
-			.compactMap { self.enclosingScrollView(of: $0) }
+			.flatMap { self.enclosingScrollViews(of: $0) }
 			.map(ObjectIdentifier.init))
 
 		self.scrollObservations = self.scrollObservations.filter { live.contains($0.key) }

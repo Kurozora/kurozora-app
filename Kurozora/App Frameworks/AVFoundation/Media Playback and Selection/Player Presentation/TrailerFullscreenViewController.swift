@@ -1177,6 +1177,12 @@ final class TrailerFullscreenViewController: UIViewController {
 		self.seekSettleDate = Date().addingTimeInterval(0.5)
 		self.player?.seek(to: self.elapsedTime)
 		self.updateProgressControls()
+
+		#if !targetEnvironment(macCatalyst)
+		if self.duration > 0.0 {
+			self.scrubber.value = Float(self.elapsedTime / self.duration)
+		}
+		#endif
 	}
 
 	/// Carries a flicked scrub onwards, slowing it until it settles.

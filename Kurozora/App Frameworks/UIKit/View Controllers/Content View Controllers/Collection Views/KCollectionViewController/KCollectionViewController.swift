@@ -158,6 +158,16 @@ class KCollectionViewController: UICollectionViewController, SegueHandler {
 		#endif
 	}
 
+	override func viewDidAppear(_ animated: Bool) {
+		super.viewDidAppear(animated)
+		TrailerPlaybackCoordinator.shared.setNeedsReevaluation()
+	}
+
+	override func viewWillDisappear(_ animated: Bool) {
+		super.viewWillDisappear(animated)
+		TrailerPlaybackCoordinator.shared.setNeedsReevaluation()
+	}
+
 	override func viewDidLayoutSubviews() {
 		super.viewDidLayoutSubviews()
 

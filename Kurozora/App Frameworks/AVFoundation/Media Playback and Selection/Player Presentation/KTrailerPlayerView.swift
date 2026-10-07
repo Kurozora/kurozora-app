@@ -193,7 +193,7 @@ final class KTrailerPlayerView: UIView {
 	private(set) var trailerURLString: String?
 
 	/// The identifier of the trailer currently loaded.
-	private var videoID: String?
+	private(set) var videoID: String?
 
 	/// The web player rendering the trailer.
 	private var webPlayer: TrailerWebPlayer?
@@ -214,6 +214,9 @@ final class KTrailerPlayerView: UIView {
 
 	/// A Boolean value indicating whether the trailer's sound is off.
 	private var isMuted = true
+
+	/// The trailers the reader turned the sound on for.
+	private static var unmutedVideoIDs: Set<String> = []
 
 	/// A Boolean value indicating whether the user paused the trailer.
 	private var isPausedByReader = false
@@ -296,7 +299,7 @@ final class KTrailerPlayerView: UIView {
 	}
 
 	/// The view controller hosting the view.
-	private var owningViewController: UIViewController? {
+	var owningViewController: UIViewController? {
 		var responder: UIResponder? = self.next
 
 		while let current = responder {
@@ -364,8 +367,8 @@ final class KTrailerPlayerView: UIView {
 	override func hitTest(_ point: CGPoint, with event: UIEvent?) -> UIView? {
 		let hitView = super.hitTest(point, with: event)
 
-		guard self.hasTrailer else {
-			return hitView === self ? nil : hitView
+		guard self.hasTrailer, self.isShowingPicture else {
+			return hitView === self || hitView === self.tapControl ? nil : hitView
 		}
 
 		return hitView
@@ -395,6 +398,7 @@ final class KTrailerPlayerView: UIView {
 			self.trailerGeneration += 1
 			self.isReaderInitiated = false
 			self.isPausedByReader = false
+			self.isMuted = !Self.unmutedVideoIDs.contains(videoID)
 
 			// The next trailer reports its own timeline.
 			self.seekSettleDate = nil
@@ -403,6 +407,7 @@ final class KTrailerPlayerView: UIView {
 			self.updateProgressControls()
 
 			webPlayer.switchTo(videoID: videoID)
+			webPlayer.setMuted(self.isMuted)
 			webPlayer.streamMetadata = self.streamMetadata
 			webPlayer.reportsNowPlaying = self.reportsNowPlaying
 
@@ -421,6 +426,7 @@ final class KTrailerPlayerView: UIView {
 		self.trailerGeneration += 1
 		self.isReaderInitiated = false
 		self.isPausedByReader = false
+		self.isMuted = !Self.unmutedVideoIDs.contains(videoID)
 
 		if let warmPlayer = TrailerPlayerPool.shared.warmPlayer(forVideoID: videoID), self.canHost(warmPlayer) {
 			self.webPlayer = warmPlayer
@@ -552,6 +558,7 @@ final class KTrailerPlayerView: UIView {
 
 		self.webPlayer = nil
 		self.isPlaying = false
+		self.isMuted = true
 		self.backgroundColor = .clear
 		self.onPictureVisibilityChanged?()
 
@@ -597,6 +604,12 @@ final class KTrailerPlayerView: UIView {
 
 		self.backgroundColor = .black
 		self.isMuted = webPlayer.isMuted
+
+		if self.isMuted {
+			Self.unmutedVideoIDs.remove(webPlayer.videoID)
+		} else {
+			Self.unmutedVideoIDs.insert(webPlayer.videoID)
+		}
 
 		if !webPlayer.isHosting(self) {
 			webPlayer.attach(to: self, isMuted: self.isMuted, delegate: self)
@@ -725,6 +738,14 @@ final class KTrailerPlayerView: UIView {
 	@objc private func toggleMute() {
 		self.isMuted.toggle()
 		self.webPlayer?.setMuted(self.isMuted)
+
+		if let videoID = self.videoID {
+			if self.isMuted {
+				Self.unmutedVideoIDs.remove(videoID)
+			} else {
+				Self.unmutedVideoIDs.insert(videoID)
+			}
+		}
 		self.updateControls(animated: false)
 		self.scheduleControlsAutoHide()
 
@@ -973,7 +994,7 @@ final class KTrailerPlayerView: UIView {
 			overlayIsVisible = self.areControlsVisible
 		} else {
 			let willStartAutomatically = self.isPlaybackAllowed || self.isEligibleForAutoplay
-			overlayIsVisible = self.areControlsVisible || self.isPausedByReader || !willStartAutomatically
+			overlayIsVisible = self.isShowingPicture && (self.areControlsVisible || self.isPausedByReader || !willStartAutomatically)
 		}
 
 		overlayIsVisible = overlayIsVisible && self.showsControls
