@@ -47,15 +47,25 @@ struct UpNextWidgetEntryView: View {
 	// MARK: - Helpers
 	/// Pads the entry's episodes to the expected count with filler placeholders.
 	///
-	/// - Parameters count: The number of episodes to pad to.
+	/// - Parameter count: The number of episodes to pad to.
 	///
-	/// - Returns: An array of episodes with real episodes first, followed by filler placeholders if needed.
+	/// - Returns: The entry's episodes padded with filler placeholders.
 	private func paddedEpisodes(count: Int) -> [UpNextEpisodeItem] {
 		var episodes = Array(self.entry.episodes.prefix(count))
 		while episodes.count < count {
 			episodes.append(.placeholder)
 		}
 		return episodes
+	}
+
+	/// Returns the redaction reasons for the slot showing the given episode.
+	///
+	/// - Parameter episode: The episode shown in the slot.
+	///
+	/// - Returns: `.placeholder` for filler episodes and no reasons for the entry's episodes.
+	private func redactionReasons(for episode: UpNextEpisodeItem) -> RedactionReasons {
+		let isFiller = !self.entry.episodes.contains { $0.id == episode.id }
+		return isFiller ? .placeholder : []
 	}
 
 	// MARK: Small
@@ -86,6 +96,7 @@ struct UpNextWidgetEntryView: View {
 						)
 					}
 					.frame(width: cardWidth)
+					.redacted(reason: self.redactionReasons(for: episode))
 				}
 			}
 			.padding(16)
@@ -113,12 +124,14 @@ struct UpNextWidgetEntryView: View {
 				}
 				.frame(height: heroHeight)
 				.clipped()
+				.redacted(reason: self.redactionReasons(for: hero))
 
 				VStack(spacing: rowSpacing) {
 					ForEach(Array(rows.enumerated()), id: \.element.id) { index, episode in
 						Link(destination: episode.deeplinkURL) {
 							UpNextBannerRowView(episode: episode, containerWidth: rowContainerWidth, bannerWidth: bannerWidth)
 						}
+						.redacted(reason: self.redactionReasons(for: episode))
 						.frame(height: slotHeight, alignment: .top)
 						.overlay(alignment: .bottom) {
 							if index < rows.count - 1 {
@@ -159,9 +172,11 @@ struct UpNextWidgetEntryView: View {
 					}
 					.frame(height: heroHeight)
 					.clipped()
+					.redacted(reason: self.redactionReasons(for: hero))
 
 					ForEach(leftRows) { episode in
 						self.rowCard(episode: episode, width: halfWidth, height: cardHeight)
+							.redacted(reason: self.redactionReasons(for: episode))
 					}
 				}
 				.frame(width: halfWidth)
@@ -169,6 +184,7 @@ struct UpNextWidgetEntryView: View {
 				VStack(spacing: spacing) {
 					ForEach(rightRows) { episode in
 						self.rowCard(episode: episode, width: halfWidth, height: cardHeight)
+							.redacted(reason: self.redactionReasons(for: episode))
 					}
 				}
 				.frame(width: halfWidth)

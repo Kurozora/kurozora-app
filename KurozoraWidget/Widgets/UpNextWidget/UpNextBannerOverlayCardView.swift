@@ -50,13 +50,13 @@ struct UpNextBannerOverlayCardView: View {
 							Text(self.episode.showTitle)
 								.font(.caption2)
 								.fontWeight(.medium)
-								.foregroundStyle(.white.opacity(0.8))
+								.foregroundStyle(self.usesFadeMask ? Color.secondary : .white.opacity(0.8))
 								.lineLimit(1)
 
 							Text(self.episode.title)
 								.font(self.isCompact ? .footnote : .subheadline)
 								.fontWeight(.bold)
-								.foregroundStyle(.white)
+								.foregroundStyle(self.usesFadeMask ? Color.primary : .white)
 								.lineLimit(1)
 
 							Text(self.episode.seasonEpisodeLabel)

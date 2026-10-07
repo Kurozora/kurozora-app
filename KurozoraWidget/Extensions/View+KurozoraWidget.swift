@@ -60,30 +60,34 @@ struct FontTraitsModifier: ViewModifier {
 }
 
 // MARK: - Adaptive Capsule Background
-/// Swaps `.ultraThinMaterial` for a semi-transparent fill in accented
-/// rendering mode so the pill text stays legible.
+/// A pill background that stays dark in full color and translucent white in accented mode.
 struct AdaptiveCapsuleBackground: ViewModifier {
 	func body(content: Content) -> some View {
 		if #available(iOS 16.0, *) {
 			content.modifier(AccentAwareCapsule())
 		} else {
-			content.background(.ultraThinMaterial, in: Capsule())
+			content
+				.background(.ultraThinMaterial, in: Capsule())
+				.environment(\.colorScheme, .dark)
 		}
 	}
 }
 
 @available(iOS 16.0, *)
 struct AccentAwareCapsule: ViewModifier {
+	@Environment(\.colorScheme) var colorScheme
 	@Environment(\.widgetRenderingMode) var widgetRenderingMode
 
 	func body(content: Content) -> some View {
-		content.background {
-			if self.widgetRenderingMode == .accented {
-				Capsule().fill(Color.white.opacity(0.2))
-			} else {
-				Capsule().fill(.ultraThinMaterial)
+		content
+			.background {
+				if self.widgetRenderingMode == .accented {
+					Capsule().fill(Color.white.opacity(0.2))
+				} else {
+					Capsule().fill(.ultraThinMaterial)
+				}
 			}
-		}
+			.environment(\.colorScheme, self.widgetRenderingMode == .fullColor ? .dark : self.colorScheme)
 	}
 }
 

@@ -40,6 +40,7 @@ struct UpNextBannerImage: View {
 @available(iOS 17.0, macOS 14.0, *)
 struct UpNextCheckmarkButton: View {
 	@Environment(\.redactionReasons) private var redactionReasons
+	@Environment(\.widgetRenderingMode) private var widgetRenderingMode
 
 	let episodeID: String
 	var font: Font = .body
@@ -57,14 +58,20 @@ struct UpNextCheckmarkButton: View {
 			Button(intent: MarkEpisodeWatchedIntent(episodeID: self.episodeID)) {
 				Image(systemName: "checkmark.circle.fill")
 					.font(self.font)
-					.foregroundStyle(Color(.accent))
+					.symbolRenderingMode(self.isFullColor ? .palette : .monochrome)
+					.foregroundStyle(self.isFullColor ? .white : Color(.accent), Color(.accent))
 			}
 			.buttonStyle(.plain)
 			.mask(Circle())
 		}
 	}
 
-	/// Approximate glyph diameter for the SF Symbol at the current font, used to size the circular placeholder, so it matches the live button's visible footprint.
+	/// Whether the widget renders in full color.
+	private var isFullColor: Bool {
+		return self.widgetRenderingMode == .fullColor
+	}
+
+	/// The approximate diameter of the checkmark glyph at the current font.
 	private var glyphDiameter: CGFloat {
 		switch self.font {
 		case .title3: return 22
