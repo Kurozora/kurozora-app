@@ -69,6 +69,18 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 		print("----- UIApplication will terminate.")
 		Store.shared.updateListenerTask?.cancel()
 	}
+
+	func application(_ application: UIApplication, supportedInterfaceOrientationsFor window: UIWindow?) -> UIInterfaceOrientationMask {
+		#if targetEnvironment(macCatalyst)
+		return .all
+		#else
+		guard UserSettings.isSmartRotationLockEnabled, UIDevice.current.userInterfaceIdiom == .phone else { return .all }
+
+		let topViewController = UIApplication.topViewController
+		let rotatesFreely = topViewController is MediaAlbumViewController || topViewController is TrailerFullscreenViewController
+		return rotatesFreely ? .allButUpsideDown : .portrait
+		#endif
+	}
 }
 
 // MARK: - UIScene

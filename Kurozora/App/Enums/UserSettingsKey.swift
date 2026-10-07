@@ -103,6 +103,12 @@ enum UserSettingsKey: String, CaseIterable {
 	/// The key to the selected sync with device settings option.
 	case isReduceMotionSyncEnabled
 
+	/// The key to the option holding the app in portrait outside the media and video players.
+	case isSmartRotationLockEnabled
+
+	/// The key to the option offering to rotate media under the system's rotation lock.
+	case isPortraitLockBuddyEnabled
+
 	// Notification settings keys
 	/// The key to the selected option for allowing notifications.
 	case notificationsAllowed

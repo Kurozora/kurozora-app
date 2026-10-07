@@ -205,6 +205,9 @@ final class TrailerFullscreenViewController: UIViewController {
 	private var areControlsVisible = true
 
 	#if !targetEnvironment(macCatalyst)
+	/// The helper that rotates the player when the device turns under the system's rotation lock.
+	private lazy var portraitLockBuddy = PortraitLockBuddy(viewController: self)
+
 	/// The drag that carries the trailer off the screen.
 	private lazy var dismissGesture = UIPanGestureRecognizer(target: self, action: #selector(self.handleDismissDrag(_:)))
 
@@ -313,7 +316,15 @@ final class TrailerFullscreenViewController: UIViewController {
 	}
 
 	override var supportedInterfaceOrientations: UIInterfaceOrientationMask {
+		#if targetEnvironment(macCatalyst)
 		return .allButUpsideDown
+		#else
+		return self.portraitLockBuddy.forcedOrientation ?? .allButUpsideDown
+		#endif
+	}
+
+	override var shouldAutorotate: Bool {
+		return UserSettings.isPortraitLockBuddyEnabled || UserSettings.isSmartRotationLockEnabled
 	}
 
 	override var keyCommands: [UIKeyCommand]? {
@@ -388,6 +399,13 @@ final class TrailerFullscreenViewController: UIViewController {
 		#endif
 	}
 
+	#if !targetEnvironment(macCatalyst)
+	override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
+		super.viewWillTransition(to: size, with: coordinator)
+		self.portraitLockBuddy.settle(with: coordinator)
+	}
+	#endif
+
 	override func viewWillAppear(_ animated: Bool) {
 		super.viewWillAppear(animated)
 		TrailerPlaybackCoordinator.shared.beginFullscreen()
@@ -419,6 +437,10 @@ final class TrailerFullscreenViewController: UIViewController {
 		self.becomeFirstResponder()
 		self.updateControls(animated: false)
 		self.scheduleControlsAutoHide()
+
+		#if !targetEnvironment(macCatalyst)
+		self.portraitLockBuddy.start()
+		#endif
 
 		#if targetEnvironment(macCatalyst)
 		// The page's own web view takes Escape for itself, so it never reaches the chain.
@@ -465,6 +487,10 @@ final class TrailerFullscreenViewController: UIViewController {
 		self.hasLeftScreen = true
 		self.resignFirstResponder()
 
+		#if !targetEnvironment(macCatalyst)
+		self.portraitLockBuddy.restorePortrait()
+		#endif
+
 		#if targetEnvironment(macCatalyst)
 		self.escapeMonitor?.stop()
 		self.escapeMonitor = nil
@@ -476,6 +502,10 @@ final class TrailerFullscreenViewController: UIViewController {
 
 		self.controlsHideTask?.cancel()
 		self.controlsHideTask = nil
+
+		#if !targetEnvironment(macCatalyst)
+		self.portraitLockBuddy.stop()
+		#endif
 
 		#if targetEnvironment(macCatalyst)
 		if let macFullscreenObserver = self.macFullscreenObserver {
@@ -494,10 +524,12 @@ final class TrailerFullscreenViewController: UIViewController {
 		self.player?.setInteractionEnabled(false)
 		#endif
 
-		if let sourceTrailerView = self.sourceTrailerView {
-			sourceTrailerView.reclaimPlayerFromFullscreen()
-		} else {
-			self.player?.detach()
+		if let player = self.player {
+			if let sourceTrailerView = self.sourceTrailerView {
+				sourceTrailerView.reclaimPlayerFromFullscreen(player)
+			} else {
+				player.detach()
+			}
 		}
 
 		self.player = nil
@@ -519,6 +551,13 @@ final class TrailerFullscreenViewController: UIViewController {
 			self.didEnterMacFullscreen = false
 			MacWindowFullscreen.toggle()
 			self.dismiss(animated: false)
+			return
+		}
+		#else
+		if self.portraitLockBuddy.restorePortrait() {
+			DispatchQueue.main.asyncAfter(deadline: .now() + 0.4) { [weak self] in
+				self?.dismiss(animated: true)
+			}
 			return
 		}
 		#endif

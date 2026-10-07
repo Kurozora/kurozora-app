@@ -75,11 +75,14 @@ final class TrailerPlayerPool {
 		return self.warmHostView
 	}
 
-	/// Tears down the least recently used players beyond the warm limit.
+	/// Tears down the least recently used detached players beyond the warm limit.
 	private func evictExcessPlayers() {
-		while self.players.count > self.maximumWarmPlayers {
-			let player = self.players.removeFirst()
+		var excess = self.players.count - self.maximumWarmPlayers
+
+		for player in self.players where excess > 0 && !player.isAttached {
+			self.players.removeAll { $0 === player }
 			player.teardown()
+			excess -= 1
 		}
 	}
 }

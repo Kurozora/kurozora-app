@@ -32,6 +32,7 @@ nonisolated class UserSettings: UserDefaults {
 			UserSettingsKey.confettiLastSeenAt.rawValue: Date.distantPast,
 			UserSettingsKey.currentSplashScreenAnimation.rawValue: SplashScreenAnimation.default.rawValue,
 			UserSettingsKey.isReduceMotionSyncEnabled.rawValue: true,
+			UserSettingsKey.isPortraitLockBuddyEnabled.rawValue: true,
 			UserSettingsKey.forwardNavigationEnabled.rawValue: true,
 			UserSettingsKey.musicCrossfadeDuration.rawValue: CrossfadeDuration.default.rawValue,
 			UserSettingsKey.musicSkipDuration.rawValue: SkipDuration.default.rawValue,
@@ -371,12 +372,12 @@ extension UserSettings {
 
 	/// Returns a boolean indicating if Smart Rotation Lock is enabled.
 	static var isSmartRotationLockEnabled: Bool {
-		return false // self.shared.bool(forKey: #function)
+		return self.shared.bool(forKey: #function)
 	}
 
 	/// Returns a boolean indicating if Portrait Lock Buddy is enabled.
 	static var isPortraitLockBuddyEnabled: Bool {
-		return true // self.shared.bool(forKey: #function)
+		return self.shared.bool(forKey: #function)
 	}
 }
 

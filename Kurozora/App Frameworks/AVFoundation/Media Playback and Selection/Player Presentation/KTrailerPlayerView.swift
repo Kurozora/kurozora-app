@@ -422,7 +422,7 @@ final class KTrailerPlayerView: UIView {
 		self.isReaderInitiated = false
 		self.isPausedByReader = false
 
-		if let warmPlayer = TrailerPlayerPool.shared.warmPlayer(forVideoID: videoID) {
+		if let warmPlayer = TrailerPlayerPool.shared.warmPlayer(forVideoID: videoID), self.canHost(warmPlayer) {
 			self.webPlayer = warmPlayer
 			warmPlayer.attach(to: self, isMuted: self.isMuted, delegate: self)
 			warmPlayer.setLooping(self.loopsPlayback)
@@ -583,10 +583,16 @@ final class KTrailerPlayerView: UIView {
 		self.startWebPlayback(forVideoID: videoID)
 	}
 
-	/// Takes the player back when the fullscreen presentation closes.
-	func reclaimPlayerFromFullscreen() {
-		guard let webPlayer = self.webPlayer else { return }
+	/// Takes the given player back when the fullscreen presentation closes.
+	///
+	/// - Parameter webPlayer: The player the fullscreen presentation held.
+	func reclaimPlayerFromFullscreen(_ webPlayer: TrailerWebPlayer) {
+		guard webPlayer.videoID == self.videoID else {
+			webPlayer.detach()
+			return
+		}
 
+		self.webPlayer = webPlayer
 		self.clearTransitionSnapshot(animated: false)
 
 		self.backgroundColor = .black
@@ -618,7 +624,7 @@ final class KTrailerPlayerView: UIView {
 	///
 	/// - Returns: `true` if a warm player was resumed.
 	private func resumeWarmPlayer() -> Bool {
-		guard let webPlayer = self.webPlayer else { return false }
+		guard let webPlayer = self.webPlayer, self.canHost(webPlayer) else { return false }
 
 		if !webPlayer.isHosting(self) {
 			webPlayer.attach(to: self, isMuted: self.isMuted, delegate: self)
@@ -633,11 +639,24 @@ final class KTrailerPlayerView: UIView {
 		return true
 	}
 
+	/// Returns whether this view may take the given player from its current host.
+	///
+	/// - Parameter webPlayer: The player to take.
+	///
+	/// - Returns: `false` while fullscreen holds a player this view does not host.
+	private func canHost(_ webPlayer: TrailerWebPlayer) -> Bool {
+		guard TrailerPlaybackCoordinator.shared.isFullscreenActive else { return true }
+
+		return !webPlayer.isAttached || webPlayer.isHosting(self)
+	}
+
 	/// Plays the trailer through the pooled web player.
 	///
 	/// - Parameter videoID: The identifier of the trailer to play.
 	private func startWebPlayback(forVideoID videoID: String) {
 		let webPlayer = TrailerPlayerPool.shared.player(forVideoID: videoID)
+		guard self.canHost(webPlayer) else { return }
+
 		self.webPlayer = webPlayer
 
 		self.backgroundColor = .clear

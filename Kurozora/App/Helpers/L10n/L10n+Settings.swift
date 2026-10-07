@@ -1110,6 +1110,85 @@ extension L10n {
 			)
 		}
 	}
+
+	/// The title of the portrait lock settings.
+	static var portraitLock: String {
+		L10n.resolve {
+			String(
+				localized: "Portrait Lock",
+				table: "Settings",
+				bundle: LanguageManager.shared.bundle,
+				locale: LanguageManager.shared.locale,
+				comment: "The title of the portrait lock settings."
+			)
+		}
+	}
+
+	/// A short description for the portrait lock settings header.
+	static var portraitLockHeaderDescription: String {
+		L10n.resolve {
+			String(
+				localized: "Control how the app follows the device's orientation and when the media viewer and video player may rotate.",
+				table: "Settings",
+				bundle: LanguageManager.shared.bundle,
+				locale: LanguageManager.shared.locale,
+				comment: "A short description for the portrait lock settings header."
+			)
+		}
+	}
+
+	/// The title of the option holding the app in portrait.
+	static var smartRotationLock: String {
+		L10n.resolve {
+			String(
+				localized: "Smart Rotation Lock",
+				table: "Settings",
+				bundle: LanguageManager.shared.bundle,
+				locale: LanguageManager.shared.locale,
+				comment: "The title of the option holding the app in portrait."
+			)
+		}
+	}
+
+	/// The footer explaining the option holding the app in portrait.
+	static var smartRotationLockFooter: String {
+		L10n.resolve {
+			String(
+				localized: "Locks Kurozora to portrait orientation except for the media viewer and video player.",
+				table: "Settings",
+				bundle: LanguageManager.shared.bundle,
+				locale: LanguageManager.shared.locale,
+				comment: "The footer explaining the option holding the app in portrait."
+			)
+		}
+	}
+
+	/// The title of the option offering to rotate media under the system's rotation lock.
+	static var portraitLockBuddy: String {
+		L10n.resolve {
+			String(
+				localized: "Portrait Lock Buddy",
+				table: "Settings",
+				bundle: LanguageManager.shared.bundle,
+				locale: LanguageManager.shared.locale,
+				comment: "The title of the option offering to rotate media under the system's rotation lock."
+			)
+		}
+	}
+
+	/// The footer explaining the option offering to rotate media under the system's rotation lock.
+	static var portraitLockBuddyFooter: String {
+		L10n.resolve {
+			String(
+				localized: "If using the iOS Portrait Orientation Lock, Kurozora detects device rotations in the media viewer and video player and offers to rotate the media.",
+				table: "Settings",
+				bundle: LanguageManager.shared.bundle,
+				locale: LanguageManager.shared.locale,
+				comment: "The footer explaining the option offering to rotate media under the system's rotation lock."
+			)
+		}
+	}
+
 	/// A short description for the notifications settings header.
 	///
 	/// - Tag: L10n-notificationsHeaderDescription

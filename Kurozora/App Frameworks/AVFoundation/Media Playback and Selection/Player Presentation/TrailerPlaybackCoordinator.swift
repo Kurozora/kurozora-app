@@ -37,7 +37,7 @@ final class TrailerPlaybackCoordinator {
 	private var settleTask: Task<Void, Never>?
 
 	/// A Boolean value indicating whether a trailer is playing fullscreen.
-	private var isFullscreenActive = false
+	private(set) var isFullscreenActive = false
 
 	// MARK: - Initializers
 	private init() {}

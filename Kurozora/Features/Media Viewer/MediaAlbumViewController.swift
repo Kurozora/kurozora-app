@@ -15,12 +15,8 @@ final class MediaAlbumViewController: UIPageViewController {
 	private let indexButton = AdaptiveCornerButton()
 
 	// MARK: - Properties
-	// Orientation
-	private let orientationManager = OrientationManager()
-	private var currentForcedOrientation: UIInterfaceOrientationMask?
-	private var rotateToastButton: UIButton?
-	private var rotateToastConstraints: [NSLayoutConstraint] = []
-	private var effectiveViewerOrientation: UIInterfaceOrientationMask = .portrait
+	/// The helper that rotates the viewer when the device turns under the system's rotation lock.
+	private lazy var portraitLockBuddy = PortraitLockBuddy(viewController: self)
 
 	// Data
 	private(set) var items: [MediaItem]
@@ -50,7 +46,6 @@ final class MediaAlbumViewController: UIPageViewController {
 
 	// Guards
 	private var isDismissing = false
-	private var isApplyingRotation = false
 	private var controlsAreVisible = true
 
 	// MARK: - Initializers
@@ -85,39 +80,24 @@ final class MediaAlbumViewController: UIPageViewController {
 		super.viewDidAppear(animated)
 		self.isDismissing = false
 		self.becomeFirstResponder()
-
-		if let sysOrientation = view.window?.windowScene?.interfaceOrientation {
-			self.effectiveViewerOrientation = self.mask(for: sysOrientation)
-		}
-
-		self.orientationManager.delegate = self
-		self.orientationManager.startMonitoring()
+		self.portraitLockBuddy.start()
 	}
 
 	override func viewWillDisappear(_ animated: Bool) {
 		super.viewWillDisappear(animated)
 		guard self.isBeingDismissed || self.isMovingFromParent else { return }
 
-		if self.currentForcedOrientation != nil {
-			self.applyForcedRotation(.portrait)
-		}
+		self.portraitLockBuddy.restorePortrait()
 	}
 
 	override func viewDidDisappear(_ animated: Bool) {
 		super.viewDidDisappear(animated)
-		self.orientationManager.stopMonitoring()
-		self.hideRotateToast()
+		self.portraitLockBuddy.stop()
 	}
 
 	override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
 		super.viewWillTransition(to: size, with: coordinator)
-		coordinator.animate(alongsideTransition: nil) { [weak self] _ in
-			guard let self else { return }
-			if let sysOrientation = self.view.window?.windowScene?.interfaceOrientation {
-				self.effectiveViewerOrientation = self.mask(for: sysOrientation)
-			}
-			self.isApplyingRotation = false
-		}
+		self.portraitLockBuddy.settle(with: coordinator)
 	}
 
 	// MARK: - Functions
@@ -214,7 +194,7 @@ final class MediaAlbumViewController: UIPageViewController {
 		self.closeButton.alpha = clampedAlpha
 		self.indexButton.alpha = clampedAlpha
 		self.actionBar.alpha = clampedAlpha
-		self.rotateToastButton?.alpha = clampedAlpha
+		self.portraitLockBuddy.setButtonAlpha(clampedAlpha)
 	}
 
 	/// Dismisses the viewer.
@@ -225,14 +205,12 @@ final class MediaAlbumViewController: UIPageViewController {
 		self.isDismissing = true
 		self.closeMethod = closeMethod
 
-		guard self.currentForcedOrientation != nil else {
+		guard self.portraitLockBuddy.restorePortrait() else {
 			self.dismiss(animated: true) { [weak self] in
 				self?.onClose?()
 			}
 			return
 		}
-
-		self.applyForcedRotation(.portrait)
 
 		DispatchQueue.main.asyncAfter(deadline: .now() + 0.4) { [weak self] in
 			self?.dismiss(animated: true) {
@@ -595,11 +573,7 @@ final class MediaAlbumViewController: UIPageViewController {
 
 	// Orientation Overrides
 	override var supportedInterfaceOrientations: UIInterfaceOrientationMask {
-		if let currentForcedOrientation = self.currentForcedOrientation {
-			return currentForcedOrientation
-		}
-
-		return super.supportedInterfaceOrientations
+		return self.portraitLockBuddy.forcedOrientation ?? super.supportedInterfaceOrientations
 	}
 
 	override var shouldAutorotate: Bool {
@@ -713,243 +687,3 @@ extension MediaAlbumViewController: UIContextMenuInteractionDelegate {
 	}
 }
 #endif
-
-// MARK: - OrientationManagerDelegate
-extension MediaAlbumViewController: OrientationManagerDelegate {
-	func orientationManager(_ manager: OrientationManager, didDetect deviceOrientation: UIInterfaceOrientationMask) {
-		// Hide existing toast and reevaluate showing a new one based on the latest orientation
-		self.hideRotateToast()
-
-		guard UserSettings.isPortraitLockBuddyEnabled else {
-			return
-		}
-
-		guard !self.isApplyingRotation else { return }
-
-		let systemOrientation = self.view.window?.windowScene?.interfaceOrientation ?? .portrait
-		let systemOrientationMask = self.mask(for: systemOrientation)
-		let deviceOrientation = !UIDevice.current.isPortraitUpsideDownSupported && deviceOrientation == .portraitUpsideDown ? systemOrientationMask : deviceOrientation
-
-		// System orientation matches device: no button is needed
-		if deviceOrientation == systemOrientationMask {
-			self.effectiveViewerOrientation = systemOrientationMask
-			return
-		}
-
-		// Device orientation matches effective viewer orientation: no button is needed
-		if deviceOrientation == self.effectiveViewerOrientation {
-			return
-		}
-
-		// Device differs from viewer while lock is active: show button
-		self.showRotateToast(for: deviceOrientation)
-	}
-
-	private func mask(for orientation: UIInterfaceOrientation) -> UIInterfaceOrientationMask {
-		switch orientation {
-		case .portrait: return .portrait
-		case .landscapeLeft: return .landscapeLeft
-		case .landscapeRight: return .landscapeRight
-		case .portraitUpsideDown: return .portraitUpsideDown
-		default: return .portrait
-		}
-	}
-
-	private func fromMask(_ orientation: UIInterfaceOrientationMask) -> UIInterfaceOrientation {
-		switch orientation {
-		case .portrait: return .portrait
-		case .landscapeLeft: return .landscapeLeft
-		case .landscapeRight: return .landscapeRight
-		case .portraitUpsideDown: return .portraitUpsideDown
-		default: return .portrait
-		}
-	}
-
-	private func orientationAngle(for mask: UIInterfaceOrientationMask) -> CGFloat {
-		switch mask {
-		case .landscapeLeft: return .pi / 2
-		case .landscapeRight: return -.pi / 2
-		case .portraitUpsideDown: return 0
-		default: return .pi
-		}
-	}
-}
-
-// MARK: - Rotate Toast
-extension MediaAlbumViewController {
-	private func showRotateToast(for deviceOrientation: UIInterfaceOrientationMask) {
-		if self.rotateToastButton != nil { return }
-
-		let tapToRotateButton = AdaptiveCornerButton()
-		tapToRotateButton.translatesAutoresizingMaskIntoConstraints = false
-		tapToRotateButton.configuration?.title = L10n.tapToRotate
-		tapToRotateButton.configuration?.image = UIImage(systemName: "lock.open.rotation")
-		tapToRotateButton.configuration?.imagePlacement = .leading
-		tapToRotateButton.configuration?.imagePadding = 8
-		tapToRotateButton.configuration?.titleTextAttributesTransformer = UIConfigurationTextAttributesTransformer { incoming in
-			var outgoing = incoming
-			outgoing.font = .preferredFont(forTextStyle: .subheadline)
-			return outgoing
-		}
-
-		tapToRotateButton.addAction(UIAction { [weak self] _ in
-			guard let self = self else { return }
-			self.applyForcedRotation(deviceOrientation)
-		}, for: .touchUpInside)
-		tapToRotateButton.alpha = 0
-
-		self.view.addSubview(tapToRotateButton)
-		self.rotateToastButton = tapToRotateButton
-
-		NSLayoutConstraint.deactivate(self.rotateToastConstraints)
-		self.rotateToastConstraints.removeAll()
-
-		let orientationFromMask = self.fromMask(deviceOrientation)
-
-		self.anchorRotateButton(tapToRotateButton: tapToRotateButton, deviceOrientation: orientationFromMask)
-
-		NSLayoutConstraint.activate(self.rotateToastConstraints)
-
-		var angle = switch (deviceOrientation, self.effectiveViewerOrientation) {
-		case (.landscapeLeft, .landscapeRight), (.landscapeRight, .landscapeLeft):
-			self.orientationAngle(for: deviceOrientation) * 2
-		default: self.orientationAngle(for: deviceOrientation) + self.orientationAngle(for: self.effectiveViewerOrientation)
-		}
-
-		angle = switch deviceOrientation {
-		case .landscapeLeft: self.effectiveViewerOrientation == .landscapeRight ? -angle : angle
-		case .landscapeRight: self.effectiveViewerOrientation == .landscapeLeft ? -angle : angle
-		case .portraitUpsideDown: angle
-		default: -angle
-		}
-
-		tapToRotateButton.transform = CGAffineTransform(rotationAngle: angle)
-
-		UIView.animate(withDuration: 0.32, delay: 0, options: [.curveEaseOut]) {
-			tapToRotateButton.alpha = 1
-		}
-	}
-
-	private func anchorRotateButton(tapToRotateButton: UIButton, deviceOrientation: UIInterfaceOrientation) {
-		guard
-			let interfaceOrientation = view.window?.windowScene?.interfaceOrientation
-		else {
-			return
-		}
-
-		// Convert both to a numeric representation so we can compute delta.
-		func index(for orientation: UIInterfaceOrientation) -> Int {
-			switch orientation {
-			case .portrait: return 0
-			case .landscapeRight: return 1
-			case .portraitUpsideDown: return 2
-			case .landscapeLeft: return 3
-			default: return 0
-			}
-		}
-
-		func index(for device: UIDeviceOrientation) -> Int {
-			switch device {
-			case .portrait: return 0
-			case .landscapeRight: return 1
-			case .portraitUpsideDown: return 2
-			case .landscapeLeft: return 3
-			default: return 0
-			}
-		}
-
-		let interfaceIndex = index(for: interfaceOrientation)
-		let deviceIndex = index(for: deviceOrientation)
-
-		// Difference tells us where the physical bottom edge lies
-		let delta = (deviceIndex - interfaceIndex + 4) % 4
-
-		switch delta {
-		case 0:
-			// Physical bottom aligns with view bottom
-			self.rotateToastConstraints.append(contentsOf: [
-				tapToRotateButton.centerXAnchor.constraint(equalTo: self.view.centerXAnchor),
-				tapToRotateButton.bottomAnchor.constraint(equalTo: self.view.layoutMarginsGuide.bottomAnchor)
-			])
-		case 1:
-			// Physical bottom is view.leading
-			self.rotateToastConstraints.append(contentsOf: [
-				tapToRotateButton.centerYAnchor.constraint(equalTo: self.view.centerYAnchor),
-				tapToRotateButton.leadingAnchor.constraint(equalTo: self.view.layoutMarginsGuide.leadingAnchor)
-			])
-		case 2:
-			// Physical bottom is view.top
-			self.rotateToastConstraints.append(contentsOf: [
-				tapToRotateButton.centerXAnchor.constraint(equalTo: self.view.centerXAnchor),
-				tapToRotateButton.topAnchor.constraint(equalTo: self.view.layoutMarginsGuide.topAnchor)
-			])
-		case 3:
-			// Physical bottom is view.trailing
-			self.rotateToastConstraints.append(contentsOf: [
-				tapToRotateButton.centerYAnchor.constraint(equalTo: self.view.centerYAnchor),
-				tapToRotateButton.trailingAnchor.constraint(equalTo: self.view.layoutMarginsGuide.trailingAnchor)
-			])
-		default:
-			break
-		}
-	}
-
-	private func hideRotateToast() {
-		guard let btn = self.rotateToastButton else { return }
-
-		UIView.animate(withDuration: 0.22, animations: {
-			self.rotateToastButton?.alpha = 0
-			self.rotateToastButton = nil
-			NSLayoutConstraint.deactivate(self.rotateToastConstraints)
-			self.rotateToastConstraints.removeAll()
-		}, completion: { _ in
-			btn.removeFromSuperview()
-		})
-	}
-}
-
-// MARK: - Forced Rotation
-extension MediaAlbumViewController {
-	private func applyForcedRotation(_ orientation: UIInterfaceOrientationMask) {
-		guard !self.isApplyingRotation else { return }
-		self.isApplyingRotation = true
-
-		// Sync effective orientation immediately, before the next OM callback
-		self.effectiveViewerOrientation = orientation
-
-		// Clear force when returning to portrait to restore auto-rotation
-		if orientation == .portrait {
-			self.currentForcedOrientation = nil
-		} else {
-			self.currentForcedOrientation = orientation
-		}
-
-		self.hideRotateToast()
-
-		guard let windowScene = view.window?.windowScene else {
-			self.isApplyingRotation = false
-			return
-		}
-
-		if #available(iOS 16.0, *) {
-			self.setNeedsUpdateOfSupportedInterfaceOrientations()
-
-			let geometryUpdate = UIWindowScene.GeometryPreferences.iOS(interfaceOrientations: orientation)
-
-			windowScene.requestGeometryUpdate(geometryUpdate) { [weak self] error in
-				print("----- Orientation update error: \(error)")
-
-				guard let self else { return }
-				// Revert to actual system orientation on failure
-				let actualMask = self.mask(for: windowScene.interfaceOrientation)
-				self.effectiveViewerOrientation = actualMask
-				self.currentForcedOrientation = (actualMask == .portrait) ? nil : actualMask
-				self.isApplyingRotation = false
-			}
-		}
-
-		DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) { [weak self] in
-			self?.isApplyingRotation = false
-		}
-	}
-}

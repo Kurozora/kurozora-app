@@ -9,11 +9,22 @@
 import UIKit
 import UniformTypeIdentifiers
 
-class MediaSettingsViewController: SubSettingsViewController {
+class MediaSettingsViewController: SubSettingsViewController, TypedSegueHandling {
+	// MARK: - Enums
+	enum SegueIdentifiers: String, SegueIdentifier {
+		case portraitLockSegue
+	}
+
 	// MARK: - Properties
 	/// The sections shown in the settings.
 	private var sections: [Section] {
-		return MediaSaveDestination.current == .photoLibrary ? Section.allCases : [.saveLocation, .liveText]
+		var sections = MediaSaveDestination.current == .photoLibrary ? Section.allCases : [.saveLocation, .liveText, .portraitLock]
+
+		#if targetEnvironment(macCatalyst)
+		sections.removeAll { $0 == .portraitLock }
+		#endif
+
+		return sections
 	}
 
 	// MARK: - Initializers
@@ -80,6 +91,15 @@ class MediaSettingsViewController: SubSettingsViewController {
 			UserSettings.set(sender.isOn, forKey: .liveTextAnalyzerEnabled)
 		default:
 			break
+		}
+	}
+
+	// MARK: - Segue
+	override func makeDestination(for identifier: any SegueIdentifier) -> UIViewController? {
+		guard let identifier = identifier as? SegueIdentifiers else { return nil }
+
+		switch identifier {
+		case .portraitLockSegue: return PortraitLockSettingsViewController()
 		}
 	}
 }
@@ -154,6 +174,13 @@ extension MediaSettingsViewController {
 
 			self.configureSwitchCell(cell, row: row, isOn: UserSettings.liveTextAnalyzerEnabled)
 			return cell
+		case .portraitLock:
+			guard let cell = tableView.dequeueReusableCell(withIdentifier: SettingsCell.self, for: indexPath) else {
+				return UITableViewCell()
+			}
+
+			cell.configure(title: row.titleValue)
+			return cell
 		}
 	}
 
@@ -191,6 +218,8 @@ extension MediaSettingsViewController {
 		switch row {
 		case .chooseFolder:
 			self.chooseFolder()
+		case .portraitLock:
+			self.show(.portraitLockSegue, sender: nil)
 		default:
 			break
 		}
@@ -230,6 +259,7 @@ private extension MediaSettingsViewController {
 		case saveLocation
 		case kurozoraAlbum
 		case liveText
+		case portraitLock
 
 		var rows: [Row] {
 			switch self {
@@ -239,6 +269,8 @@ private extension MediaSettingsViewController {
 				return [.saveToKurozoraAlbum]
 			case .liveText:
 				return [.liveTextAnalyzer]
+			case .portraitLock:
+				return [.portraitLock]
 			}
 		}
 
@@ -246,14 +278,14 @@ private extension MediaSettingsViewController {
 			switch self {
 			case .saveLocation:
 				return L10n.saveLocation
-			case .kurozoraAlbum, .liveText:
+			case .kurozoraAlbum, .liveText, .portraitLock:
 				return nil
 			}
 		}
 
 		var footerValue: String? {
 			switch self {
-			case .saveLocation:
+			case .saveLocation, .portraitLock:
 				return nil
 			case .kurozoraAlbum:
 				return L10n.saveToKurozoraAlbumFooter
@@ -268,6 +300,7 @@ private extension MediaSettingsViewController {
 		case chooseFolder
 		case saveToKurozoraAlbum
 		case liveTextAnalyzer
+		case portraitLock
 
 		init?(tag: Int) {
 			switch tag {
@@ -283,7 +316,7 @@ private extension MediaSettingsViewController {
 				return 0
 			case .liveTextAnalyzer:
 				return 1
-			case .location, .chooseFolder:
+			case .location, .chooseFolder, .portraitLock:
 				return -1
 			}
 		}
@@ -298,6 +331,8 @@ private extension MediaSettingsViewController {
 				return L10n.saveToKurozoraAlbum
 			case .liveTextAnalyzer:
 				return L10n.liveTextAnalyzer
+			case .portraitLock:
+				return L10n.portraitLock
 			}
 		}
 

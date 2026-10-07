@@ -10309,6 +10309,9 @@
         }
       }
     },
+    "Control how the app follows the device's orientation and when the media viewer and video player may rotate." : {
+      "comment" : "A short description for the portrait lock settings header."
+    },
     "Copy Subscription Link" : {
       "comment" : "The string for the 'Copy Subscription Link' calendar picker option.",
       "localizations" : {
@@ -18464,6 +18467,9 @@
         }
       }
     },
+    "If using the iOS Portrait Orientation Lock, Kurozora detects device rotations in the media viewer and video player and offers to rotate the media." : {
+      "comment" : "The footer explaining the option offering to rotate media under the system's rotation lock."
+    },
     "Import Library" : {
       "comment" : "The title string for the 'Import Library' settings.",
       "localizations" : {
@@ -23392,6 +23398,9 @@
           }
         }
       }
+    },
+    "Locks Kurozora to portrait orientation except for the media viewer and video player." : {
+      "comment" : "The footer explaining the option holding the app in portrait."
     },
     "Manage Active Sessions" : {
       "comment" : "The title string for the 'Manage Active Sessions' settings.",
@@ -28518,6 +28527,12 @@
           }
         }
       }
+    },
+    "Portrait Lock" : {
+      "comment" : "The title of the portrait lock settings."
+    },
+    "Portrait Lock Buddy" : {
+      "comment" : "The title of the option offering to rotate media under the system's rotation lock."
     },
     "Posters and banners are stored for offline use. Turn this on to download them over Wi-Fi only." : {
       "comment" : "The footer message explaining what the library artwork setting does.",
@@ -37838,6 +37853,9 @@
           }
         }
       }
+    },
+    "Smart Rotation Lock" : {
+      "comment" : "The title of the option holding the app in portrait."
     },
     "Solid" : {
       "comment" : "The scroll edge effect option title for the solid background that appears behind the bars.",

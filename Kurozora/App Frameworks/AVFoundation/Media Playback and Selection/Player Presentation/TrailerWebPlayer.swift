@@ -590,6 +590,11 @@ final class TrailerWebPlayer: NSObject {
 		return self.host != nil && self.hasRevealed
 	}
 
+	/// A Boolean value indicating whether a host holds the player.
+	var isAttached: Bool {
+		return self.host != nil
+	}
+
 	/// A Boolean value indicating whether text on the paused frame is selected.
 	var hasActiveTextSelection: Bool {
 		return self.pausedFrameView?.hasActiveTextSelection == true
