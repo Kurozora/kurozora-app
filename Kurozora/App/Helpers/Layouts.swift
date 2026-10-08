@@ -12,8 +12,11 @@ enum Layouts {
 	/// The height of a row in the rate and review section.
 	static let rateAndReviewRowHeight: CGFloat = EmojiRatingView.buttonSize
 
-	/// The max width constraint of `ActionButtonExploreCollectionViewCell`.
+	/// The widest a quick action button is laid out at.
 	static let quickActionButtonMaxWidth: CGFloat = 300.0
+
+	/// The narrowest a quick action button is laid out at.
+	static let quickActionButtonMinWidth: CGFloat = 250.0
 
 	/// The fraction of a section's width one orthogonally scrolling page occupies.
 	private static let groupWidthFraction: CGFloat = 0.90
@@ -301,20 +304,30 @@ enum Layouts {
 	///
 	/// - Parameters:
 	///    - columns: The number of items in a row.
+	///    - containerWidth: The width available to the section's content.
+	///    - isHorizontal: Whether the section scrolls orthogonally.
+	///
+	/// - Returns: The width of one item.
+	static func itemWidth(columns: Int, containerWidth: CGFloat, isHorizontal: Bool) -> CGFloat {
+		let columnCount = CGFloat(max(columns, 1))
+
+		// An orthogonally scrolling group takes its fraction of the container before the section's insets are applied.
+		let groupWidth = isHorizontal ? containerWidth * Self.groupWidthFraction : containerWidth - (Self.horizontalInset * 2.0)
+		let spacing = Self.interItemSpacing * (columnCount - 1.0)
+
+		return max((groupWidth - spacing) / columnCount, 0.0)
+	}
+
+	/// Returns the width a single item is given in a section laid out by `heightDimensions`.
+	///
+	/// - Parameters:
+	///    - columns: The number of items in a row.
 	///    - layoutEnvironment: The environment the section is laid out in.
 	///    - isHorizontal: Whether the section scrolls orthogonally.
 	///
 	/// - Returns: The width of one item.
 	private static func itemWidth(columns: Int, layoutEnvironment: NSCollectionLayoutEnvironment, isHorizontal: Bool) -> CGFloat {
-		let columnCount = CGFloat(max(columns, 1))
-		let containerWidth = layoutEnvironment.container.effectiveContentSize.width
-
-		// An orthogonally scrolling group takes its fraction of the container before the section's
-		// insets are applied, so those insets only narrow a section that scrolls with the collection.
-		let groupWidth = isHorizontal ? containerWidth * Self.groupWidthFraction : containerWidth - (Self.horizontalInset * 2.0)
-		let spacing = Self.interItemSpacing * (columnCount - 1.0)
-
-		return max((groupWidth - spacing) / columnCount, 0.0)
+		return Self.itemWidth(columns: columns, containerWidth: layoutEnvironment.container.effectiveContentSize.width, isHorizontal: isHorizontal)
 	}
 
 	/// Returns the item and group heights that keep a section's cells level with each other.
@@ -343,6 +356,40 @@ enum Layouts {
 		}
 
 		return (.estimated(estimate), .estimated(estimate))
+	}
+
+	/// Returns the item and group heights a vertically stacked section lays its rows out at.
+	///
+	/// - Parameters:
+	///    - estimate: The height a row starts out at.
+	///    - maximumHeight: The height of the tallest cell in the section.
+	///
+	/// - Returns: The item and group height dimensions.
+	private static func rowHeightDimensions(estimate: CGFloat, maximumHeight: CGFloat?) -> (item: NSCollectionLayoutDimension, group: NSCollectionLayoutDimension) {
+		guard let maximumHeight = maximumHeight else {
+			return (.estimated(estimate), .estimated(estimate))
+		}
+
+		return (.fractionalHeight(1.0), .absolute(maximumHeight))
+	}
+
+	/// Returns the width a single quick action button is given.
+	///
+	/// - Parameters:
+	///    - columns: The number of buttons in a row.
+	///    - containerWidth: The width available to the section's content.
+	///    - isCompactWidth: Whether the section is laid out in a horizontally compact environment.
+	///    - minimumWidth: The narrowest a button is laid out at.
+	///    - maximumWidth: The widest a button is laid out at.
+	///
+	/// - Returns: The width of one button.
+	static func quickActionItemWidth(columns: Int, containerWidth: CGFloat, isCompactWidth: Bool, minimumWidth: CGFloat = Self.quickActionButtonMinWidth, maximumWidth: CGFloat = Self.quickActionButtonMaxWidth) -> CGFloat {
+		let availableWidth = Self.itemWidth(columns: columns, containerWidth: containerWidth, isHorizontal: false)
+
+		guard !isCompactWidth else { return availableWidth }
+		guard availableWidth >= minimumWidth else { return availableWidth }
+
+		return min(max(availableWidth, minimumWidth), maximumWidth)
 	}
 
 	static func reviewsSection(_ section: Int, columns: Int, layoutEnvironment: NSCollectionLayoutEnvironment, isHorizontal: Bool = true, maximumHeight: ((CGFloat) -> CGFloat?)? = nil) -> NSCollectionLayoutSection {
@@ -694,40 +741,39 @@ enum Layouts {
 		return layoutSection
 	}
 
-	static func quickLinkSection(_ section: Int, columns: Int, layoutEnvironment: NSCollectionLayoutEnvironment) -> NSCollectionLayoutSection {
-		// Add layout item.
-		let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0), heightDimension: .estimated(1.0))
+	static func quickLinkSection(_ section: Int, columns: Int, layoutEnvironment: NSCollectionLayoutEnvironment, maximumHeight: ((CGFloat) -> CGFloat?)? = nil) -> NSCollectionLayoutSection {
+		let containerWidth = layoutEnvironment.container.effectiveContentSize.width
+		let itemWidth = Self.itemWidth(columns: columns, containerWidth: containerWidth, isHorizontal: false)
+		let heightDimensions = Self.rowHeightDimensions(estimate: 1.0, maximumHeight: maximumHeight?(itemWidth))
+
+		let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0), heightDimension: heightDimensions.item)
 		let item = NSCollectionLayoutItem(layoutSize: itemSize)
 
-		// Add layout group.
-		let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0), heightDimension: .estimated(1.0))
+		let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0), heightDimension: heightDimensions.group)
 		let layoutGroup = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, subitem: item, count: columns)
 		layoutGroup.interItemSpacing = .fixed(Self.interItemSpacing)
 
-		// Add layout section.
 		let layoutSection = NSCollectionLayoutSection(group: layoutGroup)
 		layoutSection.interGroupSpacing = 20.0
 		layoutSection.contentInsets = NSDirectionalEdgeInsets(top: 0, leading: Self.horizontalInset, bottom: 40, trailing: Self.horizontalInset)
 		return layoutSection
 	}
 
-	static func quickActionSection(_ section: Int, columns: Int, layoutEnvironment: NSCollectionLayoutEnvironment) -> NSCollectionLayoutSection {
+	static func quickActionSection(_ section: Int, columns: Int, layoutEnvironment: NSCollectionLayoutEnvironment, maximumHeight: ((CGFloat) -> CGFloat?)? = nil) -> NSCollectionLayoutSection {
 		let containerWidth = layoutEnvironment.container.effectiveContentSize.width
+		let isCompactWidth = layoutEnvironment.traitCollection.horizontalSizeClass == .compact
 		let totalSpacing = Self.interItemSpacing * CGFloat(columns - 1)
-		let widestFittingItem = (containerWidth - Self.horizontalInset * 2 - totalSpacing) / CGFloat(columns)
-		let itemWidth = min(self.quickActionButtonMaxWidth, widestFittingItem)
+		let itemWidth = Self.quickActionItemWidth(columns: columns, containerWidth: containerWidth, isCompactWidth: isCompactWidth)
 		let sideInset = (containerWidth - itemWidth * CGFloat(columns) - totalSpacing) / 2
+		let heightDimensions = Self.rowHeightDimensions(estimate: 1.0, maximumHeight: maximumHeight?(itemWidth))
 
-		// Add layout item.
-		let itemSize = NSCollectionLayoutSize(widthDimension: .absolute(itemWidth), heightDimension: .estimated(1.0))
+		let itemSize = NSCollectionLayoutSize(widthDimension: .absolute(itemWidth), heightDimension: heightDimensions.item)
 		let item = NSCollectionLayoutItem(layoutSize: itemSize)
 
-		// Add layout group.
-		let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0), heightDimension: .estimated(1.0))
+		let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0), heightDimension: heightDimensions.group)
 		let layoutGroup = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, subitems: Array(repeating: item, count: columns))
 		layoutGroup.interItemSpacing = .fixed(Self.interItemSpacing)
 
-		// Add layout section.
 		let layoutSection = NSCollectionLayoutSection(group: layoutGroup)
 		layoutSection.interGroupSpacing = 20.0
 		layoutSection.contentInsets = NSDirectionalEdgeInsets(top: 0, leading: sideInset, bottom: 40.0, trailing: sideInset)
@@ -750,17 +796,18 @@ enum Layouts {
 		return backgroundDecoration
 	}
 
-	static func legalSection(_ section: Int, columns: Int, layoutEnvironment: NSCollectionLayoutEnvironment) -> NSCollectionLayoutSection {
-		// Add layout item.
-		let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0), heightDimension: .estimated(1.0))
+	static func legalSection(_ section: Int, columns: Int, layoutEnvironment: NSCollectionLayoutEnvironment, maximumHeight: ((CGFloat) -> CGFloat?)? = nil) -> NSCollectionLayoutSection {
+		let containerWidth = layoutEnvironment.container.effectiveContentSize.width
+		let itemWidth = Self.itemWidth(columns: columns, containerWidth: containerWidth, isHorizontal: false)
+		let heightDimensions = Self.rowHeightDimensions(estimate: 1.0, maximumHeight: maximumHeight?(itemWidth))
+
+		let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0), heightDimension: heightDimensions.item)
 		let item = NSCollectionLayoutItem(layoutSize: itemSize)
 
-		// Add layout group.
-		let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0), heightDimension: .estimated(1.0))
+		let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0), heightDimension: heightDimensions.group)
 		let layoutGroup = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, subitem: item, count: columns)
 		layoutGroup.interItemSpacing = .fixed(Self.interItemSpacing)
 
-		// Add layout section.
 		let layoutSection = NSCollectionLayoutSection(group: layoutGroup)
 		layoutSection.interGroupSpacing = 20.0
 		layoutSection.contentInsets = NSDirectionalEdgeInsets(top: 0, leading: Self.horizontalInset, bottom: 0, trailing: Self.horizontalInset)

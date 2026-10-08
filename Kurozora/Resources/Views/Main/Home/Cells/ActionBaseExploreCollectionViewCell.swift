@@ -12,12 +12,16 @@ protocol ActionBaseExploreCollectionViewCellDelegate: AnyObject {
 	func actionButtonPressed(_ sender: UIButton, cell: ActionBaseExploreCollectionViewCell)
 }
 
-class ActionBaseExploreCollectionViewCell: UICollectionViewCell {
+class ActionBaseExploreCollectionViewCell: KCollectionViewCell {
 	// MARK: - IBOutlets
 	@IBOutlet weak var actionButton: KButton?
 
 	// MARK: - Properties
 	weak var delegate: ActionBaseExploreCollectionViewCellDelegate?
+
+	override var isSkeletonEnabled: Bool {
+		return false
+	}
 
 	// MARK: - Functions
 	/// Configure the cell with the given details.

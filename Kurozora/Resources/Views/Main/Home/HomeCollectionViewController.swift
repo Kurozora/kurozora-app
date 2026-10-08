@@ -295,6 +295,22 @@ class HomeCollectionViewController: KCollectionViewController, SectionFetchable,
 		}
 	}
 
+	override func layoutContainerWidthDidChange() {
+		self.remeasureAllCellHeights()
+	}
+
+	override func cellHeightEnvironmentDidChange() {
+		self.remeasureAllCellHeights()
+	}
+
+	#if DEBUG
+	override func measuredItemWidth(forSectionAt section: Int) -> CGFloat? {
+		guard let sectionIdentifier = self.snapshot?.sectionIdentifiers[safe: section] else { return nil }
+
+		return self.measuredItemWidth(forSection: sectionIdentifier)
+	}
+	#endif
+
 	/// Configures the profile bar button item.
 	private func configureProfileBarButtonItem() {
 		self.profileBarButtonItem = ProfileBarButtonItem(primaryAction: UIAction { [weak self] _ in
@@ -554,6 +570,10 @@ class HomeCollectionViewController: KCollectionViewController, SectionFetchable,
 			snapshot.deleteItems(oldItems)
 			snapshot.appendItems(newItems, toSection: sectionIdentifier)
 			self.snapshot = snapshot
+
+			self.setMeasuredItems(newItems, for: sectionIdentifier)
+			self.measureCellHeights(of: newItems)
+
 			await self.dataSource.apply(snapshot, animatingDifferences: true)
 		} catch {
 			print(error.localizedDescription)
@@ -771,6 +791,255 @@ class HomeCollectionViewController: KCollectionViewController, SectionFetchable,
 			default: break
 			}
 		}
+	}
+}
+
+// MARK: - Measurement
+extension HomeCollectionViewController {
+	func measuredItemWidth(for section: SectionLayoutKind, containerWidth: CGFloat) -> CGFloat? {
+		let columns = self.columnCount(forSection: section, width: containerWidth)
+
+		switch section {
+		case .quickLinks, .legal:
+			return Layouts.itemWidth(columns: columns, containerWidth: containerWidth, isHorizontal: false)
+		case .quickActions:
+			let isCompactWidth = self.traitCollection.horizontalSizeClass == .compact
+
+			return Layouts.quickActionItemWidth(columns: columns, containerWidth: containerWidth, isCompactWidth: isCompactWidth)
+		default:
+			return Layouts.itemWidth(columns: columns, containerWidth: containerWidth, isHorizontal: true)
+		}
+	}
+
+	func measurableItem(for itemKind: ItemKind, in section: SectionLayoutKind) -> CellHeightMeasurer.Item? {
+		switch section {
+		case .banner:
+			return self.showMeasurableItem(for: itemKind, in: BannerLockupCollectionViewCell.self) { show in
+				BannerLockupCollectionViewCell.measurableItem(for: show)
+			}
+		case .large:
+			return self.showMeasurableItem(for: itemKind, in: LargeLockupCollectionViewCell.self) { show in
+				LargeLockupCollectionViewCell.measurableItem(for: show)
+			}
+		case .video:
+			return self.showMeasurableItem(for: itemKind, in: VideoLockupCollectionViewCell.self) { show in
+				VideoLockupCollectionViewCell.measurableItem(for: show)
+			}
+		case .upcoming:
+			return self.showMeasurableItem(for: itemKind, in: UpcomingLockupCollectionViewCell.self) { show in
+				UpcomingLockupCollectionViewCell.measurableItem(for: show)
+			}
+		case .episode:
+			return self.episodeMeasurableItem(for: itemKind)
+		case .medium:
+			return self.mediumMeasurableItem(for: itemKind)
+		case .small:
+			return self.smallMeasurableItem(for: itemKind)
+		case .profile:
+			return self.profileMeasurableItem(for: itemKind)
+		case .music:
+			return self.musicMeasurableItem(for: itemKind)
+		case .quickLinks:
+			return self.quickLinkMeasurableItem(for: itemKind)
+		case .quickActions:
+			return self.quickActionMeasurableItem(for: itemKind)
+		case .legal:
+			return LegalCollectionViewCell.measurableItem()
+		}
+	}
+
+	/// Returns the item that measures the given item's quick link cell.
+	///
+	/// - Parameter itemKind: The item whose cell is measured.
+	///
+	/// - Returns: The item that measures the cell.
+	private func quickLinkMeasurableItem(for itemKind: ItemKind) -> CellHeightMeasurer.Item? {
+		switch itemKind {
+		case .quickLink(let quickLink, _):
+			return ActionLinkExploreCollectionViewCell.measurableItem(for: quickLink)
+		default:
+			return nil
+		}
+	}
+
+	/// Returns the item that measures the given item's quick action cell.
+	///
+	/// - Parameter itemKind: The item whose cell is measured.
+	///
+	/// - Returns: The item that measures the cell.
+	private func quickActionMeasurableItem(for itemKind: ItemKind) -> CellHeightMeasurer.Item? {
+		switch itemKind {
+		case .quickAction(let quickAction, _):
+			return ActionButtonExploreCollectionViewCell.measurableItem(for: quickAction)
+		default:
+			return nil
+		}
+	}
+
+	/// Returns the item that measures the given item's show cell.
+	///
+	/// - Parameters:
+	///    - itemKind: The item whose cell is measured.
+	///    - cellType: The type of cell the show is rendered in.
+	///    - measurableItem: Returns the item that measures a cached show.
+	///
+	/// - Returns: The item that measures the cell.
+	private func showMeasurableItem<Cell: BaseLockupCollectionViewCell>(for itemKind: ItemKind, in cellType: Cell.Type, measurableItem: (Show) -> CellHeightMeasurer.Item) -> CellHeightMeasurer.Item {
+		let show: Show? = self.fetchModel(for: itemKind)
+
+		guard let show = show else {
+			return CellHeightMeasurer.Item(cellType: cellType, isSkeleton: true) { cell in
+				cell.configure(using: nil as Show?, scheduleIsShown: false)
+			}
+		}
+
+		return measurableItem(show)
+	}
+
+	/// Returns the item that measures the given item's episode cell.
+	///
+	/// - Parameter itemKind: The item whose cell is measured.
+	///
+	/// - Returns: The item that measures the cell.
+	private func episodeMeasurableItem(for itemKind: ItemKind) -> CellHeightMeasurer.Item {
+		let episode: Episode? = self.fetchModel(for: itemKind)
+
+		guard let episode = episode else {
+			return CellHeightMeasurer.Item(cellType: EpisodeLockupCollectionViewCell.self, isSkeleton: true) { cell in
+				cell.configure(using: nil as Episode?)
+			}
+		}
+
+		return EpisodeLockupCollectionViewCell.measurableItem(for: episode)
+	}
+
+	/// Returns the item that measures the given item's medium cell.
+	///
+	/// - Parameter itemKind: The item whose cell is measured.
+	///
+	/// - Returns: The item that measures the cell.
+	private func mediumMeasurableItem(for itemKind: ItemKind) -> CellHeightMeasurer.Item? {
+		switch itemKind {
+		case .genreIdentity:
+			let genre: Genre? = self.fetchModel(for: itemKind)
+
+			guard let genre = genre else {
+				return CellHeightMeasurer.Item(cellType: MediumLockupCollectionViewCell.self, isSkeleton: true) { cell in
+					cell.configure(using: nil as Genre?)
+				}
+			}
+
+			return MediumLockupCollectionViewCell.measurableItem(for: genre)
+		case .themeIdentity:
+			let theme: Theme? = self.fetchModel(for: itemKind)
+
+			guard let theme = theme else {
+				return CellHeightMeasurer.Item(cellType: MediumLockupCollectionViewCell.self, isSkeleton: true) { cell in
+					cell.configure(using: nil as Theme?)
+				}
+			}
+
+			return MediumLockupCollectionViewCell.measurableItem(for: theme)
+		default:
+			return nil
+		}
+	}
+
+	/// Returns the item that measures the given item's small cell.
+	///
+	/// - Parameter itemKind: The item whose cell is measured.
+	///
+	/// - Returns: The item that measures the cell.
+	private func smallMeasurableItem(for itemKind: ItemKind) -> CellHeightMeasurer.Item? {
+		switch itemKind {
+		case .showIdentity:
+			return self.showMeasurableItem(for: itemKind, in: SmallLockupCollectionViewCell.self) { show in
+				SmallLockupCollectionViewCell.measurableItem(for: show)
+			}
+		case .literatureIdentity:
+			let literature: Literature? = self.fetchModel(for: itemKind)
+
+			guard let literature = literature else {
+				return CellHeightMeasurer.Item(cellType: SmallLockupCollectionViewCell.self, isSkeleton: true) { cell in
+					cell.configure(using: nil as Literature?)
+				}
+			}
+
+			return SmallLockupCollectionViewCell.measurableItem(for: literature)
+		case .gameIdentity:
+			let game: Game? = self.fetchModel(for: itemKind)
+
+			guard let game = game else {
+				return CellHeightMeasurer.Item(cellType: GameLockupCollectionViewCell.self, isSkeleton: true) { cell in
+					cell.configure(using: nil as Game?)
+				}
+			}
+
+			return GameLockupCollectionViewCell.measurableItem(for: game)
+		case .episodeIdentity:
+			return self.episodeMeasurableItem(for: itemKind)
+		case .recap:
+			let recap: Recap? = self.fetchModel(for: itemKind)
+
+			guard let recap = recap else {
+				return CellHeightMeasurer.Item(cellType: RecapPosterLockupCollectionViewCell.self, isSkeleton: true) { cell in
+					cell.configure(using: nil as Recap?)
+				}
+			}
+
+			return RecapPosterLockupCollectionViewCell.measurableItem(for: recap)
+		default:
+			return nil
+		}
+	}
+
+	/// Returns the item that measures the given item's profile cell.
+	///
+	/// - Parameter itemKind: The item whose cell is measured.
+	///
+	/// - Returns: The item that measures the cell.
+	private func profileMeasurableItem(for itemKind: ItemKind) -> CellHeightMeasurer.Item? {
+		switch itemKind {
+		case .characterIdentity:
+			let character: Character? = self.fetchModel(for: itemKind)
+
+			guard let character = character else {
+				return CellHeightMeasurer.Item(cellType: ProfileLockupCollectionViewCell.self, isSkeleton: true) { cell in
+					cell.configure(using: nil as Character?)
+				}
+			}
+
+			return ProfileLockupCollectionViewCell.measurableItem(for: character)
+		case .personIdentity:
+			let person: Person? = self.fetchModel(for: itemKind)
+
+			guard let person = person else {
+				return CellHeightMeasurer.Item(cellType: ProfileLockupCollectionViewCell.self, isSkeleton: true) { cell in
+					cell.configure(using: nil as Person?)
+				}
+			}
+
+			return ProfileLockupCollectionViewCell.measurableItem(for: person)
+		default:
+			return nil
+		}
+	}
+
+	/// Returns the item that measures the given item's music cell.
+	///
+	/// - Parameter itemKind: The item whose cell is measured.
+	///
+	/// - Returns: The item that measures the cell.
+	private func musicMeasurableItem(for itemKind: ItemKind) -> CellHeightMeasurer.Item {
+		let showSong: ShowSong? = self.fetchModel(for: itemKind)
+
+		guard let showSong = showSong else {
+			return CellHeightMeasurer.Item(cellType: MusicLockupCollectionViewCell.self, isSkeleton: true) { cell in
+				cell.configure(using: nil as ShowSong?, at: MusicLockupCollectionViewCell.measurementIndexPath, showEpisodes: false, showShow: true)
+			}
+		}
+
+		return MusicLockupCollectionViewCell.measurableItem(for: showSong, showEpisodes: false, showShow: true)
 	}
 }
 

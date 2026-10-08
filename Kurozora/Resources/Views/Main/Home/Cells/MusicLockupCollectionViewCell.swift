@@ -259,7 +259,7 @@ class MusicLockupCollectionViewCell: KCollectionViewCell {
 // MARK: - Measurement
 extension MusicLockupCollectionViewCell {
 	/// The index path a sizing cell is configured with.
-	private static let measurementIndexPath = IndexPath(item: 0, section: 0)
+	static let measurementIndexPath = IndexPath(item: 0, section: 0)
 
 	/// Returns the item that measures the given show song.
 	///

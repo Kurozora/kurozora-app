@@ -393,6 +393,8 @@ final class KTrailerPlayerView: UIView {
 	///
 	/// - Parameter urlString: The YouTube URL of the trailer.
 	func loadTrailer(fromURL urlString: String?) {
+		guard !self.isInSizingCell else { return }
+
 		let videoID = urlString.flatMap { $0.isEmpty ? nil : TrailerWebPlayer.videoID(fromURL: $0) }
 
 		guard let videoID = videoID else {

@@ -187,6 +187,28 @@ extension HomeCollectionViewController {
 			self.cache[item] = model
 		}
 
+		for item in self.snapshot.itemIdentifiers {
+			switch item {
+			case .showSong(let showSong, _):
+				self.cache[item] = showSong
+			case .recap(let recap, _):
+				self.cache[item] = recap
+			default:
+				break
+			}
+		}
+
+		for section in self.snapshot.sectionIdentifiers {
+			self.setMeasuredItems(self.snapshot.itemIdentifiers(inSection: section), for: section)
+		}
+
+		self.removeMeasuredSections(notIn: self.snapshot.sectionIdentifiers)
+		self.measureCellHeights(of: self.snapshot.sectionIdentifiers.flatMap { self.unmeasuredItems(in: $0) })
+
+		#if DEBUG
+		print("----- [apply] updateDataSource sections \(self.snapshot.sectionIdentifiers.count)")
+		#endif
+
 		self.dataSource.apply(self.snapshot)
 	}
 
@@ -410,7 +432,6 @@ extension HomeCollectionViewController {
 	func getConfiguredMusicCell() -> UICollectionView.CellRegistration<MusicLockupCollectionViewCell, ItemKind> {
 		return UICollectionView.CellRegistration<MusicLockupCollectionViewCell, ItemKind>(cellNib: MusicLockupCollectionViewCell.nib) { [weak self] cell, indexPath, itemKind in
 			guard let self = self, case .showSong(let showSong, _) = itemKind else { return }
-			self.cache[itemKind] = showSong
 
 			cell.delegate = self
 			let resolvedSong = showSong.song.attributes.amID.flatMap { self.resolvedSongs[$0] }

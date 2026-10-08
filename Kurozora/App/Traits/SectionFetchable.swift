@@ -40,9 +40,47 @@ protocol SectionFetchable: AnyObject {
 	///
 	/// - Returns: The identity of type `Element`, or `nil` if the item doesn't contain one.
 	func extractIdentity<Element: KurozoraItem>(from item: ItemKind) -> Element?
+
+	/// Returns the item that measures the given item's cell.
+	///
+	/// - Parameters:
+	///    - itemKind: The item whose cell is measured.
+	///    - section: The section the item belongs to.
+	///
+	/// - Returns: The item that measures the cell.
+	func measurableItem(for itemKind: ItemKind, in section: SectionLayoutKind) -> CellHeightMeasurer.Item?
+
+	/// Returns the width a single cell of the given section is given.
+	///
+	/// - Parameters:
+	///    - section: The section whose cells are measured.
+	///    - containerWidth: The width available to the collection view's content.
+	///
+	/// - Returns: The width of one cell.
+	func measuredItemWidth(for section: SectionLayoutKind, containerWidth: CGFloat) -> CGFloat?
+
+	/// Measures and stores the heights of the given items' cells.
+	///
+	/// - Parameter items: The items whose cells to measure.
+	func measureCellHeights(of items: [ItemKind])
+
+	/// Measures and stores the heights of every section's cells.
+	func remeasureAllCellHeights()
 }
 
 extension SectionFetchable {
+	func measurableItem(for itemKind: ItemKind, in section: SectionLayoutKind) -> CellHeightMeasurer.Item? {
+		return nil
+	}
+
+	func measuredItemWidth(for section: SectionLayoutKind, containerWidth: CGFloat) -> CGFloat? {
+		return nil
+	}
+
+	func measureCellHeights(of items: [ItemKind]) {}
+
+	func remeasureAllCellHeights() {}
+
 	/// Returns the cached model at the given index path.
 	///
 	/// - Parameter indexPath: The index path whose model you want to retrieve.
@@ -145,6 +183,12 @@ extension SectionFetchable {
 
 		let itemsInSection = snapshot.itemIdentifiers(inSection: section)
 		snapshot.reconfigureItems(itemsInSection)
+		self.measureCellHeights(of: itemsInSection)
+
+		#if DEBUG
+		print("----- [apply] setSectionNeedsUpdate \(section) items \(itemsInSection.count)")
+		#endif
+
 		self.dataSource.apply(snapshot, animatingDifferences: true, completion: nil)
 	}
 
@@ -160,6 +204,7 @@ extension SectionFetchable {
 		guard !matchedItems.isEmpty else { return }
 
 		snapshot.reconfigureItems(matchedItems)
+		self.measureCellHeights(of: matchedItems)
 		dataSource.apply(snapshot, animatingDifferences: false, completion: nil)
 	}
 
@@ -222,6 +267,12 @@ extension SectionFetchable {
 
 				if !reconfigured.isEmpty {
 					snapshot.reconfigureItems(reconfigured)
+					self.measureCellHeights(of: reconfigured)
+
+					#if DEBUG
+					print("----- [apply] fetchSectionIfNeeded \(section) items \(reconfigured.count)")
+					#endif
+
 					self.dataSource.apply(snapshot, animatingDifferences: true, completion: nil)
 				}
 			}
@@ -248,4 +299,174 @@ extension SectionFetchable where Self: KCollectionViewController {
 
 		return self.maximumCellHeight(for: items, inSection: section, width: width, layoutEnvironment: layoutEnvironment)
 	}
+
+	func measureCellHeights(of items: [ItemKind]) {
+		guard !self.cellHeightStore.isEmpty else { return }
+
+		let containerWidth = self.layoutContainerWidth
+
+		guard containerWidth > 0.0 else { return }
+
+		let environment = self.cellHeightEnvironment()
+
+		guard self.cellHeightStore.matches(containerWidth: containerWidth, environment: environment) else {
+			self.remeasureAllCellHeights()
+			return
+		}
+
+		var itemsBySection: [SectionLayoutKind: [ItemKind]] = [:]
+		var fallbackSnapshot: NSDiffableDataSourceSnapshot<SectionLayoutKind, ItemKind>?
+		var didLoadFallbackSnapshot = false
+
+		for item in items {
+			var section = self.cellHeightStore.section(containing: AnyHashable(item)) as? SectionLayoutKind
+
+			if section == nil {
+				if !didLoadFallbackSnapshot {
+					fallbackSnapshot = self.dataSource?.snapshot()
+					didLoadFallbackSnapshot = true
+				}
+
+				section = fallbackSnapshot?.sectionIdentifier(containingItem: item)
+			}
+
+			guard let section = section else { continue }
+
+			itemsBySection[section, default: []].append(item)
+		}
+
+		for (section, sectionItems) in itemsBySection {
+			self.measureCellHeights(of: sectionItems, in: section, containerWidth: containerWidth, environment: environment)
+		}
+	}
+
+	func remeasureAllCellHeights() {
+		let containerWidth = self.layoutContainerWidth
+
+		guard containerWidth > 0.0 else { return }
+
+		let environment = self.cellHeightEnvironment()
+		self.cellHeightStore.reset(containerWidth: containerWidth, environment: environment)
+
+		#if DEBUG
+		let startedAt = CFAbsoluteTimeGetCurrent()
+		#endif
+
+		let sections = self.cellHeightStore.sections.compactMap { $0.base as? SectionLayoutKind }
+
+		for section in sections {
+			let items = self.cellHeightStore.items(in: AnyHashable(section)).compactMap { $0.base as? ItemKind }
+			self.measureCellHeights(of: items, in: section, containerWidth: containerWidth, environment: environment)
+		}
+
+		#if DEBUG
+		let elapsed = (CFAbsoluteTimeGetCurrent() - startedAt) * 1000.0
+		print("----- [measure] all sections \(sections.count) width \(String(format: "%.1f", containerWidth)) \(String(format: "%.1f", elapsed))ms")
+		#endif
+	}
+
+	/// Replaces the items the given section lays out.
+	///
+	/// - Parameters:
+	///    - items: The items the section lays out.
+	///    - section: The section the items belong to.
+	func setMeasuredItems(_ items: [ItemKind], for section: SectionLayoutKind) {
+		self.cellHeightStore.setItems(items.map { AnyHashable($0) }, for: AnyHashable(section))
+	}
+
+	/// Drops every measured section absent from the given list.
+	///
+	/// - Parameter sections: The sections the store keeps.
+	func removeMeasuredSections(notIn sections: [SectionLayoutKind]) {
+		self.cellHeightStore.removeSections(notIn: sections.map { AnyHashable($0) })
+	}
+
+	/// Returns the items of the given section that carry no measured height.
+	///
+	/// - Parameter section: The section to look up.
+	///
+	/// - Returns: The items without a measured height.
+	func unmeasuredItems(in section: SectionLayoutKind) -> [ItemKind] {
+		return self.cellHeightStore.unmeasuredItems(in: AnyHashable(section)).compactMap { $0.base as? ItemKind }
+	}
+
+	/// Returns the height of the tallest measured cell in the given section.
+	///
+	/// - Parameter section: The section to look up.
+	///
+	/// - Returns: The tallest measured height.
+	func cellHeight(for section: SectionLayoutKind) -> CGFloat? {
+		return self.cellHeightStore.height(for: AnyHashable(section))
+	}
+
+	/// Returns the width a single cell of the given section was measured at.
+	///
+	/// - Parameter section: The section to look up.
+	///
+	/// - Returns: The width of one cell.
+	func measuredItemWidth(forSection section: SectionLayoutKind) -> CGFloat? {
+		return self.cellHeightStore.itemWidth(for: AnyHashable(section))
+	}
+
+	/// Returns the inputs that change what the controller's cells render.
+	///
+	/// - Returns: The measurement environment.
+	private func cellHeightEnvironment() -> CellHeightMeasurer.Environment {
+		return CellHeightMeasurer.Environment(contentSizeCategory: self.traitCollection.preferredContentSizeCategory, locale: LanguageManager.shared.locale)
+	}
+
+	/// Measures and stores the heights of the given section's items.
+	///
+	/// - Parameters:
+	///    - items: The items whose cells to measure.
+	///    - section: The section the items belong to.
+	///    - containerWidth: The width available to the collection view's content.
+	///    - environment: The inputs that change what a cell renders.
+	private func measureCellHeights(of items: [ItemKind], in section: SectionLayoutKind, containerWidth: CGFloat, environment: CellHeightMeasurer.Environment) {
+		guard let itemWidth = self.measuredItemWidth(for: section, containerWidth: containerWidth) else { return }
+
+		self.cellHeightStore.setItemWidth(itemWidth, for: AnyHashable(section))
+
+		#if DEBUG
+		let startedAt = CFAbsoluteTimeGetCurrent()
+		var cellTypes: Set<String> = []
+		var measuredCount = 0
+		#endif
+
+		for item in items {
+			guard let measurableItem = self.measurableItem(for: item, in: section) else { continue }
+
+			let height = self.cellHeightMeasurer.height(of: measurableItem, width: itemWidth, contentSizeCategory: environment.contentSizeCategory)
+			self.cellHeightStore.setHeight(height, for: AnyHashable(item))
+
+			#if DEBUG
+			cellTypes.insert(String(describing: measurableItem.cellType))
+			measuredCount += 1
+			#endif
+		}
+
+		#if DEBUG
+		guard measuredCount > 0 else { return }
+
+		let elapsed = (CFAbsoluteTimeGetCurrent() - startedAt) * 1000.0
+		let sectionIndex: Int? = self.snapshot?.indexOfSection(section) ?? nil
+		let storedHeight = self.cellHeight(for: section)
+		print("----- [measure] section \(sectionIndex.map(String.init) ?? "?") \(Self.name(of: section)) items \(measuredCount) \(String(format: "%.1f", elapsed))ms height \(storedHeight.map { String(format: "%.1f", $0) } ?? "-") cells \(cellTypes.sorted())")
+		#endif
+	}
+
+	#if DEBUG
+	/// Returns the given section's case name without its associated values.
+	///
+	/// - Parameter section: The section to describe.
+	///
+	/// - Returns: The section's case name.
+	private static func name(of section: SectionLayoutKind) -> String {
+		let description = String(describing: section)
+
+		guard let openingParenthesis = description.firstIndex(of: "(") else { return description }
+
+		return String(description[description.startIndex ..< openingParenthesis])
+	}
+	#endif
 }

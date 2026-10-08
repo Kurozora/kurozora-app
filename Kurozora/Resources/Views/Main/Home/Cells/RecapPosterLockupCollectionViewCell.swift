@@ -124,7 +124,10 @@ class RecapPosterLockupCollectionViewCell: KCollectionViewCell {
 		self.cardView.layer.cornerCurve = .continuous
 		self.contentView.addSubview(self.cardView)
 		self.cardView.fillToSuperview()
-		self.cardView.heightAnchor.constraint(equalTo: self.cardView.widthAnchor).isActive = true
+
+		let squareConstraint = self.cardView.heightAnchor.constraint(equalTo: self.cardView.widthAnchor)
+		squareConstraint.priority = UILayoutPriority(999.0)
+		squareConstraint.isActive = true
 
 		self.gradientView.gradientLayer?.startPoint = CGPoint(x: 0.0, y: 0.0)
 		self.gradientView.gradientLayer?.endPoint = CGPoint(x: 1.0, y: 1.0)
@@ -167,6 +170,8 @@ class RecapPosterLockupCollectionViewCell: KCollectionViewCell {
 
 	/// Redraws the numerals at the card's current size.
 	private func drawPoster() {
+		guard !self.isSizingCell else { return }
+
 		let cardSize = self.contentView.bounds.size
 		guard cardSize.height > 0, cardSize.height != self.drawnCardHeight else { return }
 		self.drawnCardHeight = cardSize.height

@@ -8,12 +8,28 @@
 
 import UIKit
 
-class LegalCollectionViewCell: UICollectionViewCell {
+class LegalCollectionViewCell: KCollectionViewCell {
+	// MARK: - IBOutlets
 	@IBOutlet weak var separatorView: SeparatorView!
 	@IBOutlet weak var termsConditionsLabel: KSecondaryLabel!
 	@IBOutlet weak var chevronButtonView: UIButton! {
 		didSet {
 			self.chevronButtonView.theme_tintColor = KThemePicker.subTextColor.rawValue
 		}
+	}
+
+	// MARK: - Properties
+	override var isSkeletonEnabled: Bool {
+		return false
+	}
+}
+
+// MARK: - Measurement
+extension LegalCollectionViewCell {
+	/// Returns the item that measures the legal row.
+	///
+	/// - Returns: The item that measures the legal row.
+	static func measurableItem() -> CellHeightMeasurer.Item {
+		return CellHeightMeasurer.Item(cellType: LegalCollectionViewCell.self) { _ in }
 	}
 }

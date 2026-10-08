@@ -33,3 +33,17 @@ class ActionLinkExploreCollectionViewCell: ActionBaseExploreCollectionViewCell {
 		self.actionButton?.configuration = configuration
 	}
 }
+
+// MARK: - Measurement
+extension ActionLinkExploreCollectionViewCell {
+	/// Returns the item that measures the given quick link.
+	///
+	/// - Parameter quickLink: The quick link the item measures.
+	///
+	/// - Returns: The item that measures the quick link.
+	static func measurableItem(for quickLink: QuickLink) -> CellHeightMeasurer.Item {
+		return CellHeightMeasurer.Item(cellType: ActionLinkExploreCollectionViewCell.self) { cell in
+			cell.configure(using: quickLink)
+		}
+	}
+}

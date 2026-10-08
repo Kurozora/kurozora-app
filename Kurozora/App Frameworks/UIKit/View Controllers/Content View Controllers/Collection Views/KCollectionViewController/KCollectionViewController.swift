@@ -50,6 +50,19 @@ class KCollectionViewController: UICollectionViewController, SegueHandler {
 	/// The object sizing cells so a section can lay them out at one height.
 	let cellHeightMeasurer = CellHeightMeasurer()
 
+	/// The measured cell height of every item the sections lay out.
+	let cellHeightStore = CellHeightStore<AnyHashable, AnyHashable>()
+
+	/// The width available to the collection view's content.
+	var layoutContainerWidth: CGFloat {
+		let safeAreaInsets = self.collectionView.safeAreaInsets
+
+		return self.collectionView.bounds.width - safeAreaInsets.left - safeAreaInsets.right
+	}
+
+	/// The container width the last layout pass ran at.
+	private var lastLayoutContainerWidth: CGFloat = 0.0
+
 	/// Specifies whether the view controller prefers the activity indicator to be hidden or shown.
 	///
 	/// If you change the return value for this method, call the [setNeedsActivityIndicatorAppearanceUpdate()](x-source-tag://KCollectionViewDataSource-setNeedsActivityIndicatorAppearanceUpdate) method.
@@ -123,7 +136,19 @@ class KCollectionViewController: UICollectionViewController, SegueHandler {
 		super.traitCollectionDidChange(previousTraitCollection)
 
 		guard self.traitCollection.preferredContentSizeCategory != previousTraitCollection?.preferredContentSizeCategory else { return }
+		self.cellHeightEnvironmentDidChange()
 		self.collectionView.collectionViewLayout.invalidateLayout()
+	}
+
+	override func viewWillLayoutSubviews() {
+		super.viewWillLayoutSubviews()
+
+		let containerWidth = self.layoutContainerWidth
+
+		guard containerWidth != self.lastLayoutContainerWidth else { return }
+
+		self.lastLayoutContainerWidth = containerWidth
+		self.layoutContainerWidthDidChange()
 	}
 
 	override func viewDidLoad() {
@@ -172,9 +197,12 @@ class KCollectionViewController: UICollectionViewController, SegueHandler {
 		super.viewDidLayoutSubviews()
 
 		#if DEBUG
-		self.cellHeightMeasurer.validateWidths(of: self.collectionView.visibleCells.compactMap { cell in
-			self.collectionView.indexPath(for: cell).map { (cell, $0.section) }
-		})
+		let renderedCells: [(cell: UICollectionViewCell, section: Int, measuredWidth: CGFloat?)] = self.collectionView.visibleCells.compactMap { cell in
+			guard let indexPath = self.collectionView.indexPath(for: cell) else { return nil }
+
+			return (cell: cell, section: indexPath.section, measuredWidth: self.measuredItemWidth(forSectionAt: indexPath.section))
+		}
+		self.cellHeightMeasurer.validateWidths(of: renderedCells)
 		#endif
 
 		// The top inset can be negative, but the safe area still describes the top chrome.
@@ -188,9 +216,27 @@ class KCollectionViewController: UICollectionViewController, SegueHandler {
 	/// Re-applies localized strings by reloading the collection's content.
 	override func reloadLocalization() {
 		guard self.isViewLoaded else { return }
+		self.cellHeightEnvironmentDidChange()
 		self.collectionView.collectionViewLayout.invalidateLayout()
 		self.collectionView.reloadData()
 	}
+
+	/// Called when the width available to the collection view's content changes.
+	func layoutContainerWidthDidChange() {}
+
+	/// Called when the inputs that change a measured cell height change.
+	func cellHeightEnvironmentDidChange() {}
+
+	#if DEBUG
+	/// Returns the width the cells of the section at the given index were measured at.
+	///
+	/// - Parameter section: The index of the section.
+	///
+	/// - Returns: The width of one cell.
+	func measuredItemWidth(forSectionAt section: Int) -> CGFloat? {
+		return self.cellHeightMeasurer.measuredWidth(forSection: section)
+	}
+	#endif
 
 	/// Returns the height of the tallest cell the given items render.
 	///

@@ -10,8 +10,7 @@ import KurozoraKit
 import UIKit
 
 extension HomeCollectionViewController {
-	func columnCount(forSection section: SectionLayoutKind, layout layoutEnvironment: NSCollectionLayoutEnvironment) -> Int {
-		let width = layoutEnvironment.container.effectiveContentSize.width
+	func columnCount(forSection section: SectionLayoutKind, width: CGFloat) -> Int {
 		var columnCount = 0
 
 		switch section {
@@ -89,63 +88,53 @@ extension HomeCollectionViewController {
 	override func createLayout() -> UICollectionViewLayout? {
 		return UICollectionViewCompositionalLayout { [weak self] (section: Int, layoutEnvironment: NSCollectionLayoutEnvironment) -> NSCollectionLayoutSection? in
 			guard let self = self else { return nil }
+			let containerWidth = layoutEnvironment.container.effectiveContentSize.width
 			let exploreCategorySection = self.snapshot.sectionIdentifiers[section]
-			let columns = self.columnCount(forSection: exploreCategorySection, layout: layoutEnvironment)
+			let columns = self.columnCount(forSection: exploreCategorySection, width: containerWidth)
 			var sectionLayout: NSCollectionLayoutSection?
 
 			switch exploreCategorySection {
 			case .banner:
-				sectionLayout = Layouts.bannerSection(section, columns: columns, layoutEnvironment: layoutEnvironment) { width in
-					self.maximumCellHeight(inSection: section, width: width, layoutEnvironment: layoutEnvironment) { _, show in
-						BannerLockupCollectionViewCell.measurableItem(for: show)
-					}
+				sectionLayout = Layouts.bannerSection(section, columns: columns, layoutEnvironment: layoutEnvironment) { _ in
+					self.cellHeight(for: exploreCategorySection)
 				}
 				return sectionLayout
 			case .large:
-				sectionLayout = Layouts.largeSection(section, columns: columns, layoutEnvironment: layoutEnvironment) { width in
-					self.maximumCellHeight(inSection: section, width: width, layoutEnvironment: layoutEnvironment) { _, show in
-						LargeLockupCollectionViewCell.measurableItem(for: show)
-					}
+				sectionLayout = Layouts.largeSection(section, columns: columns, layoutEnvironment: layoutEnvironment) { _ in
+					self.cellHeight(for: exploreCategorySection)
 				}
 			case .medium:
-				sectionLayout = Layouts.mediumSection(section, columns: columns, layoutEnvironment: layoutEnvironment) { width in
-					self.maximumCellHeight(for: self.mediumMeasurableItems(inSection: section), inSection: section, width: width, layoutEnvironment: layoutEnvironment)
+				sectionLayout = Layouts.mediumSection(section, columns: columns, layoutEnvironment: layoutEnvironment) { _ in
+					self.cellHeight(for: exploreCategorySection)
 				}
 			case .small:
-				sectionLayout = Layouts.smallSection(section, columns: columns, layoutEnvironment: layoutEnvironment) { width in
-					self.maximumCellHeight(for: self.smallMeasurableItems(inSection: section), inSection: section, width: width, layoutEnvironment: layoutEnvironment)
+				sectionLayout = Layouts.smallSection(section, columns: columns, layoutEnvironment: layoutEnvironment) { _ in
+					self.cellHeight(for: exploreCategorySection)
 				}
 			case .video:
-				sectionLayout = Layouts.videoSection(section, columns: columns, layoutEnvironment: layoutEnvironment) { width in
-					self.maximumCellHeight(inSection: section, width: width, layoutEnvironment: layoutEnvironment) { _, show in
-						VideoLockupCollectionViewCell.measurableItem(for: show)
-					}
+				sectionLayout = Layouts.videoSection(section, columns: columns, layoutEnvironment: layoutEnvironment) { _ in
+					self.cellHeight(for: exploreCategorySection)
 				}
 			case .upcoming:
-				sectionLayout = Layouts.upcomingSection(section, columns: columns, layoutEnvironment: layoutEnvironment) { width in
-					self.maximumCellHeight(inSection: section, width: width, layoutEnvironment: layoutEnvironment) { _, show in
-						UpcomingLockupCollectionViewCell.measurableItem(for: show)
-					}
+				sectionLayout = Layouts.upcomingSection(section, columns: columns, layoutEnvironment: layoutEnvironment) { _ in
+					self.cellHeight(for: exploreCategorySection)
 				}
 			case .episode:
-				sectionLayout = Layouts.episodesSection(section, columns: columns, layoutEnvironment: layoutEnvironment) { width in
-					self.maximumCellHeight(inSection: section, width: width, layoutEnvironment: layoutEnvironment) { _, episode in
-						EpisodeLockupCollectionViewCell.measurableItem(for: episode)
-					}
+				sectionLayout = Layouts.episodesSection(section, columns: columns, layoutEnvironment: layoutEnvironment) { _ in
+					self.cellHeight(for: exploreCategorySection)
 				}
 			case .music:
-				sectionLayout = Layouts.musicSection(section, columns: columns, layoutEnvironment: layoutEnvironment) { width in
-					let showSongs = (self.exploreCategories[safe: section]?.relationships.showSongs?.data ?? []).prefix(Self.exploreCategoryItemLimit)
-					let measurableItems = showSongs.map { MusicLockupCollectionViewCell.measurableItem(for: $0, showEpisodes: false, showShow: true) }
-
-					return self.maximumCellHeight(for: measurableItems, inSection: section, width: width, layoutEnvironment: layoutEnvironment)
+				sectionLayout = Layouts.musicSection(section, columns: columns, layoutEnvironment: layoutEnvironment) { _ in
+					self.cellHeight(for: exploreCategorySection)
 				}
 			case .profile:
-				sectionLayout = Layouts.charactersSection(section, columns: columns, layoutEnvironment: layoutEnvironment) { width in
-					self.maximumCellHeight(for: self.profileMeasurableItems(inSection: section), inSection: section, width: width, layoutEnvironment: layoutEnvironment)
+				sectionLayout = Layouts.charactersSection(section, columns: columns, layoutEnvironment: layoutEnvironment) { _ in
+					self.cellHeight(for: exploreCategorySection)
 				}
 			case .quickLinks:
-				sectionLayout = Layouts.quickLinkSection(section, columns: columns, layoutEnvironment: layoutEnvironment)
+				sectionLayout = Layouts.quickLinkSection(section, columns: columns, layoutEnvironment: layoutEnvironment) { _ in
+					self.cellHeight(for: exploreCategorySection)
+				}
 				sectionLayout?.visibleItemsInvalidationHandler = { [weak self] visibleItems, _, _ in
 					guard let self = self else { return }
 					let totalCount = self.quickLinks.count
@@ -158,10 +147,14 @@ extension HomeCollectionViewController {
 					}
 				}
 			case .quickActions:
-				sectionLayout = Layouts.quickActionSection(section, columns: columns, layoutEnvironment: layoutEnvironment)
+				sectionLayout = Layouts.quickActionSection(section, columns: columns, layoutEnvironment: layoutEnvironment) { _ in
+					self.cellHeight(for: exploreCategorySection)
+				}
 				return sectionLayout
 			case .legal:
-				sectionLayout = Layouts.legalSection(section, columns: columns, layoutEnvironment: layoutEnvironment)
+				sectionLayout = Layouts.legalSection(section, columns: columns, layoutEnvironment: layoutEnvironment) { _ in
+					self.cellHeight(for: exploreCategorySection)
+				}
 				return sectionLayout
 			}
 
@@ -173,72 +166,6 @@ extension HomeCollectionViewController {
 			)
 			sectionLayout?.boundarySupplementaryItems = [sectionHeader]
 			return sectionLayout
-		}
-	}
-}
-
-// MARK: - Measurement
-extension HomeCollectionViewController {
-	/// Returns the items that measure the cells of a small section.
-	///
-	/// - Parameter section: The section to measure.
-	///
-	/// - Returns: The items that measure the section's cells.
-	func smallMeasurableItems(inSection section: Int) -> [CellHeightMeasurer.Item] {
-		let recaps = self.exploreCategories[safe: section]?.relationships.recaps?.data ?? []
-		var measurableItems = recaps.prefix(Self.exploreCategoryItemLimit).map { RecapPosterLockupCollectionViewCell.measurableItem(for: $0) }
-
-		measurableItems += self.cachedItems(inSection: section).values.compactMap { item in
-			switch item {
-			case let show as Show:
-				return SmallLockupCollectionViewCell.measurableItem(for: show)
-			case let literature as Literature:
-				return SmallLockupCollectionViewCell.measurableItem(for: literature)
-			case let game as Game:
-				return GameLockupCollectionViewCell.measurableItem(for: game)
-			case let episode as Episode:
-				return EpisodeLockupCollectionViewCell.measurableItem(for: episode)
-			default:
-				return nil
-			}
-		}
-
-		return measurableItems
-	}
-
-	/// Returns the items that measure the cells of a medium section.
-	///
-	/// - Parameter section: The section to measure.
-	///
-	/// - Returns: The items that measure the section's cells.
-	func mediumMeasurableItems(inSection section: Int) -> [CellHeightMeasurer.Item] {
-		return self.cachedItems(inSection: section).values.compactMap { item in
-			switch item {
-			case let genre as Genre:
-				return MediumLockupCollectionViewCell.measurableItem(for: genre)
-			case let theme as Theme:
-				return MediumLockupCollectionViewCell.measurableItem(for: theme)
-			default:
-				return nil
-			}
-		}
-	}
-
-	/// Returns the items that measure the cells of a profile section.
-	///
-	/// - Parameter section: The section to measure.
-	///
-	/// - Returns: The items that measure the section's cells.
-	func profileMeasurableItems(inSection section: Int) -> [CellHeightMeasurer.Item] {
-		return self.cachedItems(inSection: section).values.compactMap { item in
-			switch item {
-			case let character as Character:
-				return ProfileLockupCollectionViewCell.measurableItem(for: character)
-			case let person as Person:
-				return ProfileLockupCollectionViewCell.measurableItem(for: person)
-			default:
-				return nil
-			}
 		}
 	}
 }

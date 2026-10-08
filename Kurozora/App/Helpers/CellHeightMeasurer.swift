@@ -12,8 +12,11 @@ import UIKit
 @MainActor
 final class CellHeightMeasurer {
 	// MARK: - Properties
-	/// The cells the measurements are taken from, keyed by their type.
-	private var sizingCells: [ObjectIdentifier: KCollectionViewCell] = [:]
+	/// The hosts the measurements are taken from.
+	private var sizingHosts: [ObjectIdentifier: SizingHost] = [:]
+
+	/// The hosts the skeleton measurements are taken from.
+	private var skeletonSizingHosts: [ObjectIdentifier: SizingHost] = [:]
 
 	/// The environment the sizing cells were built for.
 	private var environment: Environment?
@@ -39,47 +42,76 @@ final class CellHeightMeasurer {
 	func maximumHeight(for items: [Item], inSection section: Int, width: CGFloat, contentSizeCategory: UIContentSizeCategory) -> CGFloat? {
 		guard width > 0.0, !items.isEmpty else { return nil }
 
-		let environment = Environment(contentSizeCategory: contentSizeCategory, locale: LanguageManager.shared.locale)
-
-		// A detached cell never receives trait or language changes, so it is rebuilt instead.
-		if self.environment != environment {
-			self.sizingCells.removeAll()
-			self.environment = environment
-		}
-
 		var maximumHeight = 0.0
 
-		for item in items {
-			let sizingCell = self.sizingCell(of: item.cellType)
-			item.configure(sizingCell)
+		#if DEBUG
+		let startedAt = CFAbsoluteTimeGetCurrent()
+		#endif
 
-			maximumHeight = max(maximumHeight, self.fittingHeight(of: sizingCell, width: width))
+		for item in items {
+			maximumHeight = max(maximumHeight, self.height(of: item, width: width, contentSizeCategory: contentSizeCategory))
 		}
 
 		#if DEBUG
 		self.measuredWidths[section] = width
+		let elapsed = (CFAbsoluteTimeGetCurrent() - startedAt) * 1000.0
+		print("----- [measure] section \(section) items \(items.count) \(String(format: "%.1f", elapsed))ms cells \(Set(items.map { String(describing: $0.cellType) }).sorted())")
 		#endif
 
 		return maximumHeight > 0.0 ? maximumHeight : nil
 	}
 
-	/// Returns the cell the given type's measurements are taken from.
+	/// Returns the height the given item's cell renders at.
 	///
-	/// - Parameter cellType: The type of cell to measure with.
+	/// - Parameters:
+	///    - item: The item to measure.
+	///    - width: The width a single cell is given.
+	///    - contentSizeCategory: The type size the cell is laid out at.
 	///
-	/// - Returns: The sizing cell.
-	private func sizingCell(of cellType: KCollectionViewCell.Type) -> KCollectionViewCell {
+	/// - Returns: The measured height.
+	func height(of item: Item, width: CGFloat, contentSizeCategory: UIContentSizeCategory) -> CGFloat {
+		guard width > 0.0 else { return 0.0 }
+
+		let environment = Environment(contentSizeCategory: contentSizeCategory, locale: LanguageManager.shared.locale)
+
+		if self.environment != environment {
+			self.sizingHosts.removeAll()
+			self.skeletonSizingHosts.removeAll()
+			self.environment = environment
+		}
+
+		let sizingHost = self.sizingHost(of: item.cellType, isSkeleton: item.isSkeleton)
+		item.configure(sizingHost.cell)
+
+		return self.fittingHeight(of: sizingHost, width: width)
+	}
+
+	/// Returns the host the given type's measurements are taken from.
+	///
+	/// - Parameters:
+	///    - cellType: The type of cell to measure with.
+	///    - isSkeleton: Whether the cell measures a skeleton.
+	///
+	/// - Returns: The sizing host.
+	private func sizingHost(of cellType: KCollectionViewCell.Type, isSkeleton: Bool) -> SizingHost {
 		let key = ObjectIdentifier(cellType)
 
-		if let sizingCell = self.sizingCells[key] {
-			return sizingCell
+		if let sizingHost = isSkeleton ? self.skeletonSizingHosts[key] : self.sizingHosts[key] {
+			return sizingHost
 		}
 
 		let sizingCell = Self.makeCell(of: cellType)
 		sizingCell.isSizingCell = true
-		self.sizingCells[key] = sizingCell
 
-		return sizingCell
+		let sizingHost = SizingHost(cell: sizingCell)
+
+		if isSkeleton {
+			self.skeletonSizingHosts[key] = sizingHost
+		} else {
+			self.sizingHosts[key] = sizingHost
+		}
+
+		return sizingHost
 	}
 
 	/// Returns a cell of the given type, loaded from its nib when the bundle carries one.
@@ -106,32 +138,41 @@ final class CellHeightMeasurer {
 		return cell
 	}
 
-	/// Returns the height the given cell fits into at the given width.
+	/// Returns the height the given host's cell fits into at the given width.
 	///
 	/// - Parameters:
-	///    - cell: The cell to measure.
+	///    - host: The host to measure.
 	///    - width: The width the cell is given.
 	///
 	/// - Returns: The cell's fitting height.
-	private func fittingHeight(of cell: KCollectionViewCell, width: CGFloat) -> CGFloat {
-		cell.bounds.size.width = width
-		cell.layoutIfNeeded()
+	private func fittingHeight(of host: SizingHost, width: CGFloat) -> CGFloat {
+		let height = host.layOutCell(atWidth: width)
 
-		let target = CGSize(width: width, height: UIView.layoutFittingCompressedSize.height)
-		let size = cell.contentView.systemLayoutSizeFitting(target, withHorizontalFittingPriority: .required, verticalFittingPriority: .fittingSizeLevel)
+		#if DEBUG
+		assert(!host.cell.hasAmbiguousLayout, "\(type(of: host.cell)) has an ambiguous layout at width \(width).")
+		#endif
 
-		return size.height.rounded(.up)
+		return height.rounded(.up)
 	}
 
 	#if DEBUG
+	/// Returns the width the given section was measured at during the current layout pass.
+	///
+	/// - Parameter section: The section to look up.
+	///
+	/// - Returns: The recorded width.
+	func measuredWidth(forSection section: Int) -> CGFloat? {
+		return self.measuredWidths[section]
+	}
+
 	/// Reports every cell rendering at a different width than its section was measured at.
 	///
-	/// - Parameter cells: The cells currently on screen and the section of each.
-	func validateWidths(of cells: [(cell: UICollectionViewCell, section: Int)]) {
+	/// - Parameter cells: The cells currently on screen, the section of each, and the width each was measured at.
+	func validateWidths(of cells: [(cell: UICollectionViewCell, section: Int, measuredWidth: CGFloat?)]) {
 		defer { self.measuredWidths.removeAll() }
 
-		for (cell, section) in cells {
-			guard let measuredWidth = self.measuredWidths[section] else { continue }
+		for (cell, section, measuredWidth) in cells {
+			guard let measuredWidth = measuredWidth else { continue }
 
 			// A laid out frame is snapped to the pixel grid within a point of the measurement.
 			guard abs(cell.bounds.width - measuredWidth) >= 1.0 else { continue }
@@ -141,6 +182,67 @@ final class CellHeightMeasurer {
 		}
 	}
 	#endif
+}
+
+// MARK: - SizingHost
+extension CellHeightMeasurer {
+	/// A detached view that lays one sizing cell out at a given width.
+	@MainActor
+	final class SizingHost {
+		// MARK: - Views
+		/// The view the cell is laid out in.
+		private let view = UIView()
+
+		/// The cell the measurements are taken from.
+		let cell: KCollectionViewCell
+
+		// MARK: - Properties
+		/// The width the cell is laid out at.
+		private let widthConstraint: NSLayoutConstraint
+
+		// MARK: - Initializers
+		/// Creates a host around the given cell.
+		///
+		/// - Parameter cell: The cell to measure.
+		init(cell: KCollectionViewCell) {
+			self.cell = cell
+			self.widthConstraint = cell.widthAnchor.constraint(equalToConstant: 0.0)
+
+			let compressionConstraint = cell.heightAnchor.constraint(equalToConstant: 0.0)
+			compressionConstraint.priority = .fittingSizeLevel
+
+			cell.translatesAutoresizingMaskIntoConstraints = false
+			cell.contentView.translatesAutoresizingMaskIntoConstraints = false
+			self.view.addSubview(cell)
+
+			NSLayoutConstraint.activate([
+				cell.leadingAnchor.constraint(equalTo: self.view.leadingAnchor),
+				cell.topAnchor.constraint(equalTo: self.view.topAnchor),
+				self.widthConstraint,
+				compressionConstraint,
+
+				cell.contentView.leadingAnchor.constraint(equalTo: cell.leadingAnchor),
+				cell.contentView.trailingAnchor.constraint(equalTo: cell.trailingAnchor),
+				cell.contentView.topAnchor.constraint(equalTo: cell.topAnchor),
+				cell.contentView.bottomAnchor.constraint(equalTo: cell.bottomAnchor)
+			])
+		}
+
+		// MARK: - Functions
+		/// Lays the cell out at the given width and returns the height it took.
+		///
+		/// - Parameter width: The width the cell is given.
+		///
+		/// - Returns: The laid out height.
+		func layOutCell(atWidth width: CGFloat) -> CGFloat {
+			self.widthConstraint.constant = width
+
+			self.view.setNeedsLayout()
+			self.view.layoutIfNeeded()
+
+			return self.cell.bounds.height
+		}
+	}
 }
 
 // MARK: - Item
@@ -154,14 +256,19 @@ extension CellHeightMeasurer {
 		/// Applies the content to a sizing cell.
 		let configure: (KCollectionViewCell) -> Void
 
+		/// Whether the item renders the cell's skeleton.
+		let isSkeleton: Bool
+
 		// MARK: - Initializers
 		/// Creates an item that measures the given cell once it is configured.
 		///
 		/// - Parameters:
 		///    - cellType: The type of cell the content is rendered in.
+		///    - isSkeleton: Whether the item renders the cell's skeleton.
 		///    - configure: Applies the content to a sizing cell.
-		init<Cell: KCollectionViewCell>(cellType: Cell.Type, configure: @escaping (Cell) -> Void) {
+		init<Cell: KCollectionViewCell>(cellType: Cell.Type, isSkeleton: Bool = false, configure: @escaping (Cell) -> Void) {
 			self.cellType = cellType
+			self.isSkeleton = isSkeleton
 			self.configure = { cell in
 				guard let cell = cell as? Cell else { return }
 				configure(cell)
@@ -173,8 +280,12 @@ extension CellHeightMeasurer {
 // MARK: - Environment
 extension CellHeightMeasurer {
 	/// The inputs that change what a sizing cell renders at a given width.
-	private struct Environment: Equatable {
+	struct Environment: Equatable {
+		// MARK: - Properties
+		/// The type size the cell is laid out at.
 		let contentSizeCategory: UIContentSizeCategory
+
+		/// The locale the cell's strings are rendered in.
 		let locale: Locale
 	}
 }

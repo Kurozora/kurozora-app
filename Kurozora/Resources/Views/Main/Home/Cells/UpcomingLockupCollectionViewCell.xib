@@ -20,7 +20,7 @@
                     <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="plS-64-dNR" customClass="BannerImageView" customModule="Kurozora" customModuleProvider="target">
                         <rect key="frame" x="0.0" y="0.0" width="374" height="460"/>
                         <constraints>
-                            <constraint firstAttribute="width" secondItem="plS-64-dNR" secondAttribute="height" multiplier="3:4" id="7kJ-rN-YDf"/>
+                            <constraint firstAttribute="width" secondItem="plS-64-dNR" secondAttribute="height" multiplier="3:4" priority="999" id="7kJ-rN-YDf"/>
                         </constraints>
                     </imageView>
                     <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" image="shadow" translatesAutoresizingMaskIntoConstraints="NO" id="BBP-e3-w8H" customClass="RoundedRectangleImageView" customModule="Kurozora" customModuleProvider="target">
