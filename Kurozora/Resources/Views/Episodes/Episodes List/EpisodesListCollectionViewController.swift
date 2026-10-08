@@ -810,7 +810,7 @@ extension EpisodesListCollectionViewController {
 				}
 
 				cell.delegate = self
-				cell.configure(using: episode, rank: self.episodesListFetchType == .charts ? indexPath.item + 1 : nil)
+				cell.configure(using: episode, rank: self.episodesListFetchType == .charts ? indexPath.item + 1 : nil, isWatchStatusPending: self.isEpisodeWatchStatusPending(for: itemKind))
 			}
 		}
 	}
@@ -871,7 +871,12 @@ extension EpisodesListCollectionViewController: EpisodeLockupCollectionViewCellD
 			let episode = self.cachedItem(at: indexPath) as? Episode
 		else { return }
 
-		cell.watchStatusButton.isEnabled = false
+		let episodeID = episode.id.rawValue
+		guard !WatchedStore.shared.isPending(forEpisodeID: episodeID) else { return }
+
+		defer { self.setEpisodeWatchStatusPending(false, forEpisodeID: episodeID) }
+
+		self.setEpisodeWatchStatusPending(true, forEpisodeID: episodeID)
 
 		switch self.episodesListFetchType {
 		case .charts, .season, .search:
@@ -881,8 +886,6 @@ extension EpisodesListCollectionViewController: EpisodeLockupCollectionViewCellD
 			self.prepareUpNextRefresh(indexPath)
 			await self.fetchItems()
 		}
-
-		cell.watchStatusButton.isEnabled = true
 	}
 
 	func episodeLockupCollectionViewCell(_ cell: EpisodeLockupCollectionViewCell, didPressShowButton button: UIButton) async {

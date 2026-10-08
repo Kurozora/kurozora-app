@@ -369,7 +369,7 @@ extension HomeCollectionViewController {
 			let episode: Episode? = self.fetchModelOrTriggerSectionFetch(for: itemKind, response: ResourceCollection<Episode>.self, identity: EpisodeIdentity.self)
 
 			cell.delegate = self
-			cell.configure(using: episode)
+			cell.configure(using: episode, isWatchStatusPending: self.isEpisodeWatchStatusPending(for: itemKind))
 		}
 	}
 

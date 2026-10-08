@@ -208,6 +208,34 @@ extension SectionFetchable {
 		dataSource.apply(snapshot, animatingDifferences: false, completion: nil)
 	}
 
+	/// Returns whether the given item's episode has a watch status change still settling.
+	///
+	/// - Parameter itemKind: The item whose episode is inspected.
+	///
+	/// - Returns: Whether the change is still settling.
+	func isEpisodeWatchStatusPending(for itemKind: ItemKind) -> Bool {
+		let episodeIdentity: EpisodeIdentity? = self.extractIdentity(from: itemKind)
+
+		guard let episodeIdentity = episodeIdentity else { return false }
+
+		return WatchedStore.shared.isPending(forEpisodeID: episodeIdentity.id.rawValue)
+	}
+
+	/// Records whether the given episode's watch status change is still settling and redraws its items.
+	///
+	/// - Parameters:
+	///    - isPending: Whether the change is still settling.
+	///    - episodeID: The identifier of the episode.
+	func setEpisodeWatchStatusPending(_ isPending: Bool, forEpisodeID episodeID: String) {
+		WatchedStore.shared.setPending(isPending, forEpisodeID: episodeID)
+
+		self.reconfigureItems { itemKind in
+			let episodeIdentity: EpisodeIdentity? = self.extractIdentity(from: itemKind)
+
+			return episodeIdentity?.id.rawValue == episodeID
+		}
+	}
+
 	/// Fetches details for every uncached item in the section that holds the given item.
 	///
 	/// - Parameters:

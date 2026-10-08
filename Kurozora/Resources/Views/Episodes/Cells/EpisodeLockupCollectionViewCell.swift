@@ -53,7 +53,10 @@ class EpisodeLockupCollectionViewCell: KCollectionViewCell {
 	/// - Parameters:
 	///    - episode: The `Episode` object used to configure the cell.
 	///    - rank: The rank of the episode in a ranked list.
-	func configure(using episode: Episode?, rank: Int? = nil) {
+	///    - isWatchStatusPending: Whether the episode's watch status change is still settling.
+	func configure(using episode: Episode?, rank: Int? = nil, isWatchStatusPending: Bool = false) {
+		self.watchStatusButton.isEnabled = !isWatchStatusPending
+
 		guard let episode = episode else {
 			self.rankLabel.text = nil
 			self.rankLabel.isHidden = true

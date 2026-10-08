@@ -21,6 +21,9 @@ final class WatchedStore {
 	/// Entity tags for previously fetched overlay id sets.
 	private var overlayETags: [String: String] = [:]
 
+	/// Identifiers of episodes whose watch status change hasn't settled.
+	private var pendingEpisodeIDs: Set<String> = []
+
 	// MARK: - Initializers
 	private init() {}
 
@@ -63,6 +66,29 @@ final class WatchedStore {
 		}
 	}
 
+	// MARK: - Pending
+	/// Returns whether the given episode's watch status change is still settling.
+	///
+	/// - Parameter episodeID: The identifier of the episode.
+	///
+	/// - Returns: Whether the change is still settling.
+	func isPending(forEpisodeID episodeID: String) -> Bool {
+		return self.pendingEpisodeIDs.contains(episodeID)
+	}
+
+	/// Records whether the given episode's watch status change is still settling.
+	///
+	/// - Parameters:
+	///    - isPending: Whether the change is still settling.
+	///    - episodeID: The identifier of the episode.
+	func setPending(_ isPending: Bool, forEpisodeID episodeID: String) {
+		if isPending {
+			self.pendingEpisodeIDs.insert(episodeID)
+		} else {
+			self.pendingEpisodeIDs.remove(episodeID)
+		}
+	}
+
 	// MARK: - Entity Tags
 	/// Returns the entity tag recorded for the given overlay id set.
 	///
@@ -91,5 +117,6 @@ final class WatchedStore {
 	func clear() {
 		self.statuses.removeAll()
 		self.overlayETags.removeAll()
+		self.pendingEpisodeIDs.removeAll()
 	}
 }

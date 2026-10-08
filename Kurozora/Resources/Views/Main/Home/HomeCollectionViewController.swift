@@ -73,8 +73,8 @@ class HomeCollectionViewController: KCollectionViewController, SectionFetchable,
 	/// When `true`, mutations of ``exploreCategories`` skip the full ``updateDataSource()`` rebuild.
 	private var suppressDataSourceUpdate = false
 
-	/// When `true`, an Up Next refresh is in flight and further requests coalesce into one.
-	private var isRefreshingUpNext = false
+	/// The Up Next refresh in flight.
+	private var upNextRefreshTask: Task<Void, Never>?
 
 	/// When `true`, a refresh arrived mid-flight and runs once the current one finishes.
 	private var needsUpNextRefresh = false
@@ -479,11 +479,6 @@ class HomeCollectionViewController: KCollectionViewController, SectionFetchable,
 	/// - Parameters:
 	///    - notification: An object containing information broadcast to registered observers that bridges to Notification.
 	@objc func handleEpisodeWatchStatusDidUpdate(_ notification: NSNotification) {
-		if let indexPath = notification.userInfo?["indexPath"] as? IndexPath,
-		   let itemKind = self.dataSource.itemIdentifier(for: indexPath) {
-			self.cache.removeValue(forKey: itemKind)
-		}
-
 		WatchSessionManager.shared.notifyUpNextDidChange()
 	}
 
@@ -497,29 +492,44 @@ class HomeCollectionViewController: KCollectionViewController, SectionFetchable,
 		self.refreshUpNext()
 	}
 
-	/// Rebuilds the Up Next section, which changes whenever a title enters or leaves the library.
+	/// Rebuilds the Up Next section.
 	private func refreshUpNext() {
-		// Marking watched mutates the library and posts a watch status notification, so two
-		// refreshes arrive at once. fetchEpisodes() reassigns upNextCategory while it runs, so a
-		// concurrent second pass bails on a stale index or applies a stale snapshot.
-		guard !self.isRefreshingUpNext else {
+		// Marking watched mutates the library and posts a watch status notification.
+		// Two refreshes therefore arrive at once.
+		// fetchEpisodes() reassigns upNextCategory while it runs.
+		// A concurrent second pass bails on a stale index or applies a stale snapshot.
+		guard self.upNextRefreshTask == nil else {
 			self.needsUpNextRefresh = true
 			return
 		}
 
-		self.isRefreshingUpNext = true
-
-		Task { @MainActor [weak self] in
+		self.upNextRefreshTask = Task { @MainActor [weak self] in
 			guard let self = self else { return }
 
 			await self.fetchEpisodes()
 
-			self.isRefreshingUpNext = false
+			self.upNextRefreshTask = nil
 
 			guard self.needsUpNextRefresh else { return }
 
 			self.needsUpNextRefresh = false
 			self.refreshUpNext()
+		}
+	}
+
+	/// Refreshes the Up Next section and waits for the refetch to land.
+	func refreshUpNextAndWait() async {
+		if self.upNextRefreshTask == nil {
+			self.refreshUpNext()
+		}
+
+		await self.awaitUpNextRefresh()
+	}
+
+	/// Waits for the Up Next refresh in flight and for every refresh queued behind it.
+	private func awaitUpNextRefresh() async {
+		while let upNextRefreshTask = self.upNextRefreshTask {
+			await upNextRefreshTask.value
 		}
 	}
 
