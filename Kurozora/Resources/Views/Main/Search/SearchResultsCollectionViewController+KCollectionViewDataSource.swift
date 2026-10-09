@@ -232,7 +232,7 @@ extension SearchResultsCollectionViewController {
 			switch itemKind {
 			case .episodeIdentity:
 				episodeLockupCollectionViewCell.delegate = self
-				episodeLockupCollectionViewCell.configure(using: self.fetchModel(at: indexPath) as Episode?)
+				episodeLockupCollectionViewCell.configure(using: self.fetchModel(at: indexPath) as Episode?, isWatchStatusPending: self.isEpisodeWatchStatusPending(for: itemKind))
 			default: return
 			}
 		}

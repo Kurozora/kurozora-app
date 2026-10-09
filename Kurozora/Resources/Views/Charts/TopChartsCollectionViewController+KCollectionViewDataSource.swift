@@ -191,7 +191,7 @@ extension TopChartsCollectionViewController {
 			switch itemKind {
 			case .episodeIdentity:
 				let episode: Episode? = self.fetchModelOrTriggerSectionFetch(for: itemKind, response: ResourceCollection<Episode>.self, identity: EpisodeIdentity.self)
-				cell.configure(using: episode, rank: indexPath.item + 1)
+				cell.configure(using: episode, rank: indexPath.item + 1, isWatchStatusPending: self.isEpisodeWatchStatusPending(for: itemKind))
 			case .pending:
 				let episode: Episode? = nil
 				cell.configure(using: episode)

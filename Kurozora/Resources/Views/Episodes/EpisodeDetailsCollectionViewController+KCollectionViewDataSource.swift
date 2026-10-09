@@ -232,7 +232,7 @@ extension EpisodeDetailsCollectionViewController {
 			switch itemKind {
 			case .suggestedEpisode(let episode):
 				episodeLockupCollectionViewCell.delegate = self
-				episodeLockupCollectionViewCell.configure(using: episode)
+				episodeLockupCollectionViewCell.configure(using: episode, isWatchStatusPending: WatchedStore.shared.isPending(forEpisodeID: episode.id.rawValue))
 			default: break
 			}
 		}

@@ -883,6 +883,7 @@ extension EpisodesListCollectionViewController: EpisodeLockupCollectionViewCellD
 			await episode.updateWatchStatus(userInfo: ["indexPath": indexPath])
 		case .upNext:
 			await episode.updateWatchStatus(userInfo: [:])
+			await LibraryOutbox.shared.flush()
 			self.prepareUpNextRefresh(indexPath)
 			await self.fetchItems()
 		}

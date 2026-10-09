@@ -263,6 +263,16 @@ class EpisodeDetailsCollectionViewController: DetailsCollectionViewController, T
 		}
 	}
 
+	/// Records whether the given episode's watch status change is still settling and redraws its row.
+	///
+	/// - Parameters:
+	///    - isPending: Whether the change is still settling.
+	///    - episode: The episode whose row is redrawn.
+	func setWatchStatusPending(_ isPending: Bool, for episode: Episode) {
+		WatchedStore.shared.setPending(isPending, forEpisodeID: episode.id.rawValue)
+		self.setItemKindNeedsUpdate(.suggestedEpisode(episode))
+	}
+
 	override func didDeleteReview() {
 		self.libraryAttributes?.rating = nil
 		self.libraryAttributes?.review = nil
@@ -388,10 +398,15 @@ extension EpisodeDetailsCollectionViewController: EpisodeLockupCollectionViewCel
 		guard signedIn else { return }
 		guard let indexPath = self.collectionView.indexPath(for: cell) else { return }
 
-		cell.watchStatusButton.isEnabled = false
 		let suggestedEpisode = self.suggestedEpisodes[indexPath.item]
+		guard !WatchedStore.shared.isPending(forEpisodeID: suggestedEpisode.id.rawValue) else { return }
+
+		defer { self.setWatchStatusPending(false, for: suggestedEpisode) }
+
+		self.setWatchStatusPending(true, for: suggestedEpisode)
+
 		await suggestedEpisode.updateWatchStatus(userInfo: ["indexPath": indexPath])
-		cell.watchStatusButton.isEnabled = true
+		await LibraryOutbox.shared.flush()
 
 		if suggestedEpisode.id == self.episode.id {
 			self.configureNavBarButtons()

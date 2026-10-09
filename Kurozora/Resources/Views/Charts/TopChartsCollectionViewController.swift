@@ -517,9 +517,15 @@ extension TopChartsCollectionViewController: EpisodeLockupCollectionViewCellDele
 			let episode = self.cachedItem(at: indexPath) as? Episode
 		else { return }
 
-		cell.watchStatusButton.isEnabled = false
+		let episodeID = episode.id.rawValue
+		guard !WatchedStore.shared.isPending(forEpisodeID: episodeID) else { return }
+
+		defer { self.setEpisodeWatchStatusPending(false, forEpisodeID: episodeID) }
+
+		self.setEpisodeWatchStatusPending(true, forEpisodeID: episodeID)
+
 		await episode.updateWatchStatus(userInfo: ["indexPath": indexPath])
-		cell.watchStatusButton.isEnabled = true
+		await LibraryOutbox.shared.flush()
 	}
 
 	func episodeLockupCollectionViewCell(_ cell: EpisodeLockupCollectionViewCell, didPressShowButton button: UIButton) async {

@@ -279,9 +279,16 @@ extension DigestCollectionViewController: EpisodeLockupCollectionViewCellDelegat
 			let indexPath = self.collectionView.indexPath(for: cell),
 			let episode = self.cachedItem(at: indexPath) as? Episode
 		else { return }
-		cell.watchStatusButton.isEnabled = false
+
+		let episodeID = episode.id.rawValue
+		guard !WatchedStore.shared.isPending(forEpisodeID: episodeID) else { return }
+
+		defer { self.setEpisodeWatchStatusPending(false, forEpisodeID: episodeID) }
+
+		self.setEpisodeWatchStatusPending(true, forEpisodeID: episodeID)
+
 		await episode.updateWatchStatus(userInfo: ["indexPath": indexPath])
-		cell.watchStatusButton.isEnabled = true
+		await LibraryOutbox.shared.flush()
 	}
 
 	func episodeLockupCollectionViewCell(_ cell: EpisodeLockupCollectionViewCell, didPressShowButton button: UIButton) {
@@ -429,7 +436,7 @@ extension DigestCollectionViewController {
 			guard let self = self, case .episodeIdentity = itemKind else { return }
 			let episode: Episode? = self.fetchModelOrTriggerSectionFetch(for: itemKind, response: ResourceCollection<Episode>.self, identity: EpisodeIdentity.self)
 			cell.delegate = self
-			cell.configure(using: episode)
+			cell.configure(using: episode, isWatchStatusPending: self.isEpisodeWatchStatusPending(for: itemKind))
 		}
 	}
 
