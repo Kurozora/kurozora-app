@@ -190,7 +190,7 @@ extension HomeCollectionViewController: EpisodeLockupCollectionViewCellDelegate 
 
 		self.setEpisodeWatchStatusPending(true, forEpisodeID: episodeID)
 
-		await episode.updateWatchStatus(userInfo: ["indexPath": indexPath])
+		await episode.updateWatchStatus(userInfo: [:])
 		await LibraryOutbox.shared.flush()
 		await self.refreshUpNextAndWait()
 	}

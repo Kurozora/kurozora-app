@@ -264,10 +264,17 @@ class EpisodeDetailsCollectionViewController: DetailsCollectionViewController, S
 
 	override func baseDetailHeaderCollectionViewCell(_ cell: BaseDetailHeaderCollectionViewCell, didPressStatus button: UIButton) async {
 		guard await WorkflowController.shared.isSignedIn() else { return }
+		guard let episode = self.episode else { return }
 
-		button.isEnabled = false
-		await self.episode?.updateWatchStatus(userInfo: ["indexPath": self.indexPath])
-		button.isEnabled = true
+		guard !WatchedStore.shared.isPending(forEpisodeID: episode.id.rawValue) else { return }
+
+		defer { self.setWatchStatusPending(false, for: episode) }
+
+		self.setWatchStatusPending(true, for: episode)
+
+		await episode.updateWatchStatus(userInfo: ["indexPath": self.indexPath])
+		await LibraryOutbox.shared.flush()
+		await self.fetchUserOverlays()
 	}
 
 	@objc func handleEpisodeWatchStatusDidUpdate(_ notification: NSNotification) {
@@ -278,22 +285,22 @@ class EpisodeDetailsCollectionViewController: DetailsCollectionViewController, S
 				var newSnapshot = self.dataSource.snapshot()
 				newSnapshot.reloadItems([selectedEpisode])
 				self.dataSource.apply(newSnapshot)
-			} else {
-				self.snapshot.reloadSections([.header])
+			} else if let episode = self.episode {
+				self.setItemKindNeedsUpdate(.episode(episode))
 			}
 
 			self.configureNavBarButtons()
 		}
 	}
 
-	/// Records whether the given episode's watch status change is still settling and redraws its row.
+	/// Records whether the given episode's watch status change is still settling and redraws its rows.
 	///
 	/// - Parameters:
 	///    - isPending: Whether the change is still settling.
-	///    - episode: The episode whose row is redrawn.
+	///    - episode: The episode whose rows are redrawn.
 	func setWatchStatusPending(_ isPending: Bool, for episode: Episode) {
 		WatchedStore.shared.setPending(isPending, forEpisodeID: episode.id.rawValue)
-		self.setItemKindNeedsUpdate(.suggestedEpisode(episode))
+		self.setItemKindsNeedUpdate([.episode(episode), .suggestedEpisode(episode)])
 	}
 
 	override func didDeleteReview() {

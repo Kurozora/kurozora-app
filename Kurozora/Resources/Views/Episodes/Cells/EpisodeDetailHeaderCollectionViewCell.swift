@@ -24,14 +24,14 @@ class EpisodeDetailHeaderCollectionViewCell: BaseDetailHeaderCollectionViewCell 
 	///
 	/// - Parameters:
 	///    - episode: The `Episode` object used to configure the cell.
-	func configure(using episode: Episode) {
+	///    - isWatchStatusPending: Whether the episode's watch status change is still settling.
+	func configure(using episode: Episode, isWatchStatusPending: Bool = false) {
 		self.episode = episode
 
-		// Configure notifications
 		NotificationCenter.default.removeObserver(self)
 		NotificationCenter.default.addObserver(self, selector: #selector(self.handleWatchStatusUpdate(_:)), name: .KEpisodeWatchStatusDidUpdate, object: nil)
 
-		// Configure watch status button
+		self.watchStatusButton.isEnabled = !isWatchStatusPending
 		self.configureWatchButton(with: episode.watchStatus)
 
 		// Configure title label

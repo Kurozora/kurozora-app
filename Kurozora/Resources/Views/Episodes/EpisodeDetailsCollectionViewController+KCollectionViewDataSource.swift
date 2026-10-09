@@ -44,7 +44,7 @@ extension EpisodeDetailsCollectionViewController {
 				episodeDetailHeaderCollectionViewCell?.delegate = self
 				episodeDetailHeaderCollectionViewCell?.mediaViewerDelegate = self
 				episodeDetailHeaderCollectionViewCell?.indexPath = indexPath
-				episodeDetailHeaderCollectionViewCell?.configure(using: episode)
+				episodeDetailHeaderCollectionViewCell?.configure(using: episode, isWatchStatusPending: WatchedStore.shared.isPending(forEpisodeID: episode.id.rawValue))
 				return episodeDetailHeaderCollectionViewCell
 			case .badge(let episodeDetailBadge):
 				let badgeReuseIdentifier = episodeDetailBadge == EpisodeDetail.Badge.rating ? RatingBadgeCollectionViewCell.reuseID : BadgeCollectionViewCell.reuseID
@@ -202,13 +202,23 @@ extension EpisodeDetailsCollectionViewController {
 	}
 
 	func setItemKindNeedsUpdate(_ itemKind: ItemKind) {
+		self.setItemKindsNeedUpdate([itemKind])
+	}
+
+	/// Redraws the given items the snapshot holds.
+	///
+	/// - Parameter itemKinds: The items to redraw.
+	func setItemKindsNeedUpdate(_ itemKinds: [ItemKind]) {
 		var snapshot = self.dataSource.snapshot()
-		guard snapshot.indexOfItem(itemKind) != nil else { return }
-		snapshot.reconfigureItems([itemKind])
-		self.measureCellHeights(of: [itemKind])
+		let heldItemKinds = itemKinds.filter { snapshot.indexOfItem($0) != nil }
+
+		guard !heldItemKinds.isEmpty else { return }
+
+		snapshot.reconfigureItems(heldItemKinds)
+		self.measureCellHeights(of: heldItemKinds)
 
 		#if DEBUG
-		print("----- [apply] setItemKindNeedsUpdate")
+		print("----- [apply] setItemKindsNeedUpdate")
 		#endif
 
 		self.dataSource.apply(snapshot, animatingDifferences: true)

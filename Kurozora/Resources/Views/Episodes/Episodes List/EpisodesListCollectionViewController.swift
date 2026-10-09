@@ -881,6 +881,7 @@ extension EpisodesListCollectionViewController: EpisodeLockupCollectionViewCellD
 		switch self.episodesListFetchType {
 		case .charts, .season, .search:
 			await episode.updateWatchStatus(userInfo: ["indexPath": indexPath])
+			await LibraryOutbox.shared.flush()
 		case .upNext:
 			await episode.updateWatchStatus(userInfo: [:])
 			await LibraryOutbox.shared.flush()
