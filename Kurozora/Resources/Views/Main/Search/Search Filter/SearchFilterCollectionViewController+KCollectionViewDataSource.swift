@@ -19,6 +19,7 @@ extension SearchFilterCollectionViewController {
 		let durationCellRegistration = self.durationCellRegistration()
 		let menuCellRegistration = self.menuCellRegistration()
 		let textCellRegistration = self.textCellRegistration()
+		let starsCellRegistration = self.starsCellRegistration()
 
 		self.dataSource = UICollectionViewDiffableDataSource<SearchFilterDataSource.Section, SearchFilterDataSource.ItemKind>(collectionView: self.collectionView) { collectionView, indexPath, item in
 			switch item {
@@ -29,11 +30,14 @@ extension SearchFilterCollectionViewController {
 			case .row(let key, _, _):
 				guard let descriptor = self.descriptor(for: key) else { return nil }
 
-				if case .text = descriptor.control {
+				switch descriptor.control {
+				case .text:
 					return collectionView.dequeueConfiguredReusableCell(using: textCellRegistration, for: indexPath, item: item)
+				case .stars:
+					return collectionView.dequeueConfiguredReusableCell(using: starsCellRegistration, for: indexPath, item: item)
+				default:
+					return collectionView.dequeueConfiguredReusableCell(using: menuCellRegistration, for: indexPath, item: item)
 				}
-
-				return collectionView.dequeueConfiguredReusableCell(using: menuCellRegistration, for: indexPath, item: item)
 			}
 		}
 
@@ -127,7 +131,7 @@ extension SearchFilterCollectionViewController {
 			return durations.enumerated().map { index, duration in
 				.duration(key: descriptor.key, index: index, isSelected: Int(duration) == selected)
 			}
-		case .buckets, .date, .text:
+		case .buckets, .date, .text, .stars:
 			return [.row(key: descriptor.key, selectedValue: value, position: .only)]
 		}
 	}
@@ -209,6 +213,26 @@ extension SearchFilterCollectionViewController {
 			}
 		}
 	}
+
+	func starsCellRegistration() ->
+	UICollectionView.CellRegistration<SearchFilterStarsCollectionViewCell, SearchFilterDataSource.ItemKind> {
+		return UICollectionView.CellRegistration<SearchFilterStarsCollectionViewCell, SearchFilterDataSource.ItemKind> { searchFilterStarsCollectionViewCell, _, item in
+			switch item {
+			case .row(let key, _, let position):
+				guard let descriptor = self.descriptor(for: key) else { return }
+
+				let rating: Double? = switch self.draftValue(for: key) {
+				case .rating(let rating): rating
+				default: nil
+				}
+
+				searchFilterStarsCollectionViewCell.delegate = self
+				searchFilterStarsCollectionViewCell.configureCell(title: descriptor.title, rating: rating, position: position)
+			default:
+				break
+			}
+		}
+	}
 }
 
 // MARK: - Options
@@ -245,7 +269,7 @@ extension SearchFilterCollectionViewController {
 			return buckets.map { $0.title }
 		case .duration(let durations):
 			return durations.map { SearchFilterDurationCollectionViewCell.parts(of: $0).0 }
-		case .date, .text:
+		case .date, .text, .stars:
 			return []
 		}
 	}

@@ -943,8 +943,8 @@ class SearchResultsCollectionViewController: KCollectionViewController, SectionF
 		guard let searchType = self.searchTypes[safe: self.currentIndex] else { return nil }
 		let searchFilterViewController = SearchFilterCollectionViewController()
 		searchFilterViewController.delegate = self
-		searchFilterViewController.searchType = searchType
-		searchFilterViewController.filter = self.searchFilters[searchType] ?? nil
+		searchFilterViewController.descriptors = searchType.filterDescriptors
+		searchFilterViewController.values = (self.searchFilters[searchType] ?? nil)?.values ?? [:]
 		return searchFilterViewController
 	}
 
@@ -1507,10 +1507,11 @@ extension SearchResultsCollectionViewController: UIToolbarDelegate {
 
 // MARK: - SearchFilterCollectionViewControllerDelegate
 extension SearchResultsCollectionViewController: SearchFilterCollectionViewControllerDelegate {
-	func searchFilterCollectionViewController(_ searchFilterCollectionViewController: SearchFilterCollectionViewController, didApply filter: SearchFilter) {
+	func searchFilterCollectionViewController(_ searchFilterCollectionViewController: SearchFilterCollectionViewController, didApply values: [FilterKey: FilterValue]) {
 		guard let searchScope = SearchScope(rawValue: self.kSearchController.searchBar.selectedScopeButtonIndex) else { return }
 		guard let searchType = self.searchTypes[safe: self.currentIndex] else { return }
 
+		let filter = SearchFilter(type: searchType, values: values)
 		self.searchFilters[searchType] = filter.isEmpty ? nil : filter
 
 		self.performSearch(with: self.searchQuery, in: searchScope, for: [searchType], with: filter, next: nil, resettingResults: true)

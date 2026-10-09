@@ -9240,4 +9240,212 @@ extension L10n {
 			)
 		}
 	}
+	/// The sort type ordering reviews by when they were written.
+	///
+	/// - Tag: L10n-reviewSortDate
+	static var reviewSortDate: String {
+		L10n.resolve {
+			String(
+				localized: "reviewSort.date",
+				defaultValue: "Date",
+				table: "Content",
+				bundle: LanguageManager.shared.bundle,
+				locale: LanguageManager.shared.locale,
+				comment: "The sort type ordering a user's reviews by when they were written."
+			)
+		}
+	}
+	/// The sort type ordering reviews by the title of the reviewed item.
+	///
+	/// - Tag: L10n-reviewSortTitle
+	static var reviewSortTitle: String {
+		L10n.resolve {
+			String(
+				localized: "reviewSort.title",
+				defaultValue: "Title",
+				table: "Content",
+				bundle: LanguageManager.shared.bundle,
+				locale: LanguageManager.shared.locale,
+				comment: "The sort type ordering a user's reviews by the title of the reviewed anime, manga, game, or person."
+			)
+		}
+	}
+	/// The sort type ordering reviews by their star rating.
+	///
+	/// - Tag: L10n-reviewSortRating
+	static var reviewSortRating: String {
+		L10n.resolve {
+			String(
+				localized: "reviewSort.rating",
+				defaultValue: "Rating",
+				table: "Content",
+				bundle: LanguageManager.shared.bundle,
+				locale: LanguageManager.shared.locale,
+				comment: "The sort type ordering a user's reviews by their star rating."
+			)
+		}
+	}
+	/// The sort option listing the most recent reviews first.
+	///
+	/// - Tag: L10n-reviewSortNewest
+	static var reviewSortNewest: String {
+		L10n.resolve {
+			String(
+				localized: "reviewSort.newest",
+				defaultValue: "Newest",
+				table: "Content",
+				bundle: LanguageManager.shared.bundle,
+				locale: LanguageManager.shared.locale,
+				comment: "The sort option listing a user's most recent reviews first."
+			)
+		}
+	}
+	/// The sort option listing the earliest reviews first.
+	///
+	/// - Tag: L10n-reviewSortOldest
+	static var reviewSortOldest: String {
+		L10n.resolve {
+			String(
+				localized: "reviewSort.oldest",
+				defaultValue: "Oldest",
+				table: "Content",
+				bundle: LanguageManager.shared.bundle,
+				locale: LanguageManager.shared.locale,
+				comment: "The sort option listing a user's earliest reviews first."
+			)
+		}
+	}
+	/// The sort option listing reviews alphabetically by title.
+	///
+	/// - Tag: L10n-reviewSortAscending
+	static var reviewSortAscending: String {
+		L10n.resolve {
+			String(
+				localized: "reviewSort.ascending",
+				defaultValue: "A-Z",
+				table: "Content",
+				bundle: LanguageManager.shared.bundle,
+				locale: LanguageManager.shared.locale,
+				comment: "The sort option listing a user's reviews alphabetically by title."
+			)
+		}
+	}
+	/// The sort option listing reviews in reverse alphabetical order by title.
+	///
+	/// - Tag: L10n-reviewSortDescending
+	static var reviewSortDescending: String {
+		L10n.resolve {
+			String(
+				localized: "reviewSort.descending",
+				defaultValue: "Z-A",
+				table: "Content",
+				bundle: LanguageManager.shared.bundle,
+				locale: LanguageManager.shared.locale,
+				comment: "The sort option listing a user's reviews in reverse alphabetical order by title."
+			)
+		}
+	}
+	/// The sort option listing the highest rated reviews first.
+	///
+	/// - Tag: L10n-reviewSortHighest
+	static var reviewSortHighest: String {
+		L10n.resolve {
+			String(
+				localized: "reviewSort.highest",
+				defaultValue: "Highest",
+				table: "Content",
+				bundle: LanguageManager.shared.bundle,
+				locale: LanguageManager.shared.locale,
+				comment: "The sort option listing a user's highest rated reviews first."
+			)
+		}
+	}
+	/// The sort option listing the lowest rated reviews first.
+	///
+	/// - Tag: L10n-reviewSortLowest
+	static var reviewSortLowest: String {
+		L10n.resolve {
+			String(
+				localized: "reviewSort.lowest",
+				defaultValue: "Lowest",
+				table: "Content",
+				bundle: LanguageManager.shared.bundle,
+				locale: LanguageManager.shared.locale,
+				comment: "The sort option listing a user's lowest rated reviews first."
+			)
+		}
+	}
+	/// The filter option keeping only ratings that come with a written review.
+	///
+	/// - Tag: L10n-reviewFilterWithReview
+	static var reviewFilterWithReview: String {
+		L10n.resolve {
+			String(
+				localized: "reviewFilter.withReview",
+				defaultValue: "With Review",
+				table: "Content",
+				bundle: LanguageManager.shared.bundle,
+				locale: LanguageManager.shared.locale,
+				comment: "The filter option keeping only a user's ratings that come with a written review."
+			)
+		}
+	}
+	/// The filter option keeping only ratings without a written review.
+	///
+	/// - Tag: L10n-reviewFilterRatingsOnly
+	static var reviewFilterRatingsOnly: String {
+		L10n.resolve {
+			String(
+				localized: "reviewFilter.ratingsOnly",
+				defaultValue: "Ratings Only",
+				table: "Content",
+				bundle: LanguageManager.shared.bundle,
+				locale: LanguageManager.shared.locale,
+				comment: "The filter option keeping only a user's star ratings that have no written review."
+			)
+		}
+	}
+	/// The filter choosing between ratings with a written review and ratings without one.
+	///
+	/// - Tag: L10n-reviewFilterContent
+	static var reviewFilterContent: String {
+		L10n.resolve {
+			String(
+				localized: "reviewFilter.content",
+				defaultValue: "Content",
+				table: "Content",
+				bundle: LanguageManager.shared.bundle,
+				locale: LanguageManager.shared.locale,
+				comment: "The filter choosing between a user's ratings that come with a written review and star ratings without one."
+			)
+		}
+	}
+	/// The title shown when no review matches the selected filters.
+	///
+	/// - Tag: L10n-noReviewsMatchFilterTitle
+	static var noReviewsMatchFilterTitle: String {
+		L10n.resolve {
+			String(
+				localized: "No Reviews Match",
+				table: "Content",
+				bundle: LanguageManager.shared.bundle,
+				locale: LanguageManager.shared.locale,
+				comment: "The title shown when none of a user's reviews match the selected kind, filters, or rating."
+			)
+		}
+	}
+	/// The detail shown when no review matches the selected filters.
+	///
+	/// - Tag: L10n-noReviewsMatchFilterDetail
+	static var noReviewsMatchFilterDetail: String {
+		L10n.resolve {
+			String(
+				localized: "No reviews match the selected filters.",
+				table: "Content",
+				bundle: LanguageManager.shared.bundle,
+				locale: LanguageManager.shared.locale,
+				comment: "The detail shown when none of a user's reviews match the selected kind, filters, or rating."
+			)
+		}
+	}
 }

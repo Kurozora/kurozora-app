@@ -51,6 +51,71 @@ class UserReviewsListCollectionViewController: KCollectionViewController, Sectio
 	/// Whether a fetch request is currently in progress.
 	var isRequestInProgress: Bool = false
 
+	/// The chips that filter the list by kind.
+	private let chipsView = KChipsView()
+
+	/// The button presenting the sort menu.
+	private var sortBarButtonItem: UIBarButtonItem!
+
+	/// The button presenting the filter page.
+	var filterBarButtonItem: UIBarButtonItem!
+
+	/// The chips listing the applied filters.
+	let filterChipsView = KFilterChipsView()
+
+	/// The chips the applied filters show.
+	var appliedFilterChips: [FilterChip] = []
+
+	/// The kind the list is limited to.
+	private var selectedKind: ReviewKind?
+
+	/// The filter values applied to the list.
+	var filterValues: [FilterKey: FilterValue] = [:]
+
+	/// The sort type applied to the list.
+	private var selectedSortType: ReviewSortType?
+
+	/// The sort option refining the sort type.
+	private var selectedSortOption: ReviewSortOption?
+
+	/// The filters the list offers.
+	var filterDescriptors: [FilterDescriptor] {
+		return [
+			FilterDescriptor(key: .hasReview, title: L10n.reviewFilterContent, control: .booleanPills(trueTitle: L10n.reviewFilterWithReview, falseTitle: L10n.reviewFilterRatingsOnly)),
+			FilterDescriptor(key: .rating, title: L10n.rating, control: .stars)
+		]
+	}
+
+	/// Whether the list keeps ratings with or without a written review.
+	private var hasReviewFilter: Bool? {
+		switch self.filterValues[.hasReview] {
+		case .boolean(let hasReview):
+			return hasReview
+		default:
+			return nil
+		}
+	}
+
+	/// The star rating the list is limited to.
+	private var ratingFilter: Double? {
+		switch self.filterValues[.rating] {
+		case .rating(let rating):
+			return rating
+		default:
+			return nil
+		}
+	}
+
+	/// Whether a filter narrows the list.
+	private var isFiltering: Bool {
+		return !self.filterValues.isEmpty
+	}
+
+	/// Whether a kind, filter, or sort shapes the list.
+	private var isNarrowed: Bool {
+		return self.selectedKind != nil || self.isFiltering || self.selectedSortType != nil
+	}
+
 	// Refresh control
 	var _prefersRefreshControlDisabled = false {
 		didSet {
@@ -82,6 +147,8 @@ class UserReviewsListCollectionViewController: KCollectionViewController, Sectio
 		super.viewDidLoad()
 
 		self.title = L10n.ratingsAndReviews
+		self.configureNavigationItems()
+		self.configureChipsView()
 
 		#if DEBUG
 		self._prefersRefreshControlDisabled = false
@@ -118,6 +185,120 @@ class UserReviewsListCollectionViewController: KCollectionViewController, Sectio
 	}
 
 	// MARK: - Functions
+	/// Configures the sort and filter bar button items.
+	private func configureNavigationItems() {
+		self.sortBarButtonItem = UIBarButtonItem(image: UIImage(systemName: "arrow.up.arrow.down.circle"))
+		self.sortBarButtonItem.accessibilityLabel = L10n.sort
+
+		self.filterBarButtonItem = UIBarButtonItem(image: UIImage(systemName: "line.3.horizontal.decrease.circle"), style: .plain, target: self, action: #selector(self.handleFilterBarButtonItemPressed(_:)))
+		self.filterBarButtonItem.accessibilityLabel = L10n.filter
+
+		self.rebuildSortMenu()
+
+		self.navigationItem.rightBarButtonItems = [self.filterBarButtonItem, self.sortBarButtonItem]
+	}
+
+	/// Configures the chips that filter the list by kind and the chips listing the applied filters.
+	private func configureChipsView() {
+		self.filterChipsView.chipRemovedHandler = { [weak self] index in
+			guard let self = self else { return }
+
+			self.removeFilterChip(at: index)
+		}
+
+		self.chipsView.titles = [L10n.all] + ReviewKind.listOrder.map { kind in
+			kind.title
+		}
+		self.chipsView.chipSelectedHandler = { [weak self] index in
+			guard let self = self else { return }
+
+			self.selectedKind = ReviewKind.listOrder[safe: index - 1]
+			self.reloadForQueryChange()
+		}
+
+		self.navigationItem.setBottomPalette(contentView: self.chipsView, height: KChipsView.paletteHeight)
+	}
+
+	/// Rebuilds the sort menu to reflect the selected sort.
+	private func rebuildSortMenu() {
+		var menuItems: [UIMenuElement] = ReviewSortType.allCases.map { sortType in
+			let sortTypeSelected = self.selectedSortType == sortType
+			let subMenuItems = sortType.optionValue.map { option in
+				let actionIsOn = sortTypeSelected && self.selectedSortOption == option
+
+				return UIAction(title: option.title, image: option.imageValue, state: actionIsOn ? .on : .off) { [weak self] _ in
+					guard let self = self, !actionIsOn else { return }
+
+					self.sort(by: sortType, option: option)
+				}
+			}
+
+			return UIMenu(title: sortType.title, image: sortType.imageValue, children: subMenuItems)
+		}
+
+		if self.selectedSortType != nil {
+			let stopSortingAction = UIAction(title: L10n.stopSorting, image: UIImage(systemName: "xmark.circle.fill"), attributes: .destructive) { [weak self] _ in
+				guard let self = self else { return }
+
+				self.sort(by: nil, option: nil)
+			}
+			let stopSortingMenu = UIMenu(title: "", options: .displayInline, children: [stopSortingAction])
+
+			menuItems.append(stopSortingMenu)
+		}
+
+		self.sortBarButtonItem.image = UIImage(systemName: self.selectedSortType == nil ? "arrow.up.arrow.down.circle" : "arrow.up.arrow.down.circle.fill")
+		self.sortBarButtonItem.menu = UIMenu(title: "", children: menuItems)
+	}
+
+	/// Sorts the list by the given type and option.
+	///
+	/// - Parameters:
+	///    - sortType: The sort type to apply.
+	///    - option: The sort option refining the sort type.
+	private func sort(by sortType: ReviewSortType?, option: ReviewSortOption?) {
+		self.selectedSortType = sortType
+		self.selectedSortOption = option
+
+		self.rebuildSortMenu()
+		self.reloadForQueryChange()
+	}
+
+	/// Presents the filter page.
+	///
+	/// - Parameter sender: The button the page is anchored to.
+	@objc private func handleFilterBarButtonItemPressed(_ sender: UIBarButtonItem) {
+		let searchFilterCollectionViewController = SearchFilterCollectionViewController()
+		searchFilterCollectionViewController.delegate = self
+		searchFilterCollectionViewController.descriptors = self.filterDescriptors
+		searchFilterCollectionViewController.values = self.filterValues
+
+		let kNavigationController = KNavigationController(rootViewController: searchFilterCollectionViewController)
+		kNavigationController.modalPresentationStyle = .popover
+		kNavigationController.popoverPresentationController?.barButtonItem = sender
+		kNavigationController.navigationBar.prefersLargeTitles = false
+
+		self.present(kNavigationController, animated: true)
+	}
+
+	/// Reloads the list from the first page.
+	func reloadForQueryChange() {
+		self.nextPageCursor = nil
+		self.reviews = []
+		self.cache.removeAll()
+		self.isFetchingType.removeAll()
+		self.fetchGeneration += 1
+		self.isRequestInProgress = false
+		self.updateDataSource()
+		self.configureEmptyDataView()
+		self._prefersActivityIndicatorHidden = false
+
+		Task { [weak self] in
+			guard let self = self else { return }
+			await self.fetchReviews()
+		}
+	}
+
 	/// Re-renders the changed review without refetching the list.
 	///
 	/// - Parameter notification: An object containing information broadcast to registered observers.
@@ -150,6 +331,12 @@ class UserReviewsListCollectionViewController: KCollectionViewController, Sectio
 		guard let review = try? await KService.review(ReviewIdentity(id: reviewID)).response().data.first else { return }
 
 		guard let index = index else {
+			// A narrowed list places the review by its kind, filters, and sort options.
+			guard !self.isNarrowed else {
+				self.reloadForQueryChange()
+				return
+			}
+
 			// The list carries only written reviews.
 			guard review.attributes.description?.isEmpty == false else { return }
 
@@ -257,6 +444,7 @@ class UserReviewsListCollectionViewController: KCollectionViewController, Sectio
 			self.cache.removeAll()
 			self.isFetchingType.removeAll()
 			self.fetchGeneration += 1
+			self.isRequestInProgress = false
 
 			Task { [weak self] in
 				guard let self = self else { return }
@@ -267,8 +455,14 @@ class UserReviewsListCollectionViewController: KCollectionViewController, Sectio
 
 	override func configureEmptyDataView() {
 		let username = self.user?.attributes.username
-		let titleString: String = L10n.noItemsTitle(L10n.reviews)
-		let detailString: String = if self.user?.id == User.current?.id {
+		let titleString: String = if self.selectedKind != nil || self.isFiltering {
+			L10n.noReviewsMatchFilterTitle
+		} else {
+			L10n.noItemsTitle(L10n.reviews)
+		}
+		let detailString: String = if self.selectedKind != nil || self.isFiltering {
+			L10n.noReviewsMatchFilterDetail
+		} else if self.user?.id == User.current?.id {
 			L10n.reviewsEmptySelfDetail
 		} else {
 			L10n.reviewsEmptyOtherDetail(username ?? "")
@@ -282,9 +476,9 @@ class UserReviewsListCollectionViewController: KCollectionViewController, Sectio
 		self.collectionView.backgroundView?.alpha = 0
 	}
 
-	/// Fades in and out the empty data view according to the number of sections.
+	/// Fades in and out the empty data view according to the number of loaded reviews.
 	func toggleEmptyDataView() {
-		if self.collectionView.numberOfSections == 0 {
+		if self.reviews.isEmpty {
 			self.collectionView.backgroundView?.animateFadeIn()
 		} else {
 			self.collectionView.backgroundView?.animateFadeOut()
@@ -318,10 +512,27 @@ class UserReviewsListCollectionViewController: KCollectionViewController, Sectio
 
 		guard let user = self.user else { return }
 		let userIdentity = UserIdentity(id: user.id)
+		let generation = self.fetchGeneration
 
+		let reviewResponse: ResourceCollection<Review>?
 		do {
-			let reviewResponse = try await KService.reviews(forUser: userIdentity).cursor(self.nextPageCursor).limit(self.nextPageCursor != nil ? 100 : 25).response()
+			reviewResponse = try await KService.reviews(forUser: userIdentity)
+				.kind(self.selectedKind)
+				.hasReview(self.hasReviewFilter)
+				.rating(self.ratingFilter)
+				.sorted(by: self.selectedSortType, self.selectedSortOption)
+				.cursor(self.nextPageCursor)
+				.limit(self.nextPageCursor != nil ? 100 : 25)
+				.response()
+		} catch {
+			print(error.localizedDescription)
+			reviewResponse = nil
+		}
 
+		// A newer request replaced this one.
+		guard generation == self.fetchGeneration else { return }
+
+		if let reviewResponse = reviewResponse {
 			// Reset data if necessary
 			if self.nextPageCursor == nil {
 				self.reviews = []
@@ -331,8 +542,6 @@ class UserReviewsListCollectionViewController: KCollectionViewController, Sectio
 			self.nextPageCursor = reviewResponse.nextCursor
 			self.reviews.append(contentsOf: reviewResponse.data)
 			self.reviews.removeDuplicates()
-		} catch {
-			print(error.localizedDescription)
 		}
 
 		self.endFetch()
@@ -490,6 +699,29 @@ extension UserReviewsListCollectionViewController: MusicReviewLockupCollectionVi
 
 		MusicManager.shared.play(kkSongs: kkSongs, startingAt: indexPath.item)
 	}
+}
+
+// MARK: - SearchFilterCollectionViewControllerDelegate
+extension UserReviewsListCollectionViewController: SearchFilterCollectionViewControllerDelegate {
+	func searchFilterCollectionViewController(_ searchFilterCollectionViewController: SearchFilterCollectionViewController, didApply values: [FilterKey: FilterValue]) {
+		self.filterValues = values.filter { _, value in
+			!value.isEmpty
+		}
+
+		self.refreshFilterChips()
+		self.refreshFilterBarButtonImage()
+		self.reloadForQueryChange()
+	}
+
+	func searchFilterCollectionViewControllerDidReset(_ searchFilterCollectionViewController: SearchFilterCollectionViewController) {
+		self.filterValues = [:]
+
+		self.refreshFilterChips()
+		self.refreshFilterBarButtonImage()
+		self.reloadForQueryChange()
+	}
+
+	func searchFilterCollectionViewControllerDidCancel(_ searchFilterCollectionViewController: SearchFilterCollectionViewController) {}
 }
 
 // MARK: - SectionLayoutKind

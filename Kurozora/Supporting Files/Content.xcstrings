@@ -83223,6 +83223,9 @@
         }
       }
     },
+    "No Reviews Match" : {
+      "comment" : "The title shown when none of a user's reviews match the selected kind, filters, or rating."
+    },
     "No Users" : {
       "comment" : "The empty-state title for a generic users list (search / leaderboard).",
       "localizations" : {
@@ -84623,6 +84626,9 @@
           }
         }
       }
+    },
+    "No reviews match the selected filters." : {
+      "comment" : "The detail shown when none of a user's reviews match the selected kind, filters, or rating."
     },
     "No show songs" : {
       "comment" : "The empty-state title for the show songs list.",
@@ -165280,6 +165286,42 @@
         }
       }
     },
+    "reviewFilter.content" : {
+      "comment" : "The filter choosing between a user's ratings that come with a written review and star ratings without one.",
+      "extractionState" : "extracted_with_value",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "Content"
+          }
+        }
+      }
+    },
+    "reviewFilter.ratingsOnly" : {
+      "comment" : "The filter option keeping only a user's star ratings that have no written review.",
+      "extractionState" : "extracted_with_value",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "Ratings Only"
+          }
+        }
+      }
+    },
+    "reviewFilter.withReview" : {
+      "comment" : "The filter option keeping only a user's ratings that come with a written review.",
+      "extractionState" : "extracted_with_value",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "With Review"
+          }
+        }
+      }
+    },
     "reviewMore" : {
       "comment" : "The affordance riding the last line of a clipped review that opens the full review.",
       "extractionState" : "extracted_with_value",
@@ -165516,6 +165558,114 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "更多"
+          }
+        }
+      }
+    },
+    "reviewSort.ascending" : {
+      "comment" : "The sort option listing a user's reviews alphabetically by title.",
+      "extractionState" : "extracted_with_value",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "A-Z"
+          }
+        }
+      }
+    },
+    "reviewSort.date" : {
+      "comment" : "The sort type ordering a user's reviews by when they were written.",
+      "extractionState" : "extracted_with_value",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "Date"
+          }
+        }
+      }
+    },
+    "reviewSort.descending" : {
+      "comment" : "The sort option listing a user's reviews in reverse alphabetical order by title.",
+      "extractionState" : "extracted_with_value",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "Z-A"
+          }
+        }
+      }
+    },
+    "reviewSort.highest" : {
+      "comment" : "The sort option listing a user's highest rated reviews first.",
+      "extractionState" : "extracted_with_value",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "Highest"
+          }
+        }
+      }
+    },
+    "reviewSort.lowest" : {
+      "comment" : "The sort option listing a user's lowest rated reviews first.",
+      "extractionState" : "extracted_with_value",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "Lowest"
+          }
+        }
+      }
+    },
+    "reviewSort.newest" : {
+      "comment" : "The sort option listing a user's most recent reviews first.",
+      "extractionState" : "extracted_with_value",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "Newest"
+          }
+        }
+      }
+    },
+    "reviewSort.oldest" : {
+      "comment" : "The sort option listing a user's earliest reviews first.",
+      "extractionState" : "extracted_with_value",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "Oldest"
+          }
+        }
+      }
+    },
+    "reviewSort.rating" : {
+      "comment" : "The sort type ordering a user's reviews by their star rating.",
+      "extractionState" : "extracted_with_value",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "Rating"
+          }
+        }
+      }
+    },
+    "reviewSort.title" : {
+      "comment" : "The sort type ordering a user's reviews by the title of the reviewed anime, manga, game, or person.",
+      "extractionState" : "extracted_with_value",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "Title"
           }
         }
       }

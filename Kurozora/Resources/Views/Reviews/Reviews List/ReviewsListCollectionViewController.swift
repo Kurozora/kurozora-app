@@ -33,7 +33,11 @@ class ReviewsListCollectionViewController: KCollectionViewController, RatingAler
 	var listType: ReviewsListType?
 
 	/// The authenticated user's rating for the reviewed item.
-	var givenRating: Double?
+	var givenRating: Double? {
+		didSet {
+			self.refreshRateAndReviewRows()
+		}
+	}
 
 	/// The authenticated user's review text for the reviewed item.
 	var givenReview: String?
@@ -375,6 +379,13 @@ class ReviewsListCollectionViewController: KCollectionViewController, RatingAler
 	private func refreshRow(for reviewID: KurozoraItemID) async {
 		guard let review = try? await KService.review(ReviewIdentity(id: reviewID)).response().data.first else { return }
 
+		let isReviewedItem = review.relationships?.reviewedID == self.currentReviewKind()?.modelID
+
+		// The user's own review carries their latest rating of the item on screen.
+		if isReviewedItem, review.relationships?.users?.data.first?.id == User.current?.id {
+			self.givenRating = review.attributes.score
+		}
+
 		if let index = self.reviews.firstIndex(where: { $0.id == reviewID }) {
 			self.reviews[index] = review
 			self.replaceRow(for: reviewID, with: review)
@@ -383,7 +394,7 @@ class ReviewsListCollectionViewController: KCollectionViewController, RatingAler
 
 		// The list carries only written reviews of the item on screen.
 		guard review.attributes.description?.isEmpty == false else { return }
-		guard review.relationships?.reviewedID == self.currentReviewKind()?.modelID else { return }
+		guard isReviewedItem else { return }
 
 		self.insertRow(for: review)
 	}
@@ -479,6 +490,30 @@ class ReviewsListCollectionViewController: KCollectionViewController, RatingAler
 		}
 
 		self.toggleEmptyDataView()
+	}
+
+	/// Re-renders the rate and review rows with the user's current rating.
+	@MainActor
+	private func refreshRateAndReviewRows() {
+		guard self.snapshot != nil else { return }
+
+		var hasStaleItems = false
+
+		for itemKind in self.snapshot.itemIdentifiers {
+			switch itemKind {
+			case .rateAndReview(let rateAndReview, let currentRating) where currentRating != self.givenRating:
+				// The identifier carries the rating by value.
+				self.snapshot.insertItems([.rateAndReview(rateAndReview, currentRating: self.givenRating)], afterItem: itemKind)
+				self.snapshot.deleteItems([itemKind])
+				hasStaleItems = true
+			default:
+				break
+			}
+		}
+
+		guard hasStaleItems else { return }
+
+		self.dataSource.apply(self.snapshot, animatingDifferences: false)
 	}
 
 	/// Forgets the user's own submission for the reviewed item.
@@ -654,6 +689,7 @@ extension ReviewsListCollectionViewController: TapToRateCollectionViewCellDelega
 				cell.configure(using: newRating)
 
 				if newRating != nil {
+					self.givenRating = newRating
 					self.showRatingSuccessAlert()
 				}
 			} catch {
@@ -677,6 +713,14 @@ extension ReviewsListCollectionViewController: TapToRateCollectionViewCellDelega
 					let didDelete = try await kind.deleteRating()
 					if didDelete {
 						cell.configure(using: nil)
+
+						// Deleting the rating deletes its review too.
+						let ownReviewID = self.ownReview()?.id
+						self.clearGivenReview()
+
+						if let ownReviewID = ownReviewID {
+							self.removeRow(for: ownReviewID)
+						}
 					} else {
 						cell.configure(using: previousRating)
 						self.presentAlertController(title: L10n.ratingFailed, message: L10n.notAvailableForType)
@@ -743,9 +787,9 @@ extension ReviewsListCollectionViewController: ReviewEditorContextProviding {
 	func writeAReviewContext() -> ReviewEditorContext? {
 		guard let kind = self.currentReviewKind() else { return nil }
 
-		// The loaded review is the truth; the given values only seed the first render.
+		// The loaded review is the truth for its text.
 		if let review = self.ownReview() {
-			return ReviewEditorContext(kind: kind, rating: review.attributes.score, review: review.attributes.description, note: kind.storedNote(), isSpoiler: review.attributes.isSpoiler, recommendation: review.attributes.recommendation)
+			return ReviewEditorContext(kind: kind, rating: self.givenRating ?? review.attributes.score, review: review.attributes.description, note: kind.storedNote(), isSpoiler: review.attributes.isSpoiler, recommendation: review.attributes.recommendation)
 		}
 
 		return ReviewEditorContext(kind: kind, rating: self.givenRating, review: self.givenReview, note: self.givenNote, isSpoiler: self.givenIsSpoiler, recommendation: self.givenRecommendation)

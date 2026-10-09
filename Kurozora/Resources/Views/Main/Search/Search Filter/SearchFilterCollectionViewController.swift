@@ -10,7 +10,7 @@ import KurozoraKit
 import UIKit
 
 protocol SearchFilterCollectionViewControllerDelegate: AnyObject {
-	func searchFilterCollectionViewController(_ searchFilterCollectionViewController: SearchFilterCollectionViewController, didApply filter: SearchFilter)
+	func searchFilterCollectionViewController(_ searchFilterCollectionViewController: SearchFilterCollectionViewController, didApply values: [FilterKey: FilterValue])
 	func searchFilterCollectionViewControllerDidReset(_ searchFilterCollectionViewController: SearchFilterCollectionViewController)
 	func searchFilterCollectionViewControllerDidCancel(_ searchFilterCollectionViewController: SearchFilterCollectionViewController)
 }
@@ -21,9 +21,11 @@ class SearchFilterCollectionViewController: KCollectionViewController {
 	private var applyBarButtonItem: UIBarButtonItem!
 
 	// MARK: - Properties
-	var searchType: SearchType?
+	/// The filters the page offers.
 	var descriptors: [FilterDescriptor] = []
-	var filter: SearchFilter?
+
+	/// The values the page opens with.
+	var values: [FilterKey: FilterValue] = [:]
 
 	/// The values the user has set on the page.
 	var draft: [FilterKey: FilterValue] = [:]
@@ -61,11 +63,7 @@ class SearchFilterCollectionViewController: KCollectionViewController {
 
 		self.configure()
 
-		if let searchType = self.searchType {
-			self.descriptors = searchType.filterDescriptors
-		}
-
-		self.draft = self.filter?.values ?? [:]
+		self.draft = self.values
 		self.updateResetAvailability()
 
 		self.configureDataSource()
@@ -148,13 +146,11 @@ class SearchFilterCollectionViewController: KCollectionViewController {
 	}
 
 	private func applyButtonPressed() {
-		guard let searchType = self.searchType else { return }
-
-		let newSearchFilter = SearchFilter(type: searchType, values: self.draft)
+		let values = self.draft
 		let searchFilterCollectionViewController = self
 
 		self.dismiss(animated: true) {
-			searchFilterCollectionViewController.delegate?.searchFilterCollectionViewController(searchFilterCollectionViewController, didApply: newSearchFilter)
+			searchFilterCollectionViewController.delegate?.searchFilterCollectionViewController(searchFilterCollectionViewController, didApply: values)
 		}
 	}
 
@@ -187,7 +183,7 @@ class SearchFilterCollectionViewController: KCollectionViewController {
 	}
 
 	private func resetButtonPressed() {
-		self.filter = nil
+		self.values = [:]
 		self.draft = [:]
 
 		self.updateResetAvailability()
@@ -228,6 +224,10 @@ extension SearchFilterCollectionViewController: SearchFilterBaseCollectionViewCe
 			guard let text = value as? String, !text.isEmpty else { return nil }
 
 			return .text(text)
+		case .stars:
+			guard let rating = value as? Double, rating > 0 else { return nil }
+
+			return .rating(rating)
 		case .numberPills, .textPills, .booleanPills, .buckets, .duration:
 			guard let title = value as? String else { return nil }
 

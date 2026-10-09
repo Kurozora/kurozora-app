@@ -63,6 +63,8 @@ extension FilterDescriptor {
 			return [self.chip(date, isExcluded: false, removal: .wholeKey)]
 		case (.text, .text(let text)):
 			return [self.chip(text, isExcluded: false, removal: .wholeKey)]
+		case (.stars, .rating(let rating)):
+			return [self.chip("\(rating)", isExcluded: false, removal: .wholeKey)]
 		default:
 			return []
 		}
@@ -71,7 +73,7 @@ extension FilterDescriptor {
 	/// Whether a choice needs the filter's name to stand on its own.
 	var needsTitleInChip: Bool {
 		switch self.control {
-		case .booleanPills, .buckets, .date, .text:
+		case .booleanPills, .buckets, .date, .text, .stars:
 			return true
 		case .numberPills, .textPills, .duration:
 			return false
@@ -108,7 +110,7 @@ extension FilterDescriptor {
 			return [trueTitle, falseTitle]
 		case .buckets(let buckets):
 			return buckets.map { $0.title }
-		case .duration, .date, .text:
+		case .duration, .date, .text, .stars:
 			return []
 		}
 	}
@@ -148,11 +150,14 @@ enum FilterControl {
 	/// Indicates a free text field.
 	case text
 
+	/// Indicates a row presenting a star rating control.
+	case stars
+
 	// MARK: - Properties
 	/// Whether the control is presented as a row inside the details card.
 	var isRow: Bool {
 		switch self {
-		case .buckets, .date, .text:
+		case .buckets, .date, .text, .stars:
 			return true
 		case .numberPills, .textPills, .booleanPills, .duration:
 			return false

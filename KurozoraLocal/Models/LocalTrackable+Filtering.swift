@@ -52,7 +52,7 @@ extension LocalTrackable {
 			guard let actual = self.date(for: key) else { return false }
 
 			return Calendar.current.isDate(actual, inSameDayAs: Date(timeIntervalSince1970: expected))
-		case .text:
+		case .text, .rating:
 			return true
 		}
 	}
