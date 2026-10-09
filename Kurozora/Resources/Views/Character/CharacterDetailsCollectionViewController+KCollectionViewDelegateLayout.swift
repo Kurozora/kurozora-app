@@ -11,10 +11,22 @@ import UIKit
 
 extension CharacterDetailsCollectionViewController {
 	override func columnCount(forSection section: Int, layout layoutEnvironment: NSCollectionLayoutEnvironment) -> Int {
-		let width = layoutEnvironment.container.effectiveContentSize.width
+		guard let sectionIdentifier = self.snapshot?.sectionIdentifiers[safe: section] else { return 1 }
+
+		return self.columnCount(forSection: sectionIdentifier, width: layoutEnvironment.container.effectiveContentSize.width)
+	}
+
+	/// Returns the number of items the given section lays out in a row.
+	///
+	/// - Parameters:
+	///    - section: The section to lay out.
+	///    - width: The width available to the collection view's content.
+	///
+	/// - Returns: The number of columns.
+	func columnCount(forSection section: SectionLayoutKind, width: CGFloat) -> Int {
 		var columnCount = 1
 
-		switch self.snapshot.sectionIdentifiers[section] {
+		switch section {
 		case .header, .about:
 			return 1
 		case .rating:
@@ -97,8 +109,8 @@ extension CharacterDetailsCollectionViewController {
 				hasSectionHeader = true
 			case .reviews:
 				if !self.reviews.isEmpty {
-					sectionLayout = Layouts.reviewsSection(section, columns: columns, layoutEnvironment: layoutEnvironment) { width in
-						self.maximumCellHeight(for: self.reviewMeasurableItems, inSection: section, width: width, layoutEnvironment: layoutEnvironment)
+					sectionLayout = Layouts.reviewsSection(section, columns: columns, layoutEnvironment: layoutEnvironment) { _ in
+						self.cellHeight(for: characterDetailSection)
 					}
 				}
 			case .information:
@@ -107,37 +119,29 @@ extension CharacterDetailsCollectionViewController {
 				hasSectionHeader = true
 			case .people:
 				if self.personIdentities.count != 0 {
-					sectionLayout = Layouts.peopleSection(section, columns: columns, layoutEnvironment: layoutEnvironment) { width in
-						self.maximumCellHeight(inSection: section, width: width, layoutEnvironment: layoutEnvironment) { (_, person: Person) in
-							ProfileLockupCollectionViewCell.measurableItem(for: person)
-						}
+					sectionLayout = Layouts.peopleSection(section, columns: columns, layoutEnvironment: layoutEnvironment) { _ in
+						self.cellHeight(for: characterDetailSection)
 					}
 					hasSectionHeader = true
 				}
 			case .shows:
 				if self.showIdentities.count != 0 {
-					sectionLayout = Layouts.smallSection(section, columns: columns, layoutEnvironment: layoutEnvironment) { width in
-						self.maximumCellHeight(inSection: section, width: width, layoutEnvironment: layoutEnvironment) { (_, show: Show) in
-							SmallLockupCollectionViewCell.measurableItem(for: show)
-						}
+					sectionLayout = Layouts.smallSection(section, columns: columns, layoutEnvironment: layoutEnvironment) { _ in
+						self.cellHeight(for: characterDetailSection)
 					}
 					hasSectionHeader = true
 				}
 			case .literatures:
 				if self.literatureIdentities.count != 0 {
-					sectionLayout = Layouts.smallSection(section, columns: columns, layoutEnvironment: layoutEnvironment) { width in
-						self.maximumCellHeight(inSection: section, width: width, layoutEnvironment: layoutEnvironment) { (_, literature: Literature) in
-							SmallLockupCollectionViewCell.measurableItem(for: literature)
-						}
+					sectionLayout = Layouts.smallSection(section, columns: columns, layoutEnvironment: layoutEnvironment) { _ in
+						self.cellHeight(for: characterDetailSection)
 					}
 					hasSectionHeader = true
 				}
 			case .games:
 				if self.gameIdentities.count != 0 {
-					sectionLayout = Layouts.smallSection(section, columns: columns, layoutEnvironment: layoutEnvironment) { width in
-						self.maximumCellHeight(inSection: section, width: width, layoutEnvironment: layoutEnvironment) { (_, game: Game) in
-							GameLockupCollectionViewCell.measurableItem(for: game)
-						}
+					sectionLayout = Layouts.smallSection(section, columns: columns, layoutEnvironment: layoutEnvironment) { _ in
+						self.cellHeight(for: characterDetailSection)
 					}
 					hasSectionHeader = true
 				}

@@ -10,10 +10,22 @@ import UIKit
 
 extension SongDetailsCollectionViewController {
 	override func columnCount(forSection section: Int, layout layoutEnvironment: NSCollectionLayoutEnvironment) -> Int {
-		let width = layoutEnvironment.container.effectiveContentSize.width
+		guard let sectionIdentifier = self.snapshot?.sectionIdentifiers[safe: section] else { return 1 }
+
+		return self.columnCount(forSection: sectionIdentifier, width: layoutEnvironment.container.effectiveContentSize.width)
+	}
+
+	/// Returns the number of items the given section lays out in a row.
+	///
+	/// - Parameters:
+	///    - section: The section to lay out.
+	///    - width: The width available to the collection view's content.
+	///
+	/// - Returns: The number of columns.
+	func columnCount(forSection section: SectionLayoutKind, width: CGFloat) -> Int {
 		var columnCount = 1
 
-		switch self.snapshot.sectionIdentifiers[section] {
+		switch section {
 		case .header, .lyrics, .sosumi:
 			return 1
 		case .rating:
@@ -94,13 +106,12 @@ extension SongDetailsCollectionViewController {
 				hasSectionHeader = true
 			case .reviews:
 				if !self.reviews.isEmpty {
-					sectionLayout = Layouts.reviewsSection(section, columns: columns, layoutEnvironment: layoutEnvironment) { width in
-						self.maximumCellHeight(for: self.reviewMeasurableItems, inSection: section, width: width, layoutEnvironment: layoutEnvironment)
+					sectionLayout = Layouts.reviewsSection(section, columns: columns, layoutEnvironment: layoutEnvironment) { _ in
+						self.cellHeight(for: songDetailSection)
 					}
 				}
 			case .shows:
 				if !self.showIdentities.isEmpty {
-					let columns = self.columnCount(forSection: section, layout: layoutEnvironment)
 					let smallSectionLayout = Layouts.smallSection(section, columns: columns, layoutEnvironment: layoutEnvironment, isHorizontal: false)
 					sectionLayout = smallSectionLayout
 					hasSectionHeader = true

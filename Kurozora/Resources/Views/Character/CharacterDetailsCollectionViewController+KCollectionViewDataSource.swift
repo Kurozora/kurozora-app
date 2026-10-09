@@ -183,6 +183,18 @@ extension CharacterDetailsCollectionViewController {
 		}
 
 		self.snapshot = newSnapshot
+
+		for section in newSnapshot.sectionIdentifiers {
+			self.setMeasuredItems(newSnapshot.itemIdentifiers(inSection: section), for: section)
+		}
+
+		self.removeMeasuredSections(notIn: newSnapshot.sectionIdentifiers)
+		self.measureCellHeights(of: newSnapshot.sectionIdentifiers.flatMap { self.unmeasuredItems(in: $0) })
+
+		#if DEBUG
+		print("----- [apply] updateDataSource sections \(newSnapshot.sectionIdentifiers.count)")
+		#endif
+
 		self.dataSource.apply(newSnapshot)
 	}
 }

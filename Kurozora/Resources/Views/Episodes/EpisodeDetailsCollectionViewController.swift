@@ -9,7 +9,7 @@
 import KurozoraKit
 import UIKit
 
-class EpisodeDetailsCollectionViewController: DetailsCollectionViewController, TypedSegueHandling {
+class EpisodeDetailsCollectionViewController: DetailsCollectionViewController, SectionFetchable, TypedSegueHandling {
 	// MARK: Enums
 	enum SegueIdentifiers: String, SegueIdentifier {
 		case castListSegue
@@ -61,6 +61,9 @@ class EpisodeDetailsCollectionViewController: DetailsCollectionViewController, T
 	var castIdentities: [CastIdentity] = []
 
 	var suggestedEpisodes: [Episode] = []
+
+	var cache: [ItemKind: KurozoraItem] = [:]
+	var isFetchingSection: Set<SectionLayoutKind> = []
 
 	var dataSource: UICollectionViewDiffableDataSource<SectionLayoutKind, ItemKind>!
 	var snapshot: NSDiffableDataSourceSnapshot<SectionLayoutKind, ItemKind>!
@@ -131,6 +134,26 @@ class EpisodeDetailsCollectionViewController: DetailsCollectionViewController, T
 	}
 
 	// MARK: - Functions
+	override func layoutContainerWidthDidChange() {
+		self.remeasureCellHeightsNearViewport()
+	}
+
+	override func collectionViewWillLayout() {
+		self.measureStaleCellHeightsNearViewport()
+	}
+
+	override func cellHeightEnvironmentDidChange() {
+		self.remeasureAllCellHeights()
+	}
+
+	#if DEBUG
+	override func measuredItemWidth(forSectionAt section: Int) -> CGFloat? {
+		guard let sectionIdentifier = self.snapshot?.sectionIdentifiers[safe: section] else { return nil }
+
+		return self.measuredItemWidth(forSection: sectionIdentifier)
+	}
+	#endif
+
 	override func fetchDetails() async {
 		guard let episodeIdentity = self.episodeIdentity else { return }
 
@@ -310,6 +333,16 @@ class EpisodeDetailsCollectionViewController: DetailsCollectionViewController, T
 			}
 		}
 
+		if self.snapshot.indexOfSection(.reviews) != nil {
+			self.setMeasuredItems(self.snapshot.itemIdentifiers(inSection: .reviews), for: .reviews)
+		} else {
+			self.removeMeasuredSections(notIn: self.snapshot.sectionIdentifiers)
+		}
+
+		if review != nil {
+			self.measureCellHeights(of: [staleItem])
+		}
+
 		self.dataSource.apply(self.snapshot, animatingDifferences: review == nil)
 	}
 
@@ -377,6 +410,55 @@ class EpisodeDetailsCollectionViewController: DetailsCollectionViewController, T
 			navigationController.modalPresentationStyle = .formSheet
 			reviewDetailsCollectionViewController.review = review
 		}
+	}
+}
+
+// MARK: - Measurement
+extension EpisodeDetailsCollectionViewController {
+	func extractIdentity<Element>(from item: ItemKind) -> Element? where Element: KurozoraItem {
+		switch item {
+		case .castIdentity(let id): return id as? Element
+		default: return nil
+		}
+	}
+
+	func measuredItemWidth(for section: SectionLayoutKind, containerWidth: CGFloat) -> CGFloat? {
+		switch section {
+		case .reviews, .cast:
+			let columns = self.columnCount(forSection: section, width: containerWidth)
+
+			return Layouts.itemWidth(columns: columns, containerWidth: containerWidth, isHorizontal: true)
+		default:
+			return nil
+		}
+	}
+
+	func measurableItem(for itemKind: ItemKind, in _: SectionLayoutKind) -> CellHeightMeasurer.Item? {
+		switch itemKind {
+		case .review(let review):
+			return ReviewCollectionViewCell.measurableItem(for: self.reviews.first { $0.id == review.id } ?? review)
+		case .castIdentity:
+			return self.castMeasurableItem(for: itemKind)
+		default:
+			return nil
+		}
+	}
+
+	/// Returns the item that measures the given item's cast cell.
+	///
+	/// - Parameter itemKind: The item whose cell is measured.
+	///
+	/// - Returns: The item that measures the cell.
+	private func castMeasurableItem(for itemKind: ItemKind) -> CellHeightMeasurer.Item {
+		let cast = self.dataSource.indexPath(for: itemKind).flatMap { self.cast[$0] }
+
+		guard let cast = cast else {
+			return CellHeightMeasurer.Item(cellType: CastCollectionViewCell.self, isSkeleton: true) { cell in
+				cell.configure(using: nil as Cast?)
+			}
+		}
+
+		return CastCollectionViewCell.measurableItem(for: cast)
 	}
 }
 

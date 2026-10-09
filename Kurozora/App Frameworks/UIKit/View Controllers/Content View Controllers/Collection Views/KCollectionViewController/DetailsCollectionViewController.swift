@@ -52,11 +52,6 @@ class DetailsCollectionViewController: KCollectionViewController, RatingAlertPre
 		}
 	}
 
-	/// The items that measure the cells of the reviews section.
-	var reviewMeasurableItems: [CellHeightMeasurer.Item] {
-		return self.reviews.map { ReviewCollectionViewCell.measurableItem(for: $0) }
-	}
-
 	var _prefersRefreshControlDisabled = false {
 		didSet {
 			self.setNeedsRefreshControlAppearanceUpdate()

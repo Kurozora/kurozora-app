@@ -189,6 +189,17 @@ extension PersonDetailsCollectionViewController {
 			}
 		}
 
+		for section in self.snapshot.sectionIdentifiers {
+			self.setMeasuredItems(self.snapshot.itemIdentifiers(inSection: section), for: section)
+		}
+
+		self.removeMeasuredSections(notIn: self.snapshot.sectionIdentifiers)
+		self.measureCellHeights(of: self.snapshot.sectionIdentifiers.flatMap { self.unmeasuredItems(in: $0) })
+
+		#if DEBUG
+		print("----- [apply] updateDataSource sections \(self.snapshot.sectionIdentifiers.count)")
+		#endif
+
 		self.dataSource.apply(self.snapshot)
 	}
 }

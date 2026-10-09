@@ -11,10 +11,22 @@ import UIKit
 
 extension PersonDetailsCollectionViewController {
 	override func columnCount(forSection section: Int, layout layoutEnvironment: NSCollectionLayoutEnvironment) -> Int {
-		let width = layoutEnvironment.container.effectiveContentSize.width
+		guard let sectionIdentifier = self.snapshot?.sectionIdentifiers[safe: section] else { return 1 }
+
+		return self.columnCount(forSection: sectionIdentifier, width: layoutEnvironment.container.effectiveContentSize.width)
+	}
+
+	/// Returns the number of items the given section lays out in a row.
+	///
+	/// - Parameters:
+	///    - section: The section to lay out.
+	///    - width: The width available to the collection view's content.
+	///
+	/// - Returns: The number of columns.
+	func columnCount(forSection section: SectionLayoutKind, width: CGFloat) -> Int {
 		var columnCount = 1
 
-		switch self.snapshot.sectionIdentifiers[section] {
+		switch section {
 		case .header, .about:
 			return 1
 		case .rating:
@@ -98,8 +110,8 @@ extension PersonDetailsCollectionViewController {
 				hasSectionHeader = true
 			case .reviews:
 				if !self.reviews.isEmpty {
-					sectionLayout = Layouts.reviewsSection(section, columns: columns, layoutEnvironment: layoutEnvironment) { width in
-						self.maximumCellHeight(for: self.reviewMeasurableItems, inSection: section, width: width, layoutEnvironment: layoutEnvironment)
+					sectionLayout = Layouts.reviewsSection(section, columns: columns, layoutEnvironment: layoutEnvironment) { _ in
+						self.cellHeight(for: personDetailSection)
 					}
 				}
 			case .information:
@@ -108,44 +120,36 @@ extension PersonDetailsCollectionViewController {
 				hasSectionHeader = true
 			case .characters:
 				if !self.characterIdentities.isEmpty {
-					sectionLayout = Layouts.charactersSection(section, columns: columns, layoutEnvironment: layoutEnvironment) { width in
-						self.maximumCellHeight(inSection: section, width: width, layoutEnvironment: layoutEnvironment) { (_, character: Character) in
-							ProfileLockupCollectionViewCell.measurableItem(for: character)
-						}
+					sectionLayout = Layouts.charactersSection(section, columns: columns, layoutEnvironment: layoutEnvironment) { _ in
+						self.cellHeight(for: personDetailSection)
 					}
 					hasSectionHeader = true
 				}
 			case .shows:
 				if !self.showIdentities.isEmpty {
-					sectionLayout = Layouts.smallSection(section, columns: columns, layoutEnvironment: layoutEnvironment) { width in
-						self.maximumCellHeight(inSection: section, width: width, layoutEnvironment: layoutEnvironment) { (_, show: Show) in
-							SmallLockupCollectionViewCell.measurableItem(for: show)
-						}
+					sectionLayout = Layouts.smallSection(section, columns: columns, layoutEnvironment: layoutEnvironment) { _ in
+						self.cellHeight(for: personDetailSection)
 					}
 					hasSectionHeader = true
 				}
 			case .literatures:
 				if !self.literatureIdentities.isEmpty {
-					sectionLayout = Layouts.smallSection(section, columns: columns, layoutEnvironment: layoutEnvironment) { width in
-						self.maximumCellHeight(inSection: section, width: width, layoutEnvironment: layoutEnvironment) { (_, literature: Literature) in
-							SmallLockupCollectionViewCell.measurableItem(for: literature)
-						}
+					sectionLayout = Layouts.smallSection(section, columns: columns, layoutEnvironment: layoutEnvironment) { _ in
+						self.cellHeight(for: personDetailSection)
 					}
 					hasSectionHeader = true
 				}
 			case .games:
 				if !self.gameIdentities.isEmpty {
-					sectionLayout = Layouts.smallSection(section, columns: columns, layoutEnvironment: layoutEnvironment) { width in
-						self.maximumCellHeight(inSection: section, width: width, layoutEnvironment: layoutEnvironment) { (_, game: Game) in
-							GameLockupCollectionViewCell.measurableItem(for: game)
-						}
+					sectionLayout = Layouts.smallSection(section, columns: columns, layoutEnvironment: layoutEnvironment) { _ in
+						self.cellHeight(for: personDetailSection)
 					}
 					hasSectionHeader = true
 				}
 			case .relationships:
 				if !self.relationships.isEmpty {
-					sectionLayout = Layouts.smallSection(section, columns: columns, layoutEnvironment: layoutEnvironment) { width in
-						self.maximumCellHeight(for: self.relationshipMeasurableItems, inSection: section, width: width, layoutEnvironment: layoutEnvironment)
+					sectionLayout = Layouts.smallSection(section, columns: columns, layoutEnvironment: layoutEnvironment) { _ in
+						self.cellHeight(for: personDetailSection)
 					}
 					hasSectionHeader = true
 					hasBackgroundDecoration = true

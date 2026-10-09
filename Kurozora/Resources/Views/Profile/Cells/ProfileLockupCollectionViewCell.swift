@@ -246,6 +246,17 @@ extension ProfileLockupCollectionViewCell {
 		}
 	}
 
+	/// Returns the item that measures the given cast's character.
+	///
+	/// - Parameter cast: The cast the item measures.
+	///
+	/// - Returns: The item that measures the cast.
+	static func measurableItem(for cast: Cast) -> CellHeightMeasurer.Item {
+		return CellHeightMeasurer.Item(cellType: ProfileLockupCollectionViewCell.self) { cell in
+			cell.configure(using: cast.relationships.characters.data.first, role: cast.attributes.role)
+		}
+	}
+
 	/// Returns the item that measures the given person.
 	///
 	/// - Parameters:

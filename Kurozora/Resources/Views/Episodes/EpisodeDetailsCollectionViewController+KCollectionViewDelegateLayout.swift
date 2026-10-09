@@ -10,10 +10,22 @@ import UIKit
 
 extension EpisodeDetailsCollectionViewController {
 	override func columnCount(forSection section: Int, layout layoutEnvironment: NSCollectionLayoutEnvironment) -> Int {
-		let width = layoutEnvironment.container.effectiveContentSize.width
+		guard let sectionIdentifier = self.snapshot?.sectionIdentifiers[safe: section] else { return 1 }
+
+		return self.columnCount(forSection: sectionIdentifier, width: layoutEnvironment.container.effectiveContentSize.width)
+	}
+
+	/// Returns the number of items the given section lays out in a row.
+	///
+	/// - Parameters:
+	///    - section: The section to lay out.
+	///    - width: The width available to the collection view's content.
+	///
+	/// - Returns: The number of columns.
+	func columnCount(forSection section: SectionLayoutKind, width: CGFloat) -> Int {
 		var columnCount = 1
 
-		switch self.snapshot.sectionIdentifiers[section] {
+		switch section {
 		case .header, .synopsis, .sosumi:
 			return 1
 		case .badge:
@@ -81,11 +93,12 @@ extension EpisodeDetailsCollectionViewController {
 		return UICollectionViewCompositionalLayout { [weak self] (section: Int, layoutEnvironment: NSCollectionLayoutEnvironment) -> NSCollectionLayoutSection? in
 			guard let self = self else { return nil }
 			guard self.episode != nil else { return nil }
+			let episodeDetailSection = self.snapshot.sectionIdentifiers[section]
 			let columns = self.columnCount(forSection: section, layout: layoutEnvironment)
 			var sectionLayout: NSCollectionLayoutSection?
 			var hasSectionHeader = false
 
-			switch self.snapshot.sectionIdentifiers[section] {
+			switch episodeDetailSection {
 			case .header:
 				let headerSection = Layouts.headerSection(section, columns: columns, layoutEnvironment: layoutEnvironment)
 				sectionLayout = headerSection
@@ -108,8 +121,8 @@ extension EpisodeDetailsCollectionViewController {
 				hasSectionHeader = true
 			case .reviews:
 				if !self.reviews.isEmpty {
-					sectionLayout = Layouts.reviewsSection(section, columns: columns, layoutEnvironment: layoutEnvironment) { width in
-						self.maximumCellHeight(for: self.reviewMeasurableItems, inSection: section, width: width, layoutEnvironment: layoutEnvironment)
+					sectionLayout = Layouts.reviewsSection(section, columns: columns, layoutEnvironment: layoutEnvironment) { _ in
+						self.cellHeight(for: episodeDetailSection)
 					}
 				}
 			case .information:
@@ -118,12 +131,8 @@ extension EpisodeDetailsCollectionViewController {
 				hasSectionHeader = true
 			case .cast:
 				if !self.castIdentities.isEmpty {
-					sectionLayout = Layouts.castSection(section, columns: columns, layoutEnvironment: layoutEnvironment) { width in
-						let measurableItems = self.cast
-							.filter { $0.key.section == section }
-							.map { CastCollectionViewCell.measurableItem(for: $0.value) }
-
-						return self.maximumCellHeight(for: measurableItems, inSection: section, width: width, layoutEnvironment: layoutEnvironment)
+					sectionLayout = Layouts.castSection(section, columns: columns, layoutEnvironment: layoutEnvironment) { _ in
+						self.cellHeight(for: episodeDetailSection)
 					}
 					hasSectionHeader = true
 				}

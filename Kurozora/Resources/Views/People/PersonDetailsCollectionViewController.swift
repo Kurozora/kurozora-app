@@ -65,11 +65,6 @@ class PersonDetailsCollectionViewController: DetailsCollectionViewController, Se
 	var gameIdentities: [GameIdentity] = []
 	var relationships: [PersonRelationship] = []
 
-	/// The measurable items of the relationships section.
-	var relationshipMeasurableItems: [CellHeightMeasurer.Item] {
-		self.relationships.map { ProfileLockupCollectionViewCell.measurableItem(for: $0) }
-	}
-
 	var cache: [ItemKind: KurozoraItem] = [:]
 	var isFetchingSection: Set<SectionLayoutKind> = []
 
@@ -128,6 +123,26 @@ class PersonDetailsCollectionViewController: DetailsCollectionViewController, Se
 	}
 
 	// MARK: - Functions
+	override func layoutContainerWidthDidChange() {
+		self.remeasureCellHeightsNearViewport()
+	}
+
+	override func collectionViewWillLayout() {
+		self.measureStaleCellHeightsNearViewport()
+	}
+
+	override func cellHeightEnvironmentDidChange() {
+		self.remeasureAllCellHeights()
+	}
+
+	#if DEBUG
+	override func measuredItemWidth(forSectionAt section: Int) -> CGFloat? {
+		guard let sectionIdentifier = self.snapshot?.sectionIdentifiers[safe: section] else { return nil }
+
+		return self.measuredItemWidth(forSection: sectionIdentifier)
+	}
+	#endif
+
 	/// Subscribes to local library mutations affecting the visible cells.
 	private func observeLibraryChanges() {
 		guard let slug = User.current?.attributes.slug else { return }
@@ -346,6 +361,16 @@ class PersonDetailsCollectionViewController: DetailsCollectionViewController, Se
 			}
 		}
 
+		if self.snapshot.indexOfSection(.reviews) != nil {
+			self.setMeasuredItems(self.snapshot.itemIdentifiers(inSection: .reviews), for: .reviews)
+		} else {
+			self.removeMeasuredSections(notIn: self.snapshot.sectionIdentifiers)
+		}
+
+		if review != nil {
+			self.measureCellHeights(of: [staleItem])
+		}
+
 		self.dataSource.apply(self.snapshot, animatingDifferences: review == nil)
 	}
 
@@ -420,6 +445,107 @@ class PersonDetailsCollectionViewController: DetailsCollectionViewController, Se
 			navigationController.modalPresentationStyle = .formSheet
 			reviewDetailsCollectionViewController.review = review
 		}
+	}
+}
+
+// MARK: - Measurement
+extension PersonDetailsCollectionViewController {
+	func measuredItemWidth(for section: SectionLayoutKind, containerWidth: CGFloat) -> CGFloat? {
+		switch section {
+		case .reviews, .characters, .shows, .literatures, .games, .relationships:
+			let columns = self.columnCount(forSection: section, width: containerWidth)
+
+			return Layouts.itemWidth(columns: columns, containerWidth: containerWidth, isHorizontal: true)
+		default:
+			return nil
+		}
+	}
+
+	func measurableItem(for itemKind: ItemKind, in _: SectionLayoutKind) -> CellHeightMeasurer.Item? {
+		switch itemKind {
+		case .review(let review):
+			return ReviewCollectionViewCell.measurableItem(for: self.reviews.first { $0.id == review.id } ?? review)
+		case .characterIdentity:
+			return self.characterMeasurableItem(for: itemKind)
+		case .showIdentity:
+			return self.showMeasurableItem(for: itemKind)
+		case .literatureIdentity:
+			return self.literatureMeasurableItem(for: itemKind)
+		case .gameIdentity:
+			return self.gameMeasurableItem(for: itemKind)
+		case .personRelationship(let relationship):
+			return ProfileLockupCollectionViewCell.measurableItem(for: relationship)
+		default:
+			return nil
+		}
+	}
+
+	/// Returns the item that measures the given item's character cell.
+	///
+	/// - Parameter itemKind: The item whose cell is measured.
+	///
+	/// - Returns: The item that measures the cell.
+	private func characterMeasurableItem(for itemKind: ItemKind) -> CellHeightMeasurer.Item {
+		let character: Character? = self.fetchModel(for: itemKind)
+
+		guard let character = character else {
+			return CellHeightMeasurer.Item(cellType: ProfileLockupCollectionViewCell.self, isSkeleton: true) { cell in
+				cell.configure(using: nil as Character?)
+			}
+		}
+
+		return ProfileLockupCollectionViewCell.measurableItem(for: character)
+	}
+
+	/// Returns the item that measures the given item's show cell.
+	///
+	/// - Parameter itemKind: The item whose cell is measured.
+	///
+	/// - Returns: The item that measures the cell.
+	private func showMeasurableItem(for itemKind: ItemKind) -> CellHeightMeasurer.Item {
+		let show: Show? = self.fetchModel(for: itemKind)
+
+		guard let show = show else {
+			return CellHeightMeasurer.Item(cellType: SmallLockupCollectionViewCell.self, isSkeleton: true) { cell in
+				cell.configure(using: nil as Show?)
+			}
+		}
+
+		return SmallLockupCollectionViewCell.measurableItem(for: show)
+	}
+
+	/// Returns the item that measures the given item's literature cell.
+	///
+	/// - Parameter itemKind: The item whose cell is measured.
+	///
+	/// - Returns: The item that measures the cell.
+	private func literatureMeasurableItem(for itemKind: ItemKind) -> CellHeightMeasurer.Item {
+		let literature: Literature? = self.fetchModel(for: itemKind)
+
+		guard let literature = literature else {
+			return CellHeightMeasurer.Item(cellType: SmallLockupCollectionViewCell.self, isSkeleton: true) { cell in
+				cell.configure(using: nil as Literature?)
+			}
+		}
+
+		return SmallLockupCollectionViewCell.measurableItem(for: literature)
+	}
+
+	/// Returns the item that measures the given item's game cell.
+	///
+	/// - Parameter itemKind: The item whose cell is measured.
+	///
+	/// - Returns: The item that measures the cell.
+	private func gameMeasurableItem(for itemKind: ItemKind) -> CellHeightMeasurer.Item {
+		let game: Game? = self.fetchModel(for: itemKind)
+
+		guard let game = game else {
+			return CellHeightMeasurer.Item(cellType: GameLockupCollectionViewCell.self, isSkeleton: true) { cell in
+				cell.configure(using: nil as Game?)
+			}
+		}
+
+		return GameLockupCollectionViewCell.measurableItem(for: game)
 	}
 }
 

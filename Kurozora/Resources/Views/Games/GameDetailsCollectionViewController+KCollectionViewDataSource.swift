@@ -172,6 +172,12 @@ extension GameDetailsCollectionViewController {
 		newSnapshot.appendItems(GameDetail.Information.localCases.map { .information($0) }, toSection: .information)
 
 		self.snapshot = newSnapshot
+
+		for section in newSnapshot.sectionIdentifiers {
+			self.setMeasuredItems(newSnapshot.itemIdentifiers(inSection: section), for: section)
+		}
+
+		self.removeMeasuredSections(notIn: newSnapshot.sectionIdentifiers)
 		self.dataSource.apply(newSnapshot, animatingDifferences: false)
 	}
 
@@ -299,6 +305,18 @@ extension GameDetailsCollectionViewController {
 		}
 
 		self.snapshot = newSnapshot
+
+		for section in newSnapshot.sectionIdentifiers {
+			self.setMeasuredItems(newSnapshot.itemIdentifiers(inSection: section), for: section)
+		}
+
+		self.removeMeasuredSections(notIn: newSnapshot.sectionIdentifiers)
+		self.measureCellHeights(of: newSnapshot.sectionIdentifiers.flatMap { self.unmeasuredItems(in: $0) })
+
+		#if DEBUG
+		print("----- [apply] updateDataSource sections \(newSnapshot.sectionIdentifiers.count)")
+		#endif
+
 		self.dataSource.apply(newSnapshot, animatingDifferences: false)
 	}
 }

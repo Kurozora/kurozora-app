@@ -11,10 +11,22 @@ import UIKit
 
 extension GameDetailsCollectionViewController {
 	override func columnCount(forSection section: Int, layout layoutEnvironment: NSCollectionLayoutEnvironment) -> Int {
-		let width = layoutEnvironment.container.effectiveContentSize.width
+		guard let sectionIdentifier = self.snapshot?.sectionIdentifiers[safe: section] else { return 1 }
+
+		return self.columnCount(forSection: sectionIdentifier, width: layoutEnvironment.container.effectiveContentSize.width)
+	}
+
+	/// Returns the number of items the given section lays out in a row.
+	///
+	/// - Parameters:
+	///    - section: The section to lay out.
+	///    - width: The width available to the collection view's content.
+	///
+	/// - Returns: The number of columns.
+	func columnCount(forSection section: SectionLayoutKind, width: CGFloat) -> Int {
 		var columnCount = 1
 
-		switch self.snapshot.sectionIdentifiers[section] {
+		switch section {
 		case .header, .countdown, .synopsis, .sosumi:
 			return 1
 		case .badge:
@@ -90,12 +102,13 @@ extension GameDetailsCollectionViewController {
 		let layout = UICollectionViewCompositionalLayout { [weak self] (section: Int, layoutEnvironment: NSCollectionLayoutEnvironment) -> NSCollectionLayoutSection? in
 			guard let self = self else { return nil }
 			guard self.game != nil || self.libraryEntry != nil else { return nil }
+			let gameDetailSection = self.snapshot.sectionIdentifiers[section]
 			let columns = self.columnCount(forSection: section, layout: layoutEnvironment)
 			var sectionLayout: NSCollectionLayoutSection?
 			var hasSectionHeader = false
 			var hasBackgroundDecoration = false
 
-			switch self.snapshot.sectionIdentifiers[section] {
+			switch gameDetailSection {
 			case .header:
 				let headerSection = Layouts.headerSection(section, columns: columns, layoutEnvironment: layoutEnvironment)
 				sectionLayout = headerSection
@@ -121,8 +134,8 @@ extension GameDetailsCollectionViewController {
 				hasSectionHeader = true
 			case .reviews:
 				if !self.reviews.isEmpty || self.editorial != nil {
-					sectionLayout = Layouts.reviewsSection(section, columns: columns, layoutEnvironment: layoutEnvironment) { width in
-						self.maximumCellHeight(for: self.reviewMeasurableItems, inSection: section, width: width, layoutEnvironment: layoutEnvironment)
+					sectionLayout = Layouts.reviewsSection(section, columns: columns, layoutEnvironment: layoutEnvironment) { _ in
+						self.cellHeight(for: gameDetailSection)
 					}
 				}
 			case .information:
@@ -131,58 +144,46 @@ extension GameDetailsCollectionViewController {
 				hasSectionHeader = true
 			case .cast:
 				if !self.castIdentities.isEmpty {
-					sectionLayout = Layouts.castSection(section, columns: columns, layoutEnvironment: layoutEnvironment) { width in
-						self.maximumCellHeight(inSection: section, width: width, layoutEnvironment: layoutEnvironment) { _, cast in
-							CastCollectionViewCell.measurableItem(for: cast)
-						}
+					sectionLayout = Layouts.castSection(section, columns: columns, layoutEnvironment: layoutEnvironment) { _ in
+						self.cellHeight(for: gameDetailSection)
 					}
 					hasSectionHeader = true
 				}
 			case .studios:
 				if !self.studioIdentities.isEmpty {
-					sectionLayout = Layouts.studiosSection(section, columns: columns, layoutEnvironment: layoutEnvironment) { width in
-						self.maximumCellHeight(inSection: section, width: width, layoutEnvironment: layoutEnvironment) { _, studio in
-							StudioLockupCollectionViewCell.measurableItem(for: studio)
-						}
+					sectionLayout = Layouts.studiosSection(section, columns: columns, layoutEnvironment: layoutEnvironment) { _ in
+						self.cellHeight(for: gameDetailSection)
 					}
 					hasSectionHeader = true
 				}
 			case .moreByStudio:
 				if !self.studioGameIdentities.isEmpty {
-					sectionLayout = Layouts.smallSection(section, columns: columns, layoutEnvironment: layoutEnvironment) { width in
-						self.maximumCellHeight(inSection: section, width: width, layoutEnvironment: layoutEnvironment) { (_, game: Game) in
-							GameLockupCollectionViewCell.measurableItem(for: game)
-						}
+					sectionLayout = Layouts.smallSection(section, columns: columns, layoutEnvironment: layoutEnvironment) { _ in
+						self.cellHeight(for: gameDetailSection)
 					}
 					hasSectionHeader = true
 					hasBackgroundDecoration = true
 				}
 			case .relatedGames:
 				if !self.relatedGames.isEmpty {
-					sectionLayout = Layouts.smallSection(section, columns: columns, layoutEnvironment: layoutEnvironment) { width in
-						let measurableItems = self.relatedGames.map { GameLockupCollectionViewCell.measurableItem(for: $0) }
-
-						return self.maximumCellHeight(for: measurableItems, inSection: section, width: width, layoutEnvironment: layoutEnvironment)
+					sectionLayout = Layouts.smallSection(section, columns: columns, layoutEnvironment: layoutEnvironment) { _ in
+						self.cellHeight(for: gameDetailSection)
 					}
 					hasSectionHeader = true
 					hasBackgroundDecoration = true
 				}
 			case .relatedShows:
 				if !self.relatedShows.isEmpty {
-					sectionLayout = Layouts.smallSection(section, columns: columns, layoutEnvironment: layoutEnvironment) { width in
-						let measurableItems = self.relatedShows.map { SmallLockupCollectionViewCell.measurableItem(for: $0) }
-
-						return self.maximumCellHeight(for: measurableItems, inSection: section, width: width, layoutEnvironment: layoutEnvironment)
+					sectionLayout = Layouts.smallSection(section, columns: columns, layoutEnvironment: layoutEnvironment) { _ in
+						self.cellHeight(for: gameDetailSection)
 					}
 					hasSectionHeader = true
 					hasBackgroundDecoration = true
 				}
 			case .relatedLiteratures:
 				if !self.relatedLiteratures.isEmpty {
-					sectionLayout = Layouts.smallSection(section, columns: columns, layoutEnvironment: layoutEnvironment) { width in
-						let measurableItems = self.relatedLiteratures.map { SmallLockupCollectionViewCell.measurableItem(for: $0) }
-
-						return self.maximumCellHeight(for: measurableItems, inSection: section, width: width, layoutEnvironment: layoutEnvironment)
+					sectionLayout = Layouts.smallSection(section, columns: columns, layoutEnvironment: layoutEnvironment) { _ in
+						self.cellHeight(for: gameDetailSection)
 					}
 					hasSectionHeader = true
 					hasBackgroundDecoration = true

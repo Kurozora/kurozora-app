@@ -181,6 +181,18 @@ extension EpisodeDetailsCollectionViewController {
 		}
 
 		self.snapshot = newSnapshot
+
+		for section in newSnapshot.sectionIdentifiers {
+			self.setMeasuredItems(newSnapshot.itemIdentifiers(inSection: section), for: section)
+		}
+
+		self.removeMeasuredSections(notIn: newSnapshot.sectionIdentifiers)
+		self.measureCellHeights(of: newSnapshot.sectionIdentifiers.flatMap { self.unmeasuredItems(in: $0) })
+
+		#if DEBUG
+		print("----- [apply] updateDataSource sections \(newSnapshot.sectionIdentifiers.count)")
+		#endif
+
 		self.dataSource.apply(newSnapshot, animatingDifferences: false)
 	}
 
@@ -193,6 +205,12 @@ extension EpisodeDetailsCollectionViewController {
 		var snapshot = self.dataSource.snapshot()
 		guard snapshot.indexOfItem(itemKind) != nil else { return }
 		snapshot.reconfigureItems([itemKind])
+		self.measureCellHeights(of: [itemKind])
+
+		#if DEBUG
+		print("----- [apply] setItemKindNeedsUpdate")
+		#endif
+
 		self.dataSource.apply(snapshot, animatingDifferences: true)
 	}
 }
