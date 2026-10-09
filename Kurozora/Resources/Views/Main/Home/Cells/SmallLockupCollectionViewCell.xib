@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="23504" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="25098" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina6_1" orientation="portrait" appearance="dark"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="23506"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="25073"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="collection view cell content view" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -12,10 +12,10 @@
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
         <collectionViewCell opaque="NO" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="" id="qeN-52-zH0" customClass="SmallLockupCollectionViewCell" customModule="Kurozora" customModuleProvider="target">
-            <rect key="frame" x="0.0" y="0.0" width="374" height="160"/>
+            <rect key="frame" x="0.0" y="0.0" width="374" height="150"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-            <collectionViewCellContentView key="contentView" opaque="NO" multipleTouchEnabled="YES" contentMode="center" ambiguous="YES" insetsLayoutMarginsFromSafeArea="NO" id="jcJ-H9-lxl">
-                <rect key="frame" x="0.0" y="0.0" width="374" height="160"/>
+            <collectionViewCellContentView key="contentView" opaque="NO" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="jcJ-H9-lxl">
+                <rect key="frame" x="0.0" y="0.0" width="374" height="150"/>
                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                 <subviews>
                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="g2o-3O-6kL">
@@ -33,6 +33,10 @@
                         </subviews>
                         <constraints>
                             <constraint firstAttribute="height" relation="lessThanOrEqual" constant="150" id="2M7-TL-18a"/>
+                            <constraint firstItem="Brd-vw-sml" firstAttribute="top" secondItem="g2o-3O-6kL" secondAttribute="top" id="BB1-vw-sml"/>
+                            <constraint firstItem="Brd-vw-sml" firstAttribute="leading" secondItem="g2o-3O-6kL" secondAttribute="leading" id="BB2-vw-sml"/>
+                            <constraint firstAttribute="trailing" secondItem="Brd-vw-sml" secondAttribute="trailing" id="BB3-vw-sml"/>
+                            <constraint firstAttribute="bottom" secondItem="Brd-vw-sml" secondAttribute="bottom" id="BB4-vw-sml"/>
                             <constraint firstItem="biq-kw-T3L" firstAttribute="top" secondItem="g2o-3O-6kL" secondAttribute="top" id="HFD-w8-6RA"/>
                             <constraint firstItem="eSd-5E-z6q" firstAttribute="leading" secondItem="biq-kw-T3L" secondAttribute="leading" id="Vs4-KG-e0p"/>
                             <constraint firstAttribute="width" secondItem="g2o-3O-6kL" secondAttribute="height" multiplier="2:3" id="bCk-Pl-csj"/>
@@ -42,10 +46,6 @@
                             <constraint firstItem="eSd-5E-z6q" firstAttribute="top" secondItem="biq-kw-T3L" secondAttribute="top" id="qcI-Zy-eVN"/>
                             <constraint firstAttribute="bottom" secondItem="biq-kw-T3L" secondAttribute="bottom" id="tju-Ab-onj"/>
                             <constraint firstItem="eSd-5E-z6q" firstAttribute="bottom" secondItem="biq-kw-T3L" secondAttribute="bottom" id="v0e-aC-HSC"/>
-                            <constraint firstItem="Brd-vw-sml" firstAttribute="top" secondItem="g2o-3O-6kL" secondAttribute="top" id="BB1-vw-sml"/>
-                            <constraint firstItem="Brd-vw-sml" firstAttribute="leading" secondItem="g2o-3O-6kL" secondAttribute="leading" id="BB2-vw-sml"/>
-                            <constraint firstAttribute="trailing" secondItem="Brd-vw-sml" secondAttribute="trailing" id="BB3-vw-sml"/>
-                            <constraint firstAttribute="bottom" secondItem="Brd-vw-sml" secondAttribute="bottom" id="BB4-vw-sml"/>
                         </constraints>
                     </view>
                     <stackView opaque="NO" contentMode="scaleToFill" ambiguous="YES" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="lkC-TT-hWL">
@@ -183,10 +183,10 @@
         </collectionViewCell>
     </objects>
     <resources>
-        <image name="placeholders/show.poster" width="680" height="1000"/>
         <image name="book.texture" width="160" height="240"/>
+        <image name="placeholders/show.poster" width="680" height="1000"/>
         <systemColor name="secondaryLabelColor">
-            <color red="0.23529411764705882" green="0.23529411764705882" blue="0.2627450980392157" alpha="0.59999999999999998" colorSpace="custom" customColorSpace="sRGB"/>
+            <color white="0.0" alpha="0.49803921568627452" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>
     </resources>
 </document>
