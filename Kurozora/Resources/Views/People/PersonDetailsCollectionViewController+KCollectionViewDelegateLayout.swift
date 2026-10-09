@@ -101,7 +101,7 @@ extension PersonDetailsCollectionViewController {
 					hasSectionHeader = true
 				}
 			case .rating:
-				let ratingSection = Layouts.ratingSection(section, columns: columns, layoutEnvironment: layoutEnvironment, itemCount: self.snapshot.numberOfItems(inSection: personDetailSection))
+				let ratingSection = Layouts.ratingSection(section, columns: columns, layoutEnvironment: layoutEnvironment, itemCount: PersonDetail.Rating.allCases.count)
 				sectionLayout = ratingSection
 				hasSectionHeader = true
 			case .rateAndReview:
@@ -110,9 +110,7 @@ extension PersonDetailsCollectionViewController {
 				hasSectionHeader = true
 			case .reviews:
 				if !self.reviews.isEmpty {
-					sectionLayout = Layouts.reviewsSection(section, columns: columns, layoutEnvironment: layoutEnvironment) { _ in
-						self.cellHeight(for: personDetailSection)
-					}
+					sectionLayout = Layouts.reviewsSection(section, columns: columns, layoutEnvironment: layoutEnvironment, maximumHeight: self.cellHeight(for: personDetailSection))
 				}
 			case .information:
 				let gridSection = Layouts.gridSection(section, columns: columns, layoutEnvironment: layoutEnvironment)
@@ -120,37 +118,27 @@ extension PersonDetailsCollectionViewController {
 				hasSectionHeader = true
 			case .characters:
 				if !self.characterIdentities.isEmpty {
-					sectionLayout = Layouts.charactersSection(section, columns: columns, layoutEnvironment: layoutEnvironment) { _ in
-						self.cellHeight(for: personDetailSection)
-					}
+					sectionLayout = Layouts.charactersSection(section, columns: columns, layoutEnvironment: layoutEnvironment, maximumHeight: self.cellHeight(for: personDetailSection))
 					hasSectionHeader = true
 				}
 			case .shows:
 				if !self.showIdentities.isEmpty {
-					sectionLayout = Layouts.smallSection(section, columns: columns, layoutEnvironment: layoutEnvironment) { _ in
-						self.cellHeight(for: personDetailSection)
-					}
+					sectionLayout = Layouts.smallSection(section, columns: columns, layoutEnvironment: layoutEnvironment, maximumHeight: self.cellHeight(for: personDetailSection))
 					hasSectionHeader = true
 				}
 			case .literatures:
 				if !self.literatureIdentities.isEmpty {
-					sectionLayout = Layouts.smallSection(section, columns: columns, layoutEnvironment: layoutEnvironment) { _ in
-						self.cellHeight(for: personDetailSection)
-					}
+					sectionLayout = Layouts.smallSection(section, columns: columns, layoutEnvironment: layoutEnvironment, maximumHeight: self.cellHeight(for: personDetailSection))
 					hasSectionHeader = true
 				}
 			case .games:
 				if !self.gameIdentities.isEmpty {
-					sectionLayout = Layouts.smallSection(section, columns: columns, layoutEnvironment: layoutEnvironment) { _ in
-						self.cellHeight(for: personDetailSection)
-					}
+					sectionLayout = Layouts.smallSection(section, columns: columns, layoutEnvironment: layoutEnvironment, maximumHeight: self.cellHeight(for: personDetailSection))
 					hasSectionHeader = true
 				}
 			case .relationships:
 				if !self.relationships.isEmpty {
-					sectionLayout = Layouts.smallSection(section, columns: columns, layoutEnvironment: layoutEnvironment) { _ in
-						self.cellHeight(for: personDetailSection)
-					}
+					sectionLayout = Layouts.smallSection(section, columns: columns, layoutEnvironment: layoutEnvironment, maximumHeight: self.cellHeight(for: personDetailSection))
 					hasSectionHeader = true
 					hasBackgroundDecoration = true
 				}
@@ -166,7 +154,7 @@ extension PersonDetailsCollectionViewController {
 			}
 
 			if hasBackgroundDecoration {
-				let isLastSection = section == self.snapshot.sectionIdentifiers.count - 1
+				let isLastSection = section == self.laidOutSectionCount - 1
 				sectionLayout?.decorationItems = [Layouts.backgroundDecoration(extendsToBottom: isLastSection, layoutEnvironment: layoutEnvironment)]
 			}
 

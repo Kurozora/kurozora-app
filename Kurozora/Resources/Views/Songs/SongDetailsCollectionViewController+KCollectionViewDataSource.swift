@@ -150,6 +150,8 @@ extension SongDetailsCollectionViewController {
 			}
 		}
 
+		self.laidOutSectionCount = self.snapshot.sectionIdentifiers.count
+
 		for section in self.snapshot.sectionIdentifiers {
 			self.setMeasuredItems(self.snapshot.itemIdentifiers(inSection: section), for: section)
 		}

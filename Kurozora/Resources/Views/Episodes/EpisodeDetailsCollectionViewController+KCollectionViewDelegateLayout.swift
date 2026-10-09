@@ -121,9 +121,7 @@ extension EpisodeDetailsCollectionViewController {
 				hasSectionHeader = true
 			case .reviews:
 				if !self.reviews.isEmpty {
-					sectionLayout = Layouts.reviewsSection(section, columns: columns, layoutEnvironment: layoutEnvironment) { _ in
-						self.cellHeight(for: episodeDetailSection)
-					}
+					sectionLayout = Layouts.reviewsSection(section, columns: columns, layoutEnvironment: layoutEnvironment, maximumHeight: self.cellHeight(for: episodeDetailSection))
 				}
 			case .information:
 				let gridSection = Layouts.gridSection(section, columns: columns, layoutEnvironment: layoutEnvironment)
@@ -131,9 +129,7 @@ extension EpisodeDetailsCollectionViewController {
 				hasSectionHeader = true
 			case .cast:
 				if !self.castIdentities.isEmpty {
-					sectionLayout = Layouts.castSection(section, columns: columns, layoutEnvironment: layoutEnvironment) { _ in
-						self.cellHeight(for: episodeDetailSection)
-					}
+					sectionLayout = Layouts.castSection(section, columns: columns, layoutEnvironment: layoutEnvironment, maximumHeight: self.cellHeight(for: episodeDetailSection))
 					hasSectionHeader = true
 				}
 			case .suggestedEpisodes:

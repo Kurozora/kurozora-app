@@ -18,6 +18,21 @@ enum Layouts {
 	/// The narrowest a quick action button is laid out at.
 	static let quickActionButtonMinWidth: CGFloat = 250.0
 
+	/// The space between two columns or cards in a recap row.
+	static let recapInterGroupSpacing: CGFloat = 16.0
+
+	/// The narrowest a recap card is laid out at.
+	private static let recapCardMinWidth: CGFloat = 256.0
+
+	/// The widest a recap card is laid out at.
+	private static let recapCardMaxWidth: CGFloat = 384.0
+
+	/// The fraction of a recap row a card takes when the next card peeks in.
+	private static let recapCardPeekWidthFraction: CGFloat = 0.9
+
+	/// The fraction of a recap row the columns share.
+	private static let recapColumnWidthFraction: CGFloat = 0.98
+
 	/// The fraction of a section's width one orthogonally scrolling page occupies.
 	private static let groupWidthFraction: CGFloat = 0.90
 
@@ -171,7 +186,7 @@ enum Layouts {
 		return layoutSection
 	}
 
-	static func charactersSection(_ section: Int, columns: Int, layoutEnvironment: NSCollectionLayoutEnvironment, isHorizontal: Bool = true, maximumHeight: ((CGFloat) -> CGFloat?)? = nil) -> NSCollectionLayoutSection {
+	static func charactersSection(_ section: Int, columns: Int, layoutEnvironment: NSCollectionLayoutEnvironment, isHorizontal: Bool = true, maximumHeight: CGFloat? = nil) -> NSCollectionLayoutSection {
 		let widthDimension: NSCollectionLayoutDimension = isHorizontal ? .fractionalWidth(Self.groupWidthFraction) : .fractionalWidth(1.0)
 		let bottomInset: CGFloat = isHorizontal ? 40.0 : 20.0
 		let heightDimensions = Self.heightDimensions(columns: columns, layoutEnvironment: layoutEnvironment, isHorizontal: isHorizontal, estimate: 1.0, maximumHeight: maximumHeight)
@@ -197,7 +212,7 @@ enum Layouts {
 		return layoutSection
 	}
 
-	static func peopleSection(_ section: Int, columns: Int, layoutEnvironment: NSCollectionLayoutEnvironment, isHorizontal: Bool = true, maximumHeight: ((CGFloat) -> CGFloat?)? = nil) -> NSCollectionLayoutSection {
+	static func peopleSection(_ section: Int, columns: Int, layoutEnvironment: NSCollectionLayoutEnvironment, isHorizontal: Bool = true, maximumHeight: CGFloat? = nil) -> NSCollectionLayoutSection {
 		let widthDimension: NSCollectionLayoutDimension = isHorizontal ? .fractionalWidth(Self.groupWidthFraction) : .fractionalWidth(1.0)
 		let bottomInset: CGFloat = isHorizontal ? 40.0 : 20.0
 		let heightDimensions = Self.heightDimensions(columns: columns, layoutEnvironment: layoutEnvironment, isHorizontal: isHorizontal, estimate: 1.0, maximumHeight: maximumHeight)
@@ -223,7 +238,7 @@ enum Layouts {
 		return layoutSection
 	}
 
-	static func castSection(_ section: Int, columns: Int, layoutEnvironment: NSCollectionLayoutEnvironment, isHorizontal: Bool = true, maximumHeight: ((CGFloat) -> CGFloat?)? = nil) -> NSCollectionLayoutSection {
+	static func castSection(_ section: Int, columns: Int, layoutEnvironment: NSCollectionLayoutEnvironment, isHorizontal: Bool = true, maximumHeight: CGFloat? = nil) -> NSCollectionLayoutSection {
 		let widthDimension: NSCollectionLayoutDimension = isHorizontal ? .fractionalWidth(Self.groupWidthFraction) : .fractionalWidth(1.0)
 		let bottomInset: CGFloat = isHorizontal ? 40.0 : 20.0
 		let heightDimensions = Self.heightDimensions(columns: columns, layoutEnvironment: layoutEnvironment, isHorizontal: isHorizontal, estimate: 1.0, maximumHeight: maximumHeight)
@@ -249,7 +264,7 @@ enum Layouts {
 		return layoutSection
 	}
 
-	static func musicSection(_ section: Int, columns: Int, layoutEnvironment: NSCollectionLayoutEnvironment, isHorizontal: Bool = true, maximumHeight: ((CGFloat) -> CGFloat?)? = nil) -> NSCollectionLayoutSection {
+	static func musicSection(_ section: Int, columns: Int, layoutEnvironment: NSCollectionLayoutEnvironment, isHorizontal: Bool = true, maximumHeight: CGFloat? = nil) -> NSCollectionLayoutSection {
 		let widthDimension: NSCollectionLayoutDimension = isHorizontal ? .fractionalWidth(Self.groupWidthFraction) : .fractionalWidth(1.0)
 		let bottomInset: CGFloat = isHorizontal ? 40.0 : 20.0
 		let heightDimensions = Self.heightDimensions(columns: columns, layoutEnvironment: layoutEnvironment, isHorizontal: isHorizontal, estimate: 1.0, maximumHeight: maximumHeight)
@@ -274,7 +289,7 @@ enum Layouts {
 		return layoutSection
 	}
 
-	static func smallSection(_ section: Int, columns: Int, layoutEnvironment: NSCollectionLayoutEnvironment, isHorizontal: Bool = true, maximumHeight: ((CGFloat) -> CGFloat?)? = nil) -> NSCollectionLayoutSection {
+	static func smallSection(_ section: Int, columns: Int, layoutEnvironment: NSCollectionLayoutEnvironment, isHorizontal: Bool = true, maximumHeight: CGFloat? = nil) -> NSCollectionLayoutSection {
 		let widthDimension: NSCollectionLayoutDimension = isHorizontal ? .fractionalWidth(Self.groupWidthFraction) : .fractionalWidth(1.0)
 		let bottomInset: CGFloat = isHorizontal ? 40.0 : 20.0
 		let heightDimensions = Self.heightDimensions(columns: columns, layoutEnvironment: layoutEnvironment, isHorizontal: isHorizontal, estimate: 1.0, maximumHeight: maximumHeight)
@@ -318,34 +333,20 @@ enum Layouts {
 		return max((groupWidth - spacing) / columnCount, 0.0)
 	}
 
-	/// Returns the width a single item is given in a section laid out by `heightDimensions`.
-	///
-	/// - Parameters:
-	///    - columns: The number of items in a row.
-	///    - layoutEnvironment: The environment the section is laid out in.
-	///    - isHorizontal: Whether the section scrolls orthogonally.
-	///
-	/// - Returns: The width of one item.
-	private static func itemWidth(columns: Int, layoutEnvironment: NSCollectionLayoutEnvironment, isHorizontal: Bool) -> CGFloat {
-		return Self.itemWidth(columns: columns, containerWidth: layoutEnvironment.container.effectiveContentSize.width, isHorizontal: isHorizontal)
-	}
-
 	/// Returns the item and group heights that keep a section's cells level with each other.
 	///
 	/// - Parameters:
 	///    - columns: The number of items in a row.
 	///    - layoutEnvironment: The environment the section is laid out in.
-	///    - isHorizontal: Whether the section scrolls orthogonally, holding one height for its whole length.
+	///    - isHorizontal: Whether the section scrolls orthogonally.
 	///    - estimate: The height a row starts out at.
-	///    - maximumHeight: Returns the height of the tallest cell in the section at the given item width.
+	///    - maximumHeight: The height of the tallest cell in the section.
 	///
 	/// - Returns: The item and group height dimensions.
-	private static func heightDimensions(columns: Int, layoutEnvironment: NSCollectionLayoutEnvironment, isHorizontal: Bool, estimate: CGFloat, maximumHeight: ((CGFloat) -> CGFloat?)?) -> (item: NSCollectionLayoutDimension, group: NSCollectionLayoutDimension) {
+	private static func heightDimensions(columns: Int, layoutEnvironment: NSCollectionLayoutEnvironment, isHorizontal: Bool, estimate: CGFloat, maximumHeight: CGFloat?) -> (item: NSCollectionLayoutDimension, group: NSCollectionLayoutDimension) {
 		if isHorizontal {
-			let itemWidth = Self.itemWidth(columns: columns, layoutEnvironment: layoutEnvironment, isHorizontal: isHorizontal)
-
-			if let height = maximumHeight?(itemWidth) {
-				return (.fractionalHeight(1.0), .absolute(height))
+			if let maximumHeight = maximumHeight {
+				return (.fractionalHeight(1.0), .absolute(maximumHeight))
 			}
 
 			return (.estimated(estimate), .estimated(estimate))
@@ -373,6 +374,38 @@ enum Layouts {
 		return (.fractionalHeight(1.0), .absolute(maximumHeight))
 	}
 
+	/// Returns the width a single recap column is given.
+	///
+	/// - Parameters:
+	///    - columns: The number of columns shown at once.
+	///    - containerWidth: The width available to the section's content.
+	///
+	/// - Returns: The width of one column.
+	static func recapColumnWidth(columns: Int, containerWidth: CGFloat) -> CGFloat {
+		let contentWidth = containerWidth - Self.horizontalInset * 2.0
+		let columnCount = CGFloat(max(columns, 1))
+
+		return ((contentWidth * Self.recapColumnWidthFraction) - Self.recapInterGroupSpacing * (columnCount - 1.0)) / columnCount
+	}
+
+	/// Returns the width a single recap card is given.
+	///
+	/// - Parameters:
+	///    - containerWidth: The width available to the section's content.
+	///    - itemCount: The number of cards in the section.
+	///    - isFullWidth: Whether a single card spans the whole row.
+	///
+	/// - Returns: The width of one card.
+	static func recapCardWidth(containerWidth: CGFloat, itemCount: Int, isFullWidth: Bool) -> CGFloat {
+		let contentWidth = containerWidth - Self.horizontalInset * 2.0
+
+		guard !isFullWidth else { return contentWidth }
+
+		let rowWidth = itemCount > 1 ? containerWidth * Self.recapCardPeekWidthFraction : contentWidth
+
+		return min(max(rowWidth, Self.recapCardMinWidth), Self.recapCardMaxWidth)
+	}
+
 	/// Returns the width a single quick action button is given.
 	///
 	/// - Parameters:
@@ -392,7 +425,7 @@ enum Layouts {
 		return min(max(availableWidth, minimumWidth), maximumWidth)
 	}
 
-	static func reviewsSection(_ section: Int, columns: Int, layoutEnvironment: NSCollectionLayoutEnvironment, isHorizontal: Bool = true, maximumHeight: ((CGFloat) -> CGFloat?)? = nil) -> NSCollectionLayoutSection {
+	static func reviewsSection(_ section: Int, columns: Int, layoutEnvironment: NSCollectionLayoutEnvironment, isHorizontal: Bool = true, maximumHeight: CGFloat? = nil) -> NSCollectionLayoutSection {
 		let widthDimension: NSCollectionLayoutDimension = isHorizontal ? .fractionalWidth(Self.groupWidthFraction) : .fractionalWidth(1.0)
 		let bottomInset: CGFloat = isHorizontal ? 40.0 : 20.0
 		let heightDimensions = Self.heightDimensions(columns: columns, layoutEnvironment: layoutEnvironment, isHorizontal: isHorizontal, estimate: 180.0, maximumHeight: maximumHeight)
@@ -417,7 +450,7 @@ enum Layouts {
 		return layoutSection
 	}
 
-	static func upcomingSection(_ section: Int, columns: Int, layoutEnvironment: NSCollectionLayoutEnvironment, isHorizontal: Bool = true, maximumHeight: ((CGFloat) -> CGFloat?)? = nil) -> NSCollectionLayoutSection {
+	static func upcomingSection(_ section: Int, columns: Int, layoutEnvironment: NSCollectionLayoutEnvironment, isHorizontal: Bool = true, maximumHeight: CGFloat? = nil) -> NSCollectionLayoutSection {
 		let widthDimension: NSCollectionLayoutDimension = isHorizontal ? .fractionalWidth(Self.groupWidthFraction) : .fractionalWidth(1.0)
 		let bottomInset: CGFloat = isHorizontal ? 40.0 : 20.0
 		let heightDimensions = Self.heightDimensions(columns: columns, layoutEnvironment: layoutEnvironment, isHorizontal: isHorizontal, estimate: 1.0, maximumHeight: maximumHeight)
@@ -443,7 +476,7 @@ enum Layouts {
 		return layoutSection
 	}
 
-	static func mediumSection(_ section: Int, columns: Int, layoutEnvironment: NSCollectionLayoutEnvironment, isHorizontal: Bool = true, maximumHeight: ((CGFloat) -> CGFloat?)? = nil) -> NSCollectionLayoutSection {
+	static func mediumSection(_ section: Int, columns: Int, layoutEnvironment: NSCollectionLayoutEnvironment, isHorizontal: Bool = true, maximumHeight: CGFloat? = nil) -> NSCollectionLayoutSection {
 		let widthDimension: NSCollectionLayoutDimension = isHorizontal ? .fractionalWidth(Self.groupWidthFraction) : .fractionalWidth(1.0)
 		let bottomInset: CGFloat = isHorizontal ? 40.0 : 20.0
 		let heightDimensions = Self.heightDimensions(columns: columns, layoutEnvironment: layoutEnvironment, isHorizontal: isHorizontal, estimate: 1.0, maximumHeight: maximumHeight)
@@ -469,7 +502,7 @@ enum Layouts {
 		return layoutSection
 	}
 
-	static func largeSection(_ section: Int, columns: Int, layoutEnvironment: NSCollectionLayoutEnvironment, isHorizontal: Bool = true, maximumHeight: ((CGFloat) -> CGFloat?)? = nil) -> NSCollectionLayoutSection {
+	static func largeSection(_ section: Int, columns: Int, layoutEnvironment: NSCollectionLayoutEnvironment, isHorizontal: Bool = true, maximumHeight: CGFloat? = nil) -> NSCollectionLayoutSection {
 		let widthDimension: NSCollectionLayoutDimension = isHorizontal ? .fractionalWidth(Self.groupWidthFraction) : .fractionalWidth(1.0)
 		let bottomInset: CGFloat = isHorizontal ? 40.0 : 20.0
 		let heightDimensions = Self.heightDimensions(columns: columns, layoutEnvironment: layoutEnvironment, isHorizontal: isHorizontal, estimate: 1.0, maximumHeight: maximumHeight)
@@ -495,7 +528,7 @@ enum Layouts {
 		return layoutSection
 	}
 
-	static func bannerSection(_ section: Int, columns: Int, layoutEnvironment: NSCollectionLayoutEnvironment, isHorizontal: Bool = true, maximumHeight: ((CGFloat) -> CGFloat?)? = nil) -> NSCollectionLayoutSection {
+	static func bannerSection(_ section: Int, columns: Int, layoutEnvironment: NSCollectionLayoutEnvironment, isHorizontal: Bool = true, maximumHeight: CGFloat? = nil) -> NSCollectionLayoutSection {
 		let widthDimension: NSCollectionLayoutDimension = isHorizontal ? .fractionalWidth(Self.groupWidthFraction) : .fractionalWidth(1.0)
 		let bottomInset: CGFloat = isHorizontal ? 40.0 : 20.0
 		let heightDimensions = Self.heightDimensions(columns: columns, layoutEnvironment: layoutEnvironment, isHorizontal: isHorizontal, estimate: 1.0, maximumHeight: maximumHeight)
@@ -521,7 +554,7 @@ enum Layouts {
 		return layoutSection
 	}
 
-	static func videoSection(_ section: Int, columns: Int, layoutEnvironment: NSCollectionLayoutEnvironment, isHorizontal: Bool = true, maximumHeight: ((CGFloat) -> CGFloat?)? = nil) -> NSCollectionLayoutSection {
+	static func videoSection(_ section: Int, columns: Int, layoutEnvironment: NSCollectionLayoutEnvironment, isHorizontal: Bool = true, maximumHeight: CGFloat? = nil) -> NSCollectionLayoutSection {
 		let widthDimension: NSCollectionLayoutDimension = isHorizontal ? .fractionalWidth(Self.groupWidthFraction) : .fractionalWidth(1.0)
 		let bottomInset: CGFloat = isHorizontal ? 40.0 : 20.0
 		let heightDimensions = Self.heightDimensions(columns: columns, layoutEnvironment: layoutEnvironment, isHorizontal: isHorizontal, estimate: 1.0, maximumHeight: maximumHeight)
@@ -563,7 +596,7 @@ enum Layouts {
 		return layoutSection
 	}
 
-	static func seasonsSection(_ section: Int, columns: Int, layoutEnvironment: NSCollectionLayoutEnvironment, isHorizontal: Bool = true, maximumHeight: ((CGFloat) -> CGFloat?)? = nil) -> NSCollectionLayoutSection {
+	static func seasonsSection(_ section: Int, columns: Int, layoutEnvironment: NSCollectionLayoutEnvironment, isHorizontal: Bool = true, maximumHeight: CGFloat? = nil) -> NSCollectionLayoutSection {
 		let widthDimension: NSCollectionLayoutDimension = isHorizontal ? .fractionalWidth(Self.groupWidthFraction) : .fractionalWidth(1.0)
 		let bottomInset: CGFloat = isHorizontal ? 40.0 : 20.0
 		let heightDimensions = Self.heightDimensions(columns: columns, layoutEnvironment: layoutEnvironment, isHorizontal: isHorizontal, estimate: 1.0, maximumHeight: maximumHeight)
@@ -589,7 +622,7 @@ enum Layouts {
 		return layoutSection
 	}
 
-	static func episodesSection(_ section: Int, columns: Int, layoutEnvironment: NSCollectionLayoutEnvironment, isHorizontal: Bool = true, maximumHeight: ((CGFloat) -> CGFloat?)? = nil) -> NSCollectionLayoutSection {
+	static func episodesSection(_ section: Int, columns: Int, layoutEnvironment: NSCollectionLayoutEnvironment, isHorizontal: Bool = true, maximumHeight: CGFloat? = nil) -> NSCollectionLayoutSection {
 		let widthDimension: NSCollectionLayoutDimension = isHorizontal ? .fractionalWidth(Self.groupWidthFraction) : .fractionalWidth(1.0)
 		let bottomInset: CGFloat = isHorizontal ? 40.0 : 20.0
 		let heightDimensions = Self.heightDimensions(columns: columns, layoutEnvironment: layoutEnvironment, isHorizontal: isHorizontal, estimate: 1.0, maximumHeight: maximumHeight)
@@ -614,7 +647,7 @@ enum Layouts {
 		return layoutSection
 	}
 
-	static func studiosSection(_ section: Int, columns: Int, layoutEnvironment: NSCollectionLayoutEnvironment, isHorizontal: Bool = true, maximumHeight: ((CGFloat) -> CGFloat?)? = nil) -> NSCollectionLayoutSection {
+	static func studiosSection(_ section: Int, columns: Int, layoutEnvironment: NSCollectionLayoutEnvironment, isHorizontal: Bool = true, maximumHeight: CGFloat? = nil) -> NSCollectionLayoutSection {
 		let widthDimension: NSCollectionLayoutDimension = isHorizontal ? .fractionalWidth(Self.groupWidthFraction) : .fractionalWidth(1.0)
 		let bottomInset: CGFloat = isHorizontal ? 40.0 : 20.0
 		let heightDimensions = Self.heightDimensions(columns: columns, layoutEnvironment: layoutEnvironment, isHorizontal: isHorizontal, estimate: 1.0, maximumHeight: maximumHeight)
@@ -741,10 +774,8 @@ enum Layouts {
 		return layoutSection
 	}
 
-	static func quickLinkSection(_ section: Int, columns: Int, layoutEnvironment: NSCollectionLayoutEnvironment, maximumHeight: ((CGFloat) -> CGFloat?)? = nil) -> NSCollectionLayoutSection {
-		let containerWidth = layoutEnvironment.container.effectiveContentSize.width
-		let itemWidth = Self.itemWidth(columns: columns, containerWidth: containerWidth, isHorizontal: false)
-		let heightDimensions = Self.rowHeightDimensions(estimate: 1.0, maximumHeight: maximumHeight?(itemWidth))
+	static func quickLinkSection(_ section: Int, columns: Int, layoutEnvironment: NSCollectionLayoutEnvironment, maximumHeight: CGFloat? = nil) -> NSCollectionLayoutSection {
+		let heightDimensions = Self.rowHeightDimensions(estimate: 1.0, maximumHeight: maximumHeight)
 
 		let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0), heightDimension: heightDimensions.item)
 		let item = NSCollectionLayoutItem(layoutSize: itemSize)
@@ -759,13 +790,13 @@ enum Layouts {
 		return layoutSection
 	}
 
-	static func quickActionSection(_ section: Int, columns: Int, layoutEnvironment: NSCollectionLayoutEnvironment, maximumHeight: ((CGFloat) -> CGFloat?)? = nil) -> NSCollectionLayoutSection {
+	static func quickActionSection(_ section: Int, columns: Int, layoutEnvironment: NSCollectionLayoutEnvironment, maximumHeight: CGFloat? = nil) -> NSCollectionLayoutSection {
 		let containerWidth = layoutEnvironment.container.effectiveContentSize.width
 		let isCompactWidth = layoutEnvironment.traitCollection.horizontalSizeClass == .compact
 		let totalSpacing = Self.interItemSpacing * CGFloat(columns - 1)
 		let itemWidth = Self.quickActionItemWidth(columns: columns, containerWidth: containerWidth, isCompactWidth: isCompactWidth)
 		let sideInset = (containerWidth - itemWidth * CGFloat(columns) - totalSpacing) / 2
-		let heightDimensions = Self.rowHeightDimensions(estimate: 1.0, maximumHeight: maximumHeight?(itemWidth))
+		let heightDimensions = Self.rowHeightDimensions(estimate: 1.0, maximumHeight: maximumHeight)
 
 		let itemSize = NSCollectionLayoutSize(widthDimension: .absolute(itemWidth), heightDimension: heightDimensions.item)
 		let item = NSCollectionLayoutItem(layoutSize: itemSize)
@@ -796,10 +827,8 @@ enum Layouts {
 		return backgroundDecoration
 	}
 
-	static func legalSection(_ section: Int, columns: Int, layoutEnvironment: NSCollectionLayoutEnvironment, maximumHeight: ((CGFloat) -> CGFloat?)? = nil) -> NSCollectionLayoutSection {
-		let containerWidth = layoutEnvironment.container.effectiveContentSize.width
-		let itemWidth = Self.itemWidth(columns: columns, containerWidth: containerWidth, isHorizontal: false)
-		let heightDimensions = Self.rowHeightDimensions(estimate: 1.0, maximumHeight: maximumHeight?(itemWidth))
+	static func legalSection(_ section: Int, columns: Int, layoutEnvironment: NSCollectionLayoutEnvironment, maximumHeight: CGFloat? = nil) -> NSCollectionLayoutSection {
+		let heightDimensions = Self.rowHeightDimensions(estimate: 1.0, maximumHeight: maximumHeight)
 
 		let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0), heightDimension: heightDimensions.item)
 		let item = NSCollectionLayoutItem(layoutSize: itemSize)

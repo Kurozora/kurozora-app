@@ -123,7 +123,7 @@ extension LiteratureDetailsCollectionViewController {
 					hasSectionHeader = true
 				}
 			case .rating:
-				let ratingSection = Layouts.ratingSection(section, columns: columns, layoutEnvironment: layoutEnvironment, itemCount: self.snapshot.numberOfItems(inSection: .rating))
+				let ratingSection = Layouts.ratingSection(section, columns: columns, layoutEnvironment: layoutEnvironment, itemCount: LiteratureDetail.Rating.allCases.count)
 				sectionLayout = ratingSection
 				hasSectionHeader = true
 			case .rateAndReview:
@@ -132,9 +132,7 @@ extension LiteratureDetailsCollectionViewController {
 				hasSectionHeader = true
 			case .reviews:
 				if !self.reviews.isEmpty || self.editorial != nil {
-					sectionLayout = Layouts.reviewsSection(section, columns: columns, layoutEnvironment: layoutEnvironment) { _ in
-						self.cellHeight(for: literatureDetailSection)
-					}
+					sectionLayout = Layouts.reviewsSection(section, columns: columns, layoutEnvironment: layoutEnvironment, maximumHeight: self.cellHeight(for: literatureDetailSection))
 				}
 			case .information:
 				let gridSection = Layouts.gridSection(section, columns: columns, layoutEnvironment: layoutEnvironment)
@@ -142,47 +140,35 @@ extension LiteratureDetailsCollectionViewController {
 				hasSectionHeader = true
 			case .cast:
 				if !self.castIdentities.isEmpty {
-					sectionLayout = Layouts.castSection(section, columns: columns, layoutEnvironment: layoutEnvironment) { _ in
-						self.cellHeight(for: literatureDetailSection)
-					}
+					sectionLayout = Layouts.castSection(section, columns: columns, layoutEnvironment: layoutEnvironment, maximumHeight: self.cellHeight(for: literatureDetailSection))
 					hasSectionHeader = true
 				}
 			case .studios:
 				if !self.studioIdentities.isEmpty {
-					sectionLayout = Layouts.studiosSection(section, columns: columns, layoutEnvironment: layoutEnvironment) { _ in
-						self.cellHeight(for: literatureDetailSection)
-					}
+					sectionLayout = Layouts.studiosSection(section, columns: columns, layoutEnvironment: layoutEnvironment, maximumHeight: self.cellHeight(for: literatureDetailSection))
 					hasSectionHeader = true
 				}
 			case .moreByStudio:
 				if !self.studioLiteratureIdentities.isEmpty {
-					sectionLayout = Layouts.smallSection(section, columns: columns, layoutEnvironment: layoutEnvironment) { _ in
-						self.cellHeight(for: literatureDetailSection)
-					}
+					sectionLayout = Layouts.smallSection(section, columns: columns, layoutEnvironment: layoutEnvironment, maximumHeight: self.cellHeight(for: literatureDetailSection))
 					hasSectionHeader = true
 					hasBackgroundDecoration = true
 				}
 			case .relatedLiteratures:
 				if !self.relatedLiteratures.isEmpty {
-					sectionLayout = Layouts.smallSection(section, columns: columns, layoutEnvironment: layoutEnvironment) { _ in
-						self.cellHeight(for: literatureDetailSection)
-					}
+					sectionLayout = Layouts.smallSection(section, columns: columns, layoutEnvironment: layoutEnvironment, maximumHeight: self.cellHeight(for: literatureDetailSection))
 					hasSectionHeader = true
 					hasBackgroundDecoration = true
 				}
 			case .relatedShows:
 				if !self.relatedShows.isEmpty {
-					sectionLayout = Layouts.smallSection(section, columns: columns, layoutEnvironment: layoutEnvironment) { _ in
-						self.cellHeight(for: literatureDetailSection)
-					}
+					sectionLayout = Layouts.smallSection(section, columns: columns, layoutEnvironment: layoutEnvironment, maximumHeight: self.cellHeight(for: literatureDetailSection))
 					hasSectionHeader = true
 					hasBackgroundDecoration = true
 				}
 			case .relatedGames:
 				if !self.relatedGames.isEmpty {
-					sectionLayout = Layouts.smallSection(section, columns: columns, layoutEnvironment: layoutEnvironment) { _ in
-						self.cellHeight(for: literatureDetailSection)
-					}
+					sectionLayout = Layouts.smallSection(section, columns: columns, layoutEnvironment: layoutEnvironment, maximumHeight: self.cellHeight(for: literatureDetailSection))
 					hasSectionHeader = true
 					hasBackgroundDecoration = true
 				}
@@ -204,7 +190,7 @@ extension LiteratureDetailsCollectionViewController {
 			}
 
 			if hasBackgroundDecoration {
-				let isLastSection = section == self.snapshot.sectionIdentifiers.count - 1
+				let isLastSection = section == self.laidOutSectionCount - 1
 				sectionLayout?.decorationItems = [Layouts.backgroundDecoration(extendsToBottom: isLastSection, layoutEnvironment: layoutEnvironment)]
 			}
 

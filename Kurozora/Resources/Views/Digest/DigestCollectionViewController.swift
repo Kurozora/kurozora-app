@@ -95,6 +95,26 @@ class DigestCollectionViewController: KCollectionViewController, SectionFetchabl
 		}
 	}
 
+	override func layoutContainerWidthDidChange() {
+		self.remeasureCellHeightsNearViewport()
+	}
+
+	override func collectionViewWillLayout() {
+		self.measureStaleCellHeightsNearViewport()
+	}
+
+	override func cellHeightEnvironmentDidChange() {
+		self.remeasureAllCellHeights()
+	}
+
+	#if DEBUG
+	override func measuredItemWidth(forSectionAt section: Int) -> CGFloat? {
+		guard let sectionIdentifier = self.snapshot?.sectionIdentifiers[safe: section] else { return nil }
+
+		return self.measuredItemWidth(forSection: sectionIdentifier)
+	}
+	#endif
+
 	func fetchDigest() async {
 		do {
 			self.digest = try await KService.weeklyDigest().response()
@@ -149,6 +169,7 @@ class DigestCollectionViewController: KCollectionViewController, SectionFetchabl
 
 			var snapshot = self.dataSource.snapshot()
 			snapshot.reconfigureItems([updatedEpisode])
+			self.measureCellHeights(of: [updatedEpisode])
 			self.dataSource.apply(snapshot, animatingDifferences: false)
 		}
 	}
@@ -216,6 +237,103 @@ class DigestCollectionViewController: KCollectionViewController, SectionFetchabl
 	/// Opens the user's Re:CAP for the current year.
 	func openReCap() {
 		self.show(.reCapSegue, sender: nil)
+	}
+}
+
+// MARK: - Measurement
+extension DigestCollectionViewController {
+	func measuredItemWidth(for section: SectionLayoutKind, containerWidth: CGFloat) -> CGFloat? {
+		switch section {
+		case .hero, .momentum, .growth:
+			return nil
+		default:
+			let columns = self.columnCount(forSection: section, width: containerWidth)
+
+			return Layouts.itemWidth(columns: columns, containerWidth: containerWidth, isHorizontal: true)
+		}
+	}
+
+	func measurableItem(for itemKind: ItemKind, in section: SectionLayoutKind) -> CellHeightMeasurer.Item? {
+		switch section {
+		case .becauseYouWatched, .dropIn, .rescueOnHold, .rescuePlanning, .premiering:
+			return self.showMeasurableItem(for: itemKind)
+		case .newReleases, .releasing:
+			return self.gameMeasurableItem(for: itemKind)
+		case .newEpisodes, .finales, .trending:
+			return self.episodeMeasurableItem(for: itemKind)
+		case .birthdays:
+			return self.personMeasurableItem(for: itemKind)
+		default:
+			return nil
+		}
+	}
+
+	/// Returns the item that measures the given item's show cell.
+	///
+	/// - Parameter itemKind: The item whose cell is measured.
+	///
+	/// - Returns: The item that measures the cell.
+	private func showMeasurableItem(for itemKind: ItemKind) -> CellHeightMeasurer.Item {
+		let show: Show? = self.fetchModel(for: itemKind)
+
+		guard let show = show else {
+			return CellHeightMeasurer.Item(cellType: SmallLockupCollectionViewCell.self, isSkeleton: true) { cell in
+				cell.configure(using: nil as Show?)
+			}
+		}
+
+		return SmallLockupCollectionViewCell.measurableItem(for: show)
+	}
+
+	/// Returns the item that measures the given item's game cell.
+	///
+	/// - Parameter itemKind: The item whose cell is measured.
+	///
+	/// - Returns: The item that measures the cell.
+	private func gameMeasurableItem(for itemKind: ItemKind) -> CellHeightMeasurer.Item {
+		let game: Game? = self.fetchModel(for: itemKind)
+
+		guard let game = game else {
+			return CellHeightMeasurer.Item(cellType: GameLockupCollectionViewCell.self, isSkeleton: true) { cell in
+				cell.configure(using: nil as Game?)
+			}
+		}
+
+		return GameLockupCollectionViewCell.measurableItem(for: game)
+	}
+
+	/// Returns the item that measures the given item's episode cell.
+	///
+	/// - Parameter itemKind: The item whose cell is measured.
+	///
+	/// - Returns: The item that measures the cell.
+	private func episodeMeasurableItem(for itemKind: ItemKind) -> CellHeightMeasurer.Item {
+		let episode: Episode? = self.fetchModel(for: itemKind)
+
+		guard let episode = episode else {
+			return CellHeightMeasurer.Item(cellType: EpisodeLockupCollectionViewCell.self, isSkeleton: true) { cell in
+				cell.configure(using: nil as Episode?)
+			}
+		}
+
+		return EpisodeLockupCollectionViewCell.measurableItem(for: episode)
+	}
+
+	/// Returns the item that measures the given item's person cell.
+	///
+	/// - Parameter itemKind: The item whose cell is measured.
+	///
+	/// - Returns: The item that measures the cell.
+	private func personMeasurableItem(for itemKind: ItemKind) -> CellHeightMeasurer.Item {
+		let person: Person? = self.fetchModel(for: itemKind)
+
+		guard let person = person else {
+			return CellHeightMeasurer.Item(cellType: ProfileLockupCollectionViewCell.self, isSkeleton: true) { cell in
+				cell.configure(using: nil as Person?)
+			}
+		}
+
+		return ProfileLockupCollectionViewCell.measurableItem(for: person)
 	}
 }
 

@@ -10,9 +10,14 @@ import KurozoraKit
 import UIKit
 
 extension DigestCollectionViewController {
-	func columnCount(forSection section: SectionLayoutKind, layout layoutEnvironment: NSCollectionLayoutEnvironment) -> Int {
-		let width = layoutEnvironment.container.effectiveContentSize.width
-
+	/// Returns the number of items the given section lays out in a row.
+	///
+	/// - Parameters:
+	///    - section: The section to lay out.
+	///    - width: The width available to the collection view's content.
+	///
+	/// - Returns: The number of columns.
+	func columnCount(forSection section: SectionLayoutKind, width: CGFloat) -> Int {
 		switch section {
 		case .hero, .momentum, .growth:
 			return 1
@@ -43,30 +48,18 @@ extension DigestCollectionViewController {
 		return UICollectionViewCompositionalLayout { [weak self] (section: Int, layoutEnvironment: NSCollectionLayoutEnvironment) -> NSCollectionLayoutSection? in
 			guard let self = self else { return nil }
 			let digestSection = self.snapshot.sectionIdentifiers[section]
-			let columns = self.columnCount(forSection: digestSection, layout: layoutEnvironment)
+			let columns = self.columnCount(forSection: digestSection, width: layoutEnvironment.container.effectiveContentSize.width)
 			let sectionLayout: NSCollectionLayoutSection?
 
 			switch digestSection {
 			case .hero:
 				sectionLayout = self.heroSectionLayout(layoutEnvironment)
 			case .newReleases, .becauseYouWatched, .dropIn, .rescueOnHold, .rescuePlanning, .premiering, .releasing:
-				sectionLayout = Layouts.smallSection(section, columns: columns, layoutEnvironment: layoutEnvironment) { width in
-					self.maximumCellHeight(inSection: section, width: width, layoutEnvironment: layoutEnvironment) { (_, show: Show) in
-						SmallLockupCollectionViewCell.measurableItem(for: show)
-					}
-				}
+				sectionLayout = Layouts.smallSection(section, columns: columns, layoutEnvironment: layoutEnvironment, maximumHeight: self.cellHeight(for: digestSection))
 			case .newEpisodes, .finales, .trending:
-				sectionLayout = Layouts.episodesSection(section, columns: columns, layoutEnvironment: layoutEnvironment) { width in
-					self.maximumCellHeight(inSection: section, width: width, layoutEnvironment: layoutEnvironment) { _, episode in
-						EpisodeLockupCollectionViewCell.measurableItem(for: episode)
-					}
-				}
+				sectionLayout = Layouts.episodesSection(section, columns: columns, layoutEnvironment: layoutEnvironment, maximumHeight: self.cellHeight(for: digestSection))
 			case .birthdays:
-				sectionLayout = Layouts.peopleSection(section, columns: columns, layoutEnvironment: layoutEnvironment) { width in
-					self.maximumCellHeight(inSection: section, width: width, layoutEnvironment: layoutEnvironment) { (_, person: Person) in
-						ProfileLockupCollectionViewCell.measurableItem(for: person)
-					}
-				}
+				sectionLayout = Layouts.peopleSection(section, columns: columns, layoutEnvironment: layoutEnvironment, maximumHeight: self.cellHeight(for: digestSection))
 			case .momentum, .growth:
 				sectionLayout = Layouts.fullSection(section, columns: columns, layoutEnvironment: layoutEnvironment)
 			}

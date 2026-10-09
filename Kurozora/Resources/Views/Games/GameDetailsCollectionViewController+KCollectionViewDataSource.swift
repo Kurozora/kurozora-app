@@ -172,6 +172,7 @@ extension GameDetailsCollectionViewController {
 		newSnapshot.appendItems(GameDetail.Information.localCases.map { .information($0) }, toSection: .information)
 
 		self.snapshot = newSnapshot
+		self.laidOutSectionCount = newSnapshot.sectionIdentifiers.count
 
 		for section in newSnapshot.sectionIdentifiers {
 			self.setMeasuredItems(newSnapshot.itemIdentifiers(inSection: section), for: section)
@@ -305,6 +306,7 @@ extension GameDetailsCollectionViewController {
 		}
 
 		self.snapshot = newSnapshot
+		self.laidOutSectionCount = newSnapshot.sectionIdentifiers.count
 
 		for section in newSnapshot.sectionIdentifiers {
 			self.setMeasuredItems(newSnapshot.itemIdentifiers(inSection: section), for: section)

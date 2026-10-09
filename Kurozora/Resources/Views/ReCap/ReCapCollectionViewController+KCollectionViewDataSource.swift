@@ -252,6 +252,8 @@ extension ReCapCollectionViewController {
 
 	override func updateDataSource() {
 		self.cache = [:]
+		self.recapRanks = [:]
+		self.sectionItemCounts = [:]
 		self.snapshot = NSDiffableDataSourceSnapshot<SectionLayoutKind, ItemKind>()
 
 		if self.recapItems.isEmpty {
@@ -310,6 +312,24 @@ extension ReCapCollectionViewController {
 				self.snapshot.appendItems([.recapItem(recapItem, milestoneKind: .topPercentile)], toSection: .milestones(true))
 			}
 		}
+
+		for section in self.snapshot.sectionIdentifiers {
+			let items = self.snapshot.itemIdentifiers(inSection: section)
+			self.sectionItemCounts[section] = items.count
+
+			for (index, item) in items.enumerated() {
+				self.recapRanks[item] = index + 1
+			}
+
+			self.setMeasuredItems(items, for: section)
+		}
+
+		self.removeMeasuredSections(notIn: self.snapshot.sectionIdentifiers)
+		self.measureCellHeights(of: self.snapshot.sectionIdentifiers.flatMap { self.unmeasuredItems(in: $0) })
+
+		#if DEBUG
+		print("----- [apply] updateDataSource sections \(self.snapshot.sectionIdentifiers.count)")
+		#endif
 
 		self.dataSource.apply(self.snapshot, animatingDifferences: false)
 	}

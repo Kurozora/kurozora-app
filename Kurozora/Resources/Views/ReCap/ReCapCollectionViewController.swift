@@ -70,6 +70,12 @@ class ReCapCollectionViewController: KCollectionViewController, SectionFetchable
 	var cache: [ItemKind: KurozoraItem] = [:]
 	var isFetchingSection: Set<SectionLayoutKind> = []
 
+	/// The position each item holds in its section.
+	var recapRanks: [ItemKind: Int] = [:]
+
+	/// The number of items each section lays out.
+	var sectionItemCounts: [SectionLayoutKind: Int] = [:]
+
 	/// Observes local library mutations to refresh visible cells.
 	private var libraryObserver: LocalLibraryEntryObserver?
 
@@ -142,6 +148,35 @@ class ReCapCollectionViewController: KCollectionViewController, SectionFetchable
 	// MARK: - Functions
 	override func handleRefreshControl() {
 		self.fetchDetails()
+	}
+
+	override func layoutContainerWidthDidChange() {
+		self.remeasureCellHeightsNearViewport()
+	}
+
+	override func collectionViewWillLayout() {
+		self.measureStaleCellHeightsNearViewport()
+	}
+
+	override func cellHeightEnvironmentDidChange() {
+		self.remeasureAllCellHeights()
+	}
+
+	#if DEBUG
+	override func measuredItemWidth(forSectionAt section: Int) -> CGFloat? {
+		guard let sectionIdentifier = self.snapshot?.sectionIdentifiers[safe: section] else { return nil }
+
+		return self.measuredItemWidth(forSection: sectionIdentifier)
+	}
+	#endif
+
+	/// Returns the number of items the given section lays out.
+	///
+	/// - Parameter section: The section to look up.
+	///
+	/// - Returns: The number of items.
+	func itemCount(forSection section: SectionLayoutKind) -> Int {
+		return self.sectionItemCounts[section] ?? 0
 	}
 
 	/// Subscribes to local library mutations affecting the visible cells.
@@ -283,6 +318,9 @@ class ReCapCollectionViewController: KCollectionViewController, SectionFetchable
 
 		if isLoading, self.snapshot?.numberOfItems != 0 {
 			self.snapshot = NSDiffableDataSourceSnapshot<SectionLayoutKind, ItemKind>()
+			self.recapRanks = [:]
+			self.sectionItemCounts = [:]
+			self.removeMeasuredSections(notIn: [])
 			self.dataSource.apply(self.snapshot, animatingDifferences: false)
 		}
 

@@ -97,7 +97,7 @@ extension SongDetailsCollectionViewController {
 					hasSectionHeader = true
 				}
 			case .rating:
-				let ratingSection = Layouts.ratingSection(section, columns: columns, layoutEnvironment: layoutEnvironment, itemCount: self.snapshot.numberOfItems(inSection: songDetailSection))
+				let ratingSection = Layouts.ratingSection(section, columns: columns, layoutEnvironment: layoutEnvironment, itemCount: SongDetail.Rating.allCases.count)
 				sectionLayout = ratingSection
 				hasSectionHeader = true
 			case .rateAndReview:
@@ -106,9 +106,7 @@ extension SongDetailsCollectionViewController {
 				hasSectionHeader = true
 			case .reviews:
 				if !self.reviews.isEmpty {
-					sectionLayout = Layouts.reviewsSection(section, columns: columns, layoutEnvironment: layoutEnvironment) { _ in
-						self.cellHeight(for: songDetailSection)
-					}
+					sectionLayout = Layouts.reviewsSection(section, columns: columns, layoutEnvironment: layoutEnvironment, maximumHeight: self.cellHeight(for: songDetailSection))
 				}
 			case .shows:
 				if !self.showIdentities.isEmpty {
@@ -134,7 +132,7 @@ extension SongDetailsCollectionViewController {
 			}
 
 			if hasBackgroundDecoration {
-				let isLastSection = section == self.snapshot.sectionIdentifiers.count - 1
+				let isLastSection = section == self.laidOutSectionCount - 1
 				sectionLayout?.decorationItems = [Layouts.backgroundDecoration(extendsToBottom: isLastSection, layoutEnvironment: layoutEnvironment)]
 			}
 

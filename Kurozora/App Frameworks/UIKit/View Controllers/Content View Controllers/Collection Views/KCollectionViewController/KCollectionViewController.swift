@@ -242,22 +242,9 @@ class KCollectionViewController: UICollectionViewController, SegueHandler {
 	///
 	/// - Returns: The width of one cell.
 	func measuredItemWidth(forSectionAt section: Int) -> CGFloat? {
-		return self.cellHeightMeasurer.measuredWidth(forSection: section)
+		return nil
 	}
 	#endif
-
-	/// Returns the height of the tallest cell the given items render.
-	///
-	/// - Parameters:
-	///    - items: The items the section lays out.
-	///    - section: The section the items belong to.
-	///    - width: The width a single cell is given.
-	///    - layoutEnvironment: The environment the section is laid out in.
-	///
-	/// - Returns: The tallest measured height.
-	func maximumCellHeight(for items: [CellHeightMeasurer.Item], inSection section: Int, width: CGFloat, layoutEnvironment: NSCollectionLayoutEnvironment) -> CGFloat? {
-		return self.cellHeightMeasurer.maximumHeight(for: items, inSection: section, width: width, contentSizeCategory: layoutEnvironment.traitCollection.preferredContentSizeCategory)
-	}
 
 	/// Returns the width available to a section's content, before the section's own insets.
 	///

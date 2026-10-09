@@ -43,6 +43,9 @@ class DetailsCollectionViewController: KCollectionViewController, RatingAlertPre
 	#endif
 
 	// MARK: - Properties
+	/// The number of sections the applied snapshot holds.
+	var laidOutSectionCount = 0
+
 	/// The reviews displayed on the detail screen.
 	var reviews: [Review] = [] {
 		didSet {

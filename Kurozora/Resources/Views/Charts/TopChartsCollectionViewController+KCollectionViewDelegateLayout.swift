@@ -10,8 +10,14 @@ import KurozoraKit
 import UIKit
 
 extension TopChartsCollectionViewController {
-	func columnCount(forSection section: SectionLayoutKind, layout layoutEnvironment: NSCollectionLayoutEnvironment) -> Int {
-		let width = layoutEnvironment.container.effectiveContentSize.width
+	/// Returns the number of items the given section lays out in a row.
+	///
+	/// - Parameters:
+	///    - section: The section to lay out.
+	///    - width: The width available to the collection view's content.
+	///
+	/// - Returns: The number of columns.
+	func columnCount(forSection section: SectionLayoutKind, width: CGFloat) -> Int {
 		var columnCount = 0
 
 		switch section {
@@ -46,40 +52,24 @@ extension TopChartsCollectionViewController {
 		return UICollectionViewCompositionalLayout { [weak self] (section: Int, layoutEnvironment: NSCollectionLayoutEnvironment) -> NSCollectionLayoutSection? in
 			guard let self = self else { return nil }
 			guard let snapshot = self.snapshot, let chartSection = snapshot.sectionIdentifiers[safe: section] else { return nil }
-			let columns = self.columnCount(forSection: chartSection, layout: layoutEnvironment)
+			let columns = self.columnCount(forSection: chartSection, width: layoutEnvironment.container.effectiveContentSize.width)
 			let sectionLayout: NSCollectionLayoutSection
 
 			switch chartSection {
 			case .chart(let chartKind):
 				switch chartKind {
 				case .shows, .literatures, .games:
-					sectionLayout = Layouts.smallSection(section, columns: columns, layoutEnvironment: layoutEnvironment) { width in
-						self.maximumCellHeight(for: self.chartMeasurableItems(inSection: section), inSection: section, width: width, layoutEnvironment: layoutEnvironment)
-					}
+					sectionLayout = Layouts.smallSection(section, columns: columns, layoutEnvironment: layoutEnvironment, maximumHeight: self.cellHeight(for: chartSection))
 				case .characters:
-					sectionLayout = Layouts.charactersSection(section, columns: columns, layoutEnvironment: layoutEnvironment) { width in
-						self.maximumCellHeight(for: self.chartMeasurableItems(inSection: section), inSection: section, width: width, layoutEnvironment: layoutEnvironment)
-					}
+					sectionLayout = Layouts.charactersSection(section, columns: columns, layoutEnvironment: layoutEnvironment, maximumHeight: self.cellHeight(for: chartSection))
 				case .people:
-					sectionLayout = Layouts.peopleSection(section, columns: columns, layoutEnvironment: layoutEnvironment) { width in
-						self.maximumCellHeight(for: self.chartMeasurableItems(inSection: section), inSection: section, width: width, layoutEnvironment: layoutEnvironment)
-					}
+					sectionLayout = Layouts.peopleSection(section, columns: columns, layoutEnvironment: layoutEnvironment, maximumHeight: self.cellHeight(for: chartSection))
 				case .episodes:
-					sectionLayout = Layouts.episodesSection(section, columns: columns, layoutEnvironment: layoutEnvironment) { width in
-						self.maximumCellHeight(inSection: section, width: width, layoutEnvironment: layoutEnvironment) { item, episode in
-							EpisodeLockupCollectionViewCell.measurableItem(for: episode, rank: item + 1)
-						}
-					}
+					sectionLayout = Layouts.episodesSection(section, columns: columns, layoutEnvironment: layoutEnvironment, maximumHeight: self.cellHeight(for: chartSection))
 				case .songs:
-					sectionLayout = Layouts.musicSection(section, columns: columns, layoutEnvironment: layoutEnvironment) { width in
-						self.maximumCellHeight(inSection: section, width: width, layoutEnvironment: layoutEnvironment) { item, song in
-							MusicLockupCollectionViewCell.measurableItem(for: song, rank: item + 1)
-						}
-					}
+					sectionLayout = Layouts.musicSection(section, columns: columns, layoutEnvironment: layoutEnvironment, maximumHeight: self.cellHeight(for: chartSection))
 				case .studios:
-					sectionLayout = Layouts.studiosSection(section, columns: columns, layoutEnvironment: layoutEnvironment) { width in
-						self.maximumCellHeight(for: self.chartMeasurableItems(inSection: section), inSection: section, width: width, layoutEnvironment: layoutEnvironment)
-					}
+					sectionLayout = Layouts.studiosSection(section, columns: columns, layoutEnvironment: layoutEnvironment, maximumHeight: self.cellHeight(for: chartSection))
 				}
 			}
 
@@ -91,37 +81,6 @@ extension TopChartsCollectionViewController {
 			)
 			sectionLayout.boundarySupplementaryItems = [sectionHeader]
 			return sectionLayout
-		}
-	}
-}
-
-// MARK: - Measurement
-extension TopChartsCollectionViewController {
-	/// Returns the items that measure the cells of a ranked chart section.
-	///
-	/// - Parameter section: The section to measure.
-	///
-	/// - Returns: The items that measure the section's cells.
-	func chartMeasurableItems(inSection section: Int) -> [CellHeightMeasurer.Item] {
-		return self.cachedItems(inSection: section).compactMap { item, model in
-			let rank = item + 1
-
-			switch model {
-			case let show as Show:
-				return SmallLockupCollectionViewCell.measurableItem(for: show, rank: rank)
-			case let literature as Literature:
-				return SmallLockupCollectionViewCell.measurableItem(for: literature, rank: rank)
-			case let game as Game:
-				return GameLockupCollectionViewCell.measurableItem(for: game, rank: rank)
-			case let character as Character:
-				return ProfileLockupCollectionViewCell.measurableItem(for: character, rank: rank)
-			case let person as Person:
-				return ProfileLockupCollectionViewCell.measurableItem(for: person, rank: rank)
-			case let studio as Studio:
-				return StudioLockupCollectionViewCell.measurableItem(for: studio, rank: rank)
-			default:
-				return nil
-			}
 		}
 	}
 }

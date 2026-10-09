@@ -47,6 +47,9 @@ class TopChartsCollectionViewController: KCollectionViewController, SectionFetch
 	/// The chart kinds whose request has settled.
 	var settledChartKinds: Set<ChartKind> = []
 
+	/// The position each item holds in its chart.
+	var chartRanks: [ItemKind: Int] = [:]
+
 	/// The resolved Apple Music songs keyed by Apple Music identifier.
 	var resolvedSongs: [Int: MKSong] = [:]
 
@@ -113,6 +116,26 @@ class TopChartsCollectionViewController: KCollectionViewController, SectionFetch
 
 		self.fetchCharts()
 	}
+
+	override func layoutContainerWidthDidChange() {
+		self.remeasureCellHeightsNearViewport()
+	}
+
+	override func collectionViewWillLayout() {
+		self.measureStaleCellHeightsNearViewport()
+	}
+
+	override func cellHeightEnvironmentDidChange() {
+		self.remeasureAllCellHeights()
+	}
+
+	#if DEBUG
+	override func measuredItemWidth(forSectionAt section: Int) -> CGFloat? {
+		guard let sectionIdentifier = self.snapshot?.sectionIdentifiers[safe: section] else { return nil }
+
+		return self.measuredItemWidth(forSection: sectionIdentifier)
+	}
+	#endif
 
 	override func configureEmptyDataView() {
 		self.emptyBackgroundView.configureImageView(image: .Empty.libraryAnime)
@@ -275,6 +298,7 @@ class TopChartsCollectionViewController: KCollectionViewController, SectionFetch
 
 			var snapshot = self.dataSource.snapshot()
 			snapshot.reconfigureItems([updatedEpisode])
+			self.measureCellHeights(of: [updatedEpisode])
 			self.dataSource.apply(snapshot, animatingDifferences: false)
 		}
 	}
@@ -446,6 +470,193 @@ extension TopChartsCollectionViewController {
 
 		/// Indicates the item kind is a skeleton awaiting the chart's entries.
 		case pending(chartKind: ChartKind, index: Int)
+	}
+}
+
+// MARK: - Measurement
+extension TopChartsCollectionViewController {
+	func measuredItemWidth(for section: SectionLayoutKind, containerWidth: CGFloat) -> CGFloat? {
+		let columns = self.columnCount(forSection: section, width: containerWidth)
+
+		return Layouts.itemWidth(columns: columns, containerWidth: containerWidth, isHorizontal: true)
+	}
+
+	func measurableItem(for itemKind: ItemKind, in section: SectionLayoutKind) -> CellHeightMeasurer.Item? {
+		let rank = self.chartRanks[itemKind]
+
+		switch section {
+		case .chart(let chartKind):
+			switch chartKind {
+			case .shows:
+				return self.showMeasurableItem(for: itemKind, rank: rank)
+			case .literatures:
+				return self.literatureMeasurableItem(for: itemKind, rank: rank)
+			case .games:
+				return self.gameMeasurableItem(for: itemKind, rank: rank)
+			case .characters:
+				return self.characterMeasurableItem(for: itemKind, rank: rank)
+			case .people:
+				return self.personMeasurableItem(for: itemKind, rank: rank)
+			case .episodes:
+				return self.episodeMeasurableItem(for: itemKind, rank: rank)
+			case .songs:
+				return self.songMeasurableItem(for: itemKind, rank: rank)
+			case .studios:
+				return self.studioMeasurableItem(for: itemKind, rank: rank)
+			}
+		}
+	}
+
+	/// Returns the item that measures the given item's show cell.
+	///
+	/// - Parameters:
+	///    - itemKind: The item whose cell is measured.
+	///    - rank: The position the item holds in its chart.
+	///
+	/// - Returns: The item that measures the cell.
+	private func showMeasurableItem(for itemKind: ItemKind, rank: Int?) -> CellHeightMeasurer.Item {
+		let show: Show? = self.fetchModel(for: itemKind)
+
+		guard let show = show else {
+			return CellHeightMeasurer.Item(cellType: SmallLockupCollectionViewCell.self, isSkeleton: true) { cell in
+				cell.configure(using: nil as Show?)
+			}
+		}
+
+		return SmallLockupCollectionViewCell.measurableItem(for: show, rank: rank)
+	}
+
+	/// Returns the item that measures the given item's literature cell.
+	///
+	/// - Parameters:
+	///    - itemKind: The item whose cell is measured.
+	///    - rank: The position the item holds in its chart.
+	///
+	/// - Returns: The item that measures the cell.
+	private func literatureMeasurableItem(for itemKind: ItemKind, rank: Int?) -> CellHeightMeasurer.Item {
+		let literature: Literature? = self.fetchModel(for: itemKind)
+
+		guard let literature = literature else {
+			return CellHeightMeasurer.Item(cellType: SmallLockupCollectionViewCell.self, isSkeleton: true) { cell in
+				cell.configure(using: nil as Literature?)
+			}
+		}
+
+		return SmallLockupCollectionViewCell.measurableItem(for: literature, rank: rank)
+	}
+
+	/// Returns the item that measures the given item's game cell.
+	///
+	/// - Parameters:
+	///    - itemKind: The item whose cell is measured.
+	///    - rank: The position the item holds in its chart.
+	///
+	/// - Returns: The item that measures the cell.
+	private func gameMeasurableItem(for itemKind: ItemKind, rank: Int?) -> CellHeightMeasurer.Item {
+		let game: Game? = self.fetchModel(for: itemKind)
+
+		guard let game = game else {
+			return CellHeightMeasurer.Item(cellType: GameLockupCollectionViewCell.self, isSkeleton: true) { cell in
+				cell.configure(using: nil as Game?)
+			}
+		}
+
+		return GameLockupCollectionViewCell.measurableItem(for: game, rank: rank)
+	}
+
+	/// Returns the item that measures the given item's character cell.
+	///
+	/// - Parameters:
+	///    - itemKind: The item whose cell is measured.
+	///    - rank: The position the item holds in its chart.
+	///
+	/// - Returns: The item that measures the cell.
+	private func characterMeasurableItem(for itemKind: ItemKind, rank: Int?) -> CellHeightMeasurer.Item {
+		let character: Character? = self.fetchModel(for: itemKind)
+
+		guard let character = character else {
+			return CellHeightMeasurer.Item(cellType: ProfileLockupCollectionViewCell.self, isSkeleton: true) { cell in
+				cell.configure(using: nil as Character?)
+			}
+		}
+
+		return ProfileLockupCollectionViewCell.measurableItem(for: character, rank: rank)
+	}
+
+	/// Returns the item that measures the given item's person cell.
+	///
+	/// - Parameters:
+	///    - itemKind: The item whose cell is measured.
+	///    - rank: The position the item holds in its chart.
+	///
+	/// - Returns: The item that measures the cell.
+	private func personMeasurableItem(for itemKind: ItemKind, rank: Int?) -> CellHeightMeasurer.Item {
+		let person: Person? = self.fetchModel(for: itemKind)
+
+		guard let person = person else {
+			return CellHeightMeasurer.Item(cellType: ProfileLockupCollectionViewCell.self, isSkeleton: true) { cell in
+				cell.configure(using: nil as Person?)
+			}
+		}
+
+		return ProfileLockupCollectionViewCell.measurableItem(for: person, rank: rank)
+	}
+
+	/// Returns the item that measures the given item's episode cell.
+	///
+	/// - Parameters:
+	///    - itemKind: The item whose cell is measured.
+	///    - rank: The position the item holds in its chart.
+	///
+	/// - Returns: The item that measures the cell.
+	private func episodeMeasurableItem(for itemKind: ItemKind, rank: Int?) -> CellHeightMeasurer.Item {
+		let episode: Episode? = self.fetchModel(for: itemKind)
+
+		guard let episode = episode else {
+			return CellHeightMeasurer.Item(cellType: EpisodeLockupCollectionViewCell.self, isSkeleton: true) { cell in
+				cell.configure(using: nil as Episode?)
+			}
+		}
+
+		return EpisodeLockupCollectionViewCell.measurableItem(for: episode, rank: rank)
+	}
+
+	/// Returns the item that measures the given item's song cell.
+	///
+	/// - Parameters:
+	///    - itemKind: The item whose cell is measured.
+	///    - rank: The position the item holds in its chart.
+	///
+	/// - Returns: The item that measures the cell.
+	private func songMeasurableItem(for itemKind: ItemKind, rank: Int?) -> CellHeightMeasurer.Item {
+		let song: Song? = self.fetchModel(for: itemKind)
+
+		guard let song = song else {
+			return CellHeightMeasurer.Item(cellType: MusicLockupCollectionViewCell.self, isSkeleton: true) { cell in
+				cell.configure(using: nil as KKSong?, at: MusicLockupCollectionViewCell.measurementIndexPath, rank: rank)
+			}
+		}
+
+		return MusicLockupCollectionViewCell.measurableItem(for: song, rank: rank)
+	}
+
+	/// Returns the item that measures the given item's studio cell.
+	///
+	/// - Parameters:
+	///    - itemKind: The item whose cell is measured.
+	///    - rank: The position the item holds in its chart.
+	///
+	/// - Returns: The item that measures the cell.
+	private func studioMeasurableItem(for itemKind: ItemKind, rank: Int?) -> CellHeightMeasurer.Item {
+		let studio: Studio? = self.fetchModel(for: itemKind)
+
+		guard let studio = studio else {
+			return CellHeightMeasurer.Item(cellType: StudioLockupCollectionViewCell.self, isSkeleton: true) { cell in
+				cell.configure(using: nil as Studio?)
+			}
+		}
+
+		return StudioLockupCollectionViewCell.measurableItem(for: studio, rank: rank)
 	}
 }
 

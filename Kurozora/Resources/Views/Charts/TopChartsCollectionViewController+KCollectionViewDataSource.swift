@@ -65,12 +65,27 @@ extension TopChartsCollectionViewController {
 		guard !self.settledChartKinds.isEmpty else { return }
 
 		self.snapshot = NSDiffableDataSourceSnapshot<SectionLayoutKind, ItemKind>()
+		self.chartRanks = [:]
 
 		for chartKind in ChartKind.allCases {
 			let sectionLayoutKind: SectionLayoutKind = .chart(chartKind)
+			let items = self.items(for: chartKind)
+
+			for (index, item) in items.enumerated() {
+				self.chartRanks[item] = index + 1
+			}
+
 			self.snapshot.appendSections([sectionLayoutKind])
-			self.snapshot.appendItems(self.items(for: chartKind), toSection: sectionLayoutKind)
+			self.snapshot.appendItems(items, toSection: sectionLayoutKind)
+			self.setMeasuredItems(items, for: sectionLayoutKind)
 		}
+
+		self.removeMeasuredSections(notIn: self.snapshot.sectionIdentifiers)
+		self.measureCellHeights(of: self.snapshot.sectionIdentifiers.flatMap { self.unmeasuredItems(in: $0) })
+
+		#if DEBUG
+		print("----- [apply] updateDataSource sections \(self.snapshot.sectionIdentifiers.count)")
+		#endif
 
 		self.dataSource.apply(self.snapshot, animatingDifferences: false)
 		self.toggleEmptyDataView()

@@ -27,9 +27,6 @@ final class CellHeightMeasurer {
 	private var environment: Environment?
 
 	#if DEBUG
-	/// The width each section was measured at during the current layout pass.
-	private var measuredWidths: [Int: CGFloat] = [:]
-
 	/// The sections already reported for rendering at the wrong width.
 	private var reportedWidthMismatches: Set<Int> = []
 
@@ -41,38 +38,6 @@ final class CellHeightMeasurer {
 	#endif
 
 	// MARK: - Functions
-	/// Returns the height of the tallest cell the given items render.
-	///
-	/// - Parameters:
-	///    - items: The items the section lays out.
-	///    - section: The section the items belong to.
-	///    - width: The width a single cell is given.
-	///    - contentSizeCategory: The type size the section is laid out at.
-	///
-	/// - Returns: The tallest measured height.
-	func maximumHeight(for items: [Item], inSection section: Int, width: CGFloat, contentSizeCategory: UIContentSizeCategory) -> CGFloat? {
-		guard width > 0.0, !items.isEmpty else { return nil }
-
-		var maximumHeight = 0.0
-
-		#if DEBUG
-		let startedAt = CFAbsoluteTimeGetCurrent()
-		#endif
-
-		for item in items {
-			maximumHeight = max(maximumHeight, self.height(of: item, width: width, contentSizeCategory: contentSizeCategory))
-		}
-
-		#if DEBUG
-		self.measuredWidths[section] = width
-		let elapsed = (CFAbsoluteTimeGetCurrent() - startedAt) * 1000.0
-		print("----- [measure] section \(section) items \(items.count) \(String(format: "%.1f", elapsed))ms cells \(Set(items.map { String(describing: $0.cellType) }).sorted())")
-		self.flushMeasurementSplits()
-		#endif
-
-		return maximumHeight > 0.0 ? maximumHeight : nil
-	}
-
 	/// Returns the height the given item's cell renders at.
 	///
 	/// - Parameters:
@@ -234,21 +199,10 @@ final class CellHeightMeasurer {
 		}
 	}
 
-	/// Returns the width the given section was measured at during the current layout pass.
-	///
-	/// - Parameter section: The section to look up.
-	///
-	/// - Returns: The recorded width.
-	func measuredWidth(forSection section: Int) -> CGFloat? {
-		return self.measuredWidths[section]
-	}
-
 	/// Reports every cell rendering at a different width than its section was measured at.
 	///
 	/// - Parameter cells: The cells currently on screen, the section of each, and the width each was measured at.
 	func validateWidths(of cells: [(cell: UICollectionViewCell, section: Int, measuredWidth: CGFloat?)]) {
-		defer { self.measuredWidths.removeAll() }
-
 		for (cell, section, measuredWidth) in cells {
 			guard let measuredWidth = measuredWidth else { continue }
 

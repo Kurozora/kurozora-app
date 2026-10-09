@@ -95,46 +95,26 @@ extension HomeCollectionViewController {
 
 			switch exploreCategorySection {
 			case .banner:
-				sectionLayout = Layouts.bannerSection(section, columns: columns, layoutEnvironment: layoutEnvironment) { _ in
-					self.cellHeight(for: exploreCategorySection)
-				}
+				sectionLayout = Layouts.bannerSection(section, columns: columns, layoutEnvironment: layoutEnvironment, maximumHeight: self.cellHeight(for: exploreCategorySection))
 				return sectionLayout
 			case .large:
-				sectionLayout = Layouts.largeSection(section, columns: columns, layoutEnvironment: layoutEnvironment) { _ in
-					self.cellHeight(for: exploreCategorySection)
-				}
+				sectionLayout = Layouts.largeSection(section, columns: columns, layoutEnvironment: layoutEnvironment, maximumHeight: self.cellHeight(for: exploreCategorySection))
 			case .medium:
-				sectionLayout = Layouts.mediumSection(section, columns: columns, layoutEnvironment: layoutEnvironment) { _ in
-					self.cellHeight(for: exploreCategorySection)
-				}
+				sectionLayout = Layouts.mediumSection(section, columns: columns, layoutEnvironment: layoutEnvironment, maximumHeight: self.cellHeight(for: exploreCategorySection))
 			case .small:
-				sectionLayout = Layouts.smallSection(section, columns: columns, layoutEnvironment: layoutEnvironment) { _ in
-					self.cellHeight(for: exploreCategorySection)
-				}
+				sectionLayout = Layouts.smallSection(section, columns: columns, layoutEnvironment: layoutEnvironment, maximumHeight: self.cellHeight(for: exploreCategorySection))
 			case .video:
-				sectionLayout = Layouts.videoSection(section, columns: columns, layoutEnvironment: layoutEnvironment) { _ in
-					self.cellHeight(for: exploreCategorySection)
-				}
+				sectionLayout = Layouts.videoSection(section, columns: columns, layoutEnvironment: layoutEnvironment, maximumHeight: self.cellHeight(for: exploreCategorySection))
 			case .upcoming:
-				sectionLayout = Layouts.upcomingSection(section, columns: columns, layoutEnvironment: layoutEnvironment) { _ in
-					self.cellHeight(for: exploreCategorySection)
-				}
+				sectionLayout = Layouts.upcomingSection(section, columns: columns, layoutEnvironment: layoutEnvironment, maximumHeight: self.cellHeight(for: exploreCategorySection))
 			case .episode:
-				sectionLayout = Layouts.episodesSection(section, columns: columns, layoutEnvironment: layoutEnvironment) { _ in
-					self.cellHeight(for: exploreCategorySection)
-				}
+				sectionLayout = Layouts.episodesSection(section, columns: columns, layoutEnvironment: layoutEnvironment, maximumHeight: self.cellHeight(for: exploreCategorySection))
 			case .music:
-				sectionLayout = Layouts.musicSection(section, columns: columns, layoutEnvironment: layoutEnvironment) { _ in
-					self.cellHeight(for: exploreCategorySection)
-				}
+				sectionLayout = Layouts.musicSection(section, columns: columns, layoutEnvironment: layoutEnvironment, maximumHeight: self.cellHeight(for: exploreCategorySection))
 			case .profile:
-				sectionLayout = Layouts.charactersSection(section, columns: columns, layoutEnvironment: layoutEnvironment) { _ in
-					self.cellHeight(for: exploreCategorySection)
-				}
+				sectionLayout = Layouts.charactersSection(section, columns: columns, layoutEnvironment: layoutEnvironment, maximumHeight: self.cellHeight(for: exploreCategorySection))
 			case .quickLinks:
-				sectionLayout = Layouts.quickLinkSection(section, columns: columns, layoutEnvironment: layoutEnvironment) { _ in
-					self.cellHeight(for: exploreCategorySection)
-				}
+				sectionLayout = Layouts.quickLinkSection(section, columns: columns, layoutEnvironment: layoutEnvironment, maximumHeight: self.cellHeight(for: exploreCategorySection))
 				sectionLayout?.visibleItemsInvalidationHandler = { [weak self] visibleItems, _, _ in
 					guard let self = self else { return }
 					let totalCount = self.quickLinks.count
@@ -147,14 +127,10 @@ extension HomeCollectionViewController {
 					}
 				}
 			case .quickActions:
-				sectionLayout = Layouts.quickActionSection(section, columns: columns, layoutEnvironment: layoutEnvironment) { _ in
-					self.cellHeight(for: exploreCategorySection)
-				}
+				sectionLayout = Layouts.quickActionSection(section, columns: columns, layoutEnvironment: layoutEnvironment, maximumHeight: self.cellHeight(for: exploreCategorySection))
 				return sectionLayout
 			case .legal:
-				sectionLayout = Layouts.legalSection(section, columns: columns, layoutEnvironment: layoutEnvironment) { _ in
-					self.cellHeight(for: exploreCategorySection)
-				}
+				sectionLayout = Layouts.legalSection(section, columns: columns, layoutEnvironment: layoutEnvironment, maximumHeight: self.cellHeight(for: exploreCategorySection))
 				return sectionLayout
 			}
 
