@@ -78,16 +78,6 @@ class ShowDetailsCollectionViewController: DetailsCollectionViewController, Sect
 	/// fetch resolves, or when the show has none.
 	var editorial: Editorial?
 
-	override var reviewMeasurableItems: [CellHeightMeasurer.Item] {
-		var measurableItems = super.reviewMeasurableItems
-
-		if let editorial = self.editorial {
-			measurableItems.append(EditorialCollectionViewCell.measurableItem(for: editorial))
-		}
-
-		return measurableItems
-	}
-
 	/// The player that controls song playback.
 	var player: AVPlayer?
 
@@ -261,6 +251,26 @@ class ShowDetailsCollectionViewController: DetailsCollectionViewController, Sect
 	}
 
 	// MARK: - Functions
+	override func layoutContainerWidthDidChange() {
+		self.remeasureCellHeightsNearViewport()
+	}
+
+	override func collectionViewWillLayout() {
+		self.measureStaleCellHeightsNearViewport()
+	}
+
+	override func cellHeightEnvironmentDidChange() {
+		self.remeasureAllCellHeights()
+	}
+
+	#if DEBUG
+	override func measuredItemWidth(forSectionAt section: Int) -> CGFloat? {
+		guard let sectionIdentifier = self.snapshot?.sectionIdentifiers[safe: section] else { return nil }
+
+		return self.measuredItemWidth(forSection: sectionIdentifier)
+	}
+	#endif
+
 	override func fetchDetails() async {
 		guard let showIdentity = self.showIdentity else { return }
 
@@ -483,6 +493,16 @@ class ShowDetailsCollectionViewController: DetailsCollectionViewController, Sect
 			}
 		}
 
+		if self.snapshot.indexOfSection(.reviews) != nil {
+			self.setMeasuredItems(self.snapshot.itemIdentifiers(inSection: .reviews), for: .reviews)
+		} else {
+			self.removeMeasuredSections(notIn: self.snapshot.sectionIdentifiers)
+		}
+
+		if review != nil {
+			self.measureCellHeights(of: [staleItem])
+		}
+
 		self.dataSource.apply(self.snapshot, animatingDifferences: review == nil)
 	}
 
@@ -495,6 +515,115 @@ class ShowDetailsCollectionViewController: DetailsCollectionViewController, Sect
 	override func prepare(for identifier: any SegueIdentifier, destination: UIViewController, sender: Any?) {
 		guard let identifier = identifier as? SegueIdentifiers else { return }
 		self.prepareDestination(for: identifier, destination: destination, sender: sender)
+	}
+}
+
+// MARK: - Measurement
+extension ShowDetailsCollectionViewController {
+	func measuredItemWidth(for section: SectionLayoutKind, containerWidth: CGFloat) -> CGFloat? {
+		switch section {
+		case .reviews, .seasons, .cast, .songs, .studios, .moreByStudio, .relatedShows, .relatedLiteratures, .relatedGames:
+			let columns = self.columnCount(forSection: section, width: containerWidth)
+
+			return Layouts.itemWidth(columns: columns, containerWidth: containerWidth, isHorizontal: true)
+		default:
+			return nil
+		}
+	}
+
+	func measurableItem(for itemKind: ItemKind, in _: SectionLayoutKind) -> CellHeightMeasurer.Item? {
+		switch itemKind {
+		case .review(let review):
+			return ReviewCollectionViewCell.measurableItem(for: self.reviews.first { $0.id == review.id } ?? review)
+		case .editorial(let editorial):
+			return EditorialCollectionViewCell.measurableItem(for: editorial)
+		case .seasonIdentity:
+			return self.seasonMeasurableItem(for: itemKind)
+		case .castIdentity:
+			return self.castMeasurableItem(for: itemKind)
+		case .showSong(let showSong):
+			return MusicLockupCollectionViewCell.measurableItem(for: showSong)
+		case .studioIdentity:
+			return self.studioMeasurableItem(for: itemKind)
+		case .showIdentity:
+			return self.studioShowMeasurableItem(for: itemKind)
+		case .relatedShow(let relatedShow):
+			return SmallLockupCollectionViewCell.measurableItem(for: relatedShow)
+		case .relatedLiterature(let relatedLiterature):
+			return SmallLockupCollectionViewCell.measurableItem(for: relatedLiterature)
+		case .relatedGame(let relatedGame):
+			return GameLockupCollectionViewCell.measurableItem(for: relatedGame)
+		default:
+			return nil
+		}
+	}
+
+	/// Returns the item that measures the given item's season cell.
+	///
+	/// - Parameter itemKind: The item whose cell is measured.
+	///
+	/// - Returns: The item that measures the cell.
+	private func seasonMeasurableItem(for itemKind: ItemKind) -> CellHeightMeasurer.Item {
+		let season: Season? = self.fetchModel(for: itemKind)
+
+		guard let season = season else {
+			return CellHeightMeasurer.Item(cellType: SeasonLockupCollectionViewCell.self, isSkeleton: true) { cell in
+				cell.configure(using: nil as Season?)
+			}
+		}
+
+		return SeasonLockupCollectionViewCell.measurableItem(for: season)
+	}
+
+	/// Returns the item that measures the given item's cast cell.
+	///
+	/// - Parameter itemKind: The item whose cell is measured.
+	///
+	/// - Returns: The item that measures the cell.
+	private func castMeasurableItem(for itemKind: ItemKind) -> CellHeightMeasurer.Item {
+		let cast: Cast? = self.fetchModel(for: itemKind)
+
+		guard let cast = cast else {
+			return CellHeightMeasurer.Item(cellType: CastCollectionViewCell.self, isSkeleton: true) { cell in
+				cell.configure(using: nil as Cast?)
+			}
+		}
+
+		return CastCollectionViewCell.measurableItem(for: cast)
+	}
+
+	/// Returns the item that measures the given item's studio cell.
+	///
+	/// - Parameter itemKind: The item whose cell is measured.
+	///
+	/// - Returns: The item that measures the cell.
+	private func studioMeasurableItem(for itemKind: ItemKind) -> CellHeightMeasurer.Item {
+		let studio: Studio? = self.fetchModel(for: itemKind)
+
+		guard let studio = studio else {
+			return CellHeightMeasurer.Item(cellType: StudioLockupCollectionViewCell.self, isSkeleton: true) { cell in
+				cell.configure(using: nil as Studio?)
+			}
+		}
+
+		return StudioLockupCollectionViewCell.measurableItem(for: studio)
+	}
+
+	/// Returns the item that measures the given item's more by studio cell.
+	///
+	/// - Parameter itemKind: The item whose cell is measured.
+	///
+	/// - Returns: The item that measures the cell.
+	private func studioShowMeasurableItem(for itemKind: ItemKind) -> CellHeightMeasurer.Item {
+		let show: Show? = self.fetchModel(for: itemKind)
+
+		guard let show = show else {
+			return CellHeightMeasurer.Item(cellType: SmallLockupCollectionViewCell.self, isSkeleton: true) { cell in
+				cell.configure(using: nil as Show?)
+			}
+		}
+
+		return SmallLockupCollectionViewCell.measurableItem(for: show)
 	}
 }
 

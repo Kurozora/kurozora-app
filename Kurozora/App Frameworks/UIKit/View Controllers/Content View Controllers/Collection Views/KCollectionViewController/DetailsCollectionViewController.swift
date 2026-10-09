@@ -176,8 +176,8 @@ class DetailsCollectionViewController: KCollectionViewController, RatingAlertPre
 				didRenderTranslation = true
 			}
 
-			// A translated body is a different length, so the section's measured height no longer holds.
 			if didRenderTranslation {
+				self.cellHeightEnvironmentDidChange()
 				self.collectionView.collectionViewLayout.invalidateLayout()
 			}
 		}
