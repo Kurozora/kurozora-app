@@ -53,6 +53,9 @@ class KCollectionViewController: UICollectionViewController, SegueHandler {
 	/// The measured cell height of every item the sections lay out.
 	let cellHeightStore = CellHeightStore<AnyHashable, AnyHashable>()
 
+	/// The measurement of the sections away from the viewport.
+	var cellHeightDrainTask: Task<Void, Never>?
+
 	/// The width available to the collection view's content.
 	var layoutContainerWidth: CGFloat {
 		let safeAreaInsets = self.collectionView.safeAreaInsets
@@ -145,10 +148,12 @@ class KCollectionViewController: UICollectionViewController, SegueHandler {
 
 		let containerWidth = self.layoutContainerWidth
 
-		guard containerWidth != self.lastLayoutContainerWidth else { return }
+		if containerWidth != self.lastLayoutContainerWidth {
+			self.lastLayoutContainerWidth = containerWidth
+			self.layoutContainerWidthDidChange()
+		}
 
-		self.lastLayoutContainerWidth = containerWidth
-		self.layoutContainerWidthDidChange()
+		self.collectionViewWillLayout()
 	}
 
 	override func viewDidLoad() {
@@ -223,6 +228,9 @@ class KCollectionViewController: UICollectionViewController, SegueHandler {
 
 	/// Called when the width available to the collection view's content changes.
 	func layoutContainerWidthDidChange() {}
+
+	/// Called before every layout pass of the collection view.
+	func collectionViewWillLayout() {}
 
 	/// Called when the inputs that change a measured cell height change.
 	func cellHeightEnvironmentDidChange() {}

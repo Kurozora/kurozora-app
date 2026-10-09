@@ -153,6 +153,25 @@ final class CellHeightStore<Section: Hashable, Item: Hashable> {
 		return self.containerWidth == containerWidth && self.environment == environment
 	}
 
+	/// Returns whether the stored heights match the given environment.
+	///
+	/// - Parameter environment: The inputs that change what a cell renders.
+	///
+	/// - Returns: Whether the stored heights still apply.
+	func matches(environment: CellHeightMeasurer.Environment) -> Bool {
+		return self.environment == environment
+	}
+
+	/// Adopts the given width and environment without dropping a stored height.
+	///
+	/// - Parameters:
+	///    - containerWidth: The width available to the content.
+	///    - environment: The inputs that change what a cell renders.
+	func adopt(containerWidth: CGFloat, environment: CellHeightMeasurer.Environment) {
+		self.containerWidth = containerWidth
+		self.environment = environment
+	}
+
 	/// Drops every stored height and adopts the given width and environment.
 	///
 	/// - Parameters:

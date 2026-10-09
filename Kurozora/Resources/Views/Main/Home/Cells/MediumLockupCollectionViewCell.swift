@@ -34,6 +34,8 @@ class MediumLockupCollectionViewCell: KCollectionViewCell {
 	///    - genre: The `Genre` object used to configure the cell.
 	///    - rank: The rank of the genre in a ranked list.
 	func configure(using genre: Genre?, rank: Int? = nil) {
+		self.clearDecorativeArtwork()
+
 		guard let genre = genre else {
 			self.showSkeleton()
 			return
@@ -58,6 +60,8 @@ class MediumLockupCollectionViewCell: KCollectionViewCell {
 	///    - theme: The `Theme` object used to configure the cell.
 	///    - rank: The rank of the theme in a ranked list.
 	func configure(using theme: Theme?, rank: Int? = nil) {
+		self.clearDecorativeArtwork()
+
 		guard let theme = theme else {
 			self.showSkeleton()
 			return
@@ -74,6 +78,17 @@ class MediumLockupCollectionViewCell: KCollectionViewCell {
 		]
 
 		theme.attributes.symbolImage(imageView: self.symbolImageView)
+	}
+
+	/// Drops the pattern and grain artwork of a cell that exists only to be measured.
+	private func clearDecorativeArtwork() {
+		guard self.isSizingCell else { return }
+
+		let decorativeImageViews = self.backgroundColorView.subviews.compactMap { $0 as? UIImageView }
+
+		for imageView in decorativeImageViews where imageView !== self.symbolImageView {
+			imageView.image = nil
+		}
 	}
 
 	func configureRank(_ rank: Int?) {

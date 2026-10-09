@@ -383,14 +383,70 @@ extension SectionFetchable where Self: KCollectionViewController {
 		let sections = self.cellHeightStore.sections.compactMap { $0.base as? SectionLayoutKind }
 
 		for section in sections {
-			let items = self.cellHeightStore.items(in: AnyHashable(section)).compactMap { $0.base as? ItemKind }
-			self.measureCellHeights(of: items, in: section, containerWidth: containerWidth, environment: environment)
+			self.measureCellHeights(of: self.measuredItems(in: section), in: section, containerWidth: containerWidth, environment: environment)
 		}
 
 		#if DEBUG
 		let elapsed = (CFAbsoluteTimeGetCurrent() - startedAt) * 1000.0
 		print("----- [measure] all sections \(sections.count) width \(String(format: "%.1f", containerWidth)) \(String(format: "%.1f", elapsed))ms")
 		#endif
+	}
+
+	/// Measures the sections near the viewport at the current width and queues the rest.
+	func remeasureCellHeightsNearViewport() {
+		let containerWidth = self.layoutContainerWidth
+
+		guard containerWidth > 0.0 else { return }
+
+		let environment = self.cellHeightEnvironment()
+
+		guard self.cellHeightStore.matches(environment: environment) else {
+			self.remeasureAllCellHeights()
+			return
+		}
+
+		self.cellHeightStore.adopt(containerWidth: containerWidth, environment: environment)
+
+		#if DEBUG
+		let startedAt = CFAbsoluteTimeGetCurrent()
+		#endif
+
+		let sections = self.staleSections(among: self.sectionsInViewport(), containerWidth: containerWidth)
+
+		for section in sections {
+			self.measureCellHeights(of: self.measuredItems(in: section), in: section, containerWidth: containerWidth, environment: environment)
+		}
+
+		#if DEBUG
+		let elapsed = (CFAbsoluteTimeGetCurrent() - startedAt) * 1000.0
+		print("----- [measure] all sections \(sections.count) width \(String(format: "%.1f", containerWidth)) \(String(format: "%.1f", elapsed))ms")
+		#endif
+
+		self.scheduleRemainingCellHeightMeasurement()
+	}
+
+	/// Measures the sections about to come on screen whose stored cell width no longer applies.
+	func measureStaleCellHeightsNearViewport() {
+		guard !self.cellHeightStore.isEmpty else { return }
+
+		let containerWidth = self.layoutContainerWidth
+
+		guard containerWidth > 0.0 else { return }
+		guard self.cellHeightStore.containerWidth == containerWidth else { return }
+
+		let sections = self.staleSections(among: self.sectionsNearViewport(), containerWidth: containerWidth)
+
+		guard !sections.isEmpty else { return }
+
+		let environment = self.cellHeightEnvironment()
+
+		guard self.cellHeightStore.matches(environment: environment) else { return }
+
+		for section in sections {
+			self.measureCellHeights(of: self.measuredItems(in: section), in: section, containerWidth: containerWidth, environment: environment)
+		}
+
+		self.collectionView.collectionViewLayout.invalidateLayout()
 	}
 
 	/// Replaces the items the given section lays out.
@@ -436,6 +492,106 @@ extension SectionFetchable where Self: KCollectionViewController {
 		return self.cellHeightStore.itemWidth(for: AnyHashable(section))
 	}
 
+	/// Returns the items the given section lays out.
+	///
+	/// - Parameter section: The section to look up.
+	///
+	/// - Returns: The items the store holds for the section.
+	private func measuredItems(in section: SectionLayoutKind) -> [ItemKind] {
+		return self.cellHeightStore.items(in: AnyHashable(section)).compactMap { $0.base as? ItemKind }
+	}
+
+	/// Returns the sections with a cell on screen.
+	///
+	/// - Returns: The sections in the viewport.
+	private func sectionsInViewport() -> [SectionLayoutKind] {
+		return self.sections(atIndices: self.visibleSectionIndices())
+	}
+
+	/// Returns the sections on screen along with one neighbor on each side.
+	///
+	/// - Returns: The sections near the viewport.
+	private func sectionsNearViewport() -> [SectionLayoutKind] {
+		var indices: Set<Int> = []
+
+		for index in self.visibleSectionIndices() {
+			indices.formUnion([index - 1, index, index + 1])
+		}
+
+		return self.sections(atIndices: indices)
+	}
+
+	/// Returns the indices of the sections with a cell on screen.
+	///
+	/// - Returns: The indices of the visible sections.
+	private func visibleSectionIndices() -> Set<Int> {
+		return Set(self.collectionView.indexPathsForVisibleItems.map { $0.section })
+	}
+
+	/// Returns the sections at the given indices.
+	///
+	/// - Parameter indices: The indices to look up.
+	///
+	/// - Returns: The sections the snapshot holds at those indices.
+	private func sections(atIndices indices: Set<Int>) -> [SectionLayoutKind] {
+		let sectionIdentifiers = self.snapshot?.sectionIdentifiers ?? []
+
+		guard !sectionIdentifiers.isEmpty else { return [] }
+		guard !indices.isEmpty else { return sectionIdentifiers }
+
+		return indices.sorted().compactMap { sectionIdentifiers[safe: $0] }
+	}
+
+	/// Returns the given sections whose stored cell width no longer matches the given container width.
+	///
+	/// - Parameters:
+	///    - sections: The sections to inspect.
+	///    - containerWidth: The width available to the collection view's content.
+	///
+	/// - Returns: The sections awaiting a measurement.
+	private func staleSections(among sections: [SectionLayoutKind], containerWidth: CGFloat) -> [SectionLayoutKind] {
+		return sections.filter { section in
+			guard let itemWidth = self.measuredItemWidth(for: section, containerWidth: containerWidth) else { return false }
+			guard let storedItemWidth = self.measuredItemWidth(forSection: section) else { return true }
+
+			return abs(storedItemWidth - itemWidth) >= 0.5
+		}
+	}
+
+	/// Measures the sections away from the viewport once the container width settles.
+	private func scheduleRemainingCellHeightMeasurement() {
+		self.cellHeightDrainTask?.cancel()
+		self.cellHeightDrainTask = Task { @MainActor [weak self] in
+			try? await Task.sleep(nanoseconds: 250_000_000)
+
+			guard let self = self, !Task.isCancelled else { return }
+
+			let containerWidth = self.layoutContainerWidth
+
+			guard containerWidth > 0.0 else { return }
+
+			let environment = self.cellHeightEnvironment()
+
+			guard self.cellHeightStore.matches(containerWidth: containerWidth, environment: environment) else { return }
+
+			let storedSections = self.cellHeightStore.sections.compactMap { $0.base as? SectionLayoutKind }
+			let sections = self.staleSections(among: storedSections, containerWidth: containerWidth)
+
+			guard !sections.isEmpty else { return }
+
+			for section in sections {
+				guard !Task.isCancelled else { return }
+
+				self.measureCellHeights(of: self.measuredItems(in: section), in: section, containerWidth: containerWidth, environment: environment)
+				await Task.yield()
+			}
+
+			guard !Task.isCancelled else { return }
+
+			self.collectionView.collectionViewLayout.invalidateLayout()
+		}
+	}
+
 	/// Returns the inputs that change what the controller's cells render.
 	///
 	/// - Returns: The measurement environment.
@@ -453,6 +609,11 @@ extension SectionFetchable where Self: KCollectionViewController {
 	private func measureCellHeights(of items: [ItemKind], in section: SectionLayoutKind, containerWidth: CGFloat, environment: CellHeightMeasurer.Environment) {
 		guard let itemWidth = self.measuredItemWidth(for: section, containerWidth: containerWidth) else { return }
 
+		let storedItemWidth = self.measuredItemWidth(forSection: section)
+		let isSectionStale = storedItemWidth.map { abs($0 - itemWidth) >= 0.5 } ?? true
+		let sectionItems = self.measuredItems(in: section)
+		let itemsToMeasure = isSectionStale && !sectionItems.isEmpty ? sectionItems : items
+
 		self.cellHeightStore.setItemWidth(itemWidth, for: AnyHashable(section))
 
 		#if DEBUG
@@ -461,7 +622,7 @@ extension SectionFetchable where Self: KCollectionViewController {
 		var measuredCount = 0
 		#endif
 
-		for item in items {
+		for item in itemsToMeasure {
 			guard let measurableItem = self.measurableItem(for: item, in: section) else { continue }
 
 			let height = self.cellHeightMeasurer.height(of: measurableItem, width: itemWidth, contentSizeCategory: environment.contentSizeCategory)
@@ -480,6 +641,7 @@ extension SectionFetchable where Self: KCollectionViewController {
 		let sectionIndex: Int? = self.snapshot?.indexOfSection(section) ?? nil
 		let storedHeight = self.cellHeight(for: section)
 		print("----- [measure] section \(sectionIndex.map(String.init) ?? "?") \(Self.name(of: section)) items \(measuredCount) \(String(format: "%.1f", elapsed))ms height \(storedHeight.map { String(format: "%.1f", $0) } ?? "-") cells \(cellTypes.sorted())")
+		self.cellHeightMeasurer.flushMeasurementSplits()
 		#endif
 	}
 

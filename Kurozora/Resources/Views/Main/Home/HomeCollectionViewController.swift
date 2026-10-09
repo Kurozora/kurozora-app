@@ -296,7 +296,11 @@ class HomeCollectionViewController: KCollectionViewController, SectionFetchable,
 	}
 
 	override func layoutContainerWidthDidChange() {
-		self.remeasureAllCellHeights()
+		self.remeasureCellHeightsNearViewport()
+	}
+
+	override func collectionViewWillLayout() {
+		self.measureStaleCellHeightsNearViewport()
 	}
 
 	override func cellHeightEnvironmentDidChange() {

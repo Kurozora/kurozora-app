@@ -12,6 +12,11 @@ import UIKit
 @MainActor
 final class CellHeightMeasurer {
 	// MARK: - Properties
+	#if DEBUG
+	/// Whether every measurement also times a width-only re-solve.
+	static var isSplitTimingEnabled = false
+	#endif
+
 	/// The hosts the measurements are taken from.
 	private var sizingHosts: [ObjectIdentifier: SizingHost] = [:]
 
@@ -27,6 +32,12 @@ final class CellHeightMeasurer {
 
 	/// The sections already reported for rendering at the wrong width.
 	private var reportedWidthMismatches: Set<Int> = []
+
+	/// The running measurement cost of each cell type.
+	private var measurementSplits: [String: MeasurementSplit] = [:]
+
+	/// The cell types measured since the last report.
+	private var pendingMeasurementSplits: Set<String> = []
 	#endif
 
 	// MARK: - Functions
@@ -56,6 +67,7 @@ final class CellHeightMeasurer {
 		self.measuredWidths[section] = width
 		let elapsed = (CFAbsoluteTimeGetCurrent() - startedAt) * 1000.0
 		print("----- [measure] section \(section) items \(items.count) \(String(format: "%.1f", elapsed))ms cells \(Set(items.map { String(describing: $0.cellType) }).sorted())")
+		self.flushMeasurementSplits()
 		#endif
 
 		return maximumHeight > 0.0 ? maximumHeight : nil
@@ -81,6 +93,13 @@ final class CellHeightMeasurer {
 		}
 
 		let sizingHost = self.sizingHost(of: item.cellType, isSkeleton: item.isSkeleton)
+
+		#if DEBUG
+		if Self.isSplitTimingEnabled {
+			return self.splitTimedHeight(of: item, in: sizingHost, width: width)
+		}
+		#endif
+
 		item.configure(sizingHost.cell)
 
 		return self.fittingHeight(of: sizingHost, width: width)
@@ -156,6 +175,65 @@ final class CellHeightMeasurer {
 	}
 
 	#if DEBUG
+	/// Returns the given item's measured height and records its split timings.
+	///
+	/// - Parameters:
+	///    - item: The item to measure.
+	///    - host: The host the measurement is taken from.
+	///    - width: The width a single cell is given.
+	///
+	/// - Returns: The measured height.
+	private func splitTimedHeight(of item: Item, in host: SizingHost, width: CGFloat) -> CGFloat {
+		let configureStartedAt = CFAbsoluteTimeGetCurrent()
+		item.configure(host.cell)
+		let configureElapsed = (CFAbsoluteTimeGetCurrent() - configureStartedAt) * 1000.0
+
+		let layoutStartedAt = CFAbsoluteTimeGetCurrent()
+		let height = self.fittingHeight(of: host, width: width)
+		let layoutElapsed = (CFAbsoluteTimeGetCurrent() - layoutStartedAt) * 1000.0
+
+		let relayoutStartedAt = CFAbsoluteTimeGetCurrent()
+		_ = self.fittingHeight(of: host, width: width + 1.0)
+		let relayoutElapsed = (CFAbsoluteTimeGetCurrent() - relayoutStartedAt) * 1000.0
+		_ = self.fittingHeight(of: host, width: width)
+
+		self.recordMeasurementSplit(of: item.cellType, configure: configureElapsed, layout: layoutElapsed, relayout: relayoutElapsed)
+
+		return height
+	}
+
+	/// Adds one cell's split timings to its type's running totals.
+	///
+	/// - Parameters:
+	///    - cellType: The measured type of cell.
+	///    - configure: The milliseconds the configure call took.
+	///    - layout: The milliseconds the first layout took.
+	///    - relayout: The milliseconds the width-only re-solve took.
+	private func recordMeasurementSplit(of cellType: KCollectionViewCell.Type, configure: Double, layout: Double, relayout: Double) {
+		let name = String(describing: cellType)
+		var split = self.measurementSplits[name] ?? MeasurementSplit()
+
+		split.add(configure: configure, layout: layout, relayout: relayout)
+
+		self.measurementSplits[name] = split
+		self.pendingMeasurementSplits.insert(name)
+	}
+
+	/// Prints the running totals of every cell type measured since the last report.
+	func flushMeasurementSplits() {
+		defer { self.pendingMeasurementSplits.removeAll() }
+
+		for name in self.pendingMeasurementSplits.sorted() {
+			guard let split = self.measurementSplits[name] else { continue }
+
+			let configure = "\(String(format: "%.3f", split.averageConfigure))/\(String(format: "%.3f", split.maximumConfigure))ms"
+			let layout = "\(String(format: "%.3f", split.averageLayout))/\(String(format: "%.3f", split.maximumLayout))ms"
+			let relayout = "\(String(format: "%.3f", split.averageRelayout))/\(String(format: "%.3f", split.maximumRelayout))ms"
+
+			print("----- [measure-split] \(name) n=\(split.count) configure avg/max \(configure) layout avg/max \(layout) relayout avg/max \(relayout)")
+		}
+	}
+
 	/// Returns the width the given section was measured at during the current layout pass.
 	///
 	/// - Parameter section: The section to look up.
@@ -276,6 +354,71 @@ extension CellHeightMeasurer {
 		}
 	}
 }
+
+#if DEBUG
+// MARK: - MeasurementSplit
+extension CellHeightMeasurer {
+	/// What one cell type's measurements cost, split by step.
+	struct MeasurementSplit {
+		// MARK: - Properties
+		/// The number of measurements taken.
+		var count = 0
+
+		/// The total milliseconds spent configuring.
+		var totalConfigure = 0.0
+
+		/// The longest configure in milliseconds.
+		var maximumConfigure = 0.0
+
+		/// The total milliseconds spent on the first layout.
+		var totalLayout = 0.0
+
+		/// The longest first layout in milliseconds.
+		var maximumLayout = 0.0
+
+		/// The total milliseconds spent on the width-only re-solve.
+		var totalRelayout = 0.0
+
+		/// The longest width-only re-solve in milliseconds.
+		var maximumRelayout = 0.0
+
+		/// The mean milliseconds spent configuring.
+		var averageConfigure: Double {
+			return self.count > 0 ? self.totalConfigure / Double(self.count) : 0.0
+		}
+
+		/// The mean milliseconds spent on the first layout.
+		var averageLayout: Double {
+			return self.count > 0 ? self.totalLayout / Double(self.count) : 0.0
+		}
+
+		/// The mean milliseconds spent on the width-only re-solve.
+		var averageRelayout: Double {
+			return self.count > 0 ? self.totalRelayout / Double(self.count) : 0.0
+		}
+
+		// MARK: - Functions
+		/// Adds one measurement to the totals.
+		///
+		/// - Parameters:
+		///    - configure: The milliseconds the configure call took.
+		///    - layout: The milliseconds the first layout took.
+		///    - relayout: The milliseconds the width-only re-solve took.
+		mutating func add(configure: Double, layout: Double, relayout: Double) {
+			self.count += 1
+
+			self.totalConfigure += configure
+			self.maximumConfigure = max(self.maximumConfigure, configure)
+
+			self.totalLayout += layout
+			self.maximumLayout = max(self.maximumLayout, layout)
+
+			self.totalRelayout += relayout
+			self.maximumRelayout = max(self.maximumRelayout, relayout)
+		}
+	}
+}
+#endif
 
 // MARK: - Environment
 extension CellHeightMeasurer {

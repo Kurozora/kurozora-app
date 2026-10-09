@@ -59,6 +59,7 @@ class FlareView: UIView {
 	override func layoutSubviews() {
 		super.layoutSubviews()
 
+		guard !self.isInSizingCell else { return }
 		guard self.bounds.width > 0, self.bounds.height > 0 else { return }
 		guard self.bounds.size != self.renderedSize else { return }
 		self.renderedSize = self.bounds.size
