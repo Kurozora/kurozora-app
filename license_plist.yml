@@ -2,6 +2,11 @@ options:
   xcodeprojPath: "*.xcodeproj"
   prefix: Acknowledgements
   sandbox-mode: true
+manual:
+  - name: KurozoraKit
+    file: ../KurozoraKit/LICENSE
+    source: https://github.com/kurozora/KurozoraKit
+    licenseType: MIT
 exclude:
   - APIKit
   - FLEX

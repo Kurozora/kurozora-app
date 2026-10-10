@@ -29,7 +29,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 </string>
 			<key>License</key>
-			<string>unknown</string>
+			<string>MIT</string>
 			<key>Type</key>
 			<string>PSGroupSpecifier</string>
 		</dict>
