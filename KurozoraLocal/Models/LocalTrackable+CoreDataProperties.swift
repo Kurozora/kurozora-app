@@ -46,6 +46,9 @@ nonisolated extension LocalTrackable {
 	/// The trackable's genres in the user's language.
 	@NSManaged var genresLocalized: String?
 
+	/// The name of the trackable's studio, publisher or developer.
+	@NSManaged var studioName: String?
+
 	/// The identifier of the trackable's media type.
 	@NSManaged var mediaTypeID: NSNumber?
 
@@ -75,6 +78,9 @@ nonisolated extension LocalTrackable {
 
 	/// The identifier of the trackable's TV rating.
 	@NSManaged var tvRatingID: NSNumber?
+
+	/// The name of the trackable's TV rating.
+	@NSManaged var tvRatingName: String?
 
 	/// The identifier of the trackable's adaptation source.
 	@NSManaged var sourceID: NSNumber?

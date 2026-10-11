@@ -87,6 +87,7 @@ class LocalTrackable: NSManagedObject {
 		trackable.bannerURL = row.bannerURL
 		trackable.bannerBackgroundColor = row.bannerBackgroundColor
 		trackable.genresLocalized = row.genresLocalized
+		trackable.studioName = row.studioName
 		trackable.mediaTypeID = row.mediaTypeID.map { NSNumber(value: $0) }
 		trackable.mediaTypeName = row.mediaTypeName
 		trackable.statusID = row.statusID.map { NSNumber(value: $0) }
@@ -97,6 +98,7 @@ class LocalTrackable: NSManagedObject {
 		trackable.popularityRank = row.popularityRank.map { NSNumber(value: $0) }
 		trackable.publicRating = row.publicRating.map { NSNumber(value: $0) }
 		trackable.tvRatingID = row.tvRatingID.map { NSNumber(value: $0) }
+		trackable.tvRatingName = row.tvRatingName
 		trackable.sourceID = row.sourceID.map { NSNumber(value: $0) }
 		trackable.countryOfOrigin = row.countryOfOrigin
 		trackable.isNSFW = row.isNSFW.map { NSNumber(value: $0) }

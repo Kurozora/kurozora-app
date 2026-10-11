@@ -826,13 +826,32 @@ class LibraryTableCollectionViewCell: UICollectionViewCell {
 	///
 	/// - Returns: The rendered string.
 	static func text(for column: LibraryColumn, entry: LocalLibraryEntry) -> String {
+		let trackable = entry.trackable
+
 		switch column {
-		case .title: return entry.trackable?.title ?? ""
-		case .type: return entry.trackable?.mediaTypeName ?? ""
-		case .status: return entry.trackable?.statusName ?? ""
-		case .genres: return entry.trackable?.genresLocalized ?? ""
-		case .year, .studio, .tvRating, .episodes, .chapters, .volumes, .editions, .dateAdded, .progress: return ""
+		case .title: return trackable?.title ?? ""
+		case .type: return trackable?.mediaTypeName ?? ""
+		case .status: return trackable?.statusName ?? ""
+		case .genres: return trackable?.genresLocalized ?? ""
+		case .year: return trackable?.firstAired.map(Self.year(of:)) ?? ""
+		case .studio: return trackable?.studioName ?? ""
+		case .tvRating: return trackable?.tvRatingName ?? ""
+		case .episodes, .chapters, .editions: return trackable?.episodeCount?.stringValue ?? ""
+		case .volumes: return trackable?.seasonCount?.stringValue ?? ""
+		case .dateAdded, .progress: return ""
 		case .rating, .favorite, .reminder, .visibility: return ""
 		}
+	}
+
+	/// Returns the calendar year of the given date in UTC.
+	///
+	/// - Parameter date: The date to read the year from.
+	///
+	/// - Returns: The year as a string.
+	private static func year(of date: Date) -> String {
+		var calendar = Calendar(identifier: .gregorian)
+		calendar.timeZone = TimeZone(identifier: "UTC") ?? .current
+
+		return "\(calendar.component(.year, from: date))"
 	}
 }

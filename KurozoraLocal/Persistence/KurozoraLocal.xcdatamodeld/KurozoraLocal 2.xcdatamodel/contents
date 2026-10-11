@@ -153,10 +153,12 @@
         <attribute name="sourceID" optional="YES" attributeType="Integer 64" usesScalarValueType="NO"/>
         <attribute name="statusID" optional="YES" attributeType="Integer 64" usesScalarValueType="NO"/>
         <attribute name="statusName" optional="YES" attributeType="String"/>
+        <attribute name="studioName" optional="YES" attributeType="String"/>
         <attribute name="tagline" optional="YES" attributeType="String"/>
         <attribute name="title" optional="YES" attributeType="String"/>
         <attribute name="trackableID" attributeType="String" defaultValueString=""/>
         <attribute name="tvRatingID" optional="YES" attributeType="Integer 64" usesScalarValueType="NO"/>
+        <attribute name="tvRatingName" optional="YES" attributeType="String"/>
         <relationship name="entries" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="LocalLibraryEntry" inverseName="trackable" inverseEntity="LocalLibraryEntry"/>
         <fetchIndex name="byKindTrackable">
             <fetchIndexElement property="kindRaw" type="Binary" order="ascending"/>
