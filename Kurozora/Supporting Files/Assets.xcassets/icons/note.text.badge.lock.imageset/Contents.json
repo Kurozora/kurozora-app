@@ -1,0 +1,12 @@
+{
+  "images" : [
+    {
+      "filename" : "note.text.badge.lock.pdf",
+      "idiom" : "universal"
+    }
+  ],
+  "info" : {
+    "author" : "xcode",
+    "version" : 1
+  }
+}
