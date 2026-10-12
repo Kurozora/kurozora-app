@@ -88,6 +88,21 @@ extension URL {
 		return self.scheme?.starts(with: "http") ?? false
 	}
 
+	/// The `kurozora://` form of a `kurozora.app` web URL.
+	var kurozoraSchemeURL: URL? {
+		guard self.isWebURL, self.host?.lowercased() == "kurozora.app" else { return nil }
+
+		var pathComponents = self.pathComponents.filter { $0 != "/" }
+		guard !pathComponents.isEmpty else { return nil }
+
+		var components = URLComponents()
+		components.scheme = "kurozora"
+		components.host = pathComponents.removeFirst()
+		components.path = pathComponents.isEmpty ? "" : "/" + pathComponents.joined(separator: "/")
+		components.percentEncodedQuery = self.query
+		return components.url
+	}
+
 	/// Dictionary of the URL's query parameters that have values.
 	///
 	/// Duplicated query keys are ignored, taking only the first instance.

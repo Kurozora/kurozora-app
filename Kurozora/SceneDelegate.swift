@@ -248,6 +248,11 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 			return
 		}
 
+		if userActivity.activityType == NSUserActivityTypeBrowsingWeb {
+			self.configure(scene: scene, withWebpageActivity: userActivity)
+			return
+		}
+
 		guard
 			let activityType = ActivityType(rawValue: userActivity.activityType),
 			let kurozoraID = (try? userActivity.typedPayload([String: KurozoraItemID].self))?["id"],
@@ -277,6 +282,25 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 		}
 
 		print("----- Succeeded to restore from \(userActivity)")
+	}
+
+	/// Opens the destination a universal link points at.
+	///
+	/// - Parameters:
+	///    - scene: The scene the link opens in.
+	///    - userActivity: The browsing activity carrying the web URL.
+	private func configure(scene: UIScene?, withWebpageActivity userActivity: NSUserActivity) {
+		guard
+			let url = userActivity.webpageURL?.kurozoraSchemeURL,
+			let scene = scene
+		else {
+			print("----- Failed to route universal link from \(userActivity)")
+			return
+		}
+
+		Task {
+			await NavigationManager.shared.schemeHandler(scene, open: url)
+		}
 	}
 
 	/// Opens the library entry a Spotlight result points at.
