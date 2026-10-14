@@ -351,9 +351,9 @@
 			buildPhases = (
 				66647B4C2084995500CF624F /* Sources */,
 				66647B4D2084995500CF624F /* Frameworks */,
-				66B4DC40245A20390097135A /* Add version to Settings.bundle */,
-				66022EAE238B287900B5286A /* Add Acknowledgements */,
 				66647B4E2084995500CF624F /* Resources */,
+				66022EAE238B287900B5286A /* Add Acknowledgements */,
+				66B4DC40245A20390097135A /* Add version to Settings.bundle */,
 				6647B7412BC0A6E3006BC91C /* Embed Foundation Extensions */,
 				6691885F2F7BCEAA000B1272 /* Embed Watch Content */,
 				6630828D2EF70DE10080EBC4 /* Strip Symbols */,
@@ -563,18 +563,19 @@
 			files = (
 			);
 			inputFileListPaths = (
+				"$(SRCROOT)/Acknowledgements-input-files.xcfilelist",
 			);
 			inputPaths = (
-				"${BUILT_PRODUCTS_DIR}/${CONTENTS_FOLDER_PATH}/com.mono0926.LicensePlist.Output",
 			);
 			name = "Add Acknowledgements";
 			outputFileListPaths = (
+				"$(SRCROOT)/Acknowledgements-output-files.xcfilelist",
 			);
 			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 1;
 			shellPath = /bin/sh;
-			shellScript = "ACKNOWLEDGEMENTS_DIR=\"${BUILT_PRODUCTS_DIR}/${CONTENTS_FOLDER_PATH}/com.mono0926.LicensePlist.Output\"\nDESTINATION_PATH=\"${SRCROOT}/Kurozora/Supporting Files/Settings.bundle/\"\n\nrm -rf \"${DESTINATION_PATH}/Acknowledgements\"\n\ncp -r \"${ACKNOWLEDGEMENTS_DIR}\"/* \"${DESTINATION_PATH}\"\n\nrm -rf \"${ACKNOWLEDGEMENTS_DIR}\"\n";
+			shellScript = "set -e\n\nACKNOWLEDGEMENTS_DIR=\"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/com.mono0926.LicensePlist.Output\"\nDESTINATION_PATH=\"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/Settings.bundle\"\n\ndeclared=$(grep -c . \"${SCRIPT_OUTPUT_FILE_LIST_0}\")\ngenerated=$(plutil -p \"${ACKNOWLEDGEMENTS_DIR}/Acknowledgements.plist\" | grep -c PSChildPaneSpecifier)\n\nif [ \"${declared}\" -ne $((generated + 1)) ]; then\n    echo \"error: Acknowledgements file lists are stale: ${declared} declared, $((generated + 1)) generated. Regenerate Acknowledgements-input-files.xcfilelist and Acknowledgements-output-files.xcfilelist.\" >&2\n    exit 1\nfi\n\nwhile IFS= read -r line; do\n    [ -n \"${line}\" ] || continue\n\n    destination=$(eval echo \"${line}\")\n    relative=\"${destination#${DESTINATION_PATH}/}\"\n\n    cp \"${ACKNOWLEDGEMENTS_DIR}/${relative}\" \"${destination}\"\ndone < \"${SCRIPT_OUTPUT_FILE_LIST_0}\"\n";
 		};
 		6630828D2EF70DE10080EBC4 /* Strip Symbols */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -584,18 +585,18 @@
 			inputFileListPaths = (
 			);
 			inputPaths = (
-				"${DWARF_DSYM_FOLDER_PATH}/${DWARF_DSYM_FILE_NAME}/Contents/Resources/DWARF/${EXECUTABLE_NAME}",
-				"${DSTROOT}/Applications/${EXECUTABLE_FOLDER_PATH}/${EXECUTABLE_NAME}",
+				"${TARGET_BUILD_DIR}/${EXECUTABLE_PATH}",
 			);
 			name = "Strip Symbols";
 			outputFileListPaths = (
 			);
 			outputPaths = (
-				"${BUILT_PRODUCTS_DIR}/${EXECUTABLE_FOLDER_PATH}/${EXECUTABLE_NAME}",
+				"${TARGET_BUILD_DIR}/${EXECUTABLE_PATH}",
+				"${DERIVED_FILE_DIR}/StripSymbols.stamp",
 			);
 			runOnlyForDeploymentPostprocessing = 1;
 			shellPath = /bin/sh;
-			shellScript = "set -e\n\necho \"Starting the symbol stripping process...\"\n\nif [ \"Release\" = \"${CONFIGURATION}\" ]; then\n  echo \"Configuration is Release.\"\n  \n  # Path to the app directory\n  APP_DIR_PATH=\"${BUILT_PRODUCTS_DIR}/${EXECUTABLE_FOLDER_PATH}\"\n  echo \"App directory path: ${APP_DIR_PATH}\"\n\n  # Strip main binary\n  echo \"Stripping main binary: ${APP_DIR_PATH}/${EXECUTABLE_NAME}\"\n  strip -rSTx \"${APP_DIR_PATH}/${EXECUTABLE_NAME}\"\n  if [ $? -eq 0 ]; then\n    echo \"Successfully stripped main binary.\"\n  else\n    echo \"Failed to strip main binary.\" >&2\n  fi\n\n  # Path to the Frameworks directory\n  APP_FRAMEWORKS_DIR=\"${APP_DIR_PATH}/Frameworks\"\n  echo \"Frameworks directory path: ${APP_FRAMEWORKS_DIR}\"\n\n  # Strip symbols from frameworks, if Frameworks/ exists at all\n  # ... as long as the framework is NOT signed by Apple\n  if [ -d \"${APP_FRAMEWORKS_DIR}\" ]; then\n    echo \"Frameworks directory exists. Proceeding to strip symbols from frameworks.\"\n    find \"${APP_FRAMEWORKS_DIR}\" -type f -perm +111 -maxdepth 2 -mindepth 2 -exec bash -c '\n    codesign -v -R=\"anchor apple\" \"{}\" &> /dev/null ||\n    (\n        echo \"Stripping {}\" &&\n        if [ -w \"{}\" ]; then\n            strip -rSTx \"{}\"\n            if [ $? -eq 0 ]; then\n                echo \"Successfully stripped {}\"\n            else\n                echo \"Failed to strip {}\" >&2\n            fi\n        else\n            echo \"Warning: No write permission for {}\"\n        fi\n    )\n    ' ;\n    if [ $? -eq 0 ]; then\n        echo \"Successfully stripped symbols from frameworks.\"\n    else\n        echo \"Failed to strip symbols from some frameworks.\" >&2\n    fi\n  else\n    echo \"Frameworks directory does not exist. Skipping framework stripping.\"\n  fi\nelse\n  echo \"Configuration is not Release. Skipping symbol stripping.\"\nfi\n\necho \"Symbol stripping process completed.\"\n";
+			shellScript = "set -e\n\nmkdir -p \"${TEMP_DIR}\"\n\necho \"Starting the symbol stripping process...\"\n\nif [ \"Release\" = \"${CONFIGURATION}\" ]; then\n  echo \"Configuration is Release.\"\n  \n  # Path to the app directory\n  APP_DIR_PATH=\"${TARGET_BUILD_DIR}/${EXECUTABLE_FOLDER_PATH}\"\n  echo \"App directory path: ${APP_DIR_PATH}\"\n\n  # Strip main binary\n  echo \"Stripping main binary: ${APP_DIR_PATH}/${EXECUTABLE_NAME}\"\n  strip -rSTx -o \"${TEMP_DIR}/${EXECUTABLE_NAME}.stripped\" \"${APP_DIR_PATH}/${EXECUTABLE_NAME}\"\n  cp \"${TEMP_DIR}/${EXECUTABLE_NAME}.stripped\" \"${APP_DIR_PATH}/${EXECUTABLE_NAME}\"\n  if [ $? -eq 0 ]; then\n    echo \"Successfully stripped main binary.\"\n  else\n    echo \"Failed to strip main binary.\" >&2\n  fi\n\n  # Path to the Frameworks directory\n  APP_FRAMEWORKS_DIR=\"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}\"\n  echo \"Frameworks directory path: ${APP_FRAMEWORKS_DIR}\"\n\n  # Strip symbols from frameworks, if Frameworks/ exists at all\n  # ... as long as the framework is NOT signed by Apple\n  if [ -d \"${APP_FRAMEWORKS_DIR}\" ]; then\n    echo \"Frameworks directory exists. Proceeding to strip symbols from frameworks.\"\n    find \"${APP_FRAMEWORKS_DIR}\" -type f -perm +111 -maxdepth 2 -mindepth 2 -exec bash -c '\n    codesign -v -R=\"anchor apple\" \"{}\" &> /dev/null ||\n    (\n        echo \"Stripping {}\" &&\n        if [ -w \"{}\" ]; then\n            strip -rSTx \"{}\"\n            if [ $? -eq 0 ]; then\n                echo \"Successfully stripped {}\"\n            else\n                echo \"Failed to strip {}\" >&2\n            fi\n        else\n            echo \"Warning: No write permission for {}\"\n        fi\n    )\n    ' \\;\n    if [ $? -eq 0 ]; then\n        echo \"Successfully stripped symbols from frameworks.\"\n    else\n        echo \"Failed to strip symbols from some frameworks.\" >&2\n    fi\n  else\n    echo \"Frameworks directory does not exist. Skipping framework stripping.\"\n  fi\nelse\n  echo \"Configuration is not Release. Skipping symbol stripping.\"\nfi\n\necho \"Symbol stripping process completed.\"\n\ntouch \"${DERIVED_FILE_DIR}/StripSymbols.stamp\"\n";
 		};
 		66B4DC40245A20390097135A /* Add version to Settings.bundle */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -610,11 +611,11 @@
 			outputFileListPaths = (
 			);
 			outputPaths = (
-				"${BUILT_PRODUCTS_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/Settings.bundle/Root.plist",
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/Settings.bundle/Root.plist",
 			);
 			runOnlyForDeploymentPostprocessing = 1;
 			shellPath = /bin/sh;
-			shellScript = "if [ \"${IS_MACCATALYST}\" = \"YES\" ]; then\n    # Mac Catalyst: resources live under Contents/Resources.\n    PLIST=\"${BUILT_PRODUCTS_DIR}/${CONTENTS_FOLDER_PATH}/Resources/Settings.bundle/Root.plist\"\nelse\n    # iOS: resources live at the app bundle root.\n    PLIST=\"${BUILT_PRODUCTS_DIR}/${CONTENTS_FOLDER_PATH}/Settings.bundle/Root.plist\"\nfi\n\n/usr/libexec/PlistBuddy \"${PLIST}\" -c \"Set PreferenceSpecifiers:2:DefaultValue ${MARKETING_VERSION}\"\n";
+			shellScript = "set -e\n\nPLIST=\"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/Settings.bundle/Root.plist\"\n\n/usr/libexec/PlistBuddy \"${PLIST}\" -c \"Set PreferenceSpecifiers:2:DefaultValue ${MARKETING_VERSION}\"\n";
 		};
 /* End PBXShellScriptBuildPhase section */
 
@@ -867,13 +868,15 @@
 				COMPILATION_CACHE_ENABLE_CACHING = YES;
 				COMPILATION_CACHE_ENABLE_PLUGIN = YES;
 				COPY_PHASE_STRIP = NO;
-				CURRENT_PROJECT_VERSION = 1275;
+				CURRENT_PROJECT_VERSION = 1276;
 				DEAD_CODE_STRIPPING = YES;
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				DEVELOPMENT_TEAM = 47ZEU5J4BF;
+				EAGER_COMPILATION_ALLOW_SCRIPTS = YES;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
 				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				FUSE_BUILD_SCRIPT_PHASES = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu17;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_NO_COMMON_BLOCKS = YES;
@@ -895,13 +898,14 @@
 				LD_RUNPATH_SEARCH_PATHS = "@executable_path/Frameworks";
 				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
 				MACOSX_DEPLOYMENT_TARGET = 12.4;
-				MARKETING_VERSION = 1.14.0;
+				MARKETING_VERSION = 1.15.0;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
 				STRINGS_FILE_OUTPUT_ENCODING = binary;
 				STRING_CATALOG_GENERATE_SYMBOLS = YES;
+				STRIP_INSTALLED_PRODUCT = NO;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_ENABLE_COMPILE_CACHE = YES;
@@ -956,9 +960,10 @@
 				COMPILATION_CACHE_ENABLE_CACHING = YES;
 				COMPILATION_CACHE_ENABLE_PLUGIN = YES;
 				COPY_PHASE_STRIP = NO;
-				CURRENT_PROJECT_VERSION = 1275;
+				CURRENT_PROJECT_VERSION = 1276;
 				DEAD_CODE_STRIPPING = YES;
 				DEVELOPMENT_TEAM = 47ZEU5J4BF;
+				EAGER_COMPILATION_ALLOW_SCRIPTS = YES;
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_USER_SCRIPT_SANDBOXING = YES;
@@ -966,6 +971,7 @@
 					"FLEX*",
 					"Pulse*",
 				);
+				FUSE_BUILD_SCRIPT_PHASES = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu17;
 				GCC_NO_COMMON_BLOCKS = YES;
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
@@ -982,12 +988,13 @@
 				LLVM_LTO = YES_THIN;
 				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
 				MACOSX_DEPLOYMENT_TARGET = 12.4;
-				MARKETING_VERSION = 1.14.0;
+				MARKETING_VERSION = 1.15.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				SDKROOT = iphoneos;
 				STRINGS_FILE_OUTPUT_ENCODING = binary;
 				STRING_CATALOG_GENERATE_SYMBOLS = YES;
+				STRIP_INSTALLED_PRODUCT = NO;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "";
 				SWIFT_COMPILATION_MODE = wholemodule;
 				SWIFT_EMIT_LOC_STRINGS = YES;
