@@ -141,7 +141,13 @@ final class NavigationManager: NSObject {
 		case .library, .myLibrary, .list:
 			context.selectTab(.library)
 		case .feed, .timeline:
-			context.selectTab(.feed)
+			if let feedMessageIDString = url.pathComponents.first(where: { $0 != "/" }) {
+				let feedMessageID = KurozoraItemID(feedMessageIDString)
+				let fmDetailsTableViewController = FMDetailsTableViewController()(with: feedMessageID)
+				context.show(fmDetailsTableViewController)
+			} else {
+				context.selectTab(.feed)
+			}
 		case .notification, .notifications:
 			context.selectTab(.notifications)
 		case .search:
