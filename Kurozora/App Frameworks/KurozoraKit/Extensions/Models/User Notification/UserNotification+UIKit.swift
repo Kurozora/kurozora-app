@@ -69,6 +69,8 @@ import UIKit
 				if let episodeID = self.episodeID {
 					return EpisodeDetailsCollectionViewController()(with: episodeID)
 				}
+			case .newDigest:
+				return DigestCollectionViewController()
 			default: break
 			}
 

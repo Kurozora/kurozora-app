@@ -71,7 +71,7 @@ final class NotificationsRealtimeBridge {
 			LibrarySyncProgress.shared.endImport()
 			NotificationCenter.default.post(name: .KUNDidUpdate, object: nil)
 		case .newSession, .newFollower, .newFeedMessageReply, .newFeedMessageReShare,
-			.newUserMention, .subscriptionStatus, .userTimedOut, .userTimeoutExpired:
+			.newUserMention, .subscriptionStatus, .userTimedOut, .userTimeoutExpired, .newDigest:
 			NotificationCenter.default.post(name: .KUNDidUpdate, object: nil)
 		}
 	}

@@ -44,6 +44,8 @@ extension NotificationsTableViewController {
 		case .newEpisode, .newEpisodes:
 			guard let episodeID = userNotification.attributes.payload.episodeID else { return }
 			self.show(EpisodeDetailsCollectionViewController()(with: episodeID), sender: nil)
+		case .newDigest:
+			WorkflowController.shared.openDigest(in: self)
 		default: break
 		}
 	}

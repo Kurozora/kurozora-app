@@ -30,6 +30,8 @@ extension UserNotificationType {
 			return L10n.subscriptionUpdate
 		case .userTimedOut, .userTimeoutExpired:
 			return L10n.moderation
+		case .newDigest:
+			return L10n.digest
 		case .other:
 			return L10n.other
 		}
@@ -52,6 +54,8 @@ extension UserNotificationType {
             return .Icons.lockOpen
 		case .userTimedOut, .userTimeoutExpired:
             return .Icons.shieldCheckered
+		case .newDigest:
+            return .Icons.libraryChartBarXaxisAscendingBadgeClock
 		case .other:
             return .Icons.appBadge
 		}
