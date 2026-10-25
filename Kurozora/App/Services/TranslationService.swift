@@ -465,16 +465,16 @@ extension TranslationService {
 
 		self.autoTranslatedIdentities.insert(content.translationIdentity)
 
-		self.enqueueTranslation(for: content, from: sourceLanguage, announcesStart: false)
+		self.enqueueTranslation(for: content, from: sourceLanguage, isRequested: false)
 	}
 
-	/// Reveals the content's translation, queueing the work when it isn't cached yet.
+	/// Reveals the content's translation.
 	///
 	/// - Parameters:
 	///   - content: The content to translate.
 	///   - sourceLanguage: The language the content is written in.
-	///   - announcesStart: Whether observers are told the translation began.
-	private func enqueueTranslation(for content: TranslatableContent, from sourceLanguage: Locale.Language, announcesStart: Bool = true) {
+	///   - isRequested: Whether the reader asked for the translation.
+	private func enqueueTranslation(for content: TranslatableContent, from sourceLanguage: Locale.Language, isRequested: Bool = true) {
 		let key = TranslationKey(identity: content.translationIdentity, target: self.targetLanguage)
 
 		if self.translatedBodies[key] != nil {
@@ -487,9 +487,9 @@ extension TranslationService {
 
 		self.failedIdentities.remove(content.translationIdentity)
 		self.translatingIdentities.insert(content.translationIdentity)
-		self.pendingTranslations[content.translationIdentity] = PendingTranslation(content: content, sourceLanguage: sourceLanguage)
+		self.pendingTranslations[content.translationIdentity] = PendingTranslation(content: content, sourceLanguage: sourceLanguage, isRequested: isRequested)
 
-		if announcesStart {
+		if isRequested {
 			self.postUpdate(for: [content.translationIdentity])
 		}
 
@@ -538,19 +538,21 @@ extension TranslationService {
 	///   - source: The language to translate from.
 	///   - target: The language to translate into.
 	private func translate(_ batch: [PendingTranslation], from source: Locale.Language, to target: Locale.Language) async {
-		let options = AttributedString.MarkdownParsingOptions(interpretedSyntax: .inlineOnlyPreservingWhitespace)
+		let isInstalled = await LanguageAvailability().status(from: source, to: target) == .installed
+		let translatableBatch = isInstalled ? batch : batch.filter { $0.isRequested }
+		let requests = self.requests(for: translatableBatch)
 
 		do {
-			let responses = try await self.withSession(from: source, to: target) { session in
-				var requests: [TranslationSession.Request] = []
-				for pending in batch {
-					guard let markdown = pending.content.translationMarkdown ?? pending.content.translationPlainText else { continue }
+			let responses: [TranslationSession.Response]
 
-					let body = (try? AttributedString(markdown: markdown, options: options)) ?? AttributedString(markdown)
-					requests.append(TranslationSession.Request(sourceText: body, clientIdentifier: pending.content.translationIdentity.rawValue))
+			if requests.isEmpty {
+				responses = []
+			} else if isInstalled {
+				responses = try await TranslationSession(installedSource: source, target: target).translations(from: requests)
+			} else {
+				responses = try await self.withSession(from: source, to: target) { session in
+					try await session.translations(from: requests)
 				}
-
-				return try await session.translations(from: requests)
 			}
 
 			for response in responses {
@@ -562,9 +564,15 @@ extension TranslationService {
 				self.translatedBodies[TranslationKey(identity: identity, target: target)] = self.applyingWritingDirection(of: target, to: NSAttributedString(translatedBody))
 				self.revealedIdentities.insert(identity)
 			}
+
+			if !isInstalled && !requests.isEmpty {
+				self.resumeAutomaticTranslation(from: source)
+			}
 		} catch {
-			for pending in batch {
-				self.failedIdentities.insert(pending.content.translationIdentity)
+			if !self.isCancellation(error) {
+				for pending in translatableBatch {
+					self.failedIdentities.insert(pending.content.translationIdentity)
+				}
 			}
 
 			print("-----", error.localizedDescription)
@@ -578,6 +586,50 @@ extension TranslationService {
 		}
 
 		self.postUpdate(for: identities)
+	}
+
+	/// Returns whether the error means the reader canceled the translation.
+	///
+	/// - Parameter error: The error to inspect.
+	///
+	/// - Returns: `true` when the reader canceled.
+	private func isCancellation(_ error: Error) -> Bool {
+		return error is CancellationError || (error as? CocoaError)?.code == .userCancelled
+	}
+
+	/// Returns the translation requests for the given content.
+	///
+	/// - Parameter batch: The content to translate.
+	///
+	/// - Returns: One request per piece of content with a body.
+	private func requests(for batch: [PendingTranslation]) -> [TranslationSession.Request] {
+		let options = AttributedString.MarkdownParsingOptions(interpretedSyntax: .inlineOnlyPreservingWhitespace)
+		var requests: [TranslationSession.Request] = []
+
+		for pending in batch {
+			guard let markdown = pending.content.translationMarkdown ?? pending.content.translationPlainText else { continue }
+
+			let body = (try? AttributedString(markdown: markdown, options: options)) ?? AttributedString(markdown)
+			requests.append(TranslationSession.Request(sourceText: body, clientIdentifier: pending.content.translationIdentity.rawValue))
+		}
+
+		return requests
+	}
+
+	/// Lets untranslated content in the given language translate automatically again.
+	///
+	/// - Parameter language: The language whose models were just installed.
+	private func resumeAutomaticTranslation(from language: Locale.Language) {
+		let target = self.targetLanguage
+
+		self.autoTranslatedIdentities = self.autoTranslatedIdentities.filter { identity in
+			guard self.translatedBodies[TranslationKey(identity: identity, target: target)] == nil else { return true }
+			guard let detectedLanguage = self.detectedLanguages[identity] ?? nil else { return true }
+
+			return detectedLanguage.maximalIdentifier != language.maximalIdentifier
+		}
+
+		self.postUpdate(for: nil)
 	}
 
 	/// Returns the body laid out for the given language's writing direction.
@@ -613,7 +665,7 @@ extension TranslationService {
 	private func withSession<Result>(from source: Locale.Language, to target: Locale.Language, perform body: @escaping @MainActor @Sendable (TranslationSession) async throws -> Result) async throws -> Result {
 		guard let parent = self.rootViewController else { throw TranslationError.noPresentationContext }
 
-		var hostingController: UIHostingController<TranslationSessionHost>?
+		var hostingController: TranslationSessionHostingController?
 		defer {
 			hostingController?.willMove(toParent: nil)
 			hostingController?.view.removeFromSuperview()
@@ -627,7 +679,7 @@ extension TranslationService {
 			// reader navigates away would otherwise never resume.
 			let timeoutTask = Task {
 				try? await Task.sleep(for: self.timeout)
-				guard resumeGuard.claim() else { return }
+				guard !Task.isCancelled, resumeGuard.claim() else { return }
 
 				continuation.resume(throwing: TranslationError.timedOut)
 			}
@@ -635,12 +687,16 @@ extension TranslationService {
 			let host = TranslationSessionHost(
 				configuration: TranslationSession.Configuration(source: source, target: target),
 				perform: { session in
-					guard resumeGuard.claim() else { return }
 					timeoutTask.cancel()
 
 					do {
-						continuation.resume(returning: try await body(session))
+						let result = try await body(session)
+						guard resumeGuard.claim() else { return }
+
+						continuation.resume(returning: result)
 					} catch {
+						guard resumeGuard.claim() else { return }
+
 						continuation.resume(throwing: error)
 					}
 				}
@@ -648,7 +704,12 @@ extension TranslationService {
 
 			// The task only runs once the host appears, so it needs full containment
 			// rather than a bare subview.
-			let controller = UIHostingController(rootView: host)
+			let controller = TranslationSessionHostingController(rootView: host)
+			controller.sheetDismissalHandler = {
+				guard resumeGuard.claim() else { return }
+
+				continuation.resume(throwing: CancellationError())
+			}
 			parent.addChild(controller)
 			controller.view.frame = parent.view.bounds
 			controller.view.autoresizingMask = [.flexibleWidth, .flexibleHeight]
@@ -744,6 +805,9 @@ private extension TranslationService {
 
 		/// The language the message is written in.
 		let sourceLanguage: Locale.Language
+
+		/// Whether the reader asked for the translation.
+		let isRequested: Bool
 	}
 
 	/// The identity of a single translation, which changes with the target language.
@@ -789,5 +853,107 @@ private struct TranslationSessionHost: View {
 			.translationTask(self.configuration) { session in
 				await self.perform(session)
 			}
+	}
+}
+
+// MARK: - Translation Session Hosting Controller
+/// A hosting controller that presents the framework's sheets inside a plain container.
+@available(iOS 26.4, macCatalyst 26.4, *)
+private final class TranslationSessionHostingController: UIHostingController<TranslationSessionHost> {
+	// MARK: - Properties
+	/// The work to run when the reader dismisses a presented sheet.
+	var sheetDismissalHandler: (() -> Void)?
+
+	/// The object relaying the presented container's dismissal to the framework's sheet.
+	private var dismissalForwarder: SheetDismissalForwarder?
+
+	// MARK: - Functions
+	override func present(_ viewControllerToPresent: UIViewController, animated flag: Bool, completion: (() -> Void)? = nil) {
+		guard let sheet = viewControllerToPresent.sheetPresentationController else {
+			super.present(viewControllerToPresent, animated: flag, completion: completion)
+			return
+		}
+
+		let containerViewController = UIViewController()
+		containerViewController.modalPresentationStyle = viewControllerToPresent.modalPresentationStyle
+		containerViewController.isModalInPresentation = viewControllerToPresent.isModalInPresentation
+
+		containerViewController.addChild(viewControllerToPresent)
+		viewControllerToPresent.view.frame = containerViewController.view.bounds
+		viewControllerToPresent.view.autoresizingMask = [.flexibleWidth, .flexibleHeight]
+		containerViewController.view.addSubview(viewControllerToPresent.view)
+		viewControllerToPresent.didMove(toParent: containerViewController)
+
+		if let containerSheet = containerViewController.sheetPresentationController {
+			containerSheet.detents = sheet.detents
+			containerSheet.selectedDetentIdentifier = sheet.selectedDetentIdentifier
+			containerSheet.largestUndimmedDetentIdentifier = sheet.largestUndimmedDetentIdentifier
+			containerSheet.prefersGrabberVisible = sheet.prefersGrabberVisible
+			containerSheet.prefersEdgeAttachedInCompactHeight = sheet.prefersEdgeAttachedInCompactHeight
+			containerSheet.preferredCornerRadius = sheet.preferredCornerRadius
+
+			let dismissalForwarder = SheetDismissalForwarder(contentSheet: sheet) { [weak self] in
+				self?.sheetDismissalHandler?()
+			}
+			containerSheet.delegate = dismissalForwarder
+			self.dismissalForwarder = dismissalForwarder
+		}
+
+		super.present(containerViewController, animated: flag, completion: completion)
+	}
+}
+
+// MARK: - Sheet Dismissal Forwarder
+/// Relays a container sheet's dismissal callbacks to the sheet it wraps.
+@available(iOS 26.4, macCatalyst 26.4, *)
+private final class SheetDismissalForwarder: NSObject, UISheetPresentationControllerDelegate {
+	// MARK: - Properties
+	/// The sheet presentation controller of the wrapped content.
+	private weak var contentSheet: UISheetPresentationController?
+
+	/// The delegate assigned to the wrapped content's sheet.
+	private weak var contentDelegate: UISheetPresentationControllerDelegate?
+
+	/// The work to run after the reader dismisses the container.
+	private let onDismiss: () -> Void
+
+	// MARK: - Initializers
+	/// Creates a forwarder for the given sheet.
+	///
+	/// - Parameters:
+	///   - contentSheet: The sheet presentation controller of the wrapped content.
+	///   - onDismiss: The work to run after the reader dismisses the container.
+	init(contentSheet: UISheetPresentationController, onDismiss: @escaping () -> Void) {
+		self.contentSheet = contentSheet
+		self.contentDelegate = contentSheet.delegate
+		self.onDismiss = onDismiss
+		super.init()
+	}
+
+	// MARK: - Functions
+	func presentationControllerShouldDismiss(_ presentationController: UIPresentationController) -> Bool {
+		guard let contentSheet = self.contentSheet else { return true }
+
+		return self.contentDelegate?.presentationControllerShouldDismiss?(contentSheet) ?? true
+	}
+
+	func presentationControllerWillDismiss(_ presentationController: UIPresentationController) {
+		guard let contentSheet = self.contentSheet else { return }
+
+		self.contentDelegate?.presentationControllerWillDismiss?(contentSheet)
+	}
+
+	func presentationControllerDidDismiss(_ presentationController: UIPresentationController) {
+		self.onDismiss()
+
+		guard let contentSheet = self.contentSheet else { return }
+
+		self.contentDelegate?.presentationControllerDidDismiss?(contentSheet)
+	}
+
+	func presentationControllerDidAttemptToDismiss(_ presentationController: UIPresentationController) {
+		guard let contentSheet = self.contentSheet else { return }
+
+		self.contentDelegate?.presentationControllerDidAttemptToDismiss?(contentSheet)
 	}
 }
