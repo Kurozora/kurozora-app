@@ -142,11 +142,6 @@ class ProfileTableViewController: KTableViewController, TypedSegueHandling {
 
 	override func viewDidLoad() {
 		super.viewDidLoad()
-		NotificationCenter.default.addObserver(self, selector: #selector(self.updateFeedMessage(_:)), name: .KFMDidUpdate, object: nil)
-		NotificationCenter.default.addObserver(self, selector: #selector(self.deleteFeedMessage(_:)), name: .KFMDidDelete, object: nil)
-		NotificationCenter.default.addObserver(self, selector: #selector(self.handleProfileDidUpdate(_:)), name: .KUserProfileDidUpdate, object: nil)
-		NotificationCenter.default.addObserver(self, selector: #selector(self.handleBlockStatusDidChange(_:)), name: .KUserBlockStatusDidChange, object: nil)
-		NotificationCenter.default.addObserver(self, selector: #selector(self.handleTimeoutDidChange(_:)), name: .KUserTimeoutDidChange, object: nil)
 		NotificationCenter.default.addObserver(self, selector: #selector(self.updateFeedMessageTranslation(_:)), name: .KTranslationDidUpdate, object: nil)
 
 		// Setup refresh control
@@ -175,6 +170,15 @@ class ProfileTableViewController: KTableViewController, TypedSegueHandling {
 			guard let self = self else { return }
 			await self.fetchUserDetails()
 		}
+	}
+
+	override func viewWillAppear(_ animated: Bool) {
+		super.viewWillAppear(animated)
+		NotificationCenter.default.addObserver(self, selector: #selector(self.updateFeedMessage(_:)), name: .KFMDidUpdate, object: nil)
+		NotificationCenter.default.addObserver(self, selector: #selector(self.deleteFeedMessage(_:)), name: .KFMDidDelete, object: nil)
+		NotificationCenter.default.addObserver(self, selector: #selector(self.handleProfileDidUpdate(_:)), name: .KUserProfileDidUpdate, object: nil)
+		NotificationCenter.default.addObserver(self, selector: #selector(self.handleBlockStatusDidChange(_:)), name: .KUserBlockStatusDidChange, object: nil)
+		NotificationCenter.default.addObserver(self, selector: #selector(self.handleTimeoutDidChange(_:)), name: .KUserTimeoutDidChange, object: nil)
 	}
 
 	override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
