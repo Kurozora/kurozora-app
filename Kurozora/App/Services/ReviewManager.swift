@@ -72,7 +72,7 @@ final class ReviewManager {
 		// Additional conditions for specific actions
 		switch action {
 		case .itemAddedToLibrary(let status):
-			return status != .ignored || status != .dropped || status != .onHold
+			return status != .ignored && status != .dropped && status != .onHold
 		}
 	}
 
