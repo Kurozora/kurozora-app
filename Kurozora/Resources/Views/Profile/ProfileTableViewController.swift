@@ -193,7 +193,6 @@ class ProfileTableViewController: KTableViewController, TypedSegueHandling {
 		NotificationCenter.default.removeObserver(self, name: .KUserProfileDidUpdate, object: nil)
 		NotificationCenter.default.removeObserver(self, name: .KUserBlockStatusDidChange, object: nil)
 		NotificationCenter.default.removeObserver(self, name: .KUserTimeoutDidChange, object: nil)
-		NotificationCenter.default.removeObserver(self, name: .KTranslationDidUpdate, object: nil)
 
 		if self.isMovingFromParent || self.isBeingDismissed, self.user == User.current {
 			self.sidebarBottomProfileView?.isSelected = false

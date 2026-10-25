@@ -110,6 +110,7 @@ class DetailsCollectionViewController: KCollectionViewController, RatingAlertPre
 
 		NotificationCenter.default.addObserver(self, selector: #selector(self.handleReviewDidUpdate(_:)), name: .KReviewDidUpdate, object: nil)
 		NotificationCenter.default.addObserver(self, selector: #selector(self.handleReviewVoteDidUpdate(_:)), name: .KReviewVoteDidUpdate, object: nil)
+		NotificationCenter.default.addObserver(self, selector: #selector(self.handleTranslationDidUpdate(_:)), name: .KTranslationDidUpdate, object: nil)
 
 		#if DEBUG
 		self._prefersRefreshControlDisabled = false
@@ -121,7 +122,6 @@ class DetailsCollectionViewController: KCollectionViewController, RatingAlertPre
 	override func viewWillAppear(_ animated: Bool) {
 		super.viewWillAppear(animated)
 		NotificationCenter.default.addObserver(self, selector: #selector(self.handleReviewDidDelete(_:)), name: .KReviewDidDelete, object: nil)
-		NotificationCenter.default.addObserver(self, selector: #selector(self.handleTranslationDidUpdate(_:)), name: .KTranslationDidUpdate, object: nil)
 		NotificationCenter.default.addObserver(self, selector: #selector(self.handleRatingStyleDidChange(_:)), name: .KSRatingStyleDidChange, object: nil)
 
 		self.reconfigureRatingCells()
@@ -130,7 +130,6 @@ class DetailsCollectionViewController: KCollectionViewController, RatingAlertPre
 	override func viewWillDisappear(_ animated: Bool) {
 		super.viewWillDisappear(animated)
 		NotificationCenter.default.removeObserver(self, name: .KReviewDidDelete, object: nil)
-		NotificationCenter.default.removeObserver(self, name: .KTranslationDidUpdate, object: nil)
 		NotificationCenter.default.removeObserver(self, name: .KSRatingStyleDidChange, object: nil)
 	}
 

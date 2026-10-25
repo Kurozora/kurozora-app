@@ -106,6 +106,8 @@ class ReviewsListCollectionViewController: KCollectionViewController, RatingAler
 
 		self.configureDataSource()
 
+		NotificationCenter.default.addObserver(self, selector: #selector(self.updateReviewTranslation(_:)), name: .KTranslationDidUpdate, object: nil)
+
 		Task { [weak self] in
 			guard let self = self else { return }
 			await self.fetchReviews()
@@ -127,7 +129,6 @@ class ReviewsListCollectionViewController: KCollectionViewController, RatingAler
 		NotificationCenter.default.addObserver(self, selector: #selector(deleteReview(_:)), name: .KReviewDidDelete, object: nil)
 		NotificationCenter.default.addObserver(self, selector: #selector(self.updateReview(_:)), name: .KReviewDidUpdate, object: nil)
 		NotificationCenter.default.addObserver(self, selector: #selector(self.updateReviewVote(_:)), name: .KReviewVoteDidUpdate, object: nil)
-		NotificationCenter.default.addObserver(self, selector: #selector(self.updateReviewTranslation(_:)), name: .KTranslationDidUpdate, object: nil)
 		NotificationCenter.default.addObserver(self, selector: #selector(self.updateRatingStyle(_:)), name: .KSRatingStyleDidChange, object: nil)
 
 		self.reconfigureRatingCells()
@@ -156,7 +157,6 @@ class ReviewsListCollectionViewController: KCollectionViewController, RatingAler
 		NotificationCenter.default.removeObserver(self, name: .KReviewDidDelete, object: nil)
 		NotificationCenter.default.removeObserver(self, name: .KReviewDidUpdate, object: nil)
 		NotificationCenter.default.removeObserver(self, name: .KReviewVoteDidUpdate, object: nil)
-		NotificationCenter.default.removeObserver(self, name: .KTranslationDidUpdate, object: nil)
 		NotificationCenter.default.removeObserver(self, name: .KSRatingStyleDidChange, object: nil)
 	}
 

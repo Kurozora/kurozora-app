@@ -90,6 +90,8 @@ class FMDetailsTableViewController: KTableViewController, TypedSegueHandling {
 		refreshControl?.attributedTitle = NSAttributedString(string: L10n.pullToRefreshItems(L10n.messageDetails.lowercased(with: Locale.current)))
 		#endif
 
+		NotificationCenter.default.addObserver(self, selector: #selector(self.updateFeedMessageTranslation(_:)), name: .KTranslationDidUpdate, object: nil)
+
 		Task { [weak self] in
 			guard let self = self else { return }
 
@@ -105,14 +107,12 @@ class FMDetailsTableViewController: KTableViewController, TypedSegueHandling {
 		super.viewWillAppear(animated)
 		NotificationCenter.default.addObserver(self, selector: #selector(self.updateFeedMessage(_:)), name: .KFMDidUpdate, object: nil)
 		NotificationCenter.default.addObserver(self, selector: #selector(self.deleteFeedMessage(_:)), name: .KFMDidDelete, object: nil)
-		NotificationCenter.default.addObserver(self, selector: #selector(self.updateFeedMessageTranslation(_:)), name: .KTranslationDidUpdate, object: nil)
 	}
 
 	override func viewDidDisappear(_ animated: Bool) {
 		super.viewDidDisappear(animated)
 		NotificationCenter.default.removeObserver(self, name: .KFMDidUpdate, object: nil)
 		NotificationCenter.default.removeObserver(self, name: .KFMDidDelete, object: nil)
-		NotificationCenter.default.removeObserver(self, name: .KTranslationDidUpdate, object: nil)
 	}
 
 	// MARK: - Functions

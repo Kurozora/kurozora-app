@@ -44,20 +44,20 @@ class ReviewDetailsCollectionViewController: KCollectionViewController {
 		self.configureNavigationItems()
 		self.configureDataSource()
 		self.updateDataSource()
+
+		NotificationCenter.default.addObserver(self, selector: #selector(self.updateReviewTranslation(_:)), name: .KTranslationDidUpdate, object: nil)
 	}
 
 	override func viewWillAppear(_ animated: Bool) {
 		super.viewWillAppear(animated)
 		NotificationCenter.default.addObserver(self, selector: #selector(self.handleReviewDeleted(_:)), name: .KReviewDidDelete, object: nil)
 		NotificationCenter.default.addObserver(self, selector: #selector(self.handleReviewDidUpdate(_:)), name: .KReviewDidUpdate, object: nil)
-		NotificationCenter.default.addObserver(self, selector: #selector(self.updateReviewTranslation(_:)), name: .KTranslationDidUpdate, object: nil)
 	}
 
 	override func viewDidDisappear(_ animated: Bool) {
 		super.viewDidDisappear(animated)
 		NotificationCenter.default.removeObserver(self, name: .KReviewDidDelete, object: nil)
 		NotificationCenter.default.removeObserver(self, name: .KReviewDidUpdate, object: nil)
-		NotificationCenter.default.removeObserver(self, name: .KTranslationDidUpdate, object: nil)
 	}
 
 	// MARK: - Functions
