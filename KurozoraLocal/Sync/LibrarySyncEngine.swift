@@ -76,13 +76,18 @@ actor LibrarySyncEngine {
 	///
 	/// - Parameter userSlug: The user's account slug.
 	func pull(forUserSlug userSlug: String) async {
+		guard PersistenceController.shared.loadStoreIfNeeded() else {
+			syncLogger.info("DEFER reason=store-unavailable")
+			return
+		}
+
 		self.installPathMonitorIfNeeded()
 		await self.repairCursorsIfNeeded(forUserSlug: userSlug)
 
 		if let existing = self.inFlight[userSlug] {
 			// The in-flight round's delta predates this trigger.
 			self.rerunRequested.insert(userSlug)
-			await existing.value
+			_ = await existing.value
 			return
 		}
 

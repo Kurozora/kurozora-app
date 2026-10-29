@@ -232,6 +232,8 @@ actor LibraryOutbox {
 	}
 
 	private func drain(forUserSlug userSlug: String, force: Bool = false) async {
+		guard PersistenceController.shared.loadStoreIfNeeded() else { return }
+
 		while true {
 			// Operations enqueued after a round started are not in that round, so every caller
 			// keeps going until a round finds the queue empty.
@@ -527,6 +529,11 @@ actor LibraryOutbox {
 
 	// MARK: - Persistence
 	private func persistOp(type: LibraryOutboxOperationType, userSlug: String, kind: LibraryKind, trackableID: String, targetID: String, payload: LibraryOutboxPayload?, seed: LibraryOutboxSeed?, coalescing: CoalesceStrategy) async {
+		guard PersistenceController.shared.loadStoreIfNeeded() else {
+			outboxLogger.error("Failed to persist outbox operation: store unavailable")
+			return
+		}
+
 		let context = PersistenceController.shared.container.newBackgroundContext()
 		context.automaticallyMergesChangesFromParent = true
 		context.mergePolicy = NSMergePolicy.mergeByPropertyObjectTrump
