@@ -908,6 +908,7 @@ final class TrailerWebPlayer: NSObject {
 		typealias RelatedSetter = @convention(c) (NSObject, Selector, WKWebView?) -> Void
 		let setRelated = unsafeBitCast(configuration.method(for: relateSelector), to: RelatedSetter.self)
 		setRelated(configuration, relateSelector, anchor)
+		configuration.processPool = anchor.configuration.processPool
 	}
 	#endif
 
