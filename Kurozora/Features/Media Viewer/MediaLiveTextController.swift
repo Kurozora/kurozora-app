@@ -17,6 +17,15 @@ final class MediaLiveTextController: NSObject {
 	/// The analyzer shared by every renderer.
 	private static let imageAnalyzer = ImageAnalyzer()
 
+	/// The interaction types the running system supports.
+	private static var supportedInteractionTypes: ImageAnalysisInteraction.InteractionTypes {
+		#if !targetEnvironment(macCatalyst)
+		guard #available(iOS 17.0, *) else { return .textSelection }
+		#endif
+
+		return [.textSelection, .imageSubject]
+	}
+
 	private let interaction = ImageAnalysisInteraction()
 	private weak var hostViewController: UIViewController?
 	private var analysisTask: Task<Void, Never>?
@@ -40,7 +49,7 @@ final class MediaLiveTextController: NSObject {
 		super.init()
 
 		self.interaction.delegate = self
-		self.interaction.preferredInteractionTypes = [.textSelection, .imageSubject]
+		self.interaction.preferredInteractionTypes = Self.supportedInteractionTypes
 		self.interaction.isSupplementaryInterfaceHidden = true
 		imageView.addInteraction(self.interaction)
 	}
